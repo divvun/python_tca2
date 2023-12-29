@@ -8,13 +8,8 @@ class QueueEntry:
         self.removed = False
         self.end = False
 
-    def __clone__(self):
-        copy = super().__clone__()
-        copy.path = self.path.clone()
-        return copy
-
     def make_longer_path(self, model, new_step):
-        ret_queue_entry = self.__clone__()
+        ret_queue_entry = deepcopy(self)
         new_score = self.try_step(model, new_step)
         ret_queue_entry.score = new_score
         ret_queue_entry.path.extend(new_step)

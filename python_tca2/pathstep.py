@@ -1,3 +1,6 @@
+from copy import deepcopy
+
+
 class PathStep:
     def __init__(self, inc):
         self.increment = inc
@@ -18,8 +21,4 @@ class PathStep:
         return temp
 
     def clone(self):
-        # first make exact bitwise copy
-        copy = super().clone()
-        # a new list of int is created
-        copy.increment = self.increment.copy()
-        return copy
+        return deepcopy(self)
