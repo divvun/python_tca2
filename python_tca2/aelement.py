@@ -4,3 +4,15 @@ class AElement:
         self.element_number = element_number
         self.alignment_number = -1
         self.length = len(self.element.text)
+
+    def __str__(self):
+        return (
+            "element_number="
+            + str(self.element_number)
+            + ";alignment_number="
+            + str(self.alignment_number)
+            + ";length="
+            + str(self.length)
+            + ";text="
+            + self.element.text
+        )
