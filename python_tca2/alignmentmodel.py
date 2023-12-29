@@ -133,9 +133,9 @@ class AlignmentModel:
 
     def find_start_position(self):
         position = [] * alignment.NUM_FILES
-        for t in range(alignment.NUM_FILES):
-            if self.unaligned.get_size(t) > 0:
-                first_unaligned = self.unaligned.get_first_element(t)
+        for t in range(constants.NUM_FILES):
+            if len(self.unaligned.elements[t]) > 0:
+                first_unaligned = self.unaligned.elements[t][0]
                 position[t] = first_unaligned.element_number - 1
             else:
                 position[t] = len(self.nodes[t]) - 1
