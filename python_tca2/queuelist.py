@@ -3,8 +3,10 @@ from python_tca2.queue_entry import QueueEntry
 
 
 class QueueList:
+    entry = []
+
     def __init__(self, model, position):
-        self.entry = [QueueEntry(position, 0)]
+        self.entry.append(QueueEntry(position, 0))
 
     def empty(self):
         return len(self.entry) == 0
