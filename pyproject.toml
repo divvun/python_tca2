@@ -10,9 +10,11 @@ python = "^3.11"
 click = "^8.1.7"
 lxml = "^4.9.4"
 
-
 [tool.poetry.group.dev.dependencies]
 ruff = "^0.1.9"
+
+[tool.poetry.scripts]
+tca2 = "python_tca2.alignment:main"
 
 [build-system]
 requires = ["poetry-core"]
