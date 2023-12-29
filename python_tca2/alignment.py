@@ -2,14 +2,6 @@ import click
 
 from python_tca2 import alignmentmodel
 
-DEFAULT_MAX_PATH_LENGTH = 10
-NUM_FILES = 2
-
-
-class Alignment:
-    def __init__(self):
-        pass
-
 
 @click.command()
 @click.argument("anchor_file")
