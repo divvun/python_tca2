@@ -3,7 +3,7 @@ from typing import List
 from aelement import AElement
 from link import Link
 
-from corpustools import alignment
+from python_tca2 import alignment
 
 
 class AlignmentsEtc:

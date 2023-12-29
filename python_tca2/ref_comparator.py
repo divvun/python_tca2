@@ -1,4 +1,4 @@
-from corpustools.ref import Ref
+from python_tca2.ref import Ref
 
 
 class RefComparator:

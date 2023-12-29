@@ -1,5 +1,5 @@
-from corpustools import alignment
-from corpustools.queue_entry import QueueEntry
+from python_tca2 import alignment
+from python_tca2.queue_entry import QueueEntry
 
 
 class QueueList:

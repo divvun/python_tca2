@@ -1,9 +1,9 @@
 from typing import List
 
-from corpustools import alignment
-from corpustools.aelement import AElement
-from corpustools.alignments_etc import AlignmentsEtc
-from corpustools.link import Link
+from python_tca2 import alignment
+from python_tca2.aelement import AElement
+from python_tca2.alignments_etc import AlignmentsEtc
+from python_tca2.link import Link
 
 
 class ToAlign:

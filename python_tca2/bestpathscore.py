@@ -1,4 +1,4 @@
-from corpustools import alignmentmodel
+from python_tca2 import alignmentmodel
 
 
 class BestPathScore:

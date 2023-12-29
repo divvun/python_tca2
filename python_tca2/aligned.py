@@ -1,4 +1,4 @@
-from corpustools import alignment
+from python_tca2 import alignment
 
 
 class Aligned:
