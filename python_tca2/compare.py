@@ -56,6 +56,17 @@ class Compare:
 
         return self.matrix.cells[key]
 
+    @staticmethod
+    def int_to_base(i, base):
+        if i == 0:
+            return "0"
+        digits = []
+        while i:
+            digits.append(int(i % base))
+            i //= base
+        digits = digits[::-1]
+        return "".join(map(str, digits))
+
     def create_step_list(self):
         range_val = constants.MAX_NUM_TRY - constants.MIN_NUM_TRY + 1
         limit = 1
@@ -65,7 +76,9 @@ class Compare:
         for i in range(limit):
             increment = [0] * constants.NUM_FILES
 
-            comb_string = str(limit + i, range_val)[1 : alignment.NUM_FILES + 1]
+            comb_string = self.int_to_base(limit + i, range_val)[
+                1 : constants.NUM_FILES + 1
+            ]
             minimum = constants.MAX_NUM_TRY + 1
             maximum = constants.MIN_NUM_TRY - 1
             total = 0
