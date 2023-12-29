@@ -1,7 +1,6 @@
 from python_tca2 import (
-    alignment,
     alignment_utils,
-    alignmentmodel,
+    constants,
     match,
     similarity_utils,
 )
@@ -11,9 +10,9 @@ from python_tca2.ref import Ref
 
 class ElementInfoToBeCompared:
     INDENT = "  "
-    info = [[] for _ in range(alignment.NUM_FILES)]
+    info = [[] for _ in range(constants.NUM_FILES)]
     common_clusters = Clusters()
-    score = alignmentmodel.ELEMENTINFO_SCORE_NOT_CALCULATED
+    score = constants.ELEMENTINFO_SCORE_NOT_CALCULATED
     ret = []  # 2006-11-20
 
     def __init__(self, model):
@@ -23,64 +22,62 @@ class ElementInfoToBeCompared:
         self.info[t].append(element_info)
 
     def empty(self):
-        for t in range(alignment.NUM_FILES):
-            if self.info[t].size() == 0:
+        for t in range(constants.NUM_FILES):
+            if len(self.info[t]) == 0:
                 return True
 
         return False
 
     def get_score(self):
-        if self.score == alignmentmodel.ELEMENTINFO_SCORE_NOT_CALCULATED:
+        if self.score == constants.ELEMENTINFO_SCORE_NOT_CALCULATED:
             self.score = self.really_get_score()
 
         return self.score
 
     def really_get_score(self):
-        if self.score == alignmentmodel.ELEMENTINFO_SCORE_NOT_CALCULATED:
+        if self.score == constants.ELEMENTINFO_SCORE_NOT_CALCULATED:
             self.score = 0.0
             if not self.empty():
-                length = [0] * alignment.NUM_FILES
-                element_count = [0] * alignment.NUM_FILES
+                length = [0] * constants.NUM_FILES
+                element_count = [0] * constants.NUM_FILES
 
-                for t in range(alignment.NUM_FILES):
-                    it = self.info[t].iterator()
-                    while it.hasNext():
-                        info1 = it.next()
+                for t in range(constants.NUM_FILES):
+                    for info1 in self.info[t]:
                         length[t] += info1.length
-                    element_count[t] = self.info[t].size()
+                    element_count[t] = len(self.info[t])
 
                 if similarity_utils.bad_length_correlation(
                     length[0],
                     length[1],
                     element_count[0],
                     element_count[1],
-                    self.model.get_length_ratio(),
+                    self.model.length_ratio,
                 ):
-                    self.score = alignmentmodel.ELEMENTINFO_SCORE_HOPELESS
+                    self.score = constants.ELEMENTINFO_SCORE_HOPELESS
                 else:
                     self.score = self.really_get_score2()
         return self.score
 
     def really_get_score2(self):
         self.find_anchor_word_matches()
-        for t in range(alignment.NUM_FILES):
-            for tt in range(t + 1, alignment.NUM_FILES):
+        for t in range(constants.NUM_FILES):
+            for tt in range(t + 1, constants.NUM_FILES):
                 self.find_number_matches(t, tt)
                 self.find_propername_matches(t, tt)
                 self.find_dice_matches(t, tt)
                 self.find_special_character_matches(t, tt)
 
         self.score += self.common_clusters.get_score(
-            self.model.get_large_cluster_score_percentage()
+            self.model.large_cluster_score_percentage
         )
 
-        length = [0] * alignment.NUM_FILES
-        element_count = [0] * alignment.NUM_FILES
+        length = [0] * constants.NUM_FILES
+        element_count = [0] * constants.NUM_FILES
 
-        for t in range(alignment.NUM_FILES):
+        for t in range(constants.NUM_FILES):
             for info1 in self.info[t]:
                 length[t] += info1.length
-            element_count[t] = self.info[t].size()
+            element_count[t] = len(self.info[t])
 
         self.score = similarity_utils.adjust_for_length_correlation(
             self.score,
@@ -92,8 +89,8 @@ class ElementInfoToBeCompared:
         )
 
         is11 = True
-        for t in range(alignment.NUM_FILES):
             if self.info[t].size != 1:
+        for t in range(constants.NUM_FILES):
                 is11 = False
                 break
 
@@ -195,14 +192,14 @@ class ElementInfoToBeCompared:
     def find_anchor_word_matches(self):
         hits = self.find_hits()
         # TODO: sort the hits
-        current = [0] * alignment.NUM_FILES
+        current = [0] * constants.NUM_FILES
 
         done = False
         smallest = float("inf")
         smallest_count = 0
         while not done:
-            for t in range(alignment.NUM_FILES):
                 if current[t] < hits[t].size():
+            for t in range(constants.NUM_FILES):
                     hit = hits[t].get(current[t])
                     if hit.index < smallest:
                         smallest = hit.index
@@ -210,7 +207,7 @@ class ElementInfoToBeCompared:
                     elif hit.index == smallest:
                         smallest_count += 1
 
-            present_in_all_texts = smallest_count == alignment.NUM_FILES
+            present_in_all_texts = smallest_count == constants.NUM_FILES
 
             if smallest == float("inf"):
                 done = True
@@ -303,7 +300,7 @@ class ElementInfoToBeCompared:
     # manuelt portet
     def find_more_hits(self, hits, current, smallest, present_in_all_texts):
         anchor_word_clusters = Clusters()
-        for t in range(alignment.NUM_FILES):
+        for t in range(constants.NUM_FILES):
             count = 0
             if current[t] < hits[t].size():
                 done2 = False

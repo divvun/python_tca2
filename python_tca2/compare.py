@@ -1,4 +1,4 @@
-from python_tca2 import alignment
+from python_tca2 import constants
 from python_tca2.bestpathscore import BestPathScore
 from python_tca2.comparecells import CompareCells
 from python_tca2.comparematrix import CompareMatrix
@@ -9,11 +9,11 @@ from python_tca2.pathstep import PathStep
 
 class Compare:
     def __init__(self):
-        self.elements_info = [ElementsInfo() for _ in range(alignment.NUM_FILES)]
+        self.elements_info = [ElementsInfo() for _ in range(constants.NUM_FILES)]
         self.matrix = CompareMatrix()
         self.step_list = []
 
-        for t in range(alignment.NUM_FILES):
+        for t in range(constants.NUM_FILES):
             self.elements_info[t] = ElementsInfo()
 
         self.create_step_list()
@@ -22,14 +22,14 @@ class Compare:
         key = ""
         best_path_score_key = ""
 
-        for t in range(alignment.NUM_FILES):
+        for t in range(constants.NUM_FILES):
             if t > 0:
                 key += ","
             key += str(position[t] + 1)
 
         key += ","
 
-        for t in range(alignment.NUM_FILES):
+        for t in range(constants.NUM_FILES):
             if t > 0:
                 key += ","
                 best_path_score_key += ","
@@ -57,29 +57,29 @@ class Compare:
         return self.matrix.cells[key]
 
     def create_step_list(self):
-        range_val = alignment.MAX_NUM_TRY - alignment.MIN_NUM_TRY + 1
+        range_val = constants.MAX_NUM_TRY - constants.MIN_NUM_TRY + 1
         limit = 1
-        for _ in range(alignment.NUM_FILES):
+        for _ in range(constants.NUM_FILES):
             limit *= range_val
 
         for i in range(limit):
-            increment = [0] * alignment.NUM_FILES
+            increment = [0] * constants.NUM_FILES
 
             comb_string = str(limit + i, range_val)[1 : alignment.NUM_FILES + 1]
-            minimum = alignment.MAX_NUM_TRY + 1
-            maximum = alignment.MIN_NUM_TRY - 1
+            minimum = constants.MAX_NUM_TRY + 1
+            maximum = constants.MIN_NUM_TRY - 1
             total = 0
 
-            for t in range(alignment.NUM_FILES):
-                increment[t] = alignment.MIN_NUM_TRY + int(comb_string[t], range_val)
+            for t in range(constants.NUM_FILES):
+                increment[t] = constants.MIN_NUM_TRY + int(comb_string[t], range_val)
                 total += increment[t]
                 minimum = min(minimum, increment[t])
                 maximum = max(maximum, increment[t])
 
             if (
                 maximum > 0
-                and maximum - minimum <= alignment.MAX_DIFF_TRY
-                and total <= alignment.MAX_TOTAL_TRY
+                and maximum - minimum <= constants.MAX_DIFF_TRY
+                and total <= constants.MAX_TOTAL_TRY
             ):
                 self.step_list.append(PathStep(increment))
 

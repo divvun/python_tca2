@@ -1,6 +1,6 @@
 from typing import List
 
-from python_tca2 import alignment
+from python_tca2 import constants
 from python_tca2.aelement import AElement
 from python_tca2.alignments_etc import AlignmentsEtc
 from python_tca2.link import Link
@@ -34,7 +34,7 @@ class ToAlign:
             return_value = AlignmentsEtc()
             while len(self.pending) > 0:
                 return_value.alignments.append(self.pending.pop(0))
-            for t in range(alignment.NUM_FILES):
+            for t in range(constants.NUM_FILES):
                 while len(self.elements[t]) > 0:
                     return_value.elements[t].append(self.elements[t].pop(0))
             return return_value

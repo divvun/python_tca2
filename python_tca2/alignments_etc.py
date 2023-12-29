@@ -1,12 +1,11 @@
 from typing import List
 
-from aelement import AElement
-from link import Link
-
-from python_tca2 import alignment
+from python_tca2 import constants
+from python_tca2.aelement import AElement
+from python_tca2.link import Link
 
 
 class AlignmentsEtc:
     def __init__(self):
-        self.alignments: List[Link] = []  # 2006-11-20
-        self.elements: List[List[AElement]] = [[] for _ in range(alignment.NUM_FILES)]
+        self.alignments: List[Link] = []
+        self.elements: List[List[AElement]] = [[] for _ in range(constants.NUM_FILES)]

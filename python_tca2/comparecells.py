@@ -1,4 +1,4 @@
-from python_tca2 import alignment
+from python_tca2 import constants
 from python_tca2.elementinfotobecompared import ElementInfoToBeCompared
 from python_tca2.exceptions import EndOfAllTextsException, EndOfTextException
 
@@ -7,7 +7,7 @@ class CompareCells:
     def __init__(self, model, position, step):
         self.element_info_to_be_compared = ElementInfoToBeCompared(model)
         text_end_count = 0
-        for t in range(alignment.NUM_FILES):
+        for t in range(constants.NUM_FILES):
             for x in range(position[t] + 1, position[t] + step.increment[t] + 1):
                 try:
                     info = model.compare.elements_info[t].get_element_info(model, x, t)
@@ -15,7 +15,7 @@ class CompareCells:
                 except EndOfTextException:
                     text_end_count += 1
                     break
-        if text_end_count >= alignment.NUM_FILES:
+        if text_end_count >= constants.NUM_FILES:
             raise EndOfAllTextsException()
         elif text_end_count > 0:
             raise EndOfTextException()

@@ -1,4 +1,4 @@
-from python_tca2 import alignment
+from python_tca2 import constants
 from python_tca2.queue_entry import QueueEntry
 
 
@@ -28,13 +28,13 @@ class QueueList:
             done = False
             while not done:
                 hope = True
-                for t in range(alignment.NUM_FILES):
+                for t in range(constants.NUM_FILES):
                     if current[t] < pos[t]:
                         hope = False
                         break
                 if hope:
                     eq = True
-                    for t in range(alignment.NUM_FILES):
+                    for t in range(constants.NUM_FILES):
                         if current[t] != pos[t]:
                             eq = False
                             break
@@ -42,7 +42,7 @@ class QueueList:
                         hit = True
                         done = True
                     elif current_ix >= 0:
-                        for t in range(alignment.NUM_FILES):
+                        for t in range(constants.NUM_FILES):
                             current[t] -= queue_entry.path.steps[current_ix].increment[
                                 t
                             ]

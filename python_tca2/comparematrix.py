@@ -1,4 +1,4 @@
-from python_tca2 import alignment, alignmentmodel
+from python_tca2 import constants
 from python_tca2.bestpathscore import BestPathScore
 
 
@@ -9,23 +9,23 @@ class CompareMatrix:
 
     def get_score(self, model, position):
         outside = False
-        for t in range(alignment.NUM_FILES):
+        for t in range(constants.NUM_FILES):
             if position[t] < 0:
                 outside = True
                 break
 
         if outside:
-            return alignmentmodel.BEST_PATH_SCORE_BAD
+            return constants.BEST_PATH_SCORE_BAD
         else:
             best_path_score_key = ",".join(str(pos) for pos in position)
             if best_path_score_key not in self.best_path_scores:
-                return alignmentmodel.BEST_PATH_SCORE_BAD
+                return constants.BEST_PATH_SCORE_BAD
             else:
-                return self.best_path_scores[best_path_score_key].getScore()
+                return self.best_path_scores[best_path_score_key].get_score()
 
     def set_score(self, position, score):
         best_path_score_key = ""
-        for t in range(alignment.NUM_FILES):
+        for t in range(constants.NUM_FILES):
             if t > 0:
                 best_path_score_key += ","
             best_path_score_key += str(position[t])
@@ -35,7 +35,7 @@ class CompareMatrix:
         it = self.best_path_scores.keys()
         for key in it:
             self.best_path_scores[key] = BestPathScore(
-                alignmentmodel.BEST_PATH_SCORE_NOT_CALCULATED
+                constants.BEST_PATH_SCORE_NOT_CALCULATED
             )  # 2006-09-20
 
     def to_string(self):

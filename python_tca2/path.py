@@ -1,6 +1,6 @@
 from typing import List
 
-from python_tca2 import alignment
+from python_tca2 import constants
 from python_tca2.pathstep import PathStep
 
 
@@ -14,7 +14,7 @@ class Path:
 
     def extend(self, step):
         self.steps.append(step.clone())
-        for t in range(alignment.NUM_FILES):
+        for t in range(constants.NUM_FILES):
             self.position[t] += step.increment[t]
 
     def __str__(self):
@@ -24,7 +24,7 @@ class Path:
             if not first:
                 temp += ", "
             temp += "{"
-            for t in range(alignment.NUM_FILES):
+            for t in range(constants.NUM_FILES):
                 if t > 0:
                     temp += ","
                 temp += str(step.increment[t])
@@ -32,7 +32,7 @@ class Path:
             first = False
         temp += "]->"
         temp += "{"
-        for t in range(alignment.NUM_FILES):
+        for t in range(constants.NUM_FILES):
             if t > 0:
                 temp += ","
             temp += str(self.position[t])
@@ -47,6 +47,6 @@ class Path:
     def get_length_in_sentences(self):
         count = 0
         for step in self.steps:
-            for t in range(alignment.NUM_FILES):
+            for t in range(constants.NUM_FILES):
                 count += step.increment[t]
         return count
