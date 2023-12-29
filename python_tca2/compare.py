@@ -84,7 +84,7 @@ class Compare:
                 self.step_list.append(PathStep(increment))
 
     def get_score(self, model, position):
-        self.matrix.get_score(model, position)
+        return self.matrix.get_score(model, position)
 
     def set_score(self, position, score):
         self.matrix.set_score(position, score)
