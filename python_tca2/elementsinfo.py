@@ -41,8 +41,8 @@ class ElementsInfo:
             for count in range(new_last - self.last):
                 index = self.last + count + 1
 
-                if index >= model.nodes[t].length:
+                if index >= len(model.nodes[t]):
                     raise EndOfTextException()
 
-                text = model.nodes[t].item(index).get_text_content()
+                text = model.nodes[t][index].text
                 self.element_info.append(ElementInfo(model, text, t, index))

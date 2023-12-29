@@ -34,7 +34,7 @@ class AnchorWordListEntry:
                     for w in range(len(words)):
                         word = words[w].strip()
                         if word != "":
-                            phrase.append(self.makeCompiledPattern(word))
+                            phrase.append(self.make_compiled_pattern(word))
                     if len(phrase) > 0:
                         self.language[t].append(phrase)
 

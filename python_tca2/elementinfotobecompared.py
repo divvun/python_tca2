@@ -85,12 +85,12 @@ class ElementInfoToBeCompared:
             length[1],
             element_count[0],
             element_count[1],
-            self.model.get_length_ratio(),
+            self.model.length_ratio,
         )
 
         is11 = True
-            if self.info[t].size != 1:
         for t in range(constants.NUM_FILES):
+            if len(self.info[t]) != 1:
                 is11 = False
                 break
 
@@ -198,8 +198,8 @@ class ElementInfoToBeCompared:
         smallest = float("inf")
         smallest_count = 0
         while not done:
-                if current[t] < hits[t].size():
             for t in range(constants.NUM_FILES):
+                if current[t] < len(hits[t]):
                     hit = hits[t].get(current[t])
                     if hit.index < smallest:
                         smallest = hit.index
@@ -242,14 +242,10 @@ class ElementInfoToBeCompared:
                             )
 
     def find_number_matches(self, t, tt):
-        it1 = self.info[t].iterator()
-        while it1.hasNext():
-            info1 = it1.next()
+        for info1 in self.info[t]:
             for x in range(len(info1.words)):
                 word1 = info1.words[x]
-                it2 = self.info[tt].iterator()
-                while it2.hasNext():
-                    info2 = it2.next()
+                for info2 in self.info[tt]:
                     for y in range(len(info2.words)):
                         word2 = info2.words[y]
                         num1 = float(word1)

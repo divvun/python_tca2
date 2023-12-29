@@ -67,7 +67,7 @@ class AnchorWordList:
         return ret
 
     def get_scoring_characters(self, text):
-        scoring_characters = self.model.get_scoring_characters()
+        scoring_characters = self.model.scoring_characters
         ret = ""
         for i in range(len(text)):
             if text[i] in scoring_characters:

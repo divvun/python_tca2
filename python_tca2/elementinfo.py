@@ -6,13 +6,13 @@ class ElementInfo:
         self.length = 0
         self.num_words = 0
         self.words = []
-        self.anchor_wordHits = AnchorWordHits()
+        self.anchor_word_hits = AnchorWordHits()
         self.proper_names = []
         self.scoring_characters = ""
 
         self.element_number = element_number
         self.length = len(text)
-        special_characters = model.getSpecial_characters()
+        special_characters = model.special_characters
         special_characters_class = "[\\s"
         for char in special_characters:
             special_characters_class += "\\" + char
@@ -24,11 +24,11 @@ class ElementInfo:
         self.num_words = len(temp_words) - 1
         self.words = temp_words[1:]
         temp_words = None
-        self.anchor_wordHits = model.anchor_wordList.getAnchor_wordHits(
+        self.anchor_word_hits = model.anchor_word_list.get_anchor_word_hits(
             self.words, t, element_number
         )
-        self.proper_names = model.anchor_wordList.get_proper_names(self.words)
-        self.scoring_characters = model.anchor_wordList.getScoring_characters(text)
+        self.proper_names = model.anchor_word_list.get_proper_names(self.words)
+        self.scoring_characters = model.anchor_word_list.get_scoring_characters(text)
 
     def __str__(self):
         ret = []
@@ -38,7 +38,7 @@ class ElementInfo:
         ret.append("; ")
         ret.append("words = {" + ", ".join(self.words) + "}")
         ret.append("; ")
-        ret.append("anchor word hits = " + str(self.anchor_wordHits))
+        ret.append("anchor word hits = " + str(self.anchor_word_hits))
         ret.append("; ")
         ret.append("proper names = " + str(self.proper_names))
         return "".join(ret)
