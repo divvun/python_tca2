@@ -5,5 +5,5 @@ class Unaligned:
     def pop(self, t):
         return self.elements[t].pop()
 
-    def add(self, t, element):
+    def add(self, element, t):
         self.elements[t].append(element)

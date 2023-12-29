@@ -10,8 +10,6 @@ from python_tca2.queuelist import QueueList
 from python_tca2.toalign import ToAlign
 from python_tca2.unaligned import Unaligned
 
-BEST_PATH_SCORE_NOT_CALCULATED = -1.0
-
 
 class AlignmentModel:
     max_path_length = alignment.MAX_PATH_LENGTH
