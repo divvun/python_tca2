@@ -1,3 +1,10 @@
+from copy import deepcopy
+
+from python_tca2.exceptions import (
+    BlockedException,
+    EndOfAllTextsException,
+    EndOfTextException,
+)
 from python_tca2.path import Path
 
 
@@ -23,3 +30,27 @@ class QueueEntry:
         else:
             ret_queue_entry.path = None
             return ret_queue_entry
+
+    def try_step(self, model, step):
+        step_score = 0.0
+        try:
+            step_score = self.get_step_score(model, self.path.position, step)
+        except EndOfAllTextsException as e:
+            raise e
+        except EndOfTextException as e:
+            raise e
+        except BlockedException as e:
+            raise e
+        return self.score + step_score
+
+    def get_step_score(self, model, position, step):
+        try:
+            cell = model.compare.get_cell_values(model, position, step)
+            return cell.get_score()
+        except EndOfAllTextsException as e:
+            raise e
+        except EndOfTextException as e:
+            raise e
+
+    def remove(self):
+        self.removed = True

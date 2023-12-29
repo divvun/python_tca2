@@ -19,7 +19,9 @@ class CompareCells:
             raise EndOfAllTextsException()
         elif text_end_count > 0:
             raise EndOfTextException()
-        self.element_info_to_be_compared.get_score()
+
+    def get_score(self):
+        return self.element_info_to_be_compared.get_score()
 
     def __str__(self):
         return (

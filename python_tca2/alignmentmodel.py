@@ -141,3 +141,24 @@ class AlignmentModel:
                 position[t] = len(self.nodes[t]) - 1
 
         return position
+
+    def save_plain(self):
+        print("save_plain")
+        for t in range(constants.NUM_FILES):
+            self.save_new_line_format_file(t)
+
+    def save_new_line_format_file(self, t):
+        print("save_new_line_format_file", t)
+        for link in self.aligned.alignments:
+            print(150, link)
+            line = ""
+            first = True
+            for element_number in link.element_numbers:
+                a_element = self.aligned.elements[t][element_number]
+                element_text = a_element.text
+                if first:
+                    first = False
+                else:
+                    line += " "
+                line += element_text
+                print(160, line)

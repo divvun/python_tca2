@@ -58,3 +58,9 @@ class Clusters:
             self.clusters.remove(cluster)
 
         self.clusters.append(other_cluster)
+
+    def get_score(self, large_cluster_score_percentage):
+        score = 0.0
+        for cluster in self.clusters:
+            score += cluster.get_score(large_cluster_score_percentage)
+        return score
