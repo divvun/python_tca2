@@ -12,9 +12,9 @@ class Alignment:
 
 
 @click.command()
-@click.argument("anchor_file", type=click.File("r"))
-@click.argument("text_file1", type=click.File("r"))
-@click.argument("text_file2", type=click.File("r"))
+@click.argument("anchor_file")
+@click.argument("text_file1")
+@click.argument("text_file2")
 def main(anchor_file, text_file1, text_file2):
     model = alignmentmodel.AlignmentModel()
 
