@@ -4,7 +4,7 @@ from python_tca2.ref import Ref
 
 class RefComparator:
     def compare(self, o1, o2):
-        print_frame("compare")
+        print_frame()
         if not isinstance(o1, Ref):
             raise TypeError()
         if not isinstance(o2, Ref):

@@ -6,7 +6,7 @@ from python_tca2.alignment_utils import print_frame
 
 class AnchorWordListEntry:
     def __init__(self, anchor_word_list_entry_text):
-        print_frame("__init__")
+        print_frame()
         self.language = [
             [] for _ in range(constants.NUM_FILES)
         ]  # ¤¤¤ should probably be 2
@@ -41,7 +41,7 @@ class AnchorWordListEntry:
                         self.language[t].append(phrase)
 
     def make_compiled_pattern(self, anchor_word):
-        print_frame("make_compiled_pattern")
+        print_frame()
         # make a proper regular expression from the anchor word
         pattern = "^" + anchor_word.replace("*", ".*") + "$"
         return re.compile(pattern, re.IGNORECASE | re.UNICODE)

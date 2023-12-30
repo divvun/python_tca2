@@ -7,7 +7,7 @@ from python_tca2.ref import Ref
 
 class Clusters:
     def __init__(self):
-        print_frame("__init__")
+        print_frame()
         self.clusters: List[Cluster] = []  # list of Cluster
 
     def add(
@@ -31,7 +31,7 @@ class Clusters:
         self.clusters.append(new_cluster)
 
     def add_ref(self, ref):
-        print_frame("add_ref")
+        print_frame()
         overlaps = []
         for cluster in self.clusters:
             if cluster.matches(ref):
@@ -47,12 +47,12 @@ class Clusters:
         self.clusters.append(merged_cluster)
 
     def add_clusters(self, other_clusters):
-        print_frame("add_clusters")
+        print_frame()
         for other_cluster in other_clusters.clusters:
             self.add_ref(other_cluster)
 
     def add_cluster(self, other_cluster):
-        print_frame("add_cluster")
+        print_frame()
         overlaps = []
         for cluster in self.clusters:
             if cluster.matches(other_cluster):
@@ -65,7 +65,7 @@ class Clusters:
         self.clusters.append(other_cluster)
 
     def get_score(self, large_cluster_score_percentage):
-        print_frame("get_score")
+        print_frame()
         score = 0.0
         for cluster in self.clusters:
             score += cluster.get_score(large_cluster_score_percentage)

@@ -5,7 +5,7 @@ from python_tca2.bestpathscore import BestPathScore
 
 class CompareMatrix:
     def __init__(self):
-        print_frame("__init__")
+        print_frame()
         self.cells = {}
         self.best_path_scores = {}
 
@@ -17,7 +17,7 @@ class CompareMatrix:
                 break
 
         if outside:
-        print_frame("get_score")
+        print_frame()
             return constants.BEST_PATH_SCORE_BAD
         else:
             best_path_score_key = ",".join(str(pos) for pos in position)
@@ -32,7 +32,7 @@ class CompareMatrix:
                 return self.best_path_scores[best_path_score_key].get_score()
 
     def set_score(self, position, score):
-        print_frame("set_score")
+        print_frame()
         best_path_score_key = ""
         for t in range(constants.NUM_FILES):
             if t > 0:
@@ -48,7 +48,7 @@ class CompareMatrix:
             )  # 2006-09-20
 
     def to_string(self):
-        print_frame("to_string")
+        print_frame()
         ret = ""
         key = ""
         it1 = self.cells.keySet().iterator()

@@ -7,12 +7,12 @@ from python_tca2.anchorwordlistentry import AnchorWordListEntry
 
 class AnchorWordList:
     def __init__(self, model):
-        print_frame("__init__")
+        print_frame()
         self.entries = []
         self.model = model
 
     def load_from_file(self, from_file):
-        print_frame("load_from_file")
+        print_frame()
         self.entries.clear()
         ok = True
         try:
@@ -32,7 +32,7 @@ class AnchorWordList:
             self.entries.clear()
 
     def get_anchor_word_hits(self, words, t, element_number):
-        print_frame("get_anchor_word_hits")
+        print_frame()
         ret = AnchorWordHits()
         anchor_word_entry_count = 0
         for entry in self.entries:
@@ -63,7 +63,7 @@ class AnchorWordList:
         return ret
 
     def get_proper_names(self, words):
-        print_frame("get_proper_names")
+        print_frame()
         ret = []
         for word in words:
             if len(word) > 0:
@@ -72,7 +72,7 @@ class AnchorWordList:
         return ret
 
     def get_scoring_characters(self, text):
-        print_frame("get_scoring_characters")
+        print_frame()
         scoring_characters = self.model.scoring_characters
         ret = ""
         for i in range(len(text)):

@@ -7,22 +7,22 @@ from python_tca2.pathstep import PathStep
 
 class Path:
     def __init__(self, initial_position):
-        print_frame("__init__")
+        print_frame()
         self.steps: List[PathStep] = []
         self.position = initial_position
 
     def __eq__(self, path):
-        print_frame("__eq__")
+        print_frame()
         return str(self) == str(path)
 
     def extend(self, step):
-        print_frame("extend")
+        print_frame()
         self.steps.append(step.clone())
         for t in range(constants.NUM_FILES):
             self.position[t] += step.increment[t]
 
     def __str__(self):
-        print_frame("__str__")
+        print_frame()
         temp = "["
         first = True
         for step in self.steps:
@@ -45,13 +45,13 @@ class Path:
         return temp
 
     def clone(self):
-        print_frame("clone")
+        print_frame()
         copy = Path(self.position.copy())
         copy.steps = [step.clone() for step in self.steps]
         return copy
 
     def get_length_in_sentences(self):
-        print_frame("get_length_in_sentences")
+        print_frame()
         count = 0
         for step in self.steps:
             for t in range(constants.NUM_FILES):

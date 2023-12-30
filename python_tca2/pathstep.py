@@ -5,11 +5,11 @@ from python_tca2.alignment_utils import print_frame
 
 class PathStep:
     def __init__(self, inc):
-        print_frame("__init__")
+        print_frame()
         self.increment = inc
 
     def is11(self):
-        print_frame("is11")
+        print_frame()
         for t in range(len(self.increment)):
             if self.increment[t] != 1:
                 return False
@@ -26,5 +26,5 @@ class PathStep:
         return temp
 
     def clone(self):
-        print_frame("clone")
+        print_frame()
         return deepcopy(self)

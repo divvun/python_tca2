@@ -27,12 +27,12 @@ class AlignmentModel:
     compare = Compare()
 
     def __init__(self):
-        print_frame("__init__")
+        print_frame()
         self.anchor_word_list = AnchorWordList(self)
         self.match_info = MatchInfo(self)
 
     def load_text(self, text_file, t):
-        print_frame("load_text")
+        print_frame()
         # TODO: Add text file name to the model
         tree = etree.parse(text_file)
         self.docs.append(tree)
@@ -45,7 +45,7 @@ class AlignmentModel:
 
     def suggets_without_gui(self):
         mode = constants.MODE_AUTO
-        print_frame("suggets_without_gui")
+        print_frame()
         run_limit = constants.RUN_LIMIT
         run_count = 0
         done_aligning = False
@@ -61,9 +61,11 @@ class AlignmentModel:
             ):
                 done_aligning = True
             else:
+                print_frame("still looking for more to align")
                 best_path = self.get_best_path(queue_list)
 
                 if best_path.steps:
+                    print_frame("best_path.steps")
                     run_count += 1
                     done_aligning = self.get_done_aligning(mode, run_count, run_limit)
 
@@ -73,7 +75,7 @@ class AlignmentModel:
                     done_aligning = True
 
     def flush_aligned_without_gui(self):
-        print_frame("flush_aligned_without_gui")
+        print_frame()
         self.aligned.pickup(self.to_align.flush())
 
     def get_done_aligning(self, mode, run_count, run_limit):
@@ -83,7 +85,7 @@ class AlignmentModel:
         return True
 
     def find_more_to_align_without_gui(self, best_path):
-        print_frame("find_more_to_align_without_gui")
+        print_frame()
         step_suggestion = best_path.steps[0]
         for t in range(constants.NUM_FILES):
             i = 0
@@ -93,7 +95,7 @@ class AlignmentModel:
         return step_suggestion
 
     def get_best_path(self, queue_list):
-        print_frame("get_best_path")
+        print_frame()
         normalised_best_score = constants.BEST_PATH_SCORE_NOT_CALCULATED
 
         best_path = None
@@ -117,12 +119,19 @@ class AlignmentModel:
         while not done_lengthening:
             next_queue_list = QueueList(self, position)
             for queue_entry in queue_list.entry:
+            print_frame(
+                len(queue_list.entry),
+                len(next_queue_list.entry),
+            )
                 if not queue_entry.removed and not queue_entry.end:
                     self.lengthen_current_path(queue_entry, queue_list, next_queue_list)
+            print_frame(len(next_queue_list.entry))
             next_queue_list.remove_for_real()
             if next_queue_list.empty():
+                print_frame("next_queue_list.empty()")
                 done_lengthening = True
             else:
+                print_frame("next_queue_list.empty() is False")
                 queue_list = next_queue_list
                 step_count += 1
                 done_lengthening = step_count >= self.max_path_length
@@ -130,7 +139,6 @@ class AlignmentModel:
         return queue_list
 
     def lengthen_current_path(self, queue_entry, queue_list, next_queue_list):
-        print_frame()
         for step in self.compare.step_list:
             if not queue_entry.removed and not queue_entry.end:
             print_frame(step)
@@ -144,7 +152,7 @@ class AlignmentModel:
 
     def find_start_position(self):
         position = [] * alignment.NUM_FILES
-        print_frame("find_start_position")
+        print_frame()
         for t in range(constants.NUM_FILES):
             if len(self.unaligned.elements[t]) > 0:
                 first_unaligned = self.unaligned.elements[t][0]
@@ -160,7 +168,7 @@ class AlignmentModel:
             self.save_new_line_format_file(t)
 
     def save_new_line_format_file(self, t):
-        print("save_new_line_format_file", t)
+        print_frame(t, len(self.aligned.elements[t]))
         for link in self.aligned.alignments:
             print(150, link)
             line = ""
