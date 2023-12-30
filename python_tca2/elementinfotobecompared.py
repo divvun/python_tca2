@@ -10,13 +10,13 @@ from python_tca2.ref import Ref
 
 class ElementInfoToBeCompared:
     INDENT = "  "
-    info = [[] for _ in range(constants.NUM_FILES)]
-    common_clusters = Clusters()
-    score = constants.ELEMENTINFO_SCORE_NOT_CALCULATED
-    ret = []  # 2006-11-20
 
     def __init__(self, model):
         print_frame()
+        self.common_clusters = Clusters()
+        self.score = constants.ELEMENTINFO_SCORE_NOT_CALCULATED
+        self.info = [[] for _ in range(constants.NUM_FILES)]
+        self.ret = []
         self.model = model
 
     def add(self, element_info, t):
