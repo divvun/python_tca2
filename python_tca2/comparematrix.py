@@ -22,7 +22,7 @@ class CompareMatrix:
         else:
             best_path_score_key = ",".join(str(pos) for pos in position)
             if best_path_score_key not in self.best_path_scores:
-                return constants.BEST_PATH_SCORE_BAD
+                raise SystemExit("best_path_score_key not in self.best_path_scores")
             else:
                 print_frame(
                     "best_path_score_key in self.best_path_scores",
