@@ -9,15 +9,11 @@ class CompareMatrix:
         self.cells = {}
         self.best_path_scores = {}
 
-    def get_score(self, model, position):
-        outside = False
-        for t in range(constants.NUM_FILES):
-            if position[t] < 0:
-                outside = True
-                break
-
-        if outside:
+    def get_score(self, position):
         print_frame()
+        if any(pos < 0 for pos in position):
+            # raise SystemExit("outside")
+            print_frame("outside", position)
             return constants.BEST_PATH_SCORE_BAD
         else:
             best_path_score_key = ",".join(str(pos) for pos in position)
