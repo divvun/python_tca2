@@ -1,0 +1,80 @@
+<s id="0">Tottuuen- ja sovinonkommisjuuni Kainun institutissa 21.08.2020 Institutin työtelijöitten ajatuksii ja hunteerinkkii Ehotuksii siitä mitä saatettais tehhä Stipendit jatkokoulutuksheen kväänin kielessä Koulutusdirektoraatilta.</s>
+<s id="1">Kvääninkielinen litteratuuri osto-oorninkhiin piian.</s>
+<s id="2">Opetus- ja oppimateriaaliitten kehittäminen.</s>
+<s id="3">Ette olis maholisuus oppiit kväänin kieltä koko kouluaijan 1. klassista jatkokoulun lopphuun.</s>
+<s id="4">Kväänin kielele parempi posisjuuni kouluvärkissä.</s>
+<s id="5">Enämen tiettoo kvääniitten ja kväänin kielen ympäri kaikile kouluvärkissä, koko Norjassa.</s>
+<s id="6">Paremat oorningit alkukoulun- ja koulunopettaajiile jokka haluthaan oppiit kväänin kieltä.</s>
+<s id="7">Mitä oon tapattunnu Kainun institutin perustamisen jälkhiin Oon tullu uusi sukupolvi kväänin kielen puhhuujiita ja kielityötelijöitä.</s>
+<s id="8">Ei ole ennää niin paljon katkeruutta.</s>
+<s id="9">Ei ole ennää tabu ette puhhuut lapsile kväänii.</s>
+<s id="10">Uusi sukupolvi uuistaa ja rikastuttaa kväänin kieltä.</s>
+<s id="11">Oon erilaiset mielipittheet/meiningit ja näkövinkkelit.</s>
+<s id="12">Kväänin kielen infrastruktuurin eestä oon tehty paljon työtä, olis jo aika nostaat kielen 3. tasale.</s> <s id="13">Kieli ja kulttuuri oon tulheet enämen framile - net nähhään positiivisenna.</s>
+<s id="14">Oon tullu uussii kielenpuhhuujiita.</s>
+<s id="15">Kielipesätoimet oon aloitettu - kielelä oon tulleevaisuus.</s>
+<s id="16">Kielikafeat.</s>
+<s id="17">Kieliteknologii, sanakirja, oikheinkirjoitusprogrammi, ette raavhaat saahaan maholisuuen kehittämhään tahi ottamhaan kielen takaisin.</s>
+<s id="18">Kielisentterit.</s>
+<s id="19">Erilaiset tapattumat, niin ko Kippari, Paaski, kväänin kielipäivä, kvenuka, kvendagen.</s>
+<s id="20">Kielitinka, kielitingan fb-palvelus.</s>
+<s id="21">Kainun kielen grammatikki.</s>
+
+<s id="22">Enämen käänöstillauksii.</s>
+<s id="23">Mitä met tehemä meän työssä Freistata itte olla positiivissii (ja kärsivällissii) Käänöstyö ja sannoin kehittäminen Kielipesäprosjekti Sanakirja Plaanata ja olla paikala kväänintapattumissa Pittää kurssii ja seminaarii</s>
+<s id="24">Haastheet Attityydit vaikutethaan vieläki.</s>
+<s id="25">Vieläki näkkee aviisissa kirjoituksii, ette kväänin kieli ei ole oikkee kieli, ja pitäis kirjoittaat suomee.</s>
+<s id="26">Traumatiseeraattu sukupolvi.</s>
+<s id="27">Pitäiskö olla jokku toimet tälle sukupolvele?</s>
+<s id="28">Mitä met saattaisimma konkreettisesti tehhä?</s>
+<s id="29">Ihmiset ajatelhaan ette oon assiintunttiijat ja koulu kekkä piethään pelastaat kielen.</s>
+<s id="30">Sanat oon personaaliset assiit monele.</s>
+<s id="31">Joka kerta ko ei ole sana kvääniksi oon sama diskusjooni ette lainathaanko norjan tahi suomen kielestä tahi hoksaamako uuen sanan.</s> <s id="32">Se kuka saattaa enämen sannoi näyttää olleevan niin ko kilpa.</s>
+<s id="33">Mustavalkkeet attityydit skandinaavilaissii ja muita lainasannoi kohthaan.</s>
+<s id="34">Ei näjetä kokhoonaiskuvvaa sitä ette normeerattu kieli pittää passata monele.</s>
+
+<s id="35">Ei tyhä eri dialektialoile mutta kans aloittelijoile ja oppiijoile.</s>
+<s id="36">Ihmiset ei tiä mitä kielitinka oon päättäny.</s>
+<s id="37">Kieli oon piian liian pyhä pittäät joilekuile Ei praksisissa ole paikkaa missä puhhuut kväänin kieltä, ko tasan oon paikala joku norjankielinen.</s>
+<s id="38">Liijan paljon työtä liijan vähile ihmisille.</s>
+<s id="39">Kaikki kväänityö oon tärkkee ja jos sanot ei niin oon niin ko estät kväänihomman Kaikila ei ole luottamusta sanakirjhaan.</s>
+<s id="40">Het ei tasan sano meile ko het löytethään feilii.</s>
+<s id="41">Sanakirjatyö tapattuu samanaikaisesti ko normeerinkityö.</s>
+<s id="42">Ei ole aina päivitetty ja oikaistu assiita ko oon tehty uuet päätökset, eikä aina ole tietty niistä.</s>
+<s id="43">Joskus oon vaikkee oikaista assiita ko ei ole tehty päätöksii.</s>
+
+<s id="44">Kunka institutti saattais olla myötä ette vaikuttaat näihin haastheissiin</s>
+<s id="45">Sukupolvitakkoin poistaminen.</s>
+<s id="46">Kirjoittaat ommii elämänkerttoi, kurssii, tapattummii.</s>
+<s id="47">Kielikafeoitten rooli?</s>
+<s id="48">Informeerata ihmissii siitä ette jos met otama eesvastauksen kaikesta (sanakirjasta, grammatikista, normeeringista), niin se saattaa olla ette tehemä semmoissii päätöksii mistä het vieroksuthaan tahi ei tietä.</s>
+<s id="49">Luoa uuet attityydit kielelisistä feiliistä.</s>
+<s id="50">Luoa tilan missä oon turvalista tehhä feilii ja ette feilit oon positiivinen assii, ko net oon yksi askel etheenkäsin.</s>
+<s id="51">Ilman niitä ei opita.</s>
+<s id="52">Kans näyttäät ihmisille ette se ei ole vaaralista tierata kielen kans, esimerkiksi tehhä nonsense-lorrui.</s>
+<s id="53">Sannoot tapattumissa missä olema myötä ette yksi tapa oikaistaat ko ihmiset sanothaan väärin, oon sannoot mikä oon oikhein ilman ette peekata “nyt sie tehit feilin!</s>
+<s id="54">” Freistata muistela ihmisille ette olema kaikki lopun lopuksi samassa venheessä kielen kans.</s>
+<s id="55">Sekä aloitteliijalla ette äitinkielisellä oon samat haastheet ko pittää löyttäät puhetkaveriita ja paikan missä puhhuut.</s>
+<s id="56">Ja kohta kaikki kojethaan ette joku muu saattaa kväänin kieltä paremin.</s>
+<s id="57">Piian ymmärys tästä olis vähentänny sen käsityksen ette sannoin saattaaminen oon niin ko kilpa.</s>
+<s id="58">Muistela siitä kuinka työtelemmä sanakirjan kans ja sannoot ette työ oon prosessi mikä kestää.</s>
+
+<s id="59">Sanakirja ei saata noin vain olla valmis.</s>
+<s id="60">Se oon niin iso työ.</s>
+<s id="61">Sen tähen se oon hyvä ko ihmiset sanothaan sen meile ko het näjethään feilit.</s>
+<s id="62">Informeerata kielitingan päätöksistä.</s>
+<s id="63">Informeerata siitä ette kaikki puhhuujat tunnethaan samoin omista sanoista.</s> <s id="64">Jos valittemma sinun sanat, niin oon muut kekkä saatethaan tuntteet ette sanat oon ouot tahi vierhaat.</s>
+<s id="65">Jos olema liijan innokkhaat hoksaamhaan uussii sannoi, se saattaa olla ette äitinkieliset puhhuujat ei haluta pittäät niitä tahi ei ymmäretä mitä meinathaan.</s>
+<s id="66">Freisata valita sanat mikkä oon yhtheiset kaikile, silloin ko oon maholista.</s>
+<s id="67">Freistata luoa maholisiman läpinäkkyyviitä sannoi, silloin ko oon pakko hoksata uuet sanat.</s> <s id="68">Informeerata lainasanoista.</s>
+<s id="69">Esimerkiksi muistela kuinka paljon lainasannoi oon norjan ja engelskan kielessä ja ette se ei tarvitte olla huono assii ko lainaa sannoi.</s> <s id="70">Muistela siitä ette skandinaaviset lainasanat ei tasan ole nähty huonoina assiina.</s>
+<s id="71">Ennen ko moni ei saattanu norjan kieltä, niin se saattoi nostaat heän oman statuksen vähän ko sanothiin esimerkiksi “strandile” sen sijhaan ko “rannale.</s>
+<s id="72">” Muistela siitä ette kans suomen kirjakieli, kirjanorja ja uusinorja oon resultaatti valinoista ja kompromissiista.</s>
+<s id="73">Luoa paikkoi missä saattaa puhhuut kväänin kieltä.</s>
+<s id="74">Freistata muuttaat attityydii siitä ette ei ole vaaralista kuula kielii mitä ei (vielä) ymmärä ja kans luoa kokhoonaiskuvan ette parempi ette ihmiset puhuthaan.</s>
+<s id="75">kieltä.</s>
+<s id="76">Puhuminen oon tärkkeempi ko se ette tehhäänkö feilii ja piethäänkö niitä sannoi, joista itte pittää hyvinä.</s>
+<s id="77">Lissää menttori-studentti toimintaa.</s>
+<s id="78">Ko ihmiset oon käynheet institutin tahi universiteetin alkukurssin, niin heile tarjothaan maholisuuen saaja menttorin, jonka kans puhhuut ja tehhä assiita kvääniksi Motiveerata ihmissii siihen ette oppiit kväänin kieltä ja näyttäät heile ette sillä saapi työn ja ette työtä oon nokko kaikile.</s>
+<s id="79">“Nöttikuoressa”: auttaat ihmiset saamhaan kokhoonhaiskuvan ja kans auttaat heitä näkemhään oman osan siinä.</s>
+<s id="80">Freistata itte olla hyvät esikuvat.</s>
