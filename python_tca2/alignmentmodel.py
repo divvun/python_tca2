@@ -1,3 +1,5 @@
+from copy import deepcopy
+
 from lxml import etree
 
 from python_tca2 import constants
@@ -6,7 +8,9 @@ from python_tca2.aligned import Aligned
 from python_tca2.alignment_utils import print_frame
 from python_tca2.anchorwordlist import AnchorWordList
 from python_tca2.compare import Compare
+from python_tca2.exceptions import EndOfAllTextsExceptionError
 from python_tca2.matchinfo import MatchInfo
+from python_tca2.queue_entry import QueueEntry
 from python_tca2.queuelist import QueueList
 from python_tca2.toalign import ToAlign
 from python_tca2.unaligned import Unaligned
@@ -44,7 +48,6 @@ class AlignmentModel:
             self.unaligned.add(element, t)
 
     def suggets_without_gui(self):
-        mode = constants.MODE_AUTO
         print_frame()
         run_limit = constants.RUN_LIMIT
         run_count = 0
@@ -73,6 +76,7 @@ class AlignmentModel:
                     done_aligning = run_count >= run_limit
 
                     if not done_aligning:
+                        print_frame("not done_aligning")
                         self.flush_aligned_without_gui()
                 else:
                     done_aligning = True
@@ -110,16 +114,18 @@ class AlignmentModel:
     def lengthen_paths(self):
         print_frame()
         position = self.find_start_position()
-        queue_list = QueueList(self, position)
+        fresh_queue_entry = QueueEntry(position, 0)
+        queue_list = QueueList()
+        queue_list.add(fresh_queue_entry)
         step_count = 0
         done_lengthening = False
         while not done_lengthening:
-            next_queue_list = QueueList(self, position)
-            for queue_entry in queue_list.entry:
+            next_queue_list = QueueList()
             print_frame(
                 len(queue_list.entry),
                 len(next_queue_list.entry),
             )
+            for x, queue_entry in enumerate(queue_list.entry):
                 if not queue_entry.removed and not queue_entry.end:
                     self.lengthen_current_path(queue_entry, queue_list, next_queue_list)
             print_frame(len(next_queue_list.entry))
@@ -137,19 +143,24 @@ class AlignmentModel:
 
     def lengthen_current_path(self, queue_entry, queue_list, next_queue_list):
         for step in self.compare.step_list:
-            if not queue_entry.removed and not queue_entry.end:
             print_frame(step)
+            try:
                 new_queue_entry = queue_entry.make_longer_path(self, step)
                 if new_queue_entry.path is not None:
                     pos = new_queue_entry.path.position
                     queue_list.remove(pos)
                     next_queue_list.remove(pos)
                     next_queue_list.add(new_queue_entry)
+            except EndOfAllTextsExceptionError:
                 print_frame("EndOfAllTextsException")
+                new_queue_entry = deepcopy(queue_entry)
+                new_queue_entry.end = True
+                if not next_queue_list.contains(new_queue_entry):
+                    next_queue_list.add(new_queue_entry)
 
     def find_start_position(self):
-        position = [] * alignment.NUM_FILES
         print_frame()
+        position = [0] * constants.NUM_FILES
         for t in range(constants.NUM_FILES):
             if len(self.unaligned.elements[t]) > 0:
                 first_unaligned = self.unaligned.elements[t][0]
