@@ -59,6 +59,9 @@ class AlignmentModel:
                 len(queue_list.entry) < constants.NUM_FILES
                 and not queue_list.entry[0].path.steps
             ):
+                #     # When the length of the queue list is less than the number of files
+                #     # and the first path in the queue list has no steps, then aligment
+                #     # is done
                 done_aligning = True
             else:
                 print_frame("still looking for more to align")
@@ -67,7 +70,7 @@ class AlignmentModel:
                 if best_path.steps:
                     print_frame("best_path.steps")
                     run_count += 1
-                    done_aligning = self.get_done_aligning(mode, run_count, run_limit)
+                    done_aligning = run_count >= run_limit
 
                     if not done_aligning:
                         self.flush_aligned_without_gui()
@@ -77,12 +80,6 @@ class AlignmentModel:
     def flush_aligned_without_gui(self):
         print_frame()
         self.aligned.pickup(self.to_align.flush())
-
-    def get_done_aligning(self, mode, run_count, run_limit):
-        if mode == constants.MODE_AUTO:
-            return run_count >= run_limit
-
-        return True
 
     def find_more_to_align_without_gui(self, best_path):
         print_frame()
