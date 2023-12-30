@@ -20,11 +20,19 @@ class QueueEntry:
     def make_longer_path(self, model, new_step):
         print_frame()
         ret_queue_entry = deepcopy(self)
-        new_score = self.try_step(model, new_step)
+        try:
+            new_score = self.try_step(model, new_step)
+        except EndOfAllTextsExceptionError as e:
+            raise e
+        except EndOfTextExceptionError as e:
+            raise e
+        except BlockedExceptionError as e:
+            raise e
+
         ret_queue_entry.score = new_score
         ret_queue_entry.path.extend(new_step)
         if ret_queue_entry.score > model.compare.get_score(
-            model, ret_queue_entry.path.position
+            ret_queue_entry.path.position
         ):
             model.compare.set_score(
                 ret_queue_entry.path.position, ret_queue_entry.score
