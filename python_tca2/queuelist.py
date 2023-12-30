@@ -70,3 +70,6 @@ class QueueList:
         for queue_entry in self.entry:
             queue_entry.remove()
             to_remove.append(queue_entry)
+
+        for queue_entry in to_remove:
+            self.entry.remove(queue_entry)
