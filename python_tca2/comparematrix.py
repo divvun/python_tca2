@@ -41,11 +41,11 @@ class CompareMatrix:
         self.best_path_scores[best_path_score_key] = BestPathScore(score)
 
     def reset_best_path_scores(self):
-        it = self.best_path_scores.keys()
-        for key in it:
+        for key in self.best_path_scores.keys():
+            print_frame("CompareMatrix.reset_best_path_scores: " + key)
             self.best_path_scores[key] = BestPathScore(
                 constants.BEST_PATH_SCORE_NOT_CALCULATED
-            )  # 2006-09-20
+            )
 
     def to_string(self):
         print_frame()
