@@ -1,5 +1,6 @@
 from python_tca2 import constants
 from python_tca2.queue_entry import QueueEntry
+from python_tca2.alignment_utils import print_frame
 
 
 class QueueList:
@@ -7,20 +8,25 @@ class QueueList:
 
     def __init__(self, model, position):
         self.entry.append(QueueEntry(position, 0))
+        print_frame("__init__")
 
     def empty(self):
+        print_frame(len(self.entry))
         return len(self.entry) == 0
 
     def add(self, queue_entry):
+        print_frame("add")
         self.entry.append(queue_entry)
 
     def contains(self, queue_entry):
+        print_frame("contains")
         for next_queue_entry in self.entry:
             if next_queue_entry.path == queue_entry.path:
                 return True
         return False
 
     def remove(self, pos):
+        print_frame("remove")
         debug = False
         t = 0
         for queue_entry in self.entry:

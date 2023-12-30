@@ -1,36 +1,44 @@
 from typing import List
 
 from python_tca2 import alignment
+from python_tca2.alignment_utils import print_frame
 from python_tca2.ref import Ref
 
 
 class Cluster:
     def __init__(self):
+        print_frame("__init__")
         self.refs: List[Ref] = []
 
     def clone(self):
+        print_frame("clone")
         return super().clone()
 
     def get_refs(self):
+        print_frame("get_refs")
         return self.refs
 
     def add(self, other_ref):
+        print_frame("add")
         for ref in self.refs:
             if ref.exactly_matches(other_ref):
                 return
         self.refs.append(other_ref)
 
     def matches(self, other_ref):
+        print_frame("matches")
         for ref in self.refs:
             if ref.matches(other_ref):
                 return True
         return False
 
     def add_cluster(self, other_cluster):
+        print_frame("add_cluster")
         for other_ref in other_cluster.refs:
             self.add(other_ref)
 
     def get_score(self, large_cluster_score_percentage):
+        print_frame("get_score")
         high = 0
         low = float("inf")
         cluster_weight = 0.0
@@ -50,6 +58,7 @@ class Cluster:
         )
 
     def count_anchor_word_entries(self):
+        print_frame("count_anchor_word_entries")
         anchor_word_entry_numbers = []
         for ref in self.refs:
             if (
@@ -61,6 +70,7 @@ class Cluster:
 
     # for debugging purposes
     def __str__(self):
+        print_frame("__str__")
         ret_val = "("
         first = True
         for ref in self.refs:
@@ -73,6 +83,7 @@ class Cluster:
         return ret_val
 
     def get_words(self, include_match_type):
+        print_frame("get_words")
         ret = []
         sorted_cluster = self.clone()
         sorted_cluster.refs.sort(key=lambda ref: ref.get_word())

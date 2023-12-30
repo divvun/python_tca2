@@ -3,6 +3,7 @@ from lxml import etree
 from python_tca2 import constants
 from python_tca2.aelement import AElement
 from python_tca2.aligned import Aligned
+from python_tca2.alignment_utils import print_frame
 from python_tca2.anchorwordlist import AnchorWordList
 from python_tca2.compare import Compare
 from python_tca2.matchinfo import MatchInfo
@@ -26,10 +27,12 @@ class AlignmentModel:
     compare = Compare()
 
     def __init__(self):
+        print_frame("__init__")
         self.anchor_word_list = AnchorWordList(self)
         self.match_info = MatchInfo(self)
 
     def load_text(self, text_file, t):
+        print_frame("load_text")
         # TODO: Add text file name to the model
         tree = etree.parse(text_file)
         self.docs.append(tree)
@@ -37,17 +40,18 @@ class AlignmentModel:
         self.all_nodes.append(tree.xpath("//s"))
 
         for index, node in enumerate(tree.iter("s")):
-            print(39, t, node.text)
             element = AElement(node, index)
             self.unaligned.add(element, t)
 
     def suggets_without_gui(self):
         mode = constants.MODE_AUTO
+        print_frame("suggets_without_gui")
         run_limit = constants.RUN_LIMIT
         run_count = 0
         done_aligning = False
 
         while not done_aligning:
+            print_frame()
             self.compare.reset_best_path_scores()
             queue_list = self.lengthen_paths()
 
@@ -69,6 +73,7 @@ class AlignmentModel:
                     done_aligning = True
 
     def flush_aligned_without_gui(self):
+        print_frame("flush_aligned_without_gui")
         self.aligned.pickup(self.to_align.flush())
 
     def get_done_aligning(self, mode, run_count, run_limit):
@@ -78,6 +83,7 @@ class AlignmentModel:
         return True
 
     def find_more_to_align_without_gui(self, best_path):
+        print_frame("find_more_to_align_without_gui")
         step_suggestion = best_path.steps[0]
         for t in range(constants.NUM_FILES):
             i = 0
@@ -87,6 +93,7 @@ class AlignmentModel:
         return step_suggestion
 
     def get_best_path(self, queue_list):
+        print_frame("get_best_path")
         normalised_best_score = constants.BEST_PATH_SCORE_NOT_CALCULATED
 
         best_path = None
@@ -102,6 +109,7 @@ class AlignmentModel:
         return best_path
 
     def lengthen_paths(self):
+        print_frame()
         position = self.find_start_position()
         queue_list = QueueList(self, position)
         step_count = 0
@@ -122,17 +130,21 @@ class AlignmentModel:
         return queue_list
 
     def lengthen_current_path(self, queue_entry, queue_list, next_queue_list):
+        print_frame()
         for step in self.compare.step_list:
             if not queue_entry.removed and not queue_entry.end:
+            print_frame(step)
                 new_queue_entry = queue_entry.make_longer_path(self, step)
                 if new_queue_entry.path is not None:
                     pos = new_queue_entry.path.position
                     queue_list.remove(pos)
                     next_queue_list.remove(pos)
                     next_queue_list.add(new_queue_entry)
+                print_frame("EndOfAllTextsException")
 
     def find_start_position(self):
         position = [] * alignment.NUM_FILES
+        print_frame("find_start_position")
         for t in range(constants.NUM_FILES):
             if len(self.unaligned.elements[t]) > 0:
                 first_unaligned = self.unaligned.elements[t][0]

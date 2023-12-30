@@ -1,4 +1,5 @@
 from python_tca2 import constants
+from python_tca2.alignment_utils import print_frame
 from python_tca2.bestpathscore import BestPathScore
 from python_tca2.comparecells import CompareCells
 from python_tca2.comparematrix import CompareMatrix
@@ -9,6 +10,7 @@ from python_tca2.pathstep import PathStep
 
 class Compare:
     def __init__(self):
+        print_frame("__init__")
         self.elements_info = [ElementsInfo() for _ in range(constants.NUM_FILES)]
         self.matrix = CompareMatrix()
         self.step_list = []
@@ -19,6 +21,7 @@ class Compare:
         self.create_step_list()
 
     def get_cell_values(self, model, position, step):
+        print_frame("get_cell_values")
         key = ""
         best_path_score_key = ""
 
@@ -58,6 +61,7 @@ class Compare:
 
     @staticmethod
     def int_to_base(i, base):
+        print_frame("int_to_base")
         if i == 0:
             return "0"
         digits = []
@@ -68,6 +72,7 @@ class Compare:
         return "".join(map(str, digits))
 
     def create_step_list(self):
+        print_frame("create_step_list")
         range_val = constants.MAX_NUM_TRY - constants.MIN_NUM_TRY + 1
         limit = 1
         for _ in range(constants.NUM_FILES):
@@ -96,11 +101,15 @@ class Compare:
             ):
                 self.step_list.append(PathStep(increment))
 
-    def get_score(self, model, position):
-        return self.matrix.get_score(model, position)
+    def get_score(self, position):
+        print_frame("get_score")
+        return self.matrix.get_score(position)
 
     def set_score(self, position, score):
+        print_frame("set_score")
         self.matrix.set_score(position, score)
 
     def reset_best_path_scores(self):
+        print_frame("reset_best_path_scores")
+        print_frame("reset_best_path_scores")
         self.matrix.reset_best_path_scores()

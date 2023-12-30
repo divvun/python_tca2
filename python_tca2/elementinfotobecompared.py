@@ -1,9 +1,9 @@
 from python_tca2 import (
-    alignment_utils,
     constants,
     match,
     similarity_utils,
 )
+from python_tca2.alignment_utils import count_words, print_frame
 from python_tca2.clusters import Clusters
 from python_tca2.ref import Ref
 
@@ -16,12 +16,15 @@ class ElementInfoToBeCompared:
     ret = []  # 2006-11-20
 
     def __init__(self, model):
+        print_frame("__init__")
         self.model = model
 
     def add(self, element_info, t):
+        print_frame("add")
         self.info[t].append(element_info)
 
     def empty(self):
+        print_frame("empty")
         for t in range(constants.NUM_FILES):
             if len(self.info[t]) == 0:
                 return True
@@ -29,12 +32,14 @@ class ElementInfoToBeCompared:
         return False
 
     def get_score(self):
+        print_frame("get_score")
         if self.score == constants.ELEMENTINFO_SCORE_NOT_CALCULATED:
             self.score = self.really_get_score()
 
         return self.score
 
     def really_get_score(self):
+        print_frame("really_get_score")
         if self.score == constants.ELEMENTINFO_SCORE_NOT_CALCULATED:
             self.score = 0.0
             if not self.empty():
@@ -59,6 +64,7 @@ class ElementInfoToBeCompared:
         return self.score
 
     def really_get_score2(self):
+        print_frame("really_get_score2")
         self.find_anchor_word_matches()
         for t in range(constants.NUM_FILES):
             for tt in range(t + 1, constants.NUM_FILES):
@@ -100,6 +106,7 @@ class ElementInfoToBeCompared:
         return self.score
 
     def find_dice_matches(self, t, tt):
+        print_frame("find_dice_matches")
         for info1 in self.info[t]:
             for x in range(len(info1.words)):
                 word1 = info1.words[x]
@@ -190,6 +197,7 @@ class ElementInfoToBeCompared:
                                 )
 
     def find_anchor_word_matches(self):
+        print_frame("find_anchor_word_matches")
         hits = self.find_hits()
         # TODO: sort the hits
         current = [0] * constants.NUM_FILES
@@ -217,6 +225,7 @@ class ElementInfoToBeCompared:
                 )
 
     def find_propername_matches(self, t, tt):
+        print_frame("find_propername_matches")
         for info1 in self.info[t]:
             for x in range(len(info1.words)):
                 word1 = info1.words[x]
@@ -242,6 +251,7 @@ class ElementInfoToBeCompared:
                             )
 
     def find_number_matches(self, t, tt):
+        print_frame("find_number_matches")
         for info1 in self.info[t]:
             for x in range(len(info1.words)):
                 word1 = info1.words[x]
@@ -271,6 +281,7 @@ class ElementInfoToBeCompared:
                             )  # 2006-04-07
 
     def find_special_character_matches(self, t, tt):
+        print_frame("find_special_character_matches")
         for info1 in self.info[t]:
             for info2 in self.info[tt]:
                 for char1 in info1.scoring_characters:
@@ -295,6 +306,7 @@ class ElementInfoToBeCompared:
 
     # manuelt portet
     def find_more_hits(self, hits, current, smallest, present_in_all_texts):
+        print_frame("find_more_hits")
         anchor_word_clusters = Clusters()
         for t in range(constants.NUM_FILES):
             count = 0
@@ -308,7 +320,7 @@ class ElementInfoToBeCompared:
                         element_number = hit.element_number
                         pos = hit.pos
                         word = hit.word
-                        len_ = alignment_utils.count_words(word)
+                        len_ = count_words(word)
                         match_type = index
                         weight = (
                             self.model.getAnchorPhraseMatchWeight()
@@ -348,3 +360,4 @@ class ElementInfoToBeCompared:
                 for hit in info.anchorWordHits.hits
             ]
         ]
+        print_frame("find_hits")

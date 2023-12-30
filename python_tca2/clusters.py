@@ -1,4 +1,5 @@
 from typing import List
+from python_tca2.alignment_utils import print_frame
 
 from python_tca2.cluster import Cluster
 from python_tca2.ref import Ref
@@ -6,6 +7,7 @@ from python_tca2.ref import Ref
 
 class Clusters:
     def __init__(self):
+        print_frame("__init__")
         self.clusters: List[Cluster] = []  # list of Cluster
 
     def add(
@@ -29,6 +31,7 @@ class Clusters:
         self.clusters.append(new_cluster)
 
     def add_ref(self, ref):
+        print_frame("add_ref")
         overlaps = []
         for cluster in self.clusters:
             if cluster.matches(ref):
@@ -44,10 +47,12 @@ class Clusters:
         self.clusters.append(merged_cluster)
 
     def add_clusters(self, other_clusters):
+        print_frame("add_clusters")
         for other_cluster in other_clusters.clusters:
             self.add_ref(other_cluster)
 
     def add_cluster(self, other_cluster):
+        print_frame("add_cluster")
         overlaps = []
         for cluster in self.clusters:
             if cluster.matches(other_cluster):
@@ -60,6 +65,7 @@ class Clusters:
         self.clusters.append(other_cluster)
 
     def get_score(self, large_cluster_score_percentage):
+        print_frame("get_score")
         score = 0.0
         for cluster in self.clusters:
             score += cluster.get_score(large_cluster_score_percentage)

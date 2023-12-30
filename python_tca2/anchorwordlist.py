@@ -1,4 +1,5 @@
 from python_tca2 import similarity_utils
+from python_tca2.alignment_utils import print_frame
 from python_tca2.anchorwordhit import AnchorWordHit
 from python_tca2.anchorwordhits import AnchorWordHits
 from python_tca2.anchorwordlistentry import AnchorWordListEntry
@@ -6,10 +7,12 @@ from python_tca2.anchorwordlistentry import AnchorWordListEntry
 
 class AnchorWordList:
     def __init__(self, model):
+        print_frame("__init__")
         self.entries = []
         self.model = model
 
     def load_from_file(self, from_file):
+        print_frame("load_from_file")
         self.entries.clear()
         ok = True
         try:
@@ -29,6 +32,7 @@ class AnchorWordList:
             self.entries.clear()
 
     def get_anchor_word_hits(self, words, t, element_number):
+        print_frame("get_anchor_word_hits")
         ret = AnchorWordHits()
         anchor_word_entry_count = 0
         for entry in self.entries:
@@ -59,6 +63,7 @@ class AnchorWordList:
         return ret
 
     def get_proper_names(self, words):
+        print_frame("get_proper_names")
         ret = []
         for word in words:
             if len(word) > 0:
@@ -67,6 +72,7 @@ class AnchorWordList:
         return ret
 
     def get_scoring_characters(self, text):
+        print_frame("get_scoring_characters")
         scoring_characters = self.model.scoring_characters
         ret = ""
         for i in range(len(text)):

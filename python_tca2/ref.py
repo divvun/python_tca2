@@ -1,5 +1,9 @@
+from python_tca2.alignment_utils import print_frame
+
+
 class Ref:
     def __init__(self, match_type, weight, t, element_number, pos, length, word):
+        print_frame("__init__")
         self.match_type = match_type
         self.weight = weight
         self.t = t
@@ -9,6 +13,7 @@ class Ref:
         self.word = word
 
     def matches(self, other_ref):
+        print_frame("matches")
         if (
             (self.t == other_ref.t)
             and (self.element_number == other_ref.element_number)
@@ -22,6 +27,7 @@ class Ref:
         return False
 
     def exactly_matches(self, other_ref):
+        print_frame("exactly_matches")
         return (
             (self.match_type == other_ref.match_type)
             and (self.t == other_ref.t)
@@ -31,16 +37,21 @@ class Ref:
         )
 
     def get_word(self):
+        print_frame("get_word")
         return self.word
 
     def get_t(self):
+        print_frame("get_t")
         return self.t
 
     def get_match_type(self):
+        print_frame("get_match_type")
         return self.match_type
 
     def type_anchor_word(self):
+        print_frame("type_anchor_word")
         return self.match_type >= 0
 
     def get_pos(self):
+        print_frame("get_pos")
         return self.pos

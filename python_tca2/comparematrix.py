@@ -1,9 +1,11 @@
 from python_tca2 import constants
+from python_tca2.alignment_utils import print_frame
 from python_tca2.bestpathscore import BestPathScore
 
 
 class CompareMatrix:
     def __init__(self):
+        print_frame("__init__")
         self.cells = {}
         self.best_path_scores = {}
 
@@ -15,15 +17,22 @@ class CompareMatrix:
                 break
 
         if outside:
+        print_frame("get_score")
             return constants.BEST_PATH_SCORE_BAD
         else:
             best_path_score_key = ",".join(str(pos) for pos in position)
             if best_path_score_key not in self.best_path_scores:
                 return constants.BEST_PATH_SCORE_BAD
             else:
+                print_frame(
+                    "best_path_score_key in self.best_path_scores",
+                    best_path_score_key,
+                    self.best_path_scores[best_path_score_key].get_score(),
+                )
                 return self.best_path_scores[best_path_score_key].get_score()
 
     def set_score(self, position, score):
+        print_frame("set_score")
         best_path_score_key = ""
         for t in range(constants.NUM_FILES):
             if t > 0:
@@ -39,6 +48,7 @@ class CompareMatrix:
             )  # 2006-09-20
 
     def to_string(self):
+        print_frame("to_string")
         ret = ""
         key = ""
         it1 = self.cells.keySet().iterator()

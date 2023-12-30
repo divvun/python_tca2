@@ -1,10 +1,12 @@
 from python_tca2 import constants
+from python_tca2.alignment_utils import print_frame
 from python_tca2.elementinfotobecompared import ElementInfoToBeCompared
 from python_tca2.exceptions import EndOfAllTextsException, EndOfTextException
 
 
 class CompareCells:
     def __init__(self, model, position, step):
+        print_frame("__init__")
         self.element_info_to_be_compared = ElementInfoToBeCompared(model)
         text_end_count = 0
         for t in range(constants.NUM_FILES):
@@ -21,9 +23,11 @@ class CompareCells:
             raise EndOfTextException()
 
     def get_score(self):
+        print_frame("get_score")
         return self.element_info_to_be_compared.get_score()
 
     def __str__(self):
+        print_frame("__str__")
         return (
             "CompareCells' toString. score="
             + str(self.element_info_to_be_compared.get_score())
