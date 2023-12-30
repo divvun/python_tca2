@@ -6,7 +6,7 @@ from python_tca2.exceptions import EndOfAllTextsExceptionError, EndOfTextExcepti
 
 class CompareCells:
     def __init__(self, model, position, step):
-        print_frame()
+        # print_frame()
         self.element_info_to_be_compared = ElementInfoToBeCompared(model)
         text_end_count = 0
         for t in range(constants.NUM_FILES):
@@ -23,11 +23,11 @@ class CompareCells:
             raise EndOfTextExceptionError()
 
     def get_score(self):
-        print_frame()
+        # print_frame()
         return self.element_info_to_be_compared.get_score()
 
     def __str__(self):
-        print_frame()
+        # print_frame()
         return (
             "CompareCells' toString. score="
             + str(self.element_info_to_be_compared.get_score())

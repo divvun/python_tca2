@@ -2,7 +2,7 @@ from python_tca2.alignment_utils import print_frame
 
 
 def dice_match1(word1, word2, dice_min_counting_score):
-    print_frame()
+    # print_frame()
     word1_lower_case = word1.lower()
     word2_lower_case = word2.lower()
 
@@ -28,7 +28,7 @@ def dice_match1(word1, word2, dice_min_counting_score):
 
 
 def dice_match2(word_a, word_b, word_c, type_, dice_min_counting_score):
-    print_frame()
+    # print_frame()
     phrase_word1, phrase_word2 = "", ""
     word = ""
 
@@ -90,14 +90,14 @@ def dice_match2(word_a, word_b, word_c, type_, dice_min_counting_score):
 
 
 def anchor_match(compiled_anchor_pattern, word):
-    print_frame()
+    # print_frame()
     # is the word word an occurrence of the anchor word anchor_word?
     matcher = compiled_anchor_pattern.match(word)
     return bool(matcher)
 
 
 def bad_length_correlation(length1, length2, element_count1, element_count2, ratio):
-    print_frame()
+    # print_frame()
     kill_limit = 0.5  # less tolerant limit for 1-2 and 2-1, above which such alignments score lethally low
     c = 2 * abs(0.0 + ratio * length1 - length2) / (ratio * length1 + length2)
     return (
@@ -108,7 +108,7 @@ def bad_length_correlation(length1, length2, element_count1, element_count2, rat
 def adjust_for_length_correlation(
     score, length1, length2, element_count1, element_count2, ratio
 ):
-    print_frame()
+    # print_frame()
     new_score = 0.0
     lower_limit = 0.4
     upper_limit = 1.0

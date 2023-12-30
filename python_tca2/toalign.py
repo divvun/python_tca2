@@ -9,17 +9,17 @@ from python_tca2.link import Link
 
 class ToAlign:
     def __init__(self):
-        print_frame()
+        # print_frame()
         self.elements: List[List[AElement]] = []
         self.pending: List[Link] = []
         self.first_alignment_number = 0
 
     def empty(self) -> bool:
-        print_frame()
+        # print_frame()
         return len(self.pending) == 0
 
     def pickup(self, t: int, element: AElement):
-        print_frame()
+        # print_frame()
         if element is not None:
             self.elements[t].append(element)
             if len(self.pending) == 0:
@@ -30,7 +30,7 @@ class ToAlign:
             element.alignment_number = last_alignment_number
 
     def flush(self) -> AlignmentsEtc:
-        print_frame()
+        # print_frame()
         if len(self.pending) == 0:
             print("Nothing to flush")
             return None

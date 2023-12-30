@@ -10,18 +10,18 @@ class QueueList:
         return len(self.entry) == 0
 
     def add(self, queue_entry):
-        print_frame()
+        # print_frame()
         self.entry.append(queue_entry)
 
     def contains(self, queue_entry):
-        print_frame()
+        # print_frame()
         for next_queue_entry in self.entry:
             if next_queue_entry.path == queue_entry.path:
                 return True
         return False
 
     def remove(self, pos):
-        print_frame(len(self.entry))
+        # print_frame(len(self.entry))
         debug = False
         t = 0
         for queue_entry in self.entry:
@@ -62,10 +62,10 @@ class QueueList:
 
         if debug:
             print(">>>>>>>>>>>>>>>>>>>>>>> END remove()")
-        print_frame(len(self.entry))
+        # print_frame(len(self.entry))
 
     def remove_for_real(self):
-        print_frame()
+        # print_frame()
         to_remove = []
         for queue_entry in self.entry:
             queue_entry.remove()

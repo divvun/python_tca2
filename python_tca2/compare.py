@@ -10,7 +10,7 @@ from python_tca2.pathstep import PathStep
 
 class Compare:
     def __init__(self):
-        print_frame()
+        # print_frame()
         self.elements_info = [ElementsInfo() for _ in range(constants.NUM_FILES)]
         self.matrix = CompareMatrix()
         self.step_list = []
@@ -21,7 +21,7 @@ class Compare:
         self.create_step_list()
 
     def get_cell_values(self, model, position, step):
-        print_frame()
+        # print_frame()
         key = ""
         best_path_score_key = ""
 
@@ -61,7 +61,7 @@ class Compare:
 
     @staticmethod
     def int_to_base(i, base):
-        print_frame()
+        # print_frame()
         if i == 0:
             return "0"
         digits = []
@@ -72,7 +72,7 @@ class Compare:
         return "".join(map(str, digits))
 
     def create_step_list(self):
-        print_frame()
+        # print_frame()
         range_val = constants.MAX_NUM_TRY - constants.MIN_NUM_TRY + 1
         limit = 1
         for _ in range(constants.NUM_FILES):
@@ -102,13 +102,13 @@ class Compare:
                 self.step_list.append(PathStep(increment))
 
     def get_score(self, position):
-        print_frame()
+        # print_frame()
         return self.matrix.get_score(position)
 
     def set_score(self, position, score):
-        print_frame()
+        # print_frame()
         self.matrix.set_score(position, score)
 
     def reset_best_path_scores(self):
-        print_frame()
+        # print_frame()
         self.matrix.reset_best_path_scores()

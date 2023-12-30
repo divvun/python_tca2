@@ -11,14 +11,14 @@ from python_tca2.path import Path
 
 class QueueEntry:
     def __init__(self, position, score):
-        print_frame()
+        # print_frame()
         self.path = Path(position)
         self.score = score
         self.removed = False
         self.end = False
 
     def make_longer_path(self, model, new_step):
-        print_frame()
+        # print_frame()
         ret_queue_entry = deepcopy(self)
         try:
             new_score = self.try_step(model, new_step)
@@ -43,23 +43,23 @@ class QueueEntry:
             return ret_queue_entry
 
     def try_step(self, model, step):
-        print_frame()
+        # print_frame()
         step_score = 0.0
         try:
             step_score = self.get_step_score(model, self.path.position, step)
         except EndOfAllTextsExceptionError as e:
-            print_frame("EndOfAllTextsException")
+            # print_frame("EndOfAllTextsException")
             raise e
         except EndOfTextExceptionError as e:
-            print_frame("EndOfTextException")
+            # print_frame("EndOfTextException")
             raise e
         except BlockedExceptionError as e:
-            print_frame("BlockedException")
+            # print_frame("BlockedException")
             raise e
         return self.score + step_score
 
     def get_step_score(self, model, position, step):
-        print_frame()
+        # print_frame()
         try:
             cell = model.compare.get_cell_values(model, position, step)
             return cell.get_score()
@@ -69,5 +69,5 @@ class QueueEntry:
             raise e
 
     def remove(self):
-        print_frame()
+        # print_frame()
         self.removed = True

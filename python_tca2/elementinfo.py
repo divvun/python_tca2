@@ -4,7 +4,7 @@ from python_tca2.anchorwordhits import AnchorWordHits
 
 class ElementInfo:
     def __init__(self, model, text, t, element_number):
-        print_frame()
+        # print_frame()
         self.length = 0
         self.num_words = 0
         self.words = []
@@ -33,7 +33,7 @@ class ElementInfo:
         self.scoring_characters = model.anchor_word_list.get_scoring_characters(text)
 
     def __str__(self):
-        print_frame()
+        # print_frame()
         ret = []
         ret.append("# chars = " + str(self.length))
         ret.append("; ")
