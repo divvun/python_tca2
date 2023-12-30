@@ -353,12 +353,11 @@ class ElementInfoToBeCompared:
         return hits
 
     def find_hits(self):
-        return [
-            [
-                hit
-                for info_list in self.info
-                for info in info_list
-                for hit in info.anchorWordHits.hits
-            ]
-        ]
         print_frame()
+        hits = [[] for _ in range(constants.NUM_FILES)]
+        for t, info_list in enumerate(self.info):
+            for info in info_list:
+                for hit in info.anchor_word_hits.hits:
+                    hits[t].append(hit)
+
+        return hits
