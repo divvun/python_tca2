@@ -1,7 +1,7 @@
 from python_tca2 import constants
 from python_tca2.alignment_utils import print_frame
 from python_tca2.elementinfotobecompared import ElementInfoToBeCompared
-from python_tca2.exceptions import EndOfAllTextsException, EndOfTextException
+from python_tca2.exceptions import EndOfAllTextsExceptionError, EndOfTextExceptionError
 
 
 class CompareCells:
@@ -14,13 +14,13 @@ class CompareCells:
                 try:
                     info = model.compare.elements_info[t].get_element_info(model, x, t)
                     self.element_info_to_be_compared.add(info, t)
-                except EndOfTextException:
+                except EndOfTextExceptionError:
                     text_end_count += 1
                     break
         if text_end_count >= constants.NUM_FILES:
-            raise EndOfAllTextsException()
+            raise EndOfAllTextsExceptionError()
         elif text_end_count > 0:
-            raise EndOfTextException()
+            raise EndOfTextExceptionError()
 
     def get_score(self):
         print_frame()

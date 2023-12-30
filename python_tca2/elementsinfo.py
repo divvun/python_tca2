@@ -1,6 +1,6 @@
 from python_tca2.alignment_utils import print_frame
 from python_tca2.elementinfo import ElementInfo
-from python_tca2.exceptions import EndOfTextException
+from python_tca2.exceptions import EndOfTextExceptionError
 
 
 class ElementsInfo:
@@ -17,7 +17,7 @@ class ElementsInfo:
         elif element_number > self.last:
             try:
                 self.set_last(model, element_number, t)
-            except EndOfTextException as e:
+            except EndOfTextExceptionError as e:
                 raise e
         return self.element_info[element_number - self.first]
 
@@ -47,7 +47,7 @@ class ElementsInfo:
                 index = self.last + count + 1
 
                 if index >= len(model.nodes[t]):
-                    raise EndOfTextException()
+                    raise EndOfTextExceptionError()
 
                 text = model.nodes[t][index].text
                 self.element_info.append(ElementInfo(model, text, t, index))

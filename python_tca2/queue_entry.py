@@ -2,9 +2,9 @@ from copy import deepcopy
 
 from python_tca2.alignment_utils import print_frame
 from python_tca2.exceptions import (
-    BlockedException,
-    EndOfAllTextsException,
-    EndOfTextException,
+    BlockedExceptionError,
+    EndOfAllTextsExceptionError,
+    EndOfTextExceptionError,
 )
 from python_tca2.path import Path
 
@@ -39,13 +39,13 @@ class QueueEntry:
         step_score = 0.0
         try:
             step_score = self.get_step_score(model, self.path.position, step)
-        except EndOfAllTextsException as e:
+        except EndOfAllTextsExceptionError as e:
             print_frame("EndOfAllTextsException")
             raise e
-        except EndOfTextException as e:
+        except EndOfTextExceptionError as e:
             print_frame("EndOfTextException")
             raise e
-        except BlockedException as e:
+        except BlockedExceptionError as e:
             print_frame("BlockedException")
             raise e
         return self.score + step_score
@@ -55,9 +55,9 @@ class QueueEntry:
         try:
             cell = model.compare.get_cell_values(model, position, step)
             return cell.get_score()
-        except EndOfAllTextsException as e:
+        except EndOfAllTextsExceptionError as e:
             raise e
-        except EndOfTextException as e:
+        except EndOfTextExceptionError as e:
             raise e
 
     def remove(self):

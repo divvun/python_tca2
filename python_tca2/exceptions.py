@@ -1,10 +1,10 @@
-class EndOfAllTextsException(Exception):
+class EndOfAllTextsExceptionError(Exception):
     pass
 
 
-class EndOfTextException(Exception):
+class EndOfTextExceptionError(Exception):
     pass
 
 
-class BlockedException(Exception):
+class BlockedExceptionError(Exception):
     pass
