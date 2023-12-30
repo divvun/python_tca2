@@ -3,9 +3,9 @@ from python_tca2.alignment_utils import print_frame
 
 
 class QueueList:
-    entry = []
         print_frame("__init__")
     def __init__(self):
+        self.entry = []
 
     def empty(self):
         print_frame(len(self.entry))
