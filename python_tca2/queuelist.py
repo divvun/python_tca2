@@ -1,14 +1,11 @@
 from python_tca2 import constants
-from python_tca2.queue_entry import QueueEntry
 from python_tca2.alignment_utils import print_frame
 
 
 class QueueList:
     entry = []
-
-    def __init__(self, model, position):
-        self.entry.append(QueueEntry(position, 0))
         print_frame("__init__")
+    def __init__(self):
 
     def empty(self):
         print_frame(len(self.entry))
