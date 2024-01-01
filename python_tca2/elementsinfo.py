@@ -1,4 +1,3 @@
-from python_tca2.alignment_utils import print_frame
 from python_tca2.elementinfo import ElementInfo
 from python_tca2.exceptions import EndOfTextExceptionError
 
@@ -28,7 +27,7 @@ class ElementsInfo:
             for count in range(self.first - new_first):
                 index = new_first + count
                 text = model.nodes[t].item(index).get_text_content()
-                more.append(ElementInfo(model, text, t, index))
+                more.append(ElementInfo(model.anchor_word_list, text, t, index))
             self.element_info = more + self.element_info
             self.first = new_first
         elif new_first > self.last:
@@ -50,4 +49,6 @@ class ElementsInfo:
                     raise EndOfTextExceptionError()
 
                 text = model.nodes[t][index].text
-                self.element_info.append(ElementInfo(model, text, t, index))
+                self.element_info.append(
+                    ElementInfo(model.anchor_word_list, text, t, index)
+                )

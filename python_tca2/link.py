@@ -1,12 +1,11 @@
 from python_tca2 import constants
-from python_tca2.alignment_utils import print_frame
 
 
 class Link:
     def __init__(self):
         # print_frame()
         self.alignment_number = -1
-        self.element_numbers = [set() for _ in range(constants.NUM_FILES)]
+        self.element_numbers = [[] for _ in range(constants.NUM_FILES)]
 
     def __str__(self):
         # print_frame()

@@ -11,13 +11,12 @@ from python_tca2.ref import Ref
 class ElementInfoToBeCompared:
     INDENT = "  "
 
-    def __init__(self, model):
+    def __init__(self):
         # print_frame()
         self.common_clusters = Clusters()
         self.score = constants.ELEMENTINFO_SCORE_NOT_CALCULATED
         self.info = [[] for _ in range(constants.NUM_FILES)]
         self.ret = []
-        self.model = model
 
     def add(self, element_info, t):
         # print_frame()
@@ -56,7 +55,7 @@ class ElementInfoToBeCompared:
                     length[1],
                     element_count[0],
                     element_count[1],
-                    self.model.length_ratio,
+                    constants.DEFAULT_LENGTH_RATIO,
                 ):
                     self.score = constants.ELEMENTINFO_SCORE_HOPELESS
                 else:
@@ -74,7 +73,7 @@ class ElementInfoToBeCompared:
                 self.find_special_character_matches(t, tt)
 
         self.score += self.common_clusters.get_score(
-            self.model.large_cluster_score_percentage
+            constants.DEFAULT_LARGE_CLUSTER_SCORE_PERCENTAGE
         )
 
         length = [0] * constants.NUM_FILES
@@ -91,7 +90,7 @@ class ElementInfoToBeCompared:
             length[1],
             element_count[0],
             element_count[1],
-            self.model.length_ratio,
+            constants.DEFAULT_LENGTH_RATIO,
         )
 
         is11 = True
@@ -114,14 +113,14 @@ class ElementInfoToBeCompared:
                 for info2 in self.info[tt]:
                     for y in range(len(info2.words)):
                         match_type = match.DICE
-                        weight = self.model.get_dice_match_weight()
+                        weight = constants.DEFAULT_DICE_MATCH_WEIGHT
                         word2 = info2.words[y]
 
                         if (
-                            len(word1) > self.model.get_dice_min_word_length()
-                            and len(word2) > self.model.get_dice_min_word_length()
+                            len(word1) > constants.DEFAULT_DICE_MIN_WORD_LENGTH
+                            and len(word2) > constants.DEFAULT_DICE_MIN_WORD_LENGTH
                             and similarity_utils.dice_match1(
-                                word1, word2, self.model.get_dice_min_counting_score()
+                                word1, word2, constants.DEFAULT_DICE_MIN_COUNTING_SCORE
                             )
                         ):
                             self.common_clusters.add(
@@ -141,14 +140,14 @@ class ElementInfoToBeCompared:
                         if next_word1 != "":
                             show_phrase = word1 + " " + next_word1
                             if all(
-                                len(word) >= self.model.get_dice_min_word_length()
+                                len(word) >= constants.DEFAULT_DICE_MIN_WORD_LENGTH
                                 for word in [word2, next_word1, word1]
                             ) and similarity_utils.dice_match2(
                                 word1,
                                 next_word1,
                                 word2,
                                 "2-1",
-                                self.model.get_dice_min_counting_score(),
+                                constants.DEFAULT_DICE_MIN_COUNTING_SCORE,
                             ):
                                 self.common_clusters.add(
                                     match_type,
@@ -171,14 +170,14 @@ class ElementInfoToBeCompared:
                         if next_word2 != "":
                             show_phrase = word2 + " " + next_word2
                             if all(
-                                len(word) >= self.model.get_dice_min_word_length()
+                                len(word) >= constants.DEFAULT_DICE_MIN_WORD_LENGTH
                                 for word in [word1, next_word2, word2]
                             ) and similarity_utils.dice_match2(
                                 word1,
                                 word2,
                                 next_word2,
                                 "1-2",
-                                self.model.get_dice_min_counting_score(),
+                                constants.DEFAULT_DICE_MIN_COUNTING_SCORE,
                             ):
                                 show_phrase2 = word2 + " " + next_word2
                                 self.common_clusters.add(
@@ -199,7 +198,6 @@ class ElementInfoToBeCompared:
     def find_anchor_word_matches(self):
         # print_frame()
         hits = self.find_hits()
-        print(194, hits)
         # TODO: sort the hits
         current = [0] * constants.NUM_FILES
 
@@ -235,7 +233,7 @@ class ElementInfoToBeCompared:
                         word2 = info2.words[y]
                         if word1[0].isupper() and word2[0].isupper() and word1 == word2:
                             match_type = match.PROPER
-                            weight = self.model.get_proper_name_match_weight()
+                            weight = constants.DEFAULT_PROPER_NAME_MATCH_WEIGHT
                             self.common_clusters.add(
                                 match_type,
                                 weight,
@@ -265,7 +263,7 @@ class ElementInfoToBeCompared:
                             # same number
                             # add to cluster list
                             match_type = match.NUMBER
-                            weight = self.model.get_number_match_weight()  # 2006-04-07
+                            weight = constants.DEFAULT_NUMBER_MATCH_WEIGHT
                             self.common_clusters.add(
                                 match_type,
                                 weight,
@@ -289,7 +287,7 @@ class ElementInfoToBeCompared:
                     for char2 in info2.scoring_characters:
                         if char1 == char2:
                             match_type = match.SCORING_CHARACTERS
-                            weight = self.model.get_scoring_character_match_weight()
+                            weight = constants.DEFAULT_SCORING_CHARACTER_MATCH_WEIGHT
                             self.common_clusters.add(
                                 match_type,
                                 weight,
@@ -307,7 +305,7 @@ class ElementInfoToBeCompared:
 
     # manuelt portet
     def find_more_hits(self, hits, current, smallest, present_in_all_texts):
-        # print_frame()
+        print_frame()
         anchor_word_clusters = Clusters()
         for t in range(constants.NUM_FILES):
             count = 0
@@ -324,9 +322,9 @@ class ElementInfoToBeCompared:
                         len_ = count_words(word)
                         match_type = index
                         weight = (
-                            self.model.getAnchorPhraseMatchWeight()
+                            constants.DEFAULT_ANCHORPHRASE_MATCH_WEIGHT
                             if len_ > 1
-                            else self.model.getAnchorWordMatchWeight()
+                            else constants.DEFAULT_ANCHOR_WORD_MATCH_WEIGHT
                         )
                         if present_in_all_texts:
                             anchor_word_clusters.add(

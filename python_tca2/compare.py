@@ -1,10 +1,8 @@
 from python_tca2 import constants
-from python_tca2.alignment_utils import print_frame
 from python_tca2.bestpathscore import BestPathScore
 from python_tca2.comparecells import CompareCells
 from python_tca2.comparematrix import CompareMatrix
 from python_tca2.elementsinfo import ElementsInfo
-from python_tca2.exceptions import EndOfAllTextsExceptionError, EndOfTextExceptionError
 from python_tca2.pathstep import PathStep
 
 
@@ -40,12 +38,7 @@ class Compare:
             best_path_score_key += str(position[t] + 1 + step.increment[t] - 1)
 
         if key not in self.matrix.cells:
-            try:
-                self.matrix.cells[key] = CompareCells(model, position, step)
-            except EndOfAllTextsExceptionError as e:
-                raise e
-            except EndOfTextExceptionError as e:
-                raise e
+            self.matrix.cells[key] = CompareCells(model, position, step)
 
             if best_path_score_key in self.matrix.best_path_scores:
                 temp = self.matrix.best_path_scores[best_path_score_key]

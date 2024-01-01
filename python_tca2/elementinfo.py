@@ -1,10 +1,11 @@
-from python_tca2.alignment_utils import print_frame
+from python_tca2 import constants
 from python_tca2.anchorwordhits import AnchorWordHits
+from python_tca2.anchorwordlist import AnchorWordList
 
 
 class ElementInfo:
-    def __init__(self, model, text, t, element_number):
-        # print_frame()
+    def __init__(self, anchor_word_list: AnchorWordList, text, t, element_number):
+        # print_frame(text)
         self.length = 0
         self.num_words = 0
         self.words = []
@@ -14,7 +15,7 @@ class ElementInfo:
 
         self.element_number = element_number
         self.length = len(text)
-        special_characters = model.special_characters
+        special_characters = constants.DEFAULT_SPECIAL_CHARACTERS
         special_characters_class = "[\\s"
         for char in special_characters:
             special_characters_class += "\\" + char
@@ -26,11 +27,11 @@ class ElementInfo:
         self.num_words = len(temp_words) - 1
         self.words = temp_words[1:]
         temp_words = None
-        self.anchor_word_hits = model.anchor_word_list.get_anchor_word_hits(
+        self.anchor_word_hits = anchor_word_list.get_anchor_word_hits(
             self.words, t, element_number
         )
-        self.proper_names = model.anchor_word_list.get_proper_names(self.words)
-        self.scoring_characters = model.anchor_word_list.get_scoring_characters(text)
+        self.proper_names = anchor_word_list.get_proper_names(self.words)
+        self.scoring_characters = anchor_word_list.get_scoring_characters(text)
 
     def __str__(self):
         # print_frame()
