@@ -68,8 +68,8 @@ class QueueList:
         # print_frame()
         to_remove = []
         for queue_entry in self.entry:
-            queue_entry.remove()
-            to_remove.append(queue_entry)
+            if queue_entry.removed:
+                to_remove.append(queue_entry)
 
         for queue_entry in to_remove:
             self.entry.remove(queue_entry)
