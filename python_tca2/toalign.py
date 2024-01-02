@@ -21,20 +21,20 @@ class ToAlign:
     def pickup(self, t: int, element: AElement):
         print_frame()
         if element is not None:
-            self.elements[t].append(element)
             if len(self.pending) == 0:
+                new_link = Link()
+                new_link.alignment_number = self.first_alignment_number
                 self.pending.append(Link())
-                self.pending[0].alignment_number = self.first_alignment_number
+
             self.pending[-1].element_numbers[t].append(element.element_number)
             last_alignment_number = self.first_alignment_number + len(self.pending) - 1
+
             element.alignment_number = last_alignment_number
+            self.elements[t].append(element)
 
     def flush(self) -> AlignmentsEtc:
         print_frame()
-        if len(self.pending) == 0:
-            print("Nothing to flush")
-            return None
-        else:
+        if self.pending:
             self.first_alignment_number = self.pending[-1].alignment_number + 1
             return_value = AlignmentsEtc()
             while len(self.pending) > 0:
@@ -43,3 +43,4 @@ class ToAlign:
                 while len(self.elements[t]) > 0:
                     return_value.elements[t].append(self.elements[t].pop(0))
             return return_value
+        print("Nothing to flush")
