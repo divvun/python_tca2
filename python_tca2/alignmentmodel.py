@@ -212,18 +212,18 @@ class AlignmentModel:
 
     def save_new_line_format_file(self, t):
         with open(f"aligned_{t}.txt", "w") as f:
-            print_frame(t, len(self.aligned.elements[t]))
-            for link in self.aligned.alignments:
-                print_frame(link)
-                line = ""
-                first = True
-                for element_number in link.element_numbers[t]:
-                    print_frame(element_number)
-                    a_element = self.aligned.elements[t][element_number]
-                    element_text = a_element.element.text
-                    if first:
-                        first = False
-                    else:
-                        line += " "
-                    line += element_text
-                print(line, file=f)
+            print_frame(t, len(self.aligned.elements[t]), len(self.aligned.alignments))
+            print(
+                "\n".join(
+                    [
+                        " ".join(
+                            [
+                                self.aligned.elements[t][element_number].element.text
+                                for element_number in link.element_numbers[t]
+                            ]
+                        )
+                        for link in self.aligned.alignments
+                    ]
+                ),
+                file=f,
+            )
