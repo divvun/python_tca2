@@ -68,7 +68,7 @@ class AlignmentModel:
                 len(queue_list.entry) < constants.NUM_FILES
                 and not queue_list.entry[0].path.steps
             ):
-                print_frame("done aligning")
+                print_frame("length done aligning")
                 # When the length of the queue list is less than the number of files
                 # and the first path in the queue list has no steps, then aligment
                 # is done
@@ -86,7 +86,10 @@ class AlignmentModel:
                     if not done_aligning:
                         # print_frame("not done_aligning")
                         self.flush_aligned_without_gui()
+                    else:
+                        print_frame("done_aligning run_limit exceeded")
                 else:
+                    print_frame("no best_path.steps")
                     done_aligning = True
 
     def flush_aligned_without_gui(self):
