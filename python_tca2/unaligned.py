@@ -8,7 +8,7 @@ class Unaligned:
 
     def pop(self, t):
         # print_frame()
-        return self.elements[t].pop()
+        return self.elements[t].pop(0)
 
     def add(self, element, t):
         # print_frame()
