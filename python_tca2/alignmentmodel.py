@@ -9,7 +9,6 @@ from python_tca2.alignment_utils import print_frame
 from python_tca2.anchorwordlist import AnchorWordList
 from python_tca2.compare import Compare
 from python_tca2.exceptions import EndOfAllTextsExceptionError, EndOfTextExceptionError
-from python_tca2.matchinfo import MatchInfo
 from python_tca2.pathstep import PathStep
 from python_tca2.queue_entry import QueueEntry
 from python_tca2.queuelist import QueueList
@@ -32,7 +31,6 @@ class AlignmentModel:
         self.compare = Compare()
         # print_frame()
         self.anchor_word_list = AnchorWordList(self)
-        self.match_info = MatchInfo(self)
 
     def load_text(self, text_file, t):
         # print_frame()
