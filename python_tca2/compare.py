@@ -1,3 +1,5 @@
+from typing import List
+
 from python_tca2 import constants
 from python_tca2.bestpathscore import BestPathScore
 from python_tca2.comparecells import CompareCells
@@ -9,33 +11,23 @@ from python_tca2.pathstep import PathStep
 class Compare:
     def __init__(self):
         # print_frame()
-        self.elements_info = [ElementsInfo() for _ in range(constants.NUM_FILES)]
-        self.matrix = CompareMatrix()
-        self.step_list = []
-
-        for t in range(constants.NUM_FILES):
-            self.elements_info[t] = ElementsInfo()
+        self.elements_info: List[ElementsInfo] = [
+            ElementsInfo() for _ in range(constants.NUM_FILES)
+        ]
+        self.matrix: CompareMatrix = CompareMatrix()
+        self.step_list: List[PathStep] = []
 
         self.create_step_list()
 
     def get_cell_values(self, model, position, step):
         # print_frame()
-        key = ""
-        best_path_score_key = ""
-
-        for t in range(constants.NUM_FILES):
-            if t > 0:
-                key += ","
-            key += str(position[t] + 1)
-
-        key += ","
-
-        for t in range(constants.NUM_FILES):
-            if t > 0:
-                key += ","
-                best_path_score_key += ","
-            key += str(position[t] + 1 + step.increment[t] - 1)
-            best_path_score_key += str(position[t] + 1 + step.increment[t] - 1)
+        key = ",".join(
+            [str(position[t] + 1) for t in range(constants.NUM_FILES)]
+            + [str(position[t] + step.increment[t]) for t in range(constants.NUM_FILES)]
+        )
+        best_path_score_key = ",".join(
+            [str(position[t] + step.increment[t]) for t in range(constants.NUM_FILES)]
+        )
 
         if key not in self.matrix.cells:
             self.matrix.cells[key] = CompareCells(model, position, step)
