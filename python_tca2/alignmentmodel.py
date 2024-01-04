@@ -133,6 +133,7 @@ class AlignmentModel:
         step_count = 0
         done_lengthening = False
         while not done_lengthening:
+            print("step_count = " + str(step_count))
             next_queue_list = QueueList()
             # print_frame(
             #     len(queue_list.entry),
@@ -160,21 +161,21 @@ class AlignmentModel:
         for step in self.compare.step_list:
             # print_frame(str(step))
             try:
-                print("step = " + str(step))
-                print("1 queueEntry " + str(queue_entry))
+                # print("step = " + str(step))
+                # print("1 queueEntry " + str(queue_entry))
                 new_queue_entry = self.make_longer_path(deepcopy(queue_entry), step)
                 if new_queue_entry.path is not None:
                     pos = new_queue_entry.path.position
                     queue_list.remove(pos)
                     next_queue_list.remove(pos)
-                    print("2 queueEntry " + str(new_queue_entry))
+                    # print("2 queueEntry " + str(new_queue_entry))
                     next_queue_list.add(new_queue_entry)
             except EndOfAllTextsExceptionError:
                 print_frame("EndOfAllTextsException")
                 new_queue_entry = deepcopy(queue_entry)
                 new_queue_entry.end = True
                 if not next_queue_list.contains(new_queue_entry):
-                    print("3 queueEntry " + str(new_queue_entry))
+                    # print("3 queueEntry " + str(new_queue_entry))
                     next_queue_list.add(new_queue_entry)
             except EndOfTextExceptionError:
                 # print_frame("EndOfTextException")
@@ -182,6 +183,9 @@ class AlignmentModel:
 
     def get_step_score(self, position, step):
         # print_frame()
+        print("getStepScore: step = " + str(step))
+        print(f"position = {position[0]},{position[1]}")
+
         cell = self.compare.get_cell_values(self, position, step)
         return cell.get_score()
 

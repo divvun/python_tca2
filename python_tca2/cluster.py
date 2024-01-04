@@ -55,6 +55,7 @@ class Cluster:
                 count = len(positions)
             low = min(low, count)
             high = max(high, count)
+        print("1 cl2", high, low, cluster_weight)
         return cluster_weight * (
             1 + ((low - 1) * large_cluster_score_percentage / 100.0)
         )

@@ -9,8 +9,6 @@ from python_tca2.ref import Ref
 
 
 class ElementInfoToBeCompared:
-    INDENT = "  "
-
     def __init__(self):
         # print_frame()
         self.common_clusters = Clusters()
@@ -44,8 +42,9 @@ class ElementInfoToBeCompared:
     def get_score(self):
         # print_frame()
         if self.score == constants.ELEMENTINFO_SCORE_NOT_CALCULATED:
+            print("score not calculated")
             self.score = self.really_get_score()
-
+        print("score", self.score)
         return self.score
 
     def really_get_score(self):
@@ -53,6 +52,7 @@ class ElementInfoToBeCompared:
         if self.score == constants.ELEMENTINFO_SCORE_NOT_CALCULATED:
             self.score = 0.0
             if not self.empty():
+                print("not empty")
                 length = [0] * constants.NUM_FILES
                 element_count = [0] * constants.NUM_FILES
 
@@ -68,6 +68,7 @@ class ElementInfoToBeCompared:
                     element_count[1],
                     constants.DEFAULT_LENGTH_RATIO,
                 ):
+                    print("bad length correlation")
                     self.score = constants.ELEMENTINFO_SCORE_HOPELESS
                 else:
                     self.score = self.really_get_score2()
@@ -86,6 +87,7 @@ class ElementInfoToBeCompared:
         self.score += self.common_clusters.get_score(
             constants.DEFAULT_LARGE_CLUSTER_SCORE_PERCENTAGE
         )
+        print("1 g2 score", self.score)
 
         length = [0] * constants.NUM_FILES
         element_count = [0] * constants.NUM_FILES
@@ -103,6 +105,7 @@ class ElementInfoToBeCompared:
             element_count[1],
             constants.DEFAULT_LENGTH_RATIO,
         )
+        print("2 g2 score", self.score)
 
         is11 = True
         for t in range(constants.NUM_FILES):
@@ -113,20 +116,23 @@ class ElementInfoToBeCompared:
         if not is11:
             self.score -= 0.001
 
+        print("3 g2 score", self.score)
         return self.score
 
     def find_dice_matches(self, t, tt):
         # print_frame()
         for info1 in self.info[t]:
+            print(f"info1: {info1}")
             for x in range(len(info1.words)):
                 word1 = info1.words[x]
                 next_word1 = info1.words[x + 1] if x < len(info1.words) else ""
                 for info2 in self.info[tt]:
+                    print(f"info2: {info2}")
                     for y in range(len(info2.words)):
                         match_type = match.DICE
                         weight = constants.DEFAULT_DICE_MATCH_WEIGHT
                         word2 = info2.words[y]
-
+                        print("word1: " + word1 + ", word2: " + word2)
                         if (
                             len(word1) > constants.DEFAULT_DICE_MIN_WORD_LENGTH
                             and len(word2) > constants.DEFAULT_DICE_MIN_WORD_LENGTH

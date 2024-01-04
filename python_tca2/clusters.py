@@ -68,7 +68,10 @@ class Clusters:
 
     def get_score(self, large_cluster_score_percentage):
         # print_frame()
+        print("1 cl score", large_cluster_score_percentage, len(self.clusters))
         score = 0.0
         for cluster in self.clusters:
             score += cluster.get_score(large_cluster_score_percentage)
+        print("2 cl score", score)
+
         return score
