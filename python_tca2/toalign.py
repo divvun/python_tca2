@@ -2,7 +2,6 @@ from typing import List
 
 from python_tca2 import constants
 from python_tca2.aelement import AElement
-from python_tca2.alignment_utils import print_frame
 from python_tca2.alignments_etc import AlignmentsEtc
 from python_tca2.link import Link
 
@@ -19,7 +18,7 @@ class ToAlign:
         return len(self.pending) == 0
 
     def pickup(self, t: int, element: AElement):
-        print_frame()
+        # print_frame()
         if element is not None:
             if len(self.pending) == 0:
                 new_link = Link()
@@ -33,7 +32,7 @@ class ToAlign:
             self.elements[t].append(element)
 
     def flush(self) -> AlignmentsEtc:
-        print_frame()
+        # print_frame()
         if self.pending:
             self.first_alignment_number = self.pending[-1].alignment_number + 1
             return_value = AlignmentsEtc()

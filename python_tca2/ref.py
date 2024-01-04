@@ -1,6 +1,3 @@
-from python_tca2.alignment_utils import print_frame
-
-
 class Ref:
     def __init__(self, match_type, weight, t, element_number, pos, length, word):
         # print_frame()
@@ -11,6 +8,19 @@ class Ref:
         self.pos = pos
         self.length = length
         self.word = word
+
+    def __str__(self) -> str:
+        return (
+            "{\n"
+            f"matchType=: {self.match_type},\n"
+            f"weight: {self.weight},\n"
+            f"t: {self.t},\n"
+            f"elementNumber{self.element_number},\n"
+            f"pos: {self.pos},\n"
+            f"len: {self.length},\n"
+            f"word: {self.word}\n"
+            "}"
+        )
 
     def matches(self, other_ref):
         # print_frame()

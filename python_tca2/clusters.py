@@ -1,5 +1,4 @@
 from typing import List
-from python_tca2.alignment_utils import print_frame
 
 from python_tca2.cluster import Cluster
 from python_tca2.ref import Ref
@@ -9,6 +8,9 @@ class Clusters:
     def __init__(self):
         # print_frame()
         self.clusters: List[Cluster] = []  # list of Cluster
+
+    def __str__(self):
+        return "{\n" + f"clusters: [\n{',\n'.join(self.clusters)}\n]\n" + "}"
 
     def add(
         self,

@@ -1,7 +1,6 @@
 from typing import List
 
 from python_tca2 import alignment
-from python_tca2.alignment_utils import print_frame
 from python_tca2.ref import Ref
 
 
@@ -9,6 +8,9 @@ class Cluster:
     def __init__(self):
         # print_frame()
         self.refs: List[Ref] = []
+
+    def __str__(self):
+        return "{\n" + f"refs: [\n{',\n'.join(self.refs)}\n]\n" + "}"
 
     def clone(self):
         # print_frame()
@@ -67,20 +69,6 @@ class Cluster:
             ):
                 anchor_word_entry_numbers.append(ref.get_match_type())
         return len(anchor_word_entry_numbers)
-
-    # for debugging purposes
-    def __str__(self):
-        # print_frame()
-        ret_val = "("
-        first = True
-        for ref in self.refs:
-            if first:
-                first = False
-            else:
-                ret_val += ", "
-            ret_val += str(ref)
-        ret_val += ")"
-        return ret_val
 
     def get_words(self, include_match_type):
         # print_frame()

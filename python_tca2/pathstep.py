@@ -1,7 +1,5 @@
 from copy import deepcopy
 
-from python_tca2.alignment_utils import print_frame
-
 
 class PathStep:
     def __init__(self, inc):
@@ -16,12 +14,12 @@ class PathStep:
         return True
 
     def __str__(self):
-        temp = "{"
+        temp = "["
         for t in range(len(self.increment)):
             if t > 0:
-                temp += ","
+                temp += ", "
             temp += str(self.increment[t])
-        temp += "}"
+        temp += "]"
         # print_frame("__str__", temp)
         return temp
 

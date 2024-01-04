@@ -1,7 +1,6 @@
 from typing import List
 
 from python_tca2 import constants
-from python_tca2.bestpathscore import BestPathScore
 from python_tca2.comparecells import CompareCells
 from python_tca2.comparematrix import CompareMatrix
 from python_tca2.elementsinfo import ElementsInfo
@@ -19,6 +18,21 @@ class Compare:
 
         self.create_step_list()
 
+    def __str__(self):
+        # print_frame()
+        temp = "{\nCompare: {\n"
+        temp += "elementsInfo: [\n"
+        temp += ",\n".join(
+            f"{self.elements_info[t]}" for t in range(constants.NUM_FILES)
+        )
+        temp += "],\nmatrix: {\n"
+        temp += f"{self.matrix}"
+        temp += "},\n"
+        temp += f"stepList: [\n{',\n'.join(str(step) for step in self.step_list)}\n]\n"
+        temp += "}\n}\n\n"
+
+        return temp
+
     def get_cell_values(self, model, position, step):
         # print_frame()
         key = ",".join(
@@ -30,13 +44,17 @@ class Compare:
         )
 
         if key not in self.matrix.cells:
+            # Lag en ny celle
             self.matrix.cells[key] = CompareCells(model, position, step)
 
+            # Hvis best_path_score_key finnes i best_path_scores, så kopierer vi
             if best_path_score_key in self.matrix.best_path_scores:
                 temp = self.matrix.best_path_scores[best_path_score_key]
                 self.matrix.cells[key].best_path_score = temp
             else:
-                self.matrix.cells[key].best_path_score = BestPathScore()
+                self.matrix.cells[
+                    key
+                ].best_path_score = constants.BEST_PATH_SCORE_NOT_CALCULATED
 
             self.matrix.best_path_scores[best_path_score_key] = self.matrix.cells[
                 key

@@ -18,6 +18,17 @@ class ElementInfoToBeCompared:
         self.info = [[] for _ in range(constants.NUM_FILES)]
         self.ret = []
 
+    def __str__(self):
+        return (
+            "{\n"
+            f"score: {self.get_score()},\n"
+            "common_clusters: "
+            f"[\n{self.common_clusters}\n],\n"
+            f"info: [\n{',\n'.join([f'{info}' for info in self.info])}\n],\n"
+            f"ret: [\n{',\n'.join([f'{ret}' for ret in self.ret])}\n]\n"
+            "}"
+        )
+
     def add(self, element_info, t):
         # print_frame()
         self.info[t].append(element_info)

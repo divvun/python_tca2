@@ -29,8 +29,9 @@ class AlignmentModel:
         self.to_align = ToAlign()
         self.unaligned = Unaligned()
         self.compare = Compare()
-        # print_frame()
         self.anchor_word_list = AnchorWordList(self)
+
+        print(str(self.compare))
 
     def load_text(self, text_file, t):
         # print_frame()
@@ -46,12 +47,12 @@ class AlignmentModel:
 
     def suggets_without_gui(self):
         # print_frame()
-        run_limit = constants.RUN_LIMIT
+        run_limit = 3  # constants.RUN_LIMIT
         run_count = 0
         done_aligning = False
 
         while not done_aligning:
-            print_frame("not done_aligning", run_count)
+            # print_frame("not done_aligning", run_count)
             self.compare.reset_best_path_scores()
 
             # Dette er anderledes enn i Java.
@@ -76,7 +77,7 @@ class AlignmentModel:
                 best_path = self.get_best_path(queue_list)
 
                 if best_path.steps:
-                    # print_frame("best_path.steps")
+                    
                     step_suggestion = self.find_more_to_align_without_gui(best_path)
                     run_count += 1
                     done_aligning = run_count >= run_limit
@@ -98,6 +99,11 @@ class AlignmentModel:
         # print_frame()
         step_suggestion = best_path.steps[0]
         for t in range(constants.NUM_FILES):
+            print_frame(
+                f"stepSuggestion.increment[{t}] = {step_suggestion.increment[t]}"
+            )
+            print_frame(self.unaligned.elements[t][0])
+            print()
             i = 0
             while i < step_suggestion.increment[t]:
                 self.to_align.pickup(t, self.unaligned.pop(t))

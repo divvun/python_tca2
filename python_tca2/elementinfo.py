@@ -36,13 +36,14 @@ class ElementInfo:
     def __str__(self):
         # print_frame()
         ret = []
-        ret.append("# chars = " + str(self.length))
-        ret.append("; ")
-        ret.append("# words = " + str(self.num_words))
-        ret.append("; ")
-        ret.append("words = {" + ", ".join(self.words) + "}")
-        ret.append("; ")
-        ret.append("anchor word hits = " + str(self.anchor_word_hits))
-        ret.append("; ")
-        ret.append("proper names = " + str(self.proper_names))
+        ret.append("length: " + str(self.length) + ",\n")
+        ret.append("numWords: " + str(self.num_words) + ",\n")
+        ret.append("words: [\n" + ",\n".join(self.words) + "],\n")
+        ret.append(str(self.anchor_word_hits))
+        ret.append(",\n")
+        ret.append("scoring characters: " + self.scoring_characters + "\n")
+        ret.append("proper names: [\n")
+        ret.append(",\n".join(self.proper_names))
+        ret.append("],\n")
+
         return "".join(ret)

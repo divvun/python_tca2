@@ -7,6 +7,7 @@ class CompareCells:
     def __init__(self, model, position, step):
         # print_frame()
         self.element_info_to_be_compared = ElementInfoToBeCompared()
+        self.best_path_score: float = -1.0
         text_end_count = 0
         for t in range(constants.NUM_FILES):
             for x in range(position[t] + 1, position[t] + step.increment[t] + 1):
@@ -26,10 +27,9 @@ class CompareCells:
         return self.element_info_to_be_compared.get_score()
 
     def __str__(self):
-        # print_frame()
         return (
-            "CompareCells' toString. score="
-            + str(self.element_info_to_be_compared.get_score())
-            + ", best path score="
-            + str(self.best_path_score.get_score())
+            "{\nCompareCells: {\n"
+            f"{self.element_info_to_be_compared}"
+            f",\nbestPathScore: {self.best_path_score}\n"
+            "}\n}\n"
         )
