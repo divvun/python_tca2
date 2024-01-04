@@ -45,9 +45,9 @@ class Compare:
 
         if key not in self.matrix.cells:
             print("Creating cell " + key)
-            print("step = " + str(step))
-            print(f"position = {position[0]},{position[1]}")
-            print("bestPathScoreKey = " + best_path_score_key)
+            # print("step = " + str(step))
+            # print(f"position = {position[0]},{position[1]}")
+            # print("bestPathScoreKey = " + best_path_score_key)
             # print(str(self.matrix))
 
             self.matrix.cells[key] = CompareCells(model, position, step)
@@ -64,7 +64,7 @@ class Compare:
             self.matrix.best_path_scores[best_path_score_key] = self.matrix.cells[
                 key
             ].best_path_score
-            print("Done creating cell " + key)
+            # print("Done creating cell " + key)
             # print(str(self.matrix))
 
         return self.matrix.cells[key]

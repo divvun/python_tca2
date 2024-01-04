@@ -184,6 +184,11 @@ class AlignmentModel:
 
     def make_longer_path(self, ret_queue_entry, new_step: PathStep):
         # print_frame()
+        position = ret_queue_entry.path.position
+        print("Make longer path " + str(ret_queue_entry))
+        print("step = " + str(new_step))
+        print(f"position = {position[0]},{position[1]}")
+
         new_score = ret_queue_entry.score + self.get_step_score(
             ret_queue_entry.path.position, new_step
         )

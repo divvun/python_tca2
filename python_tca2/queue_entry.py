@@ -1,6 +1,5 @@
 from typing import List
 
-from python_tca2.alignment_utils import print_frame
 from python_tca2.path import Path
 
 
@@ -15,3 +14,9 @@ class QueueEntry:
     def remove(self):
         # print_frame()
         self.removed = True
+
+    def __str__(self):
+        return (
+            f"QueueEntry: {self.path} {self.score if self.score else "0.0"} "
+            f"{'true' if self.removed else 'false'} {'true' if self.end else 'false'}"
+        )
