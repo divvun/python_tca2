@@ -1,4 +1,4 @@
-from python_tca2.alignment_utils import print_frame
+from python_tca2.aelement import AElement
 
 
 class Unaligned:
@@ -6,10 +6,15 @@ class Unaligned:
         # print_frame()
         self.elements = [[], []]
 
-    def pop(self, t):
+    def pop(self, t: int) -> AElement:
         # print_frame()
         return self.elements[t].pop(0)
 
-    def add(self, element, t):
+    def add(self, element: AElement, t: int):
         # print_frame()
         self.elements[t].append(element)
+
+    def __str__(self):
+        return "\n".join(
+            [str(element) for elements in self.elements for element in elements]
+        )

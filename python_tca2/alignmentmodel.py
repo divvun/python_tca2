@@ -77,7 +77,6 @@ class AlignmentModel:
                 best_path = self.get_best_path(queue_list)
 
                 if best_path.steps:
-                    
                     step_suggestion = self.find_more_to_align_without_gui(best_path)
                     run_count += 1
                     done_aligning = run_count >= run_limit
@@ -161,17 +160,21 @@ class AlignmentModel:
         for step in self.compare.step_list:
             # print_frame(str(step))
             try:
+                print("step = " + str(step))
+                print("1 queueEntry " + str(queue_entry))
                 new_queue_entry = self.make_longer_path(deepcopy(queue_entry), step)
                 if new_queue_entry.path is not None:
                     pos = new_queue_entry.path.position
                     queue_list.remove(pos)
                     next_queue_list.remove(pos)
+                    print("2 queueEntry " + str(new_queue_entry))
                     next_queue_list.add(new_queue_entry)
             except EndOfAllTextsExceptionError:
                 print_frame("EndOfAllTextsException")
                 new_queue_entry = deepcopy(queue_entry)
                 new_queue_entry.end = True
                 if not next_queue_list.contains(new_queue_entry):
+                    print("3 queueEntry " + str(new_queue_entry))
                     next_queue_list.add(new_queue_entry)
             except EndOfTextExceptionError:
                 # print_frame("EndOfTextException")
