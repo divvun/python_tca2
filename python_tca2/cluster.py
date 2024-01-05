@@ -1,6 +1,6 @@
 from typing import List
 
-from python_tca2 import alignment
+from python_tca2 import constants
 from python_tca2.ref import Ref
 
 
@@ -44,7 +44,7 @@ class Cluster:
         high = 0
         low = float("inf")
         cluster_weight = 0.0
-        for t in range(alignment.NUM_FILES):
+        for t in range(constants.NUM_FILES):
             count = 0
             positions = []
             for ref in self.refs:
