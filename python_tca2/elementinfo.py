@@ -1,5 +1,4 @@
 from python_tca2 import constants
-from python_tca2.anchorwordhits import AnchorWordHits
 from python_tca2.anchorwordlist import AnchorWordList
 
 
@@ -14,21 +13,13 @@ def remove_special_characters(word):
 
 
 class ElementInfo:
-    def __init__(self, anchor_word_list: AnchorWordList, text, t, element_number):
-        self.length = 0
-        self.num_words = 0
-        self.words = []
-        self.anchor_word_hits = AnchorWordHits()
-        self.proper_names = []
-        self.scoring_characters = ""
-
+    def __init__(
+        self, anchor_word_list: AnchorWordList, text: str, t: int, element_number: int
+    ):
         self.element_number = element_number
         self.length = len(text)
-        temp_words = [remove_special_characters(word) for word in text.split()]
-        print(f"tempWords: {len(temp_words)} {temp_words}")
-        self.num_words = len(temp_words)
-        self.words = temp_words
-        temp_words = None
+        self.words = [remove_special_characters(word) for word in text.split()]
+        self.num_words = len(self.words)
         self.anchor_word_hits = anchor_word_list.get_anchor_word_hits(
             self.words, t, element_number
         )
