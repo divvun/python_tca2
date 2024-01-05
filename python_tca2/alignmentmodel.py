@@ -29,7 +29,7 @@ class AlignmentModel:
         self.to_align = ToAlign()
         self.unaligned = Unaligned()
         self.compare = Compare()
-        self.anchor_word_list = AnchorWordList(self)
+        self.anchor_word_list = AnchorWordList()
 
         print(str(self.compare))
 
