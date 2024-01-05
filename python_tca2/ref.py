@@ -36,6 +36,9 @@ class Ref:
                 return True
         return False
 
+    def is_in_text(self, t):
+        return self.t == t
+
     def exactly_matches(self, other_ref):
         # print_frame()
         return (
@@ -46,22 +49,6 @@ class Ref:
             and (self.length == other_ref.length)
         )
 
-    def get_word(self):
-        # print_frame()
-        return self.word
-
-    def get_t(self):
-        # print_frame()
-        return self.t
-
-    def get_match_type(self):
-        # print_frame()
-        return self.match_type
-
     def type_anchor_word(self):
         # print_frame()
         return self.match_type >= 0
-
-    def get_pos(self):
-        # print_frame()
-        return self.pos

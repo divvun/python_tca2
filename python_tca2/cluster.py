@@ -49,9 +49,9 @@ class Cluster:
             positions = []
             for ref in self.refs:
                 if ref.is_in_text(t):
-                    if ref.get_pos() not in positions:
-                        positions.append(ref.get_pos())
-                    cluster_weight = max(cluster_weight, ref.get_weight())
+                    if ref.pos not in positions:
+                        positions.append(ref.pos)
+                    cluster_weight = max(cluster_weight, ref.weight)
                 count = len(positions)
             low = min(low, count)
             high = max(high, count)
