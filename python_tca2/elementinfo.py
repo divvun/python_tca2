@@ -43,8 +43,8 @@ class ElementInfo:
         ret.append("words: [\n" + ",\n".join(self.words) + "],\n")
         ret.append(str(self.anchor_word_hits))
         ret.append(",\n")
-        ret.append("scoring characters: " + self.scoring_characters + "\n")
-        ret.append("proper names: [\n")
+        ret.append("scoringCharacters: " + self.scoring_characters + "\n")
+        ret.append("properNames: [\n")
         ret.append(",\n".join(self.proper_names))
         ret.append("],\n")
 
