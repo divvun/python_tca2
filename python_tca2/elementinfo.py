@@ -12,6 +12,19 @@ def remove_special_characters(word):
     return word
 
 
+def get_scoring_characters(text: str) -> str:
+    scoring_characters = constants.DEFAULT_SCORING_CHARACTERS
+    ret = ""
+    for i in range(len(text)):
+        if text[i] in scoring_characters:
+            ret += text[i]
+    return ret
+
+
+def get_upper_case_words(words):
+    return [word for word in words if len(word) > 0 and word[0].isupper()]
+
+
 class ElementInfo:
     def __init__(
         self, anchor_word_list: AnchorWordList, text: str, t: int, element_number: int
@@ -23,8 +36,8 @@ class ElementInfo:
         self.anchor_word_hits = anchor_word_list.get_anchor_word_hits(
             self.words, t, element_number
         )
-        self.proper_names = anchor_word_list.get_proper_names(self.words)
-        self.scoring_characters = anchor_word_list.get_scoring_characters(text)
+        self.upper_case_words = get_upper_case_words(self.words)
+        self.scoring_characters = get_scoring_characters(text)
 
     def __str__(self) -> str:
         # print_frame()
@@ -36,7 +49,7 @@ class ElementInfo:
         ret.append(",\n")
         ret.append("scoringCharacters: " + self.scoring_characters + ",\n")
         ret.append("properNames: [\n")
-        ret.append(",\n".join(self.proper_names))
+        ret.append(",\n".join(self.upper_case_words))
         ret.append("],\n")
 
         return "".join(ret)
