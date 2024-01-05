@@ -274,27 +274,30 @@ class ElementInfoToBeCompared:
                 for info2 in self.info[tt]:
                     for y in range(len(info2.words)):
                         word2 = info2.words[y]
-                        num1 = float(word1)
-                        num2 = float(word2)
-                        if num1 == num2:
-                            # same number
-                            # add to cluster list
-                            match_type = match.NUMBER
-                            weight = constants.DEFAULT_NUMBER_MATCH_WEIGHT
-                            self.common_clusters.add(
-                                match_type,
-                                weight,
-                                t,
-                                tt,
-                                info1.element_number,
-                                info2.element_number,
-                                x,
-                                y,
-                                1,
-                                1,
-                                word1,
-                                word2,
-                            )  # 2006-04-07
+                        try:
+                            num1 = float(word1)
+                            num2 = float(word2)
+                            if num1 == num2:
+                                # same number
+                                # add to cluster list
+                                match_type = match.NUMBER
+                                weight = constants.DEFAULT_NUMBER_MATCH_WEIGHT
+                                self.common_clusters.add(
+                                    match_type,
+                                    weight,
+                                    t,
+                                    tt,
+                                    info1.element_number,
+                                    info2.element_number,
+                                    x,
+                                    y,
+                                    1,
+                                    1,
+                                    word1,
+                                    word2,
+                                )  # 2006-04-07
+                        except ValueError:
+                            pass
 
     def find_special_character_matches(self, t, tt):
         # print_frame()
