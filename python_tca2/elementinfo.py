@@ -35,7 +35,7 @@ class ElementInfo:
         self.proper_names = anchor_word_list.get_proper_names(self.words)
         self.scoring_characters = anchor_word_list.get_scoring_characters(text)
 
-    def __str__(self):
+    def __str__(self) -> str:
         # print_frame()
         ret = []
         ret.append("length: " + str(self.length) + ",\n")
@@ -43,7 +43,7 @@ class ElementInfo:
         ret.append("words: [\n" + ",\n".join(self.words) + "],\n")
         ret.append(str(self.anchor_word_hits))
         ret.append(",\n")
-        ret.append("scoringCharacters: " + self.scoring_characters + "\n")
+        ret.append("scoringCharacters: " + self.scoring_characters + ",\n")
         ret.append("properNames: [\n")
         ret.append(",\n".join(self.proper_names))
         ret.append("],\n")
