@@ -3,9 +3,18 @@ from python_tca2.anchorwordhits import AnchorWordHits
 from python_tca2.anchorwordlist import AnchorWordList
 
 
+def remove_special_characters(word):
+    for special_char in constants.DEFAULT_SPECIAL_CHARACTERS:
+        if word.startswith(special_char):
+            word = word[1:]
+        if word.endswith(special_char):
+            word = word[:-1]
+
+    return word
+
+
 class ElementInfo:
     def __init__(self, anchor_word_list: AnchorWordList, text, t, element_number):
-        # print_frame(text)
         self.length = 0
         self.num_words = 0
         self.words = []
@@ -15,17 +24,10 @@ class ElementInfo:
 
         self.element_number = element_number
         self.length = len(text)
-        special_characters = constants.DEFAULT_SPECIAL_CHARACTERS
-        special_characters_class = "[\\s"
-        for char in special_characters:
-            special_characters_class += "\\" + char
-        special_characters_class += "]"
-        special_characters_pattern = (
-            special_characters_class + "*\\s" + special_characters_class + "*"
-        )
-        temp_words = (" " + text + " ").split(special_characters_pattern)
-        self.num_words = len(temp_words) - 1
-        self.words = temp_words[1:]
+        temp_words = [remove_special_characters(word) for word in text.split()]
+        print(f"tempWords: {len(temp_words)} {temp_words}")
+        self.num_words = len(temp_words)
+        self.words = temp_words
         temp_words = None
         self.anchor_word_hits = anchor_word_list.get_anchor_word_hits(
             self.words, t, element_number
