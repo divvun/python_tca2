@@ -125,7 +125,7 @@ class ElementInfoToBeCompared:
             print(f"info1: {info1}")
             for x in range(len(info1.words)):
                 word1 = info1.words[x]
-                next_word1 = info1.words[x + 1] if x < len(info1.words) else ""
+                next_word1 = info1.words[x + 1] if x < len(info1.words) - 1 else ""
                 for info2 in self.info[tt]:
                     print(f"info2: {info2}")
                     for y in range(len(info2.words)):
