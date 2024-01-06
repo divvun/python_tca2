@@ -11,15 +11,13 @@ class Ref:
 
     def __str__(self) -> str:
         return (
-            "{\n"
-            f"matchType=: {self.match_type},\n"
+            f"matchType: {self.match_type},\n"
             f"weight: {self.weight},\n"
             f"t: {self.t},\n"
-            f"elementNumber{self.element_number},\n"
+            f"elementNumber: {self.element_number},\n"
             f"pos: {self.pos},\n"
             f"len: {self.length},\n"
             f"word: {self.word}\n"
-            "}"
         )
 
     def matches(self, other_ref):

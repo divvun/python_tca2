@@ -11,7 +11,7 @@ class AnchorWordHits:
         self.hits.append(hit)
 
     def __str__(self):
-        ret = "{\nAnchorwordHits: ["
+        ret = "{\nanchorWordHits: [\n"
         for i, hit in enumerate(self.hits):
             if i > 0:
                 ret += ","

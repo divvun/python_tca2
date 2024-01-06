@@ -10,7 +10,7 @@ class Clusters:
         self.clusters: List[Cluster] = []  # list of Cluster
 
     def __str__(self):
-        return "{\n" + f"clusters: [\n{',\n'.join(self.clusters)}\n]\n" + "}"
+        return f"clusters: {',\n'.join(str(cluster) for cluster in self.clusters)}"
 
     def add(
         self,
@@ -27,6 +27,21 @@ class Clusters:
         word1,
         word2,
     ):
+        print(
+            "add",
+            match_type,
+            weight,
+            t,
+            tt,
+            element_number1,
+            element_number2,
+            pos1,
+            pos2,
+            len1,
+            len2,
+            word1,
+            word2,
+        )
         new_cluster = Cluster()
         new_cluster.add(Ref(match_type, weight, t, element_number1, pos1, len1, word1))
         new_cluster.add(Ref(match_type, weight, tt, element_number2, pos2, len2, word2))

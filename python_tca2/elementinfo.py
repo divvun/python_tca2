@@ -40,9 +40,8 @@ class ElementInfo:
         self.scoring_characters = get_scoring_characters(text)
 
     def __str__(self) -> str:
-        # print_frame()
         ret = []
-        ret.append("length: " + str(self.length) + ",\n")
+        ret.append("{\nlength: " + str(self.length) + ",\n")
         ret.append("numWords: " + str(self.num_words) + ",\n")
         ret.append("words: [\n" + ",\n".join(self.words) + "],\n")
         ret.append(str(self.anchor_word_hits))
@@ -50,6 +49,6 @@ class ElementInfo:
         ret.append("scoringCharacters: " + self.scoring_characters + ",\n")
         ret.append("properNames: [\n")
         ret.append(",\n".join(self.upper_case_words))
-        ret.append("],\n")
+        ret.append("]\n}")
 
         return "".join(ret)

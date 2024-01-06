@@ -10,7 +10,9 @@ class Cluster:
         self.refs: List[Ref] = []
 
     def __str__(self):
-        return "{\n" + f"refs: [\n{',\n'.join(self.refs)}\n]\n" + "}"
+        return (
+            f"refs: {',\n'.join(str(ref) for ref in self.refs)}"
+        )
 
     def clone(self):
         # print_frame()

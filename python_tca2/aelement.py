@@ -1,6 +1,3 @@
-from python_tca2.alignment_utils import print_frame
-
-
 class AElement:
     def __init__(self, node, element_number):
         # print_frame()
@@ -12,12 +9,12 @@ class AElement:
     def __str__(self):
         # print_frame()
         return (
-            "element_number="
+            "element_number: "
             + str(self.element_number)
-            + ";alignment_number="
+            + " alignment_number: "
             + str(self.alignment_number)
-            + ";length="
+            + " length: "
             + str(self.length)
-            + ";text="
+            + " text: "
             + self.element.text
         )

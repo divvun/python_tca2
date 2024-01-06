@@ -28,7 +28,7 @@ class ElementInfoToBeCompared:
         )
 
     def add(self, element_info, t):
-        # print_frame()
+        print(f"eitbc add: {t} {element_info}")
         self.info[t].append(element_info)
 
     def empty(self):
@@ -79,10 +79,30 @@ class ElementInfoToBeCompared:
         self.find_anchor_word_matches()
         for t in range(constants.NUM_FILES):
             for tt in range(t + 1, constants.NUM_FILES):
+                print(
+                    f"1 t: {t}, tt: {tt}, clusters: "
+                    f"{len(self.common_clusters.clusters)}"
+                )
                 self.find_number_matches(t, tt)
+                print(
+                    f"2 t: {t}, tt: {tt}, clusters: "
+                    f"{len(self.common_clusters.clusters)}"
+                )
                 self.find_propername_matches(t, tt)
+                print(
+                    f"3 t: {t}, tt: {tt}, clusters: "
+                    f"{len(self.common_clusters.clusters)}"
+                )
                 self.find_dice_matches(t, tt)
+                print(
+                    f"4 t: {t}, tt: {tt}, clusters: "
+                    f"{len(self.common_clusters.clusters)}"
+                )
                 self.find_special_character_matches(t, tt)
+                print(
+                    f"5 t: {t}, tt: {tt}, clusters: "
+                    f"{len(self.common_clusters.clusters)}"
+                )
 
         self.score += self.common_clusters.get_score(
             constants.DEFAULT_LARGE_CLUSTER_SCORE_PERCENTAGE
@@ -154,6 +174,7 @@ class ElementInfoToBeCompared:
                                 word1,
                                 word2,
                             )
+                            print(f"1 fd {self.common_clusters}")
                         if next_word1 != "":
                             show_phrase = word1 + " " + next_word1
                             if all(
@@ -180,11 +201,13 @@ class ElementInfoToBeCompared:
                                     show_phrase,
                                     word2,
                                 )
+                                print(f"2 fd {self.common_clusters}")
 
                         next_word2 = (
                             info2.words[y + 1] if y < len(info2.words) - 1 else ""
                         )
                         if next_word2 != "":
+                            print("word1: " + word1 + ", next_word2: " + next_word2)
                             show_phrase = word2 + " " + next_word2
                             if all(
                                 len(word) >= constants.DEFAULT_DICE_MIN_WORD_LENGTH
@@ -211,6 +234,7 @@ class ElementInfoToBeCompared:
                                     word1,
                                     show_phrase2,
                                 )
+                                print(f"3 fd {self.common_clusters}")
 
     def find_anchor_word_matches(self):
         # print_frame()

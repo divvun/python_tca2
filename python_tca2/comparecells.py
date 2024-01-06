@@ -11,6 +11,7 @@ class CompareCells:
         text_end_count = 0
         for t in range(constants.NUM_FILES):
             for x in range(position[t] + 1, position[t] + step.increment[t] + 1):
+                print(f"CompareCells: t = {t}, x = {x}")
                 try:
                     info = model.compare.elements_info[t].get_element_info(model, x, t)
                     self.element_info_to_be_compared.add(info, t)

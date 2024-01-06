@@ -23,34 +23,41 @@ class ElementsInfo:
         if element_number < self.first:
             self.set_first(model, element_number, t)
         elif element_number > self.last:
-            try:
-                self.set_last(model, element_number, t)
-            except EndOfTextExceptionError as e:
-                raise e
+            self.set_last(model, element_number, t)
+        print(
+            f"element_number = {element_number}, first = {self.first}, "
+            f"last = {self.last}"
+        )
         return self.element_info[element_number - self.first]
 
     def set_first(self, model, new_first, t):
-        # print_frame()
+        print(f"setFirst: newFirst = {new_first}, t = {t}")
         if new_first < self.first:
+            print("newFirst < first")
             more = []
             for count in range(self.first - new_first):
                 index = new_first + count
-                text = model.nodes[t].item(index).get_text_content()
+                text = model.nodes[t][index].text
+                print(f"index = {index}, text = {text}")
                 more.append(ElementInfo(model.anchor_word_list, text, t, index))
             self.element_info = more + self.element_info
+            print(f"elementInfo = {len(self.element_info)}")
             self.first = new_first
         elif new_first > self.last:
+            print("newFirst > last")
             self.element_info.clear()
             self.first = new_first
             self.last = self.first - 1
         else:
             for count in range(new_first - self.first):
                 self.element_info.pop(0)
+            print(f"2 elementInfo = {len(self.element_info)} {new_first}")
             self.first = new_first
 
     def set_last(self, model, new_last, t):
-        # print_frame()
+        print(f"setLast: newLast = {new_last}, t = {t}")
         if new_last > self.last:
+            print("newLast > last")
             for count in range(new_last - self.last):
                 index = self.last + count + 1
 
