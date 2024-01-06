@@ -65,6 +65,18 @@ class ElementsInfo:
                     raise EndOfTextExceptionError()
 
                 text = model.nodes[t][index].text
+                print(f"2 index = {index}, text = {text}")
                 self.element_info.append(
                     ElementInfo(model.anchor_word_list, text, t, index)
                 )
+            self.last = new_last
+        elif new_last < self.first:
+            print("newLast < first")
+            self.element_info.clear()
+            self.first = new_last
+            self.last = self.first - 1
+        else:
+            for count in range(self.last - new_last):
+                self.element_info.pop()
+            print(f"3 elementInfo = {len(self.element_info)} {new_last}")
+            self.last = new_last

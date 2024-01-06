@@ -29,7 +29,7 @@ class Cluster:
                 return
         self.refs.append(other_ref)
 
-    def matches(self, other_ref):
+    def matches(self, other_ref: Ref):
         # print_frame()
         for ref in self.refs:
             if ref.matches(other_ref):

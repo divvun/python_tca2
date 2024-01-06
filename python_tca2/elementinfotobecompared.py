@@ -53,14 +53,17 @@ class ElementInfoToBeCompared:
             self.score = 0.0
             if not self.empty():
                 print("not empty")
-                length = [0] * constants.NUM_FILES
-                element_count = [0] * constants.NUM_FILES
+                length = [0, 0]
+                element_count = [0, 0]
 
                 for t in range(constants.NUM_FILES):
-                    for info1 in self.info[t]:
-                        length[t] += info1.length
+                    print(f"t: {t} {len(self.info[t])}")
+                    for info in self.info[t]:
+                        print(f"info: {t} {info}")
+                        length[t] += info.length
                     element_count[t] = len(self.info[t])
 
+                print("length correlation:", length, element_count)
                 if similarity_utils.bad_length_correlation(
                     length[0],
                     length[1],
@@ -150,7 +153,7 @@ class ElementInfoToBeCompared:
                     print(f"info2: {info2}")
                     for y in range(len(info2.words)):
                         match_type = match.DICE
-                        weight = constants.DEFAULT_DICE_MATCH_WEIGHT
+                        weight = constants.DEFAULT_DICEPHRASE_MATCH_WEIGHT
                         word2 = info2.words[y]
                         print("word1: " + word1 + ", word2: " + word2)
                         if (
@@ -371,7 +374,7 @@ class ElementInfoToBeCompared:
                             else constants.DEFAULT_ANCHOR_WORD_MATCH_WEIGHT
                         )
                         if present_in_all_texts:
-                            anchor_word_clusters.add(
+                            anchor_word_clusters.add_ref(
                                 Ref(
                                     match_type,
                                     weight,
@@ -391,7 +394,7 @@ class ElementInfoToBeCompared:
                     c += 1
                 current[t] += count
 
-        self.commonClusters.add(anchor_word_clusters)
+        self.commonClusters.add_clusters(anchor_word_clusters)
         return hits
 
     def find_hits(self):

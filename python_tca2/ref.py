@@ -25,8 +25,8 @@ class Ref:
         if (
             (self.t == other_ref.t)
             and (self.element_number == other_ref.element_number)
-            and (self.pos <= other_ref.pos + other_ref.length)
-            and (other_ref.pos <= self.pos + self.length)
+            and (self.pos <= other_ref.pos + other_ref.length - 1)
+            and (other_ref.pos <= self.pos + self.length - 1)
         ):
             return True
         elif other_ref.match_type >= 0:
