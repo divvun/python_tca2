@@ -277,7 +277,7 @@ class ElementInfoToBeCompared:
                         word2 = info2.words[y]
                         if word1[0].isupper() and word2[0].isupper() and word1 == word2:
                             match_type = match.PROPER
-                            weight = constants.DEFAULT_PROPER_NAME_MATCH_WEIGHT
+                            weight = constants.DEFAULT_PROPERNAME_MATCH_WEIGHT
                             self.common_clusters.add(
                                 match_type,
                                 weight,
