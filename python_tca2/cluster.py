@@ -6,41 +6,34 @@ from python_tca2.ref import Ref
 
 class Cluster:
     def __init__(self):
-        # print_frame()
         self.refs: List[Ref] = []
 
     def __str__(self):
         return f"refs: {',\n'.join(str(ref) for ref in self.refs)}"
 
     def clone(self):
-        # print_frame()
         return super().clone()
 
     def get_refs(self):
-        # print_frame()
         return self.refs
 
     def add(self, other_ref):
-        # print_frame()
         for ref in self.refs:
             if ref.exactly_matches(other_ref):
                 return
         self.refs.append(other_ref)
 
     def matches(self, other_ref: Ref):
-        # print_frame()
         for ref in self.refs:
             if ref.matches(other_ref):
                 return True
         return False
 
     def add_cluster(self, other_cluster):
-        # print_frame()
         for other_ref in other_cluster.refs:
             self.add(other_ref)
 
     def get_score(self, large_cluster_score_percentage):
-        # print_frame()
         high = 0
         low = float("inf")
         cluster_weight = 0.0
@@ -61,7 +54,6 @@ class Cluster:
         )
 
     def count_anchor_word_entries(self):
-        # print_frame()
         anchor_word_entry_numbers = []
         for ref in self.refs:
             if (
@@ -72,7 +64,6 @@ class Cluster:
         return len(anchor_word_entry_numbers)
 
     def get_words(self, include_match_type):
-        # print_frame()
         ret = []
         sorted_cluster = self.clone()
         sorted_cluster.refs.sort(key=lambda ref: ref.get_word())

@@ -34,7 +34,6 @@ class AlignmentModel:
         print(str(self.compare))
 
     def load_text(self, text_file, t):
-        # print_frame()
         # TODO: Add text file name to the model
         tree = etree.parse(text_file)
         self.docs.append(tree)
@@ -46,8 +45,7 @@ class AlignmentModel:
             self.unaligned.add(element, t)
 
     def suggets_without_gui(self):
-        # print_frame()
-        run_limit = 3  # constants.RUN_LIMIT
+        run_limit = constants.RUN_LIMIT
         run_count = 0
         done_aligning = False
 
@@ -91,11 +89,9 @@ class AlignmentModel:
                     done_aligning = True
 
     def flush_aligned_without_gui(self):
-        # print_frame()
         self.aligned.pickup(self.to_align.flush())
 
     def find_more_to_align_without_gui(self, best_path):
-        # print_frame()
         step_suggestion = best_path.steps[0]
         for t in range(constants.NUM_FILES):
             print_frame(
@@ -110,7 +106,6 @@ class AlignmentModel:
         return step_suggestion
 
     def get_best_path(self, queue_list):
-        # print_frame()
         normalised_best_score = constants.BEST_PATH_SCORE_NOT_CALCULATED
 
         best_path = None
@@ -126,7 +121,6 @@ class AlignmentModel:
         return best_path
 
     def lengthen_paths(self):
-        # print_frame()
         position = self.find_start_position()
         queue_list = QueueList()
         queue_list.add(QueueEntry(position, 0))
@@ -182,7 +176,6 @@ class AlignmentModel:
                 break
 
     def get_step_score(self, position, step):
-        # print_frame()
         print("getStepScore: step = " + str(step))
         print(f"position = {position[0]},{position[1]}")
 
@@ -190,7 +183,6 @@ class AlignmentModel:
         return cell.get_score()
 
     def make_longer_path(self, ret_queue_entry, new_step: PathStep):
-        # print_frame()
         position = ret_queue_entry.path.position
         print("Make longer path " + str(ret_queue_entry))
         print("step = " + str(new_step))
@@ -213,7 +205,6 @@ class AlignmentModel:
             return ret_queue_entry
 
     def find_start_position(self):
-        # print_frame()
         position = [0] * constants.NUM_FILES
         for t in range(constants.NUM_FILES):
             if len(self.unaligned.elements[t]) > 0:
