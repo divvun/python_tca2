@@ -23,7 +23,7 @@ class ToAlign:
             if len(self.pending) == 0:
                 new_link = Link()
                 new_link.alignment_number = self.first_alignment_number
-                self.pending.append(Link())
+                self.pending.append(new_link)
 
             self.pending[-1].element_numbers[t].append(element.element_number)
             last_alignment_number = self.first_alignment_number + len(self.pending) - 1
