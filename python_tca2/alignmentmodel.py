@@ -31,8 +31,6 @@ class AlignmentModel:
         self.compare = Compare()
         self.anchor_word_list = AnchorWordList()
 
-        print(str(self.compare))
-
     def load_text(self, text_file, t):
         # TODO: Add text file name to the model
         tree = etree.parse(text_file)
@@ -88,6 +86,7 @@ class AlignmentModel:
                 else:
                     print_frame(run_count, "no best_path.steps")
                     done_aligning = True
+        print_frame(f"done_aligning: {self.aligned}")
 
     def flush_aligned_without_gui(self):
         self.aligned.pickup(self.to_align.flush())
@@ -128,7 +127,6 @@ class AlignmentModel:
         step_count = 0
         done_lengthening = False
         while not done_lengthening:
-            print("step_count = " + str(step_count))
             next_queue_list = QueueList()
             print(
                 len(queue_list.entry),
@@ -154,7 +152,6 @@ class AlignmentModel:
         self, queue_entry: QueueEntry, queue_list: QueueList, next_queue_list: QueueList
     ):
         for step in self.compare.step_list:
-            # print(str(step))
             try:
                 print("step = " + str(step))
                 print("1 queueEntry " + str(queue_entry))
@@ -166,7 +163,6 @@ class AlignmentModel:
                     print("2 queueEntry " + str(new_queue_entry))
                     next_queue_list.add(new_queue_entry)
             except EndOfAllTextsExceptionError:
-                print_frame("EndOfAllTextsException")
                 new_queue_entry = deepcopy(queue_entry)
                 new_queue_entry.end = True
                 if not next_queue_list.contains(new_queue_entry):
@@ -177,17 +173,11 @@ class AlignmentModel:
                 break
 
     def get_step_score(self, position, step):
-        print("getStepScore: step = " + str(step))
-        print(f"position = {position[0]},{position[1]}")
-
         cell = self.compare.get_cell_values(self, position, step)
         return cell.get_score()
 
     def make_longer_path(self, ret_queue_entry, new_step: PathStep):
         position = ret_queue_entry.path.position
-        print("Make longer path " + str(ret_queue_entry))
-        print("step = " + str(new_step))
-        print(f"position = {position[0]},{position[1]}")
 
         new_score = ret_queue_entry.score + self.get_step_score(
             ret_queue_entry.path.position, new_step
@@ -217,13 +207,11 @@ class AlignmentModel:
         return position
 
     def save_plain(self):
-        # print_frame("save_plain")
         for t in range(constants.NUM_FILES):
             self.save_new_line_format_file(t)
 
     def save_new_line_format_file(self, t):
         with open(f"aligned_{t}.txt", "w") as f:
-            print_frame(t, len(self.aligned.elements[t]), len(self.aligned.alignments))
             print(
                 "\n".join(
                     [

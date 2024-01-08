@@ -11,7 +11,6 @@ class QueueEntry:
         self.end: bool = False
 
     def remove(self):
-        # print_frame()
         self.removed = True
 
     def __str__(self):

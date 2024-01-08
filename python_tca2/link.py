@@ -3,7 +3,6 @@ from python_tca2 import constants
 
 class Link:
     def __init__(self):
-        # print_frame()
         self.alignment_number = -1
         self.element_numbers = [[] for _ in range(constants.NUM_FILES)]
 
@@ -15,7 +14,6 @@ class Link:
         )
 
     def __str__(self):
-        # print_frame()
         str_ = "("
         for t in range(constants.NUM_FILES):
             if t > 0:
@@ -24,5 +22,5 @@ class Link:
             for el in self.element_numbers[t]:
                 str_ += ",el=" + str(el)
         str_ += ")"
-        str_ += " alignment number " + str(self.alignment_number)
+        str_ += f" alignment number {self.alignment_number}"
         return str_

@@ -1,10 +1,8 @@
-from python_tca2.alignment_utils import print_frame
 from python_tca2.anchorwordhit import AnchorWordHit
 
 
 class AnchorWordHitComparator:
     def compare(self, o1: AnchorWordHit, o2: AnchorWordHit) -> int:
-        # print_frame()
         if not isinstance(o1, AnchorWordHit):
             raise TypeError()
         if not isinstance(o2, AnchorWordHit):

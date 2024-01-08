@@ -6,11 +6,9 @@ from python_tca2.anchorwordlistentry import AnchorWordListEntry
 
 class AnchorWordList:
     def __init__(self):
-        # print_frame()
         self.entries = []
 
     def load_from_file(self, from_file):
-        # print_frame()
         self.entries.clear()
         ok = True
         try:

@@ -1,6 +1,5 @@
 class AElement:
     def __init__(self, node, element_number):
-        # print_frame()
         self.element = node
         self.element_number = element_number
         self.alignment_number = -1
@@ -15,7 +14,6 @@ class AElement:
         )
 
     def __str__(self):
-        # print_frame()
         return (
             "element_number: "
             + str(self.element_number)

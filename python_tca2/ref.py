@@ -1,6 +1,5 @@
 class Ref:
     def __init__(self, match_type, weight, t, element_number, pos, length, word):
-        # print_frame()
         self.match_type = match_type
         self.weight = weight
         self.t = t
@@ -21,7 +20,6 @@ class Ref:
         )
 
     def matches(self, other_ref):
-        # print_frame()
         if (
             (self.t == other_ref.t)
             and (self.element_number == other_ref.element_number)
@@ -38,7 +36,6 @@ class Ref:
         return self.t == t
 
     def exactly_matches(self, other_ref):
-        # print_frame()
         return (
             (self.match_type == other_ref.match_type)
             and (self.t == other_ref.t)
@@ -48,5 +45,4 @@ class Ref:
         )
 
     def type_anchor_word(self):
-        # print_frame()
         return self.match_type >= 0

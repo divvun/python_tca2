@@ -8,17 +8,14 @@ from python_tca2.link import Link
 
 class ToAlign:
     def __init__(self):
-        # print_frame()
         self.elements: List[List[AElement]] = [[], []]
         self.pending: List[Link] = []
         self.first_alignment_number = 0
 
     def empty(self) -> bool:
-        # print_frame()
         return len(self.pending) == 0
 
     def pickup(self, t: int, element: AElement):
-        # print_frame()
         if element is not None:
             if len(self.pending) == 0:
                 new_link = Link()
@@ -32,7 +29,6 @@ class ToAlign:
             self.elements[t].append(element)
 
     def flush(self) -> AlignmentsEtc:
-        # print_frame()
         if self.pending:
             self.first_alignment_number = self.pending[-1].alignment_number + 1
             return_value = AlignmentsEtc()
