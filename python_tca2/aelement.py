@@ -6,6 +6,14 @@ class AElement:
         self.alignment_number = -1
         self.length = len(self.element.text)
 
+    def __eq__(self, other):
+        return (
+            self.element_number == other.element_number
+            and self.alignment_number == other.alignment_number
+            and self.length == other.length
+            and self.element.text == other.element.text
+        )
+
     def __str__(self):
         # print_frame()
         return (
