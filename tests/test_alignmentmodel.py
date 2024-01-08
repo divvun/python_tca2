@@ -1,6 +1,10 @@
+from typing import List
+
 from lxml import etree
 
+from python_tca2 import alignmentmodel
 from python_tca2.aelement import AElement
+from python_tca2.aligned import Aligned
 from python_tca2.link import Link
 from python_tca2.toalign import ToAlign
 from python_tca2.unaligned import Unaligned
@@ -49,75 +53,57 @@ def test_toalign_pickup():
     assert str(link) == str(to_align.pending[0])
 
 
-# def test_suggest1():
-#     trees = [
-#         etree.fromstring(
-#             """
-#     <document>
-#       <s id="1">Kanskje en innkjøpsordning for kvenskspråklig litteratur.</s>
-#       <s id="2">Utvikling av undervisnings- og lærematerialer.</s>
-#     </document>
-#     """
-#         ),
-#         etree.fromstring(
-#             """
-#     <document>
-#       <s id="1">Kvääninkielinen litteratuuri osto-oorninkhiin piian.</s>
-#       <s id="2">Opetus- ja oppimateriaaliitten kehittäminen.</s>
-#     </document>
-#     """
-#         ),
-#     ]
+def test_suggest1():
+    trees = [
+        etree.fromstring(
+            """
+    <document>
+      <s id="1">Kanskje en innkjøpsordning for kvenskspråklig litteratur.</s>
+      <s id="2">Utvikling av undervisnings- og lærematerialer.</s>
+    </document>
+    """
+        ),
+        etree.fromstring(
+            """
+    <document>
+      <s id="1">Kvääninkielinen litteratuuri osto-oorninkhiin piian.</s>
+      <s id="2">Opetus- ja oppimateriaaliitten kehittäminen.</s>
+    </document>
+    """
+        ),
+    ]
 
-#     model = alignmentmodel.AlignmentModel()
-#     load_text(trees, model)
+    model = alignmentmodel.AlignmentModel()
+    load_text(trees, model)
 
-#     model.suggets_without_gui()
+    model.suggets_without_gui()
 
-#     alignments: List[Link] = [Link(), Link()]
-#     alignments[0].element_numbers = [[0], [0]]
-#     alignments[1].element_numbers = [[1], [1]]
+    alignments: List[Link] = [Link(), Link()]
+    alignments[0].element_numbers = [[0], [0]]
+    alignments[0].alignment_number = 0
+    alignments[1].element_numbers = [[1], [1]]
+    alignments[1].alignment_number = 1
 
-#     elements: List[List[AElement]] = [
-#         [
-#             AElement(model.nodes[0][0], 0),
-#             AElement(model.nodes[0][1], 1),
-#         ],
-#         [
-#             AElement(model.nodes[1][0], 0),
-#             AElement(model.nodes[1][1], 1),
-#         ],
-#     ]
+    elements: List[List[AElement]] = [
+        [
+            AElement(model.nodes[0][0], 0),
+            AElement(model.nodes[0][1], 1),
+        ],
+        [
+            AElement(model.nodes[1][0], 0),
+            AElement(model.nodes[1][1], 1),
+        ],
+    ]
+    elements[0][0].alignment_number = 0
+    elements[0][1].alignment_number = 1
+    elements[1][0].alignment_number = 0
+    elements[1][1].alignment_number = 1
 
-#     aligned = Aligned()
-#     aligned.alignments = alignments
-#     aligned.elements = elements
+    aligned = Aligned()
+    aligned.alignments = alignments
+    aligned.elements = elements
 
-#     print(
-#         "\n".join(
-#             [
-#                 str(a1 == a2)
-#                 for a1, a2 in zip(model.aligned.alignments, alignments, strict=True)
-#             ]
-#         ),
-#         file=open("test.txt", "a"),
-#     )
-#     print(
-#         "\n".join([str(el) for el_list in model.aligned.elements for el in el_list]),
-#         file=open("test.txt", "a"),
-#     )
-#     assert len(elements) == len(model.aligned.elements)
-#     assert len(model.aligned.alignments) == len(alignments)
-#     assert aligned.alignments[0] == alignments[0]
-#     print(
-#         "\n".join(
-#             [
-#                 f"{a1} == {a2}"
-#                 for a1, a2 in zip(model.aligned.alignments, alignments, strict=False)
-#             ]
-#         ),
-#         file=open("test.txt", "a"),
-#     )
+    assert model.aligned == aligned
 
 
 # def test_suggest2():
