@@ -34,3 +34,9 @@ class CompareCells:
             f"{self.element_info_to_be_compared}"
             f",\nbestPathScore: {self.best_path_score}\n"
         )
+
+    def to_json(self):
+        return {
+            "element_info_to_be_compared": self.element_info_to_be_compared.to_json(),
+            "best_path_score": self.best_path_score,
+        }

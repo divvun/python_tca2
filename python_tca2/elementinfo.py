@@ -52,3 +52,14 @@ class ElementInfo:
         ret.append(",\n".join(self.upper_case_words))
 
         return "".join(ret)
+
+    def to_json(self):
+        return {
+            "element_number": self.element_number,
+            "length": self.length,
+            "num_words": self.num_words,
+            "words": self.words,
+            "anchor_word_hits": self.anchor_word_hits.to_json(),
+            "scoring_characters": self.scoring_characters,
+            "proper_names": self.upper_case_words,
+        }

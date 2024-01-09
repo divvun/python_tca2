@@ -19,3 +19,11 @@ class QueueEntry:
             f"QueueEntry: {self.path} {score} "
             f"{'true' if self.removed else 'false'} {'true' if self.end else 'false'}"
         )
+
+    def to_json(self):
+        return {
+            "path": self.path.to_json(),
+            "score": self.score,
+            "removed": self.removed,
+            "end": self.end,
+        }

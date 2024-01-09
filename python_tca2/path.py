@@ -9,6 +9,12 @@ class Path:
         self.steps: List[PathStep] = []
         self.position = initial_position
 
+    def to_json(self):
+        return {
+            "steps": [step.to_json() for step in self.steps],
+            "position": self.position,
+        }
+
     def __eq__(self, path):
         return str(self) == str(path)
 

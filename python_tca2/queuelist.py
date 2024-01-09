@@ -8,6 +8,9 @@ class QueueList:
     def __init__(self):
         self.entry: List[QueueEntry] = []
 
+    def to_json(self):
+        return [entry.to_json() for entry in self.entry]
+
     def empty(self) -> bool:
         return len(self.entry) == 0
 

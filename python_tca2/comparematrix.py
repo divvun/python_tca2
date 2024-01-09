@@ -9,6 +9,12 @@ class CompareMatrix:
         self.cells: Dict[str, CompareCells] = {}
         self.best_path_scores: Dict[str, float] = {}
 
+    def to_json(self):
+        return {
+            "cells": {key: self.cells[key].to_json() for key in self.cells.keys()},
+            "best_path_scores": self.best_path_scores,
+        }
+
     def __str__(self):
         cells = "\n".join([f"{key}: {self.cells[key]}" for key in self.cells.keys()])
         bp = "\n".join(

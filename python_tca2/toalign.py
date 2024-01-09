@@ -12,6 +12,12 @@ class ToAlign:
         self.pending: List[Link] = []
         self.first_alignment_number = 0
 
+    def to_json(self):
+        return {
+            "elements": self.elements,
+            "pending": [al.to_json() for al in self.pending],
+        }
+
     def empty(self) -> bool:
         return len(self.pending) == 0
 

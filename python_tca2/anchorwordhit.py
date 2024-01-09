@@ -27,3 +27,11 @@ class AnchorWordHit:
             + self.word
             + ")"
         )
+
+    def to_json(self):
+        return {
+            "index": self.index,
+            "element_number": self.element_number,
+            "pos": self.pos,
+            "word": self.word,
+        }

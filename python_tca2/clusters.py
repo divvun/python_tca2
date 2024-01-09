@@ -12,6 +12,9 @@ class Clusters:
     def __str__(self):
         return f"clusters: {',\n'.join(str(cluster) for cluster in self.clusters)}"
 
+    def to_json(self):
+        return {"clusters": [cluster.to_json() for cluster in self.clusters]}
+
     def add(
         self,
         match_type,

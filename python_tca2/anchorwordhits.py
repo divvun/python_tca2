@@ -18,3 +18,6 @@ class AnchorWordHits:
             ret += str(hit)
         ret += "]\n}"
         return ret
+
+    def to_json(self):
+        return {"anchor_word_hits": [hit.to_json() for hit in self.hits]}

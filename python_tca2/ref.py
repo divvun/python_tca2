@@ -8,6 +8,17 @@ class Ref:
         self.length = length
         self.word = word
 
+    def to_json(self):
+        return {
+            "match_type": self.match_type,
+            "weight": self.weight,
+            "t": self.t,
+            "element_number": self.element_number,
+            "pos": self.pos,
+            "length": self.length,
+            "word": self.word,
+        }
+
     def __str__(self) -> str:
         return (
             f"matchType: {self.match_type},\n"

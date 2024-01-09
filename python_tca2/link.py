@@ -13,6 +13,12 @@ class Link:
             for e1e, e2e in zip(e1, e2, strict=True)
         )
 
+    def to_json(self):
+        return {
+            "alignment_number": self.alignment_number,
+            "element_numbers": self.element_numbers,
+        }
+
     def __str__(self):
         str_ = "("
         for t in range(constants.NUM_FILES):

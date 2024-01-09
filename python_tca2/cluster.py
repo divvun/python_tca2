@@ -8,6 +8,9 @@ class Cluster:
     def __init__(self):
         self.refs: List[Ref] = []
 
+    def to_json(self):
+        return {"refs": [ref.to_json() for ref in self.refs]}
+
     def __str__(self):
         return f"refs: {',\n'.join(str(ref) for ref in self.refs)}"
 

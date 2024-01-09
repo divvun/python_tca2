@@ -23,3 +23,6 @@ class PathStep:
 
     def clone(self):
         return deepcopy(self)
+
+    def to_json(self):
+        return {"increment": self.increment}

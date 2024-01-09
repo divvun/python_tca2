@@ -11,6 +11,12 @@ class Aligned:
         self.elements: List[List[AElement]] = [[] for _ in range(constants.NUM_FILES)]
         self.alignments: List[Link] = []
 
+    def to_json(self):
+        return {
+            "elements": self.elements,
+            "alignments": [al.to_json() for al in self.alignments],
+        }
+
     def __eq__(self, other):
         return self.elements == other.elements and self.alignments == other.alignments
 

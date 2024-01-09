@@ -17,6 +17,15 @@ class ElementsInfo:
         temp += ",\n".join([str(element_info) for element_info in self.element_info])
         return temp
 
+    def to_json(self):
+        return {
+            "first": self.first,
+            "last": self.last,
+            "element_info": [
+                element_info.to_json() for element_info in self.element_info
+            ],
+        }
+
     def get_element_info(self, model, element_number, t):
         # print_frame()
         print(

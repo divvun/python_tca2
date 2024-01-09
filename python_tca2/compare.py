@@ -17,6 +17,12 @@ class Compare:
 
         self.create_step_list()
 
+    def to_json(self):
+        return {
+            "elements_info": [ei.to_json() for ei in self.elements_info],
+            "matrix": self.matrix.to_json(),
+            "step_list": [step.to_json() for step in self.step_list],
+        }
     def __str__(self):
         temp = "{\nCompare: {\n"
         temp += "elementsInfo: [\n"

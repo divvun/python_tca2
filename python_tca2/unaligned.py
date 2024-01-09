@@ -17,3 +17,10 @@ class Unaligned:
         return "\n".join(
             [str(element) for elements in self.elements for element in elements]
         )
+
+    def to_json(self):
+        return {
+            "elements": [
+                element.to_json() for elements in self.elements for element in elements
+            ]
+        }

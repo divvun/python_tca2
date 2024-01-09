@@ -17,6 +17,13 @@ class ElementInfoToBeCompared:
         self.score = constants.ELEMENTINFO_SCORE_NOT_CALCULATED
         self.info: List[List[ElementInfo]] = [[] for _ in range(constants.NUM_FILES)]
 
+    def to_json(self):
+        return {
+            "score": self.get_score(),
+            "common_clusters": self.common_clusters.to_json(),
+            "info": [info.to_json() for infos in self.info for info in infos],
+        }
+
     def __str__(self):
         poff = []
         for t, infos in enumerate(self.info):
