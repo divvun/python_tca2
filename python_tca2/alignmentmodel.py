@@ -217,7 +217,7 @@ class AlignmentModel:
                     [
                         " ".join(
                             [
-                                self.aligned.elements[t][element_number].element.text
+                                self.aligned.elements[t][element_number].element
                                 for element_number in link.element_numbers[t]
                             ]
                         )

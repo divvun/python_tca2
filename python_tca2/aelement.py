@@ -1,16 +1,16 @@
 class AElement:
     def __init__(self, node, element_number):
-        self.element = node
+        self.element = node.text
         self.element_number = element_number
         self.alignment_number = -1
-        self.length = len(self.element.text)
+        self.length = len(self.element)
 
     def __eq__(self, other):
         return (
             self.element_number == other.element_number
             and self.alignment_number == other.alignment_number
             and self.length == other.length
-            and self.element.text == other.element.text
+            and self.element == other.element
         )
 
     def __str__(self):
@@ -22,5 +22,5 @@ class AElement:
             + " length: "
             + str(self.length)
             + " text: "
-            + self.element.text
+            + self.element
         )
