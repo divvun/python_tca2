@@ -1,3 +1,4 @@
+import json
 from typing import List
 
 from python_tca2 import constants
@@ -10,6 +11,9 @@ class QueueList:
 
     def to_json(self):
         return [entry.to_json() for entry in self.entry]
+
+    def __str__(self):
+        return json.dumps(self.to_json(), indent=0, ensure_ascii=False)
 
     def empty(self) -> bool:
         return len(self.entry) == 0

@@ -1,3 +1,4 @@
+import json
 from typing import List
 
 from python_tca2.aelement import AElement
@@ -14,9 +15,7 @@ class Unaligned:
         self.elements[t].append(element)
 
     def __str__(self):
-        return "\n".join(
-            [str(element) for elements in self.elements for element in elements]
-        )
+        return json.dumps(self.to_json(), indent=0, ensure_ascii=False)
 
     def to_json(self):
         return {

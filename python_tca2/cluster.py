@@ -1,3 +1,4 @@
+import json
 from typing import List
 
 from python_tca2 import constants
@@ -12,7 +13,7 @@ class Cluster:
         return {"refs": [ref.to_json() for ref in self.refs]}
 
     def __str__(self):
-        return f"refs: {',\n'.join(str(ref) for ref in self.refs)}"
+        return json.dumps(self.to_json(), indent=0, ensure_ascii=False)
 
     def clone(self):
         return super().clone()

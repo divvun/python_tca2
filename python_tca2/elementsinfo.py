@@ -1,3 +1,4 @@
+import json
 from typing import List
 
 from python_tca2.elementinfo import ElementInfo
@@ -11,11 +12,7 @@ class ElementsInfo:
         self.element_info: List[ElementInfo] = []
 
     def __str__(self):
-        temp = f"first: {self.first},\n"
-        temp += f"last: {self.last},\n"
-        temp += "elementInfo: "
-        temp += ",\n".join([str(element_info) for element_info in self.element_info])
-        return temp
+        return json.dumps(self.to_json(), indent=0, ensure_ascii=False)
 
     def to_json(self):
         return {

@@ -1,3 +1,4 @@
+import json
 from copy import deepcopy
 from typing import List
 
@@ -10,7 +11,7 @@ class Clusters:
         self.clusters: List[Cluster] = []  # list of Cluster
 
     def __str__(self):
-        return f"clusters: {',\n'.join(str(cluster) for cluster in self.clusters)}"
+        return json.dumps(self.to_json(), indent=0, ensure_ascii=False)
 
     def to_json(self):
         return {"clusters": [cluster.to_json() for cluster in self.clusters]}

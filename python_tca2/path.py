@@ -1,3 +1,4 @@
+import json
 from typing import List
 
 from python_tca2 import constants
@@ -24,26 +25,7 @@ class Path:
             self.position[t] += step.increment[t]
 
     def __str__(self):
-        temp = "["
-        first = True
-        for step in self.steps:
-            if not first:
-                temp += ", "
-            temp += "{"
-            for t in range(constants.NUM_FILES):
-                if t > 0:
-                    temp += ","
-                temp += str(step.increment[t])
-            temp += "}"
-            first = False
-        temp += "]->"
-        temp += "{"
-        for t in range(constants.NUM_FILES):
-            if t > 0:
-                temp += ","
-            temp += str(self.position[t])
-        temp += "}"
-        return temp
+        return json.dumps(self.to_json(), indent=0, ensure_ascii=False)
 
     def clone(self):
         copy = Path(self.position.copy())

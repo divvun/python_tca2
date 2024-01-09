@@ -1,3 +1,4 @@
+import json
 from copy import deepcopy
 
 from lxml import etree
@@ -86,7 +87,11 @@ class AlignmentModel:
                 else:
                     print_frame(run_count, "no best_path.steps")
                     done_aligning = True
-        print_frame(f"done_aligning: {self.aligned}")
+        # print_frame(f"done_aligning: {self.aligned}")
+        print(
+            json.dumps(self.compare.to_json(), indent=0, ensure_ascii=False),
+            file=open("compare.json", "w"),
+        )
 
     def flush_aligned_without_gui(self):
         self.aligned.pickup(self.to_align.flush())

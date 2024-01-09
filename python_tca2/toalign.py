@@ -1,3 +1,4 @@
+import json
 from typing import List
 
 from python_tca2 import constants
@@ -17,6 +18,9 @@ class ToAlign:
             "elements": self.elements,
             "pending": [al.to_json() for al in self.pending],
         }
+
+    def __str__(self):
+        return json.dumps(self.to_json(), indent=0, ensure_ascii=False)
 
     def empty(self) -> bool:
         return len(self.pending) == 0

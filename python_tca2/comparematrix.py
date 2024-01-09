@@ -1,3 +1,4 @@
+import json
 from typing import Dict, List
 
 from python_tca2 import constants
@@ -16,21 +17,7 @@ class CompareMatrix:
         }
 
     def __str__(self):
-        cells = "\n".join([f"{key}: {self.cells[key]}" for key in self.cells.keys()])
-        bp = "\n".join(
-            [
-                f"{key}: {self.best_path_scores[key]}"
-                for key in self.best_path_scores.keys()
-            ]
-        )
-        return (
-            "CompareMatrix: {\n"
-            + "cells: [\n"
-            + cells
-            + "]\nbestPathScores: [\n"
-            + bp
-            + "]\n}"
-        )
+        return json.dumps(self.to_json(), indent=0, ensure_ascii=False)
 
     def get_score(self, position) -> float:
         if any(pos < 0 for pos in position):

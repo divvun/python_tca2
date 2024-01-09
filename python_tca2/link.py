@@ -1,3 +1,5 @@
+import json
+
 from python_tca2 import constants
 
 
@@ -20,13 +22,4 @@ class Link:
         }
 
     def __str__(self):
-        str_ = "("
-        for t in range(constants.NUM_FILES):
-            if t > 0:
-                str_ += ";"
-            str_ += "size=" + str(len(self.element_numbers[t]))
-            for el in self.element_numbers[t]:
-                str_ += ",el=" + str(el)
-        str_ += ")"
-        str_ += f" alignment number {self.alignment_number}"
-        return str_
+        return json.dumps(self.to_json(), indent=0, ensure_ascii=False)

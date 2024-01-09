@@ -1,3 +1,6 @@
+import json
+
+
 class Ref:
     def __init__(self, match_type, weight, t, element_number, pos, length, word):
         self.match_type = match_type
@@ -8,16 +11,8 @@ class Ref:
         self.length = length
         self.word = word
 
-    def to_json(self):
-        return {
-            "match_type": self.match_type,
-            "weight": self.weight,
-            "t": self.t,
-            "element_number": self.element_number,
-            "pos": self.pos,
-            "length": self.length,
-            "word": self.word,
-        }
+    def __str__(self):
+        return json.dumps(self.to_json(), indent=0, ensure_ascii=False)
 
     def __str__(self) -> str:
         return (

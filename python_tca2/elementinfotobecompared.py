@@ -1,3 +1,4 @@
+import json
 from typing import List
 
 from python_tca2 import (
@@ -25,19 +26,7 @@ class ElementInfoToBeCompared:
         }
 
     def __str__(self):
-        poff = []
-        for t, infos in enumerate(self.info):
-            poff.append(f"text[{t}]: ")
-            for info in infos:
-                poff.append(f"{info},")
-
-        return (
-            f"score: {self.get_score()},\n"
-            "common_clusters: "
-            f"[\n{self.common_clusters}\n],\n"
-            f"info: [\n{',\n'.join([f'{info}' for info in self.info])}\n],\n"
-            "}"
-        )
+        return json.dumps(self.to_json(), indent=0, ensure_ascii=False)
 
     def add(self, element_info, t):
         self.info[t].append(element_info)

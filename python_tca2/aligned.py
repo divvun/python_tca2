@@ -1,3 +1,4 @@
+import json
 from typing import List
 
 from python_tca2 import constants
@@ -21,12 +22,7 @@ class Aligned:
         return self.elements == other.elements and self.alignments == other.alignments
 
     def __str__(self):
-        str_ = "Aligned: "
-        str_ += "alignments: " + ", ".join(str(al) for al in self.alignments)
-        str_ += " elements: " + "\n".join(
-            str(el) for els in self.elements for el in els
-        )
-        return str_
+        return json.dumps(self.to_json(), indent=0, ensure_ascii=False)
 
     def pickup(self, value_got: AlignmentsEtc):
         if value_got is not None:

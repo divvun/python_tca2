@@ -1,3 +1,4 @@
+import json
 from typing import List
 
 from python_tca2.anchorwordhit import AnchorWordHit
@@ -11,13 +12,7 @@ class AnchorWordHits:
         self.hits.append(hit)
 
     def __str__(self):
-        ret = "{\nanchorWordHits: [\n"
-        for i, hit in enumerate(self.hits):
-            if i > 0:
-                ret += ","
-            ret += str(hit)
-        ret += "]\n}"
-        return ret
+        return json.dumps(self.to_json(), indent=0, ensure_ascii=False)
 
     def to_json(self):
         return {"anchor_word_hits": [hit.to_json() for hit in self.hits]}

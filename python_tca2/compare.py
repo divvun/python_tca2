@@ -1,3 +1,4 @@
+import json
 from typing import List
 
 from python_tca2 import constants
@@ -23,19 +24,9 @@ class Compare:
             "matrix": self.matrix.to_json(),
             "step_list": [step.to_json() for step in self.step_list],
         }
-    def __str__(self):
-        temp = "{\nCompare: {\n"
-        temp += "elementsInfo: [\n"
-        temp += ",\n".join(
-            f"{self.elements_info[t]}" for t in range(constants.NUM_FILES)
-        )
-        temp += "],\nmatrix: {\n"
-        temp += f"{self.matrix}"
-        temp += "},\n"
-        temp += f"stepList: [\n{',\n'.join(str(step) for step in self.step_list)}\n]\n"
-        temp += "}\n}\n\n"
 
-        return temp
+    def __str__(self):
+        return json.dumps(self.to_json(), indent=0, ensure_ascii=False)
 
     def get_cell_values(self, model, position, step):
         key = ",".join(

@@ -1,3 +1,5 @@
+import json
+
 from python_tca2 import constants
 from python_tca2.anchorwordhits import AnchorWordHits
 from python_tca2.anchorwordlist import AnchorWordList
@@ -40,18 +42,8 @@ class ElementInfo:
         self.upper_case_words = get_upper_case_words(self.words)
         self.scoring_characters = get_scoring_characters(text)
 
-    def __str__(self) -> str:
-        ret = []
-        ret.append("length: " + str(self.length) + ",\n")
-        ret.append("numWords: " + str(self.num_words) + ",\n")
-        ret.append("words: " + ",\n".join(self.words) + ",\n")
-        ret.append(str(self.anchor_word_hits))
-        ret.append(",\n")
-        ret.append("scoringCharacters: " + self.scoring_characters + ",\n")
-        ret.append("properNames: ")
-        ret.append(",\n".join(self.upper_case_words))
-
-        return "".join(ret)
+    def __str__(self):
+        return json.dumps(self.to_json(), indent=0, ensure_ascii=False)
 
     def to_json(self):
         return {

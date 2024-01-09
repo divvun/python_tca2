@@ -1,3 +1,6 @@
+import json
+
+
 class AnchorWordHit:
     def __init__(self, index, element_number, pos, word):
         self.index = index
@@ -18,15 +21,7 @@ class AnchorWordHit:
         return self.elementNumber
 
     def __str__(self):
-        return (
-            "(index="
-            + str(self.index)
-            + ";pos="
-            + str(self.pos)
-            + ";word="
-            + self.word
-            + ")"
-        )
+        return json.dumps(self.to_json(), indent=0, ensure_ascii=False)
 
     def to_json(self):
         return {

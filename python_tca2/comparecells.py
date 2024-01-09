@@ -1,3 +1,5 @@
+import json
+
 from python_tca2 import constants
 from python_tca2.elementinfotobecompared import ElementInfoToBeCompared
 from python_tca2.exceptions import EndOfAllTextsExceptionError, EndOfTextExceptionError
@@ -29,11 +31,7 @@ class CompareCells:
         return self.element_info_to_be_compared.get_score()
 
     def __str__(self):
-        return (
-            "CompareCells: "
-            f"{self.element_info_to_be_compared}"
-            f",\nbestPathScore: {self.best_path_score}\n"
-        )
+        return json.dumps(self.to_json(), indent=0, ensure_ascii=False)
 
     def to_json(self):
         return {
