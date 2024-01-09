@@ -14,17 +14,19 @@ class ElementInfoToBeCompared:
         self.common_clusters = Clusters()
         self.score = constants.ELEMENTINFO_SCORE_NOT_CALCULATED
         self.info = [[] for _ in range(constants.NUM_FILES)]
-        self.ret = []
 
     def __str__(self):
+        poff = []
+        for t, infos in enumerate(self.info):
+            poff.append(f"text[{t}]: ")
+            for info in infos:
+                poff.append(f"{info},")
+
         return (
-            "{\n"
             f"score: {self.get_score()},\n"
             "common_clusters: "
-            f"[\n{self.common_clusters}\n],\n"
-            f"info: [\n{',\n'.join([f'{info}' for info in self.info])}\n],\n"
-            f"ret: [\n{',\n'.join([f'{ret}' for ret in self.ret])}\n]\n"
-            "}"
+            f"{self.common_clusters},\n"
+            f"{'\n'.join(poff)}"
         )
 
     def add(self, element_info, t):

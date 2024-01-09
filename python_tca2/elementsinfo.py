@@ -10,23 +10,25 @@ class ElementsInfo:
         self.element_info = []
 
     def __str__(self):
-        temp = "{\n"
-        temp += f"first: {self.first},\n"
+        temp = f"first: {self.first},\n"
         temp += f"last: {self.last},\n"
-        temp += "elementInfo: [\n"
+        temp += "elementInfo: "
         temp += ",\n".join([str(element_info) for element_info in self.element_info])
-        temp += "]\n}\n"
         return temp
 
     def get_element_info(self, model, element_number, t):
         # print_frame()
+        print(
+            f"element_number = {element_number}, first = {self.first}, "
+            f"last = {self.last} {len(self.element_info)}"
+        )
         if element_number < self.first:
             self.set_first(model, element_number, t)
         elif element_number > self.last:
             self.set_last(model, element_number, t)
         print(
             f"element_number = {element_number}, first = {self.first}, "
-            f"last = {self.last}"
+            f"last = {self.last} {element_number - self.first} {len(self.element_info)}"
         )
         return self.element_info[element_number - self.first]
 

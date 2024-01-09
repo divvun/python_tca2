@@ -41,14 +41,13 @@ class ElementInfo:
 
     def __str__(self) -> str:
         ret = []
-        ret.append("{\nlength: " + str(self.length) + ",\n")
+        ret.append("length: " + str(self.length) + ",\n")
         ret.append("numWords: " + str(self.num_words) + ",\n")
-        ret.append("words: [\n" + ",\n".join(self.words) + "],\n")
+        ret.append("words: " + ",\n".join(self.words) + ",\n")
         ret.append(str(self.anchor_word_hits))
         ret.append(",\n")
         ret.append("scoringCharacters: " + self.scoring_characters + ",\n")
-        ret.append("properNames: [\n")
+        ret.append("properNames: ")
         ret.append(",\n".join(self.upper_case_words))
-        ret.append("]\n}")
 
         return "".join(ret)

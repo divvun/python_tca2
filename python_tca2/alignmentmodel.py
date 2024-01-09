@@ -50,7 +50,7 @@ class AlignmentModel:
         done_aligning = False
 
         while not done_aligning:
-            # print_frame("not done_aligning", run_count)
+            print(run_count, "not done_aligning")
             self.compare.reset_best_path_scores()
 
             # Dette er anderledes enn i Java.
@@ -58,34 +58,35 @@ class AlignmentModel:
             try:
                 queue_list = self.lengthen_paths()
             except EndOfTextExceptionError:
-                print_frame("EndOfTextExceptionError")
+                print("EndOfTextExceptionError")
                 break
 
             if (
                 len(queue_list.entry) < constants.NUM_FILES
                 and not queue_list.entry[0].path.steps
             ):
-                print_frame("length done aligning")
+                print(run_count, "length done aligning")
                 # When the length of the queue list is less than the number of files
                 # and the first path in the queue list has no steps, then aligment
                 # is done
                 done_aligning = True
             else:
-                # print_frame("still looking for more to align")
+                print(run_count, "still looking for more to align")
                 best_path = self.get_best_path(queue_list)
 
                 if best_path.steps:
+                    print(run_count, "flush not done_aligning")
                     step_suggestion = self.find_more_to_align_without_gui(best_path)
                     run_count += 1
                     done_aligning = run_count >= run_limit
 
                     if not done_aligning:
-                        # print_frame("not done_aligning")
+                        print(run_count, "flush not done_aligning")
                         self.flush_aligned_without_gui()
                     else:
                         print_frame("done_aligning run_limit exceeded")
                 else:
-                    print_frame("no best_path.steps")
+                    print_frame(run_count, "no best_path.steps")
                     done_aligning = True
 
     def flush_aligned_without_gui(self):
@@ -94,10 +95,8 @@ class AlignmentModel:
     def find_more_to_align_without_gui(self, best_path):
         step_suggestion = best_path.steps[0]
         for t in range(constants.NUM_FILES):
-            print_frame(
-                f"stepSuggestion.increment[{t}] = {step_suggestion.increment[t]}"
-            )
-            print_frame(self.unaligned.elements[t][0])
+            print(f"stepSuggestion.increment[{t}] = {step_suggestion.increment[t]}")
+            print(self.unaligned.elements[t][0])
             print()
             i = 0
             while i < step_suggestion.increment[t]:
@@ -131,23 +130,23 @@ class AlignmentModel:
         while not done_lengthening:
             print("step_count = " + str(step_count))
             next_queue_list = QueueList()
-            # print_frame(
-            #     len(queue_list.entry),
-            #     len(next_queue_list.entry),
-            # )
+            print(
+                len(queue_list.entry),
+                len(next_queue_list.entry),
+            )
             for x, queue_entry in enumerate(queue_list.entry):
                 if not queue_entry.removed and not queue_entry.end:
                     self.lengthen_current_path(queue_entry, queue_list, next_queue_list)
-            # print_frame(len(queue_list.entry), len(next_queue_list.entry))
+            print(len(queue_list.entry), len(next_queue_list.entry))
             next_queue_list.remove_for_real()
             if next_queue_list.empty():
-                # print_frame("next_queue_list.empty()")
+                print("next_queue_list.empty()")
                 done_lengthening = True
             else:
                 queue_list = next_queue_list
                 step_count += 1
                 done_lengthening = step_count >= self.max_path_length
-                # print_frame("next_queue_list.empty() is False", done_lengthening)
+                print("next_queue_list.empty() is False", done_lengthening)
 
         return queue_list
 
@@ -155,26 +154,26 @@ class AlignmentModel:
         self, queue_entry: QueueEntry, queue_list: QueueList, next_queue_list: QueueList
     ):
         for step in self.compare.step_list:
-            # print_frame(str(step))
+            # print(str(step))
             try:
-                # print("step = " + str(step))
-                # print("1 queueEntry " + str(queue_entry))
+                print("step = " + str(step))
+                print("1 queueEntry " + str(queue_entry))
                 new_queue_entry = self.make_longer_path(deepcopy(queue_entry), step)
                 if new_queue_entry.path is not None:
                     pos = new_queue_entry.path.position
                     queue_list.remove(pos)
                     next_queue_list.remove(pos)
-                    # print("2 queueEntry " + str(new_queue_entry))
+                    print("2 queueEntry " + str(new_queue_entry))
                     next_queue_list.add(new_queue_entry)
             except EndOfAllTextsExceptionError:
                 print_frame("EndOfAllTextsException")
                 new_queue_entry = deepcopy(queue_entry)
                 new_queue_entry.end = True
                 if not next_queue_list.contains(new_queue_entry):
-                    # print("3 queueEntry " + str(new_queue_entry))
+                    print("3 queueEntry " + str(new_queue_entry))
                     next_queue_list.add(new_queue_entry)
             except EndOfTextExceptionError:
-                # print_frame("EndOfTextException")
+                print("EndOfTextException")
                 break
 
     def get_step_score(self, position, step):
