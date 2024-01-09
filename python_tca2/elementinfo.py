@@ -1,4 +1,5 @@
 from python_tca2 import constants
+from python_tca2.anchorwordhits import AnchorWordHits
 from python_tca2.anchorwordlist import AnchorWordList
 
 
@@ -33,7 +34,7 @@ class ElementInfo:
         self.length = len(text)
         self.words = [remove_special_characters(word) for word in text.split()]
         self.num_words = len(self.words)
-        self.anchor_word_hits = anchor_word_list.get_anchor_word_hits(
+        self.anchor_word_hits: AnchorWordHits = anchor_word_list.get_anchor_word_hits(
             self.words, t, element_number
         )
         self.upper_case_words = get_upper_case_words(self.words)

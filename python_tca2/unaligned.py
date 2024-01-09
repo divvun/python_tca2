@@ -1,9 +1,11 @@
+from typing import List
+
 from python_tca2.aelement import AElement
 
 
 class Unaligned:
     def __init__(self):
-        self.elements = [[], []]
+        self.elements: List[List[AElement]] = [[], []]
 
     def pop(self, t: int) -> AElement:
         return self.elements[t].pop(0)

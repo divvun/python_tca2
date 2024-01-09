@@ -1,3 +1,5 @@
+from typing import List
+
 from python_tca2 import (
     constants,
     match,
@@ -5,6 +7,7 @@ from python_tca2 import (
 )
 from python_tca2.alignment_utils import count_words
 from python_tca2.clusters import Clusters
+from python_tca2.elementinfo import ElementInfo
 from python_tca2.ref import Ref
 
 
@@ -12,7 +15,7 @@ class ElementInfoToBeCompared:
     def __init__(self):
         self.common_clusters = Clusters()
         self.score = constants.ELEMENTINFO_SCORE_NOT_CALCULATED
-        self.info = [[] for _ in range(constants.NUM_FILES)]
+        self.info: List[List[ElementInfo]] = [[] for _ in range(constants.NUM_FILES)]
 
     def __str__(self):
         poff = []
@@ -24,8 +27,9 @@ class ElementInfoToBeCompared:
         return (
             f"score: {self.get_score()},\n"
             "common_clusters: "
-            f"{self.common_clusters},\n"
-            f"{'\n'.join(poff)}"
+            f"[\n{self.common_clusters}\n],\n"
+            f"info: [\n{',\n'.join([f'{info}' for info in self.info])}\n],\n"
+            "}"
         )
 
     def add(self, element_info, t):

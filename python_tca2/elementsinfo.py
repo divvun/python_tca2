@@ -1,3 +1,5 @@
+from typing import List
+
 from python_tca2.elementinfo import ElementInfo
 from python_tca2.exceptions import EndOfTextExceptionError
 
@@ -6,7 +8,7 @@ class ElementsInfo:
     def __init__(self):
         self.first = 0
         self.last = -1
-        self.element_info = []
+        self.element_info: List[ElementInfo] = []
 
     def __str__(self):
         temp = f"first: {self.first},\n"
