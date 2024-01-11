@@ -211,7 +211,7 @@ class ElementInfoToBeCompared:
         while not done:
             for t in range(constants.NUM_FILES):
                 if current[t] < len(hits[t]):
-                    hit = hits[t].get(current[t])
+                    hit = hits[t][current[t]]
                     if hit.index < smallest:
                         smallest = hit.index
                         smallest_count = 1
@@ -312,11 +312,11 @@ class ElementInfoToBeCompared:
         anchor_word_clusters = Clusters()
         for t in range(constants.NUM_FILES):
             count = 0
-            if current[t] < hits[t].size():
+            if current[t] < len(hits[t]):
                 done2 = False
                 while not done2:
                     c = current[t]
-                    hit = hits[t].get(c)
+                    hit = hits[t][c]
                     index = hit.index
                     if index == smallest:
                         element_number = hit.element_number
@@ -345,7 +345,7 @@ class ElementInfoToBeCompared:
                     else:
                         done2 = True
 
-                    if c + 1 >= hits[t].size():
+                    if c + 1 >= len(hits[t]):
                         done2 = True
                     c += 1
                 current[t] += count
