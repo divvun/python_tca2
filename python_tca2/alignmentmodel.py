@@ -48,7 +48,6 @@ class AlignmentModel:
         done_aligning = False
 
         while not done_aligning:
-            print(run_count, "not done_aligning")
             self.compare.reset_best_path_scores()
 
             queue_list = self.lengthen_paths()
@@ -57,28 +56,23 @@ class AlignmentModel:
                 len(queue_list.entry) < constants.NUM_FILES
                 and not queue_list.entry[0].path.steps
             ):
-                print(run_count, "length done aligning")
                 # When the length of the queue list is less than the number of files
                 # and the first path in the queue list has no steps, then aligment
                 # is done
                 done_aligning = True
             else:
-                print(run_count, "still looking for more to align")
                 best_path = self.get_best_path(queue_list)
 
                 if best_path.steps:
-                    print(run_count, "flush not done_aligning")
                     self.find_more_to_align_without_gui(best_path)
                     run_count += 1
                     done_aligning = run_count >= run_limit
 
                     if not done_aligning:
-                        print(run_count, "flush not done_aligning")
                         self.flush_aligned_without_gui()
                     else:
                         print_frame("done_aligning run_limit exceeded")
                 else:
-                    print_frame(run_count, "no best_path.steps")
                     done_aligning = True
         # print(
         #     json.dumps(self.compare.to_json(), indent=0, ensure_ascii=False),
@@ -91,9 +85,6 @@ class AlignmentModel:
     def find_more_to_align_without_gui(self, best_path):
         step_suggestion = best_path.steps[0]
         for t in range(constants.NUM_FILES):
-            print(f"stepSuggestion.increment[{t}] = {step_suggestion.increment[t]}")
-            print(self.unaligned.elements[t][0])
-            print()
             i = 0
             while i < step_suggestion.increment[t]:
                 self.to_align.pickup(t, self.unaligned.pop(t))
@@ -125,23 +116,16 @@ class AlignmentModel:
         done_lengthening = False
         while not done_lengthening:
             next_queue_list = QueueList()
-            print(
-                len(queue_list.entry),
-                len(next_queue_list.entry),
-            )
             for x, queue_entry in enumerate(queue_list.entry):
                 if not queue_entry.removed and not queue_entry.end:
                     self.lengthen_current_path(queue_entry, queue_list, next_queue_list)
-            print(len(queue_list.entry), len(next_queue_list.entry))
             next_queue_list.remove_for_real()
             if next_queue_list.empty():
-                print("next_queue_list.empty()")
                 done_lengthening = True
             else:
                 queue_list = next_queue_list
                 step_count += 1
                 done_lengthening = step_count >= self.max_path_length
-                print("next_queue_list.empty() is False", done_lengthening)
 
         return queue_list
 
@@ -150,23 +134,18 @@ class AlignmentModel:
     ):
         for step in self.compare.step_list:
             try:
-                print("step = " + str(step))
-                print("1 queueEntry " + str(queue_entry))
                 new_queue_entry = self.make_longer_path(deepcopy(queue_entry), step)
                 if new_queue_entry.path is not None:
                     pos = new_queue_entry.path.position
                     queue_list.remove(pos)
                     next_queue_list.remove(pos)
-                    print("2 queueEntry " + str(new_queue_entry))
                     next_queue_list.add(new_queue_entry)
             except EndOfAllTextsExceptionError:
                 new_queue_entry = deepcopy(queue_entry)
                 new_queue_entry.end = True
                 if not next_queue_list.contains(new_queue_entry):
-                    print("3 queueEntry " + str(new_queue_entry))
                     next_queue_list.add(new_queue_entry)
             except EndOfTextExceptionError:
-                print("EndOfTextException")
                 break
 
     def get_step_score(self, position, step):
