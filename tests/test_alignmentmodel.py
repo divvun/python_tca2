@@ -111,12 +111,11 @@ def test_suggest2():
         etree.fromstring(
             """
 <document>
-  <s id="74">Når folk har gått på nybegynnerkursene hos enten instituttet eller universitetet, kan man tilby dem muligheten å få en mentor som de kan snakke
-  kvensk med og gjøre aktiviteter med på kvensk.</s>
+  <s id="74">Når folk har gått på nybegynnerkursene hos enten instituttet eller universitetet, kan man tilby dem muligheten å få en mentor som de kan snakke kvensk med og gjøre aktiviteter med på kvensk.</s>
   <s id="75">Motivere folk til å lære kvensk og vise dem at man får jobb med det, og at det er nok arbeid til alle.</s>
   <s id="77">Forsøke selv å være gode forbilder.</s>
 </document>
-"""
+"""  # noqa: E501
         ),
         etree.fromstring(
             """
@@ -124,7 +123,7 @@ def test_suggest2():
   <s id="78">Ko ihmiset oon käynheet institutin tahi universiteetin alkukurssin, niin heile tarjothaan maholisuuen saaja menttorin, jonka kans puhhuut ja tehhä assiita kvääniksi  Motiveerata ihmissii siihen ette oppiit kväänin kieltä ja näyttäät heile ette sillä saapi työn ja ette työtä oon nokko kaikile.</s>
   <s id="80">Freistata itte olla hyvät esikuvat.</s>
 </document>
-"""
+"""  # noqa: E501
         ),
     ]
 
@@ -133,31 +132,46 @@ def test_suggest2():
 
     model.suggets_without_gui()
 
-    alignments: List[Link] = [Link(), Link()]
-    alignments[0].alignment_number = 0
-    alignments[0].element_numbers = [[0, 1], [0]]
-    alignments[1].alignment_number = 1
-    alignments[1].element_numbers = [[2], [1]]
-
-    elements: List[List[AElement]] = [
-        [
-            AElement(model.nodes[0][0], 0),
-            AElement(model.nodes[0][1], 1),
-            AElement(model.nodes[0][2], 2),
+    model.aligned.to_json()
+    assert model.aligned.to_json() == {
+        "elements": [
+            [
+                {
+                    "element": "Når folk har gått på nybegynnerkursene hos enten instituttet eller universitetet, kan man tilby dem muligheten å få en mentor som de kan snakke kvensk med og gjøre aktiviteter med på kvensk.",  # noqa: E501
+                    "element_number": 0,
+                    "alignment_number": 0,
+                    "length": 190,
+                },
+                {
+                    "element": "Motivere folk til å lære kvensk og vise dem at man får jobb med det, og at det er nok arbeid til alle.",  # noqa: E501
+                    "element_number": 1,
+                    "alignment_number": 0,
+                    "length": 102,
+                },
+                {
+                    "element": "Forsøke selv å være gode forbilder.",
+                    "element_number": 2,
+                    "alignment_number": 1,
+                    "length": 35,
+                },
+            ],
+            [
+                {
+                    "element": "Ko ihmiset oon käynheet institutin tahi universiteetin alkukurssin, niin heile tarjothaan maholisuuen saaja menttorin, jonka kans puhhuut ja tehhä assiita kvääniksi  Motiveerata ihmissii siihen ette oppiit kväänin kieltä ja näyttäät heile ette sillä saapi työn ja ette työtä oon nokko kaikile.",  # noqa: E501
+                    "element_number": 0,
+                    "alignment_number": 0,
+                    "length": 293,
+                },
+                {
+                    "element": "Freistata itte olla hyvät esikuvat.",
+                    "element_number": 1,
+                    "alignment_number": 1,
+                    "length": 35,
+                },
+            ],
         ],
-        [
-            AElement(model.nodes[1][0], 0),
-            AElement(model.nodes[1][1], 1),
+        "alignments": [
+            {"alignment_number": 0, "element_numbers": [[0, 1], [0]]},
+            {"alignment_number": 1, "element_numbers": [[2], [1]]},
         ],
-    ]
-    elements[0][0].alignment_number = 0
-    elements[0][1].alignment_number = 0
-    elements[0][2].alignment_number = 1
-    elements[1][0].alignment_number = 0
-    elements[1][1].alignment_number = 1
-
-    aligned = Aligned()
-    aligned.alignments = alignments
-    aligned.elements = elements
-
-    assert str(model.aligned) == str(aligned)
+    }
