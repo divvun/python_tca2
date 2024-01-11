@@ -14,16 +14,16 @@ class Ref:
     def __str__(self):
         return json.dumps(self.to_json(), indent=0, ensure_ascii=False)
 
-    def __str__(self) -> str:
-        return (
-            f"matchType: {self.match_type},\n"
-            f"weight: {self.weight},\n"
-            f"t: {self.t},\n"
-            f"elementNumber: {self.element_number},\n"
-            f"pos: {self.pos},\n"
-            f"len: {self.length},\n"
-            f"word: {self.word}\n"
-        )
+    def to_json(self):
+        return {
+            "match_type": self.match_type,
+            "weight": self.weight,
+            "t": self.t,
+            "element_number": self.element_number,
+            "pos": self.pos,
+            "length": self.length,
+            "word": self.word,
+        }
 
     def matches(self, other_ref):
         if (

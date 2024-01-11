@@ -12,3 +12,4 @@ java \
     -anchor=data/anchor-nob-fkv.txt \
     -in1=data/nob.sent \
     -in2=data/fkv.sent
+

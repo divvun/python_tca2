@@ -1,4 +1,3 @@
-import json
 from copy import deepcopy
 
 from lxml import etree
@@ -52,13 +51,7 @@ class AlignmentModel:
             print(run_count, "not done_aligning")
             self.compare.reset_best_path_scores()
 
-            # Dette er anderledes enn i Java.
-            # Her fanges EndOfAllTextsExceptionError i lengthen_paths()
-            try:
-                queue_list = self.lengthen_paths()
-            except EndOfTextExceptionError:
-                print("EndOfTextExceptionError")
-                break
+            queue_list = self.lengthen_paths()
 
             if (
                 len(queue_list.entry) < constants.NUM_FILES
@@ -75,7 +68,7 @@ class AlignmentModel:
 
                 if best_path.steps:
                     print(run_count, "flush not done_aligning")
-                    step_suggestion = self.find_more_to_align_without_gui(best_path)
+                    self.find_more_to_align_without_gui(best_path)
                     run_count += 1
                     done_aligning = run_count >= run_limit
 
@@ -87,11 +80,10 @@ class AlignmentModel:
                 else:
                     print_frame(run_count, "no best_path.steps")
                     done_aligning = True
-        # print_frame(f"done_aligning: {self.aligned}")
-        print(
-            json.dumps(self.compare.to_json(), indent=0, ensure_ascii=False),
-            file=open("compare.json", "w"),
-        )
+        # print(
+        #     json.dumps(self.compare.to_json(), indent=0, ensure_ascii=False),
+        #     file=open("compare.json", "w"),
+        # )
 
     def flush_aligned_without_gui(self):
         self.aligned.pickup(self.to_align.flush())
@@ -182,8 +174,6 @@ class AlignmentModel:
         return cell.get_score()
 
     def make_longer_path(self, ret_queue_entry, new_step: PathStep):
-        position = ret_queue_entry.path.position
-
         new_score = ret_queue_entry.score + self.get_step_score(
             ret_queue_entry.path.position, new_step
         )

@@ -12,7 +12,9 @@ class CompareMatrix:
 
     def to_json(self):
         return {
-            "cells": {key: self.cells[key].to_json() for key in self.cells.keys()},
+            "cells": {
+                key: self.cells[key].to_json() for key in sorted(self.cells.keys())
+            },
             "best_path_scores": self.best_path_scores,
         }
 
