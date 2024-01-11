@@ -14,7 +14,9 @@ class Aligned:
 
     def to_json(self):
         return {
-            "elements": self.elements,
+            "elements": [
+                element.to_json() for elements in self.elements for element in elements
+            ],
             "alignments": [al.to_json() for al in self.alignments],
         }
 
