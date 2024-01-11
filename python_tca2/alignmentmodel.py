@@ -8,7 +8,11 @@ from python_tca2.aligned import Aligned
 from python_tca2.alignment_utils import print_frame
 from python_tca2.anchorwordlist import AnchorWordList
 from python_tca2.compare import Compare
-from python_tca2.exceptions import EndOfAllTextsExceptionError, EndOfTextExceptionError
+from python_tca2.exceptions import (
+    BlockedExceptionError,
+    EndOfAllTextsExceptionError,
+    EndOfTextExceptionError,
+)
 from python_tca2.pathstep import PathStep
 from python_tca2.queue_entry import QueueEntry
 from python_tca2.queuelist import QueueList
@@ -63,7 +67,7 @@ class AlignmentModel:
             else:
                 best_path = self.get_best_path(queue_list)
 
-                if best_path.steps:
+                if best_path and best_path.steps:
                     self.find_more_to_align_without_gui(best_path)
                     run_count += 1
                     done_aligning = run_count >= run_limit
@@ -96,15 +100,14 @@ class AlignmentModel:
 
         best_path = None
         for candidate in queue_list.entry:
-            if not candidate.removed and not candidate.end:
-                normalised_candidate_score = (
-                    candidate.score / candidate.path.get_length_in_sentences()
-                )
-                if int(normalised_candidate_score * 1000) > int(
-                    normalised_best_score * 1000
-                ):
-                    normalised_best_score = normalised_candidate_score
-                    best_path = candidate.path
+            normalised_candidate_score = (
+                candidate.score / candidate.path.get_length_in_sentences()
+            )
+            if int(normalised_candidate_score * 1000) > int(
+                normalised_best_score * 1000
+            ):
+                normalised_best_score = normalised_candidate_score
+                best_path = candidate.path
 
         return best_path
 
@@ -146,7 +149,9 @@ class AlignmentModel:
                 if not next_queue_list.contains(new_queue_entry):
                     next_queue_list.add(new_queue_entry)
             except EndOfTextExceptionError:
-                break
+                pass
+            except BlockedExceptionError:
+                pass
 
     def get_step_score(self, position, step):
         cell = self.compare.get_cell_values(self, position, step)
