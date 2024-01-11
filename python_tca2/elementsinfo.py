@@ -45,7 +45,7 @@ class ElementsInfo:
             self.first = new_first
             self.last = self.first - 1
         else:
-            for count in range(new_first - self.first):
+            for _ in range(new_first - self.first):
                 self.element_info.pop(0)
             self.first = new_first
 
@@ -68,7 +68,7 @@ class ElementsInfo:
             self.first = new_last
             self.last = self.first - 1
         else:
-            for count in range(self.last - new_last):
+            for _ in range(self.last - new_last):
                 self.element_info.pop()
 
             self.last = new_last

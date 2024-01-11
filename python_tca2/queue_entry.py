@@ -19,7 +19,7 @@ class QueueEntry:
 
     def to_json(self):
         return {
-            "path": self.path.to_json(),
+            "path": self.path.to_json() if self.path is not None else None,
             "score": self.score,
             "removed": self.removed,
             "end": self.end,
