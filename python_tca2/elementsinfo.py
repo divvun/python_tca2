@@ -24,19 +24,11 @@ class ElementsInfo:
         }
 
     def get_element_info(self, model, element_number, t):
-        # print_frame()
-        print(
-            f"element_number = {element_number}, first = {self.first}, "
-            f"last = {self.last} {len(self.element_info)}"
-        )
         if element_number < self.first:
             self.set_first(model, element_number, t)
         elif element_number > self.last:
             self.set_last(model, element_number, t)
-        print(
-            f"element_number = {element_number}, first = {self.first}, "
-            f"last = {self.last} {element_number - self.first} {len(self.element_info)}"
-        )
+
         return self.element_info[element_number - self.first]
 
     def set_first(self, model, new_first, t):

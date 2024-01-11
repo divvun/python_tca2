@@ -16,16 +16,12 @@ class CompareCells:
                     info = model.compare.elements_info[t].get_element_info(model, x, t)
                     self.element_info_to_be_compared.add(info, t)
                 except EndOfTextExceptionError:
-                    print("CC EndOfTextException")
                     text_end_count += 1
                     break
         if text_end_count >= constants.NUM_FILES:
-            print("1 cc")
             raise EndOfAllTextsExceptionError()
         elif text_end_count > 0:
-            print("2 cc")
             raise EndOfTextExceptionError()
-        print("3 cc")
 
     def get_score(self):
         return self.element_info_to_be_compared.get_score()

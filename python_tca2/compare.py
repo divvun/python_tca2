@@ -38,15 +38,8 @@ class Compare:
         )
 
         if key not in self.matrix.cells:
-            print("Creating cell " + key)
-            print("step = " + str(step))
-            print(f"position = {position[0]},{position[1]}")
-            print("bestPathScoreKey = " + best_path_score_key)
-            print("getCell: " + str(self.matrix))
-
             self.matrix.cells[key] = CompareCells(model, position, step)
 
-            # Hvis best_path_score_key finnes i best_path_scores, så kopierer vi
             if best_path_score_key in self.matrix.best_path_scores:
                 temp = self.matrix.best_path_scores[best_path_score_key]
                 self.matrix.cells[key].best_path_score = temp
@@ -56,8 +49,6 @@ class Compare:
             self.matrix.best_path_scores[best_path_score_key] = self.matrix.cells[
                 key
             ].best_path_score
-            print("Done creating cell " + key)
-            print(str(self.matrix))
 
         return self.matrix.cells[key]
 
