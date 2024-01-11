@@ -46,7 +46,7 @@ class Clusters:
         merged_cluster.add(ref)
 
         for cluster in overlaps:
-            merged_cluster.add(cluster)
+            merged_cluster.add_cluster(cluster)
             self.clusters.remove(cluster)
 
         self.clusters.append(merged_cluster)
