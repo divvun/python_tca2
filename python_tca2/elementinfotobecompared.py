@@ -229,28 +229,31 @@ class ElementInfoToBeCompared:
 
     def find_propername_matches(self, t, tt):
         for info1 in self.info[t]:
-            for x in range(len(info1.words)):
-                word1 = info1.words[x]
-                for info2 in self.info[tt]:
-                    for y in range(len(info2.words)):
-                        word2 = info2.words[y]
-                        if word1[0].isupper() and word2[0].isupper() and word1 == word2:
-                            match_type = match.PROPER
-                            weight = constants.DEFAULT_PROPERNAME_MATCH_WEIGHT
-                            self.common_clusters.add(
-                                match_type,
-                                weight,
-                                t,
-                                tt,
-                                info1.element_number,
-                                info2.element_number,
-                                x,
-                                y,
-                                1,
-                                1,
-                                word1,
-                                word2,
-                            )
+            for x, word1 in enumerate(info1.words):
+                if word1:
+                    for info2 in self.info[tt]:
+                        for y, word2 in enumerate(info2.words):
+                            if (
+                                word1[0].isupper()
+                                and word2[0].isupper()
+                                and word1 == word2
+                            ):
+                                match_type = match.PROPER
+                                weight = constants.DEFAULT_PROPERNAME_MATCH_WEIGHT
+                                self.common_clusters.add(
+                                    match_type,
+                                    weight,
+                                    t,
+                                    tt,
+                                    info1.element_number,
+                                    info2.element_number,
+                                    x,
+                                    y,
+                                    1,
+                                    1,
+                                    word1,
+                                    word2,
+                                )
 
     def find_number_matches(self, t, tt):
         for info1 in self.info[t]:
