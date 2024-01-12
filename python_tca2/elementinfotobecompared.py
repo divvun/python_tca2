@@ -353,7 +353,8 @@ class ElementInfoToBeCompared:
                     c += 1
                 current[t] += count
 
-        self.common_clusters.add_clusters(anchor_word_clusters)
+        if anchor_word_clusters.clusters:
+            self.common_clusters.add_clusters(anchor_word_clusters)
         return hits
 
     def find_hits(self):
