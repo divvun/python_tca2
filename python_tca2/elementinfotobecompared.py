@@ -206,9 +206,9 @@ class ElementInfoToBeCompared:
         current = [0] * constants.NUM_FILES
 
         done = False
-        smallest = float("inf")
-        smallest_count = 0
         while not done:
+            smallest = float("inf")
+            smallest_count = 0
             for t in range(constants.NUM_FILES):
                 if current[t] < len(hits[t]):
                     hit = hits[t][current[t]]
