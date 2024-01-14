@@ -204,9 +204,10 @@ class ElementInfoToBeCompared:
         hits = self.find_hits()
         # TODO: sort the hits
         current = [0] * constants.NUM_FILES
-
-        done = False
-        while not done:
+        previous_hits = hits
+        # The loop is a hideous hack to avoid infinite loops
+        # TODO: fix the reason for the infinite loop
+        for _ in range(10):
             smallest = float("inf")
             smallest_count = 0
             for t in range(constants.NUM_FILES):
@@ -217,12 +218,15 @@ class ElementInfoToBeCompared:
                         smallest_count = 1
                     elif hit.index == smallest:
                         smallest_count += 1
-
             present_in_all_texts = smallest_count == constants.NUM_FILES
 
             if smallest == float("inf"):
-                done = True
-            else:
+                break
+
+            # This if statement is a hideous hack to avoid infinite loops, as well
+            # TODO: fix the reason for the infinite loop
+            if hits != previous_hits:
+                previous_hits = hits
                 hits = self.find_more_hits(
                     hits, current, smallest, present_in_all_texts
                 )
