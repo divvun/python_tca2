@@ -1,10 +1,7 @@
-from typing import List
-
 from lxml import etree
 
 from python_tca2 import alignmentmodel
 from python_tca2.aelement import AElement
-from python_tca2.aligned import Aligned
 from python_tca2.anchorwordlistentry import AnchorWordListEntry
 from python_tca2.link import Link
 from python_tca2.toalign import ToAlign
@@ -19,6 +16,7 @@ def load_text(trees, model):
             model.unaligned.add(AElement(node, index), t)
 
 
+# A simple test of transfer from unaligned to toalign
 def test_toalign_pickup():
     tree = etree.fromstring(
         """
@@ -48,12 +46,47 @@ def test_toalign_pickup():
     link.element_numbers[0] = [0, 1]
     link.alignment_number = 0
 
-    assert to_align.first_alignment_number == 0
-    assert str(to_align.elements[0][0]) == str(elements[0])
-    assert to_align.elements[0][1] == elements[1]
-    assert str(link) == str(to_align.pending[0])
+    assert unaligned.to_json() == {
+        "elements": [
+            {
+                "element": "Kanskje en innkjøpsordning for kvenskspråklig litteratur.",
+                "element_number": 0,
+                "alignment_number": 0,
+                "length": 57,
+            },
+            {
+                "element": "Utvikling av undervisnings- og lærematerialer.",
+                "element_number": 1,
+                "alignment_number": 0,
+                "length": 46,
+            },
+        ]
+    }
+    assert to_align.to_json() == {
+        "elements": [
+            [
+                {
+                    "element": (
+                        "Kanskje en innkjøpsordning for kvenskspråklig litteratur."
+                    ),
+                    "element_number": 0,
+                    "alignment_number": 0,
+                    "length": 57,
+                },
+                {
+                    "element": "Utvikling av undervisnings- og lærematerialer.",
+                    "element_number": 1,
+                    "alignment_number": 0,
+                    "length": 46,
+                },
+            ],
+            [],
+        ],
+        "pending": [{"alignment_number": 0, "element_numbers": [[0, 1], []]}],
+    }
 
 
+# A simple test of the alignment model
 def test_suggest1():
     trees = [
         etree.fromstring(
@@ -76,37 +109,49 @@ def test_suggest1():
 
     model = alignmentmodel.AlignmentModel()
     load_text(trees, model)
-
     model.suggets_without_gui()
 
-    alignments: List[Link] = [Link(), Link()]
-    alignments[0].element_numbers = [[0], [0]]
-    alignments[0].alignment_number = 0
-    alignments[1].element_numbers = [[1], [1]]
-    alignments[1].alignment_number = 1
-
-    elements: List[List[AElement]] = [
-        [
-            AElement(model.nodes[0][0], 0),
-            AElement(model.nodes[0][1], 1),
+    assert model.aligned.to_json() == {
+        "elements": [
+            [
+                {
+                    "element": (
+                        "Kanskje en innkjøpsordning for kvenskspråklig " "litteratur."
+                    ),
+                    "element_number": 0,
+                    "alignment_number": 0,
+                    "length": 57,
+                },
+                {
+                    "element": "Utvikling av undervisnings- og lærematerialer.",
+                    "element_number": 1,
+                    "alignment_number": 1,
+                    "length": 46,
+                },
+            ],
+            [
+                {
+                    "element": "Kvääninkielinen litteratuuri osto-oorninkhiin piian.",
+                    "element_number": 0,
+                    "alignment_number": 0,
+                    "length": 52,
+                },
+                {
+                    "element": "Opetus- ja oppimateriaaliitten kehittäminen.",
+                    "element_number": 1,
+                    "alignment_number": 1,
+                    "length": 44,
+                },
+            ],
         ],
-        [
-            AElement(model.nodes[1][0], 0),
-            AElement(model.nodes[1][1], 1),
+        "alignments": [
+            {"alignment_number": 0, "element_numbers": [[0], [0]]},
+            {"alignment_number": 1, "element_numbers": [[1], [1]]},
         ],
-    ]
-    elements[0][0].alignment_number = 0
-    elements[0][1].alignment_number = 1
-    elements[1][0].alignment_number = 0
-    elements[1][1].alignment_number = 1
-
-    aligned = Aligned()
-    aligned.alignments = alignments
-    aligned.elements = elements
-
-    assert model.aligned == aligned
+    }
 
 
+# A test of the alignment model, with different number of sentences
 def test_suggest2():
     trees = [
         etree.fromstring(
@@ -130,10 +175,8 @@ def test_suggest2():
 
     model = alignmentmodel.AlignmentModel()
     load_text(trees, model)
-
     model.suggets_without_gui()
 
-    model.aligned.to_json()
     assert model.aligned.to_json() == {
         "elements": [
             [
