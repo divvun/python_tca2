@@ -12,6 +12,8 @@ from python_tca2.elementinfo import ElementInfo
 from python_tca2.ref import Ref
 
 
+# TODO: If ElementInfo and AElement are merged, then as a first step,
+# info becomes indexes into e.g. AlignmentModel.elements or whatever
 class ElementInfoToBeCompared:
     def __init__(self):
         self.common_clusters = Clusters()

@@ -28,6 +28,8 @@ def get_upper_case_words(words):
     return [word for word in words if len(word) > 0 and word[0].isupper()]
 
 
+# TODO: Looks like this can be merged with AEelement
+# Most all attributes are essentially derived from AEelement info, anyway
 class ElementInfo:
     def __init__(
         self, anchor_word_list: AnchorWordList, text: str, t: int, element_number: int
