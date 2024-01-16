@@ -22,7 +22,7 @@ class ElementInfoToBeCompared:
         return {
             "score": self.get_score(),
             "common_clusters": self.common_clusters.to_json(),
-            "info": [info.to_json() for infos in self.info for info in infos],
+            "info": [[info.to_json() for info in infos] for infos in self.info],
         }
 
     def __str__(self):

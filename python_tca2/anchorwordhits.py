@@ -15,4 +15,4 @@ class AnchorWordHits:
         return json.dumps(self.to_json(), indent=0, ensure_ascii=False)
 
     def to_json(self):
-        return {"anchor_word_hits": [hit.to_json() for hit in self.hits]}
+        return [hit.to_json() for hit in self.hits]
