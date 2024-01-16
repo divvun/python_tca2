@@ -109,7 +109,7 @@ class ElementInfoToBeCompared:
 
         return self.score
 
-    def find_dice_matches(self, t, tt):
+    def find_dice_matches(self, t: int, tt: int):
         for info1 in self.info[t]:
             for x in range(len(info1.words)):
                 word1 = info1.words[x]

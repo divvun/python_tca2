@@ -21,7 +21,7 @@ class Cluster:
     def get_refs(self):
         return self.refs
 
-    def add(self, other_ref):
+    def add(self, other_ref: Ref):
         for ref in self.refs:
             if ref.exactly_matches(other_ref):
                 return
@@ -33,7 +33,7 @@ class Cluster:
                 return True
         return False
 
-    def add_cluster(self, other_cluster):
+    def add_cluster(self, other_cluster: "Cluster"):
         for other_ref in other_cluster.refs:
             self.add(other_ref)
 

@@ -77,7 +77,7 @@ class Clusters:
 
         self.clusters.append(merged_cluster)
 
-    def get_score(self, large_cluster_score_percentage):
+    def get_score(self, large_cluster_score_percentage: int) -> float:
         score = 0.0
         for cluster in self.clusters:
             score += cluster.get_score(large_cluster_score_percentage)

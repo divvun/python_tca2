@@ -1,3 +1,5 @@
+from typing import List
+
 from python_tca2 import similarity_utils
 from python_tca2.anchorwordhit import AnchorWordHit
 from python_tca2.anchorwordhits import AnchorWordHits
@@ -6,7 +8,7 @@ from python_tca2.anchorwordlistentry import AnchorWordListEntry
 
 class AnchorWordList:
     def __init__(self):
-        self.entries = []
+        self.entries: List[AnchorWordListEntry] = []
 
     def load_from_file(self, from_file):
         self.entries.clear()
