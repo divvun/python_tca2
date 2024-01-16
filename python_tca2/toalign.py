@@ -15,7 +15,10 @@ class ToAlign:
 
     def to_json(self):
         return {
-            "elements": self.elements,
+            "elements": [
+                [lang_element.to_json() for lang_element in lang_elements]
+                for lang_elements in self.elements
+            ],
             "pending": [al.to_json() for al in self.pending],
         }
 
