@@ -240,7 +240,8 @@ class ElementInfoToBeCompared:
                     for info2 in self.info[tt]:
                         for y, word2 in enumerate(info2.words):
                             if (
-                                word1[0].isupper()
+                                word2
+                                and word1[0].isupper()
                                 and word2[0].isupper()
                                 and word1 == word2
                             ):
