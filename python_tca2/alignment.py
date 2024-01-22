@@ -3,11 +3,7 @@ import click
 from python_tca2 import alignmentmodel
 
 
-@click.command()
-@click.argument("anchor_file")
-@click.argument("text_file1")
-@click.argument("text_file2")
-def main(anchor_file, text_file1, text_file2):
+def parallelize(anchor_file, text_file1, text_file2):
     model = alignmentmodel.AlignmentModel()
 
     model.anchor_word_list.load_from_file(anchor_file)
@@ -16,3 +12,11 @@ def main(anchor_file, text_file1, text_file2):
 
     model.suggets_without_gui()
     model.save_plain()
+
+
+@click.command()
+@click.argument("anchor_file")
+@click.argument("text_file1")
+@click.argument("text_file2")
+def main(anchor_file, text_file1, text_file2):
+    parallelize(anchor_file, text_file1, text_file2)
