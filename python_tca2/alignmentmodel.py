@@ -187,10 +187,10 @@ class AlignmentModel:
 
     def save_plain(self):
         for t in range(constants.NUM_FILES):
-            self.save_new_line_format_file(t)
+            self.save_new_line_format_file(f"aligned_{t}.txt", t)
 
-    def save_new_line_format_file(self, t):
-        with open(f"aligned_{t}.txt", "w") as f:
+    def save_new_line_format_file(self, filename, t):
+        with open(filename, "w") as f:
             print(
                 "\n".join(
                     [
