@@ -246,6 +246,78 @@ Sametinget* / Sámedigg*, Sámedikk*
     return anchor_word_list
 
 
+def test_suggest3():
+    trees = [
+        etree.fromstring(
+            """
+    <document>
+        <s id="1">- regjeringen.no</s>
+        <s id="2">Ot.prp. nr. 25 (2006-2007)</s>
+        <s id="3">Om lov om reindrift (reindriftsloven)</s>
+    </document>
+    """  # noqa: E501
+        ),
+        etree.fromstring(
+            """
+    <document>
+        <s id="1">- regjeringen.no</s>
+        <s id="2">Boazodoallolága birra</s>
+    </document>
+    """  # noqa: E501
+        ),
+    ]
+
+    model = alignmentmodel.AlignmentModel()
+    load_text(trees, model)
+    model.anchor_word_list = load_anchor_words()
+
+    model.suggets_without_gui()
+
+    assert model.aligned.to_json() == {
+        "elements": [
+            [
+                {
+                    "element": "- regjeringen.no",
+                    "element_number": 0,
+                    "alignment_number": 0,
+                    "length": 16,
+                },
+                {
+                    "element": "Ot.prp. nr. 25 (2006-2007)",
+                    "element_number": 1,
+                    "alignment_number": 1,
+                    "length": 26,
+                },
+                {
+                    "element": "Om lov om reindrift (reindriftsloven)",
+                    "element_number": 2,
+                    "alignment_number": 2,
+                    "length": 37,
+                },
+            ],
+            [
+                {
+                    "element": "- regjeringen.no",
+                    "element_number": 0,
+                    "alignment_number": 0,
+                    "length": 16,
+                },
+                {
+                    "element": "Boazodoallolága birra",
+                    "element_number": 1,
+                    "alignment_number": 1,
+                    "length": 21,
+                },
+            ],
+        ],
+        "alignments": [
+            {"alignment_number": 0, "element_numbers": [[0], [0]]},
+            {"alignment_number": 1, "element_numbers": [[1], []]},
+            {"alignment_number": 2, "element_numbers": [[2], [1]]},
+        ],
+    }
+
+
 # Set a bench for alignments using anchor words
 def test_anchor1():
     trees = [
