@@ -2951,3 +2951,15 @@ def test_anchor1():
             {"increment": [2, 1]},
         ],
     }
+
+
+def test_aelement_text():
+    """Check that space is normalised in aelement.element"""
+    node = etree.fromstring(
+        '<s id="4">9 Økonomiske, administrative&#13; og miljømessige  konsekvenser</s>'
+    )
+    aelement = AElement(node, 0)
+
+    assert (
+        aelement.element == "9 Økonomiske, administrative og miljømessige konsekvenser"
+    )
