@@ -8,6 +8,18 @@ from python_tca2.toalign import ToAlign
 from python_tca2.unaligned import Unaligned
 
 
+def test_aelement_text():
+    """Check that space is normalised in aelement.element"""
+    node = etree.fromstring(
+        '<s id="4">9 Økonomiske, administrative&#13; og miljømessige  konsekvenser</s>'
+    )
+    aelement = AElement(node, 0)
+
+    assert (
+        aelement.element == "9 Økonomiske, administrative og miljømessige konsekvenser"
+    )
+
+
 def load_text(trees, model):
     for t, tree in enumerate(trees):
         model.docs.append(tree)
@@ -2951,15 +2963,3 @@ def test_anchor1():
             {"increment": [2, 1]},
         ],
     }
-
-
-def test_aelement_text():
-    """Check that space is normalised in aelement.element"""
-    node = etree.fromstring(
-        '<s id="4">9 Økonomiske, administrative&#13; og miljømessige  konsekvenser</s>'
-    )
-    aelement = AElement(node, 0)
-
-    assert (
-        aelement.element == "9 Økonomiske, administrative og miljømessige konsekvenser"
-    )
