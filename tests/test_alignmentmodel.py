@@ -368,12 +368,7 @@ def test_anchor1():
                             "arktisk",
                         ],
                         "anchor_word_hits": [
-                            {
-                                "index": 0,
-                                "element_number": 0,
-                                "pos": 0,
-                                "word": "1",
-                            },
+                            {"index": 0, "element_number": 0, "pos": 0, "word": "1"},
                             {
                                 "index": 1,
                                 "element_number": 0,
@@ -411,12 +406,7 @@ def test_anchor1():
                             "nord",
                         ],
                         "anchor_word_hits": [
-                            {
-                                "index": 0,
-                                "element_number": 2,
-                                "pos": 3,
-                                "word": "1",
-                            },
+                            {"index": 0, "element_number": 2, "pos": 3, "word": "1"},
                             {
                                 "index": 1,
                                 "element_number": 2,
@@ -469,12 +459,7 @@ def test_anchor1():
                             "davvin",
                         ],
                         "anchor_word_hits": [
-                            {
-                                "index": 0,
-                                "element_number": 2,
-                                "pos": 3,
-                                "word": "1",
-                            },
+                            {"index": 0, "element_number": 2, "pos": 3, "word": "1"},
                             {
                                 "index": 2,
                                 "element_number": 2,
@@ -591,6 +576,24 @@ def test_anchor1():
                                             "length": 1,
                                             "word": "1",
                                         },
+                                        {
+                                            "match_type": 0,
+                                            "weight": 1.0,
+                                            "t": 1,
+                                            "element_number": 0,
+                                            "pos": 0,
+                                            "length": 1,
+                                            "word": "1",
+                                        },
+                                        {
+                                            "match_type": 0,
+                                            "weight": 1.0,
+                                            "t": 0,
+                                            "element_number": 0,
+                                            "pos": 0,
+                                            "length": 1,
+                                            "word": "1",
+                                        },
                                     ]
                                 }
                             ]
@@ -676,6 +679,24 @@ def test_anchor1():
                                             "match_type": -3,
                                             "weight": 3.0,
                                             "t": 1,
+                                            "element_number": 0,
+                                            "pos": 0,
+                                            "length": 1,
+                                            "word": "1",
+                                        },
+                                        {
+                                            "match_type": 0,
+                                            "weight": 1.0,
+                                            "t": 1,
+                                            "element_number": 0,
+                                            "pos": 0,
+                                            "length": 1,
+                                            "word": "1",
+                                        },
+                                        {
+                                            "match_type": 0,
+                                            "weight": 1.0,
+                                            "t": 0,
                                             "element_number": 0,
                                             "pos": 0,
                                             "length": 1,
@@ -1200,6 +1221,24 @@ def test_anchor1():
                                             "length": 1,
                                             "word": "1",
                                         },
+                                        {
+                                            "match_type": 0,
+                                            "weight": 1.0,
+                                            "t": 1,
+                                            "element_number": 2,
+                                            "pos": 3,
+                                            "length": 1,
+                                            "word": "1",
+                                        },
+                                        {
+                                            "match_type": 0,
+                                            "weight": 1.0,
+                                            "t": 0,
+                                            "element_number": 0,
+                                            "pos": 0,
+                                            "length": 1,
+                                            "word": "1",
+                                        },
                                     ]
                                 }
                             ]
@@ -1297,6 +1336,24 @@ def test_anchor1():
                                             "t": 1,
                                             "element_number": 2,
                                             "pos": 3,
+                                            "length": 1,
+                                            "word": "1",
+                                        },
+                                        {
+                                            "match_type": 0,
+                                            "weight": 1.0,
+                                            "t": 1,
+                                            "element_number": 2,
+                                            "pos": 3,
+                                            "length": 1,
+                                            "word": "1",
+                                        },
+                                        {
+                                            "match_type": 0,
+                                            "weight": 1.0,
+                                            "t": 0,
+                                            "element_number": 0,
+                                            "pos": 0,
                                             "length": 1,
                                             "word": "1",
                                         },
@@ -2048,6 +2105,24 @@ def test_anchor1():
                                             "length": 1,
                                             "word": "1",
                                         },
+                                        {
+                                            "match_type": 0,
+                                            "weight": 1.0,
+                                            "t": 1,
+                                            "element_number": 2,
+                                            "pos": 3,
+                                            "length": 1,
+                                            "word": "1",
+                                        },
+                                        {
+                                            "match_type": 0,
+                                            "weight": 1.0,
+                                            "t": 0,
+                                            "element_number": 2,
+                                            "pos": 3,
+                                            "length": 1,
+                                            "word": "1",
+                                        },
                                     ]
                                 }
                             ]
@@ -2262,6 +2337,24 @@ def test_anchor1():
                                             "length": 1,
                                             "word": "1",
                                         },
+                                        {
+                                            "match_type": 0,
+                                            "weight": 1.0,
+                                            "t": 1,
+                                            "element_number": 0,
+                                            "pos": 0,
+                                            "length": 1,
+                                            "word": "1",
+                                        },
+                                        {
+                                            "match_type": 0,
+                                            "weight": 1.0,
+                                            "t": 0,
+                                            "element_number": 2,
+                                            "pos": 3,
+                                            "length": 1,
+                                            "word": "1",
+                                        },
                                     ]
                                 }
                             ]
@@ -2353,6 +2446,24 @@ def test_anchor1():
                                             "t": 1,
                                             "element_number": 0,
                                             "pos": 0,
+                                            "length": 1,
+                                            "word": "1",
+                                        },
+                                        {
+                                            "match_type": 0,
+                                            "weight": 1.0,
+                                            "t": 1,
+                                            "element_number": 0,
+                                            "pos": 0,
+                                            "length": 1,
+                                            "word": "1",
+                                        },
+                                        {
+                                            "match_type": 0,
+                                            "weight": 1.0,
+                                            "t": 0,
+                                            "element_number": 2,
+                                            "pos": 3,
                                             "length": 1,
                                             "word": "1",
                                         },
@@ -2582,6 +2693,24 @@ def test_anchor1():
                                             "length": 1,
                                             "word": "1",
                                         },
+                                        {
+                                            "match_type": 0,
+                                            "weight": 1.0,
+                                            "t": 1,
+                                            "element_number": 2,
+                                            "pos": 3,
+                                            "length": 1,
+                                            "word": "1",
+                                        },
+                                        {
+                                            "match_type": 0,
+                                            "weight": 1.0,
+                                            "t": 0,
+                                            "element_number": 2,
+                                            "pos": 3,
+                                            "length": 1,
+                                            "word": "1",
+                                        },
                                     ]
                                 }
                             ]
@@ -2780,6 +2909,24 @@ def test_anchor1():
                                             "match_type": -3,
                                             "weight": 3.0,
                                             "t": 1,
+                                            "element_number": 2,
+                                            "pos": 3,
+                                            "length": 1,
+                                            "word": "1",
+                                        },
+                                        {
+                                            "match_type": 0,
+                                            "weight": 1.0,
+                                            "t": 1,
+                                            "element_number": 2,
+                                            "pos": 3,
+                                            "length": 1,
+                                            "word": "1",
+                                        },
+                                        {
+                                            "match_type": 0,
+                                            "weight": 1.0,
+                                            "t": 0,
                                             "element_number": 2,
                                             "pos": 3,
                                             "length": 1,
