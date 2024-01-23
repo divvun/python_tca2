@@ -206,7 +206,6 @@ class ElementInfoToBeCompared:
         hits = self.find_hits()
         # TODO: sort the hits
         current = [0] * constants.NUM_FILES
-        previous_hits = hits
         # The loop is a hideous hack to avoid infinite loops
         # TODO: fix the reason for the infinite loop
         for _ in range(10):
@@ -227,11 +226,7 @@ class ElementInfoToBeCompared:
 
             # This if statement is a hideous hack to avoid infinite loops, as well
             # TODO: fix the reason for the infinite loop
-            if hits != previous_hits:
-                previous_hits = hits
-                hits = self.find_more_hits(
-                    hits, current, smallest, present_in_all_texts
-                )
+            hits = self.find_more_hits(hits, current, smallest, present_in_all_texts)
 
     def find_propername_matches(self, t, tt):
         for info1 in self.info[t]:
@@ -323,8 +318,9 @@ class ElementInfoToBeCompared:
         for t in range(constants.NUM_FILES):
             count = 0
             if current[t] < len(hits[t]):
-                done2 = False
-                while not done2:
+                done2 = 0
+                while done2 < 10:
+                    done2 += 1
                     c = current[t]
                     hit = hits[t][c]
                     index = hit.index
@@ -352,11 +348,9 @@ class ElementInfoToBeCompared:
                                 )
                             )
                         count += 1
-                    else:
-                        done2 = True
 
                     if c + 1 >= len(hits[t]):
-                        done2 = True
+                        done2 = 100
                     c += 1
                 current[t] += count
 
