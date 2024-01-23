@@ -306,7 +306,7 @@ def test_suggest3():
                 {
                     "element": "Boazodoallolága birra",
                     "element_number": 1,
-                    "alignment_number": 1,
+                    "alignment_number": 2,
                     "length": 21,
                 },
             ],
