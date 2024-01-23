@@ -237,6 +237,7 @@ def load_anchor_words():
     anchor_words = """1* / 1*, okta, ovtta
 mill, million* / milj, miljovdna*, miljovnna*
 Sametinget* / Sámedigg*, Sámedikk*
+om / birra
 """
     anchor_word_list = alignmentmodel.AnchorWordList()
     anchor_word_list.entries = [
