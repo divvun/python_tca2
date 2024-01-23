@@ -201,10 +201,10 @@ def test_suggest2():
             ],
             [
                 {
-                    "element": "Ko ihmiset oon käynheet institutin tahi universiteetin alkukurssin, niin heile tarjothaan maholisuuen saaja menttorin, jonka kans puhhuut ja tehhä assiita kvääniksi  Motiveerata ihmissii siihen ette oppiit kväänin kieltä ja näyttäät heile ette sillä saapi työn ja ette työtä oon nokko kaikile.",  # noqa: E501
+                    "element": "Ko ihmiset oon käynheet institutin tahi universiteetin alkukurssin, niin heile tarjothaan maholisuuen saaja menttorin, jonka kans puhhuut ja tehhä assiita kvääniksi Motiveerata ihmissii siihen ette oppiit kväänin kieltä ja näyttäät heile ette sillä saapi työn ja ette työtä oon nokko kaikile.",  # noqa: E501
                     "element_number": 0,
                     "alignment_number": 0,
-                    "length": 293,
+                    "length": 292,
                 },
                 {
                     "element": "Freistata itte olla hyvät esikuvat.",
