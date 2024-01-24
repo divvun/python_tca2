@@ -360,11 +360,8 @@ class ElementInfoToBeCompared:
             self.common_clusters.add_clusters(anchor_word_clusters)
         return hits
 
-    def find_hits(self):
-        hits = [[] for _ in range(constants.NUM_FILES)]
-        for t, info_list in enumerate(self.info):
-            for info in info_list:
-                for hit in info.anchor_word_hits.hits:
-                    hits[t].append(hit)
-
-        return hits
+    def find_hits(self) -> list[AnchorWordHits]:
+        return [
+            [hit for info in info_list for hit in info.anchor_word_hits.hits]
+            for info_list in self.info
+        ]

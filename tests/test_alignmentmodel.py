@@ -319,6 +319,43 @@ def test_suggest3():
     }
 
 
+def test_anchorword_hits():
+    trees = [
+        etree.fromstring(
+            """
+    <document>
+        <s id="1">1 million kroner til landbruket i arktisk</s>
+    </document>
+    """  # noqa: E501
+        ),
+        etree.fromstring(
+            """
+    <document>
+        <s id="1">1 miljon ruvnno árktalaš eanadollui</s>
+    </document>
+    """  # noqa: E501
+        ),
+    ]
+
+    model = alignmentmodel.AlignmentModel()
+    load_text(trees, model)
+    model.anchor_word_list = load_anchor_words()
+    model.suggets_without_gui()
+    interesting = model.compare.matrix.cells["0,0,0,0"]
+
+    found_hits = [
+        [hit.to_json() for hit in lang_hits]
+        for lang_hits in interesting.element_info_to_be_compared.find_hits()
+    ]
+    assert found_hits == [
+        [
+            {"index": 0, "element_number": 0, "pos": 0, "word": "1"},
+            {"index": 1, "element_number": 0, "pos": 1, "word": "million"},
+        ],
+        [{"index": 0, "element_number": 0, "pos": 0, "word": "1"}],
+    ]
+
+
 # Set a bench for alignments using anchor words
 def test_anchor1():
     trees = [
