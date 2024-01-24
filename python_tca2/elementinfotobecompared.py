@@ -350,7 +350,8 @@ class ElementInfoToBeCompared:
                                 )
                             )
                         count += 1
-
+                    else:
+                        done2 = 100
                     if c + 1 >= len(hits[t]):
                         done2 = 100
                     c += 1
