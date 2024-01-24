@@ -203,8 +203,10 @@ class ElementInfoToBeCompared:
                                 )
 
     def find_anchor_word_matches(self):
-        hits = self.find_hits()
-        # TODO: sort the hits
+        hits = [
+            sorted(lang_hits, key=lambda hit: (hit.index, hit.word))
+            for lang_hits in self.find_hits()
+        ]
         current = [0] * constants.NUM_FILES
         # The loop is a hideous hack to avoid infinite loops
         # TODO: fix the reason for the infinite loop
