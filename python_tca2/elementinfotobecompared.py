@@ -7,6 +7,7 @@ from python_tca2 import (
     similarity_utils,
 )
 from python_tca2.alignment_utils import count_words
+from python_tca2.anchorwordhits import AnchorWordHits
 from python_tca2.clusters import Clusters
 from python_tca2.elementinfo import ElementInfo
 from python_tca2.ref import Ref
@@ -208,9 +209,8 @@ class ElementInfoToBeCompared:
             for lang_hits in self.find_hits()
         ]
         current = [0] * constants.NUM_FILES
-        # The loop is a hideous hack to avoid infinite loops
-        # TODO: fix the reason for the infinite loop
-        for _ in range(10):
+        done = False
+        while not done:
             smallest = float("inf")
             smallest_count = 0
             for t in range(constants.NUM_FILES):
@@ -221,13 +221,12 @@ class ElementInfoToBeCompared:
                         smallest_count = 1
                     elif hit.index == smallest:
                         smallest_count += 1
+
             present_in_all_texts = smallest_count == constants.NUM_FILES
 
             if smallest == float("inf"):
                 break
 
-            # This if statement is a hideous hack to avoid infinite loops, as well
-            # TODO: fix the reason for the infinite loop
             hits = self.find_more_hits(hits, current, smallest, present_in_all_texts)
 
     def find_propername_matches(self, t, tt):
@@ -314,16 +313,14 @@ class ElementInfoToBeCompared:
                                 char2,
                             )
 
-    # manuelt portet
     def find_more_hits(self, hits, current, smallest, present_in_all_texts):
         anchor_word_clusters = Clusters()
         for t in range(constants.NUM_FILES):
             count = 0
             if current[t] < len(hits[t]):
-                done2 = 0
-                while done2 < 10:
-                    done2 += 1
-                    c = current[t]
+                done2 = False
+                c = current[t]
+                while not done2:
                     hit = hits[t][c]
                     index = hit.index
                     if index == smallest:
@@ -351,14 +348,15 @@ class ElementInfoToBeCompared:
                             )
                         count += 1
                     else:
-                        done2 = 100
+                        done2 = True
                     if c + 1 >= len(hits[t]):
-                        done2 = 100
+                        done2 = True
                     c += 1
                 current[t] += count
 
         if anchor_word_clusters.clusters:
             self.common_clusters.add_clusters(anchor_word_clusters)
+
         return hits
 
     def find_hits(self) -> list[AnchorWordHits]:
