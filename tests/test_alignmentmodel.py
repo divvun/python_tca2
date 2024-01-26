@@ -2,10 +2,71 @@ from lxml import etree
 
 from python_tca2 import alignmentmodel
 from python_tca2.aelement import AElement
+from python_tca2.anchorwordlist import AnchorWordList
 from python_tca2.anchorwordlistentry import AnchorWordListEntry
+from python_tca2.elementinfo import ElementInfo
+from python_tca2.elementinfotobecompared import ElementInfoToBeCompared
 from python_tca2.link import Link
 from python_tca2.toalign import ToAlign
 from python_tca2.unaligned import Unaligned
+
+
+def test_find_dice_matches():
+    """Test that the first if in find_dice_matches works as expected"""
+    eitbc = ElementInfoToBeCompared()
+    eitbc.add(element_info=ElementInfo(AnchorWordList(), "Mobil", 0, 0), t=0)
+    eitbc.add(element_info=ElementInfo(AnchorWordList(), "Mobiila", 0, 0), t=1)
+    eitbc.find_dice_matches(0, 1)
+
+    assert eitbc.to_json() == {
+        "score": 4.0,
+        "common_clusters": {
+            "clusters": [
+                {
+                    "refs": [
+                        {
+                            "match_type": -2,
+                            "weight": 3.0,
+                            "t": 0,
+                            "element_number": 0,
+                            "pos": 0,
+                            "length": 1,
+                            "word": "Mobil",
+                        },
+                        {
+                            "match_type": -2,
+                            "weight": 3.0,
+                            "t": 1,
+                            "element_number": 0,
+                            "pos": 0,
+                            "length": 1,
+                            "word": "Mobiila",
+                        },
+                    ]
+                }
+            ]
+        },
+        "info": [
+            {
+                "element_number": 0,
+                "length": 5,
+                "num_words": 1,
+                "words": ["Mobil"],
+                "anchor_word_hits": [],
+                "scoring_characters": "",
+                "proper_names": ["Mobil"],
+            },
+            {
+                "element_number": 0,
+                "length": 7,
+                "num_words": 1,
+                "words": ["Mobiila"],
+                "anchor_word_hits": [],
+                "scoring_characters": "",
+                "proper_names": ["Mobiila"],
+            },
+        ],
+    }
 
 
 def test_aelement_text():
