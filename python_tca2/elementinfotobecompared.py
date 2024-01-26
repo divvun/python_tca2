@@ -124,8 +124,8 @@ class ElementInfoToBeCompared:
                         word2 = info2.words[y]
 
                         if (
-                            len(word1) > constants.DEFAULT_DICE_MIN_WORD_LENGTH
-                            and len(word2) > constants.DEFAULT_DICE_MIN_WORD_LENGTH
+                            len(word1) >= constants.DEFAULT_DICE_MIN_WORD_LENGTH
+                            and len(word2) >= constants.DEFAULT_DICE_MIN_WORD_LENGTH
                             and similarity_utils.dice_match1(
                                 word1, word2, constants.DEFAULT_DICE_MIN_COUNTING_SCORE
                             )

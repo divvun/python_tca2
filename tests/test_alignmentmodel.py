@@ -47,24 +47,28 @@ def test_find_dice_matches():
             ]
         },
         "info": [
-            {
-                "element_number": 0,
-                "length": 5,
-                "num_words": 1,
-                "words": ["Mobil"],
-                "anchor_word_hits": [],
-                "scoring_characters": "",
-                "proper_names": ["Mobil"],
-            },
-            {
-                "element_number": 0,
-                "length": 7,
-                "num_words": 1,
-                "words": ["Mobiila"],
-                "anchor_word_hits": [],
-                "scoring_characters": "",
-                "proper_names": ["Mobiila"],
-            },
+            [
+                {
+                    "element_number": 0,
+                    "length": 5,
+                    "num_words": 1,
+                    "words": ["Mobil"],
+                    "anchor_word_hits": [],
+                    "scoring_characters": "",
+                    "proper_names": ["Mobil"],
+                }
+            ],
+            [
+                {
+                    "element_number": 0,
+                    "length": 7,
+                    "num_words": 1,
+                    "words": ["Mobiila"],
+                    "anchor_word_hits": [],
+                    "scoring_characters": "",
+                    "proper_names": ["Mobiila"],
+                }
+            ],
         ],
     }
 
