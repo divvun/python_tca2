@@ -1,15 +1,19 @@
 #!/bin/bash
-# tca2 \
-#     data/anchor-nob-fkv.txt \
-#     data/kommisjonen_21.08.2020_nob.txt_nob.sent \
-#     data/kommisjonen_21.08.2020_fkv.txt_fkv.sent
+
+ANCHOR=bug3/anchor-nob-sme.txt
+IN1=bug3/samediggi-article-42.html_nob.sent
+IN2=bug3/samediggi-article-42.html_sme.sent
+
+tca2 \
+    $ANCHOR \
+    $IN1 \
+    $IN2 > tca2.txt
 
 java \
     -Xms512m \
     -Xmx1024m \
-    -jar /Users/bga001/repos/giellalt/CorpusTools/corpustools/tca2/dist/lib/alignment.jar \
+    -jar $GUTHOME/giellalt/CorpusTools/corpustools/tca2/dist/lib/alignment.jar \
     -cli-plain \
-    -anchor=data/anchor-nob-fkv.txt \
-    -in1=data/nob.sent \
-    -in2=data/fkv.sent
-
+    -anchor=$ANCHOR \
+    -in1=$IN1 \
+    -in2=$IN2 2> compare.java.json 1> java.txt
