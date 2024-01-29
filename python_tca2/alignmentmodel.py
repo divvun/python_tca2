@@ -165,7 +165,7 @@ class AlignmentModel:
         ret_queue_entry.score = new_score
         ret_queue_entry.path.extend(new_step)
 
-        if int(ret_queue_entry.score * 1000) > int(
+        if int(ret_queue_entry.score * 1000) >= int(
             self.compare.get_score(ret_queue_entry.path.position) * 1000
         ):
             self.compare.set_score(ret_queue_entry.path.position, ret_queue_entry.score)
