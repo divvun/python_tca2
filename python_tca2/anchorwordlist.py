@@ -12,22 +12,9 @@ class AnchorWordList:
 
     def load_from_file(self, from_file):
         self.entries.clear()
-        ok = True
-        try:
-            with open(from_file, "r") as file:
-                for line in file:
-                    try:
-                        self.entries.append(AnchorWordListEntry(line.strip()))
-                    except Exception as e:
-                        print("Error in anchor word entry:", str(e))
-                        ok = False
-                        break
-        except IOError:
-            pass
-
-        if not ok:
-            print("Error occurred. Clear list again")
-            self.entries.clear()
+        with open(from_file, "r") as file:
+            for line in file:
+                self.entries.append(AnchorWordListEntry(line.strip()))
 
     def get_anchor_word_hits(self, words, t, element_number):
         ret = AnchorWordHits()
