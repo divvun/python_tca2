@@ -2,6 +2,7 @@ from lxml import etree
 
 from python_tca2 import alignmentmodel
 from python_tca2.aelement import AElement
+from python_tca2.aligned import Aligned
 from python_tca2.anchorwordlist import AnchorWordList
 from python_tca2.anchorwordlistentry import AnchorWordListEntry
 from python_tca2.elementinfo import ElementInfo
@@ -163,6 +164,289 @@ def test_toalign_pickup():
     }
 
 
+def test_aligned_to_text_file():
+    aligned = Aligned()
+    aligned.elements = [
+        [
+            {
+                "element": "Møte med Tana kommune",
+                "element_number": 0,
+                "alignment_number": 0,
+                "length": 21,
+            },
+            {
+                "element": "Sametinget avholdt et digitalt møte med Tana kommune 5.november 2021.",  # noqa: E501
+                "element_number": 1,
+                "alignment_number": 1,
+                "length": 69,
+            },
+            {
+                "element": "Møte var om at Tana kommune har behov for et mye større tospråklighetstilskudd enn det de bevilges av Sametinget.",  # noqa: E501
+                "element_number": 2,
+                "alignment_number": 2,
+                "length": 113,
+            },
+            {
+                "element": "Sametingsrådene Mikkel Eskil Mikkelsen og Runar Myrnes Balto var med på møtet.",  # noqa: E501
+                "element_number": 3,
+                "alignment_number": 3,
+                "length": 78,
+            },
+            {
+                "element": "Samisk språkuke",
+                "element_number": 4,
+                "alignment_number": 6,
+                "length": 15,
+            },
+            {
+                "element": "Aldri noensinne har språkuka og samiske språk fått så mye oppmerksomhet i samfunnet.",  # noqa: E501
+                "element_number": 5,
+                "alignment_number": 14,
+                "length": 84,
+            },
+            {
+                "element": "Sametinget så i fjor i forbindelse med pandemien at vi rekker ut til folk med filmer.",  # noqa: E501
+                "element_number": 6,
+                "alignment_number": 15,
+                "length": 85,
+            },
+            {
+                "element": "Derfor bestilte Sametinget 11 filmer til språkuka.",
+                "element_number": 7,
+                "alignment_number": 16,
+                "length": 50,
+            },
+            {
+                "element": "Sametinget har brukt mye ressurser på å synliggjøre språkuka via sosiale media.",  # noqa: E501
+                "element_number": 8,
+                "alignment_number": 17,
+                "length": 79,
+            },
+            {
+                "element": "Vi ser at det er med en bredere synliggjøring av språkuka.",
+                "element_number": 9,
+                "alignment_number": 18,
+                "length": 58,
+            },
+            {
+                "element": "Helhetlig ser Sametinget at det Norske samfunnet er klare til å gjøre mer i forbindelse med språkuka så lenge Sametinget har ressurser til å veilede og hjelpe.",  # noqa: E501
+                "element_number": 10,
+                "alignment_number": 19,
+                "length": 159,
+            },
+            {
+                "element": "Sametinget har også muligheter til å samarbeide med større aktører, hvis de begynner å planlegge i god tid.",  # noqa: E501
+                "element_number": 11,
+                "alignment_number": 20,
+                "length": 107,
+            },
+        ],
+        [
+            {
+                "element": "Čoahkkin Deanu gielddain",
+                "element_number": 0,
+                "alignment_number": 0,
+                "length": 24,
+            },
+            {
+                "element": "Sámediggi doalai digitála čoahkkima Deanu gielddain skábmamánu 5. beaivvi 2021.",  # noqa: E501
+                "element_number": 1,
+                "alignment_number": 1,
+                "length": 79,
+            },
+            {
+                "element": "Čoahkkin lei Deanu gieldda guovttegielatvuođadoarjaga dárbbuid birra mat leat olu eambbo go doarjja maid Sámediggi juolluda.",  # noqa: E501
+                "element_number": 2,
+                "alignment_number": 2,
+                "length": 124,
+            },
+            {
+                "element": "Sámediggeráđit Mikkel Eskil Mikkelsen ja Runar Myrnes Balto searvvaiga čoahkkimii.",  # noqa: E501
+                "element_number": 3,
+                "alignment_number": 3,
+                "length": 82,
+            },
+            {
+                "element": "( FUOM!",
+                "element_number": 4,
+                "alignment_number": 4,
+                "length": 7,
+            },
+            {
+                "element": "ii dárbbaš jorgalit dan mii lea ruoksadin , teaksta lei čállojuvvon guovtti gillii, bijan dušše dása vai ii láhppo )",  # noqa: E501
+                "element_number": 5,
+                "alignment_number": 5,
+                "length": 116,
+            },
+            {
+                "element": "Sámi báikenammanevvohat",
+                "element_number": 6,
+                "alignment_number": 6,
+                "length": 23,
+            },
+            {
+                "element": "Báikenammanevvohat lea sádden álgorávvemiid Gáivuonas, Sáččás ja Ulbbis , ja loahpalaš rávvemiid Mátta-Várjjagis, Loabágis ja Rørosas.",  # noqa: E501
+                "element_number": 7,
+                "alignment_number": 7,
+                "length": 134,
+            },
+            {
+                "element": "Sámediggi lea maid dán áigodagas sádden ođđa vástádusa Oslo suohkana jearaldahkii, mas bivde sámegiel nama Oslo gávpogii.",  # noqa: E501
+                "element_number": 8,
+                "alignment_number": 8,
+                "length": 121,
+            },
+            {
+                "element": "Duogážin dán áššis lea ahte nammanevvohaga vuosttaš rávvema geažil šattai dát mediaáššin, ja nammanevvohat válljii guorahallat ášši ođđasit.",  # noqa: E501
+                "element_number": 9,
+                "alignment_number": 9,
+                "length": 140,
+            },
+            {
+                "element": "Nammanevvohat lea dál čađahan ođđa nammafágalaš guorahallama, ja boađusin lea ahte nammanevvohat doalaha ovddit rávvema, namalassii ahte Oslo bisuhuvvo hámis Oslo.",  # noqa: E501
+                "element_number": 10,
+                "alignment_number": 10,
+                "length": 163,
+            },
+            {
+                "element": "Nammanevvohat árvala reivvestis ahte Oslo suohkan váldá atnui sámegiel nama suohkanii čuovvovaččat: dsg .",  # noqa: E501
+                "element_number": 11,
+                "alignment_number": 11,
+                "length": 105,
+            },
+            {
+                "element": "Oslo suohkan / gielda ~ jsg. Oslo suohkan ~ lsg.",
+                "element_number": 12,
+                "alignment_number": 12,
+                "length": 48,
+            },
+            {
+                "element": "Oslon tjïelte ( Oslon geažus -n ea genetiivageažus) .",
+                "element_number": 13,
+                "alignment_number": 13,
+                "length": 53,
+            },
+            {
+                "element": "Sámi giellavahkku",
+                "element_number": 14,
+                "alignment_number": 14,
+                "length": 17,
+            },
+            {
+                "element": "Ii goassege leat Giellavahkku ja sámegielat ná bures fuomášuvvon servodagas.",  # noqa: E501
+                "element_number": 15,
+                "alignment_number": 14,
+                "length": 76,
+            },
+            {
+                "element": "Sámediggi oinnii diibmá pandemiija oktavuođas ahte olahit olbmuide filmmaiguin.",  # noqa: E501
+                "element_number": 16,
+                "alignment_number": 15,
+                "length": 79,
+            },
+            {
+                "element": "Dan dihte diŋgui Sámediggi 11 filmma Giellavahkkui.",
+                "element_number": 17,
+                "alignment_number": 16,
+                "length": 51,
+            },
+            {
+                "element": "Sámediggi lea atnán ollu resurssaid čalmmustahttit Giellavahku sosiála mediaid bokte.",  # noqa: E501
+                "element_number": 18,
+                "alignment_number": 17,
+                "length": 85,
+            },
+            {
+                "element": "Mii oaidnit ahte dat lea mielde čalmmustahttime Giellavahku viidát.",  # noqa: E501
+                "element_number": 19,
+                "alignment_number": 18,
+                "length": 67,
+            },
+            {
+                "element": "Ollislaččat oaidná Sámediggi ahte Norgga servodat lea gearggus dahkat eanet Giellavahku oktavuođas nu guhká go Sámedikkis leat resurssat sin láidestit ja veahkehit.",  # noqa: E501
+                "element_number": 20,
+                "alignment_number": 19,
+                "length": 164,
+            },
+            {
+                "element": "Sámedikkis lea maid vejolašvuohta oažžut ovttasbarggu stuorit aktevrraiguin, jus buori áiggis oččodišgoahtit ovttasbarggu.",  # noqa: E501
+                "element_number": 21,
+                "alignment_number": 20,
+                "length": 122,
+            },
+        ],
+    ]
+
+    aligned.alignments = [
+        {"alignment_number": 0, "element_numbers": [[0], [0]]},
+        {"alignment_number": 1, "element_numbers": [[1], [1]]},
+        {"alignment_number": 2, "element_numbers": [[2], [2]]},
+        {"alignment_number": 3, "element_numbers": [[3], [3]]},
+        {"alignment_number": 4, "element_numbers": [[], [4]]},
+        {"alignment_number": 5, "element_numbers": [[], [5]]},
+        {"alignment_number": 6, "element_numbers": [[4], [6]]},
+        {"alignment_number": 7, "element_numbers": [[], [7]]},
+        {"alignment_number": 8, "element_numbers": [[], [8]]},
+        {"alignment_number": 9, "element_numbers": [[], [9]]},
+        {"alignment_number": 10, "element_numbers": [[], [10]]},
+        {"alignment_number": 11, "element_numbers": [[], [11]]},
+        {"alignment_number": 12, "element_numbers": [[], [12]]},
+        {"alignment_number": 13, "element_numbers": [[], [13]]},
+        {"alignment_number": 14, "element_numbers": [[5], [14, 15]]},
+        {"alignment_number": 15, "element_numbers": [[6], [16]]},
+        {"alignment_number": 16, "element_numbers": [[7], [17]]},
+        {"alignment_number": 17, "element_numbers": [[8], [18]]},
+        {"alignment_number": 18, "element_numbers": [[9], [19]]},
+        {"alignment_number": 19, "element_numbers": [[10], [20]]},
+        {"alignment_number": 20, "element_numbers": [[11], [21]]},
+    ]
+
+    assert aligned.valid_pairs() == [
+        ("Møte med Tana kommune", "Čoahkkin Deanu gielddain"),
+        (
+            "Sametinget avholdt et digitalt møte med Tana kommune 5.november 2021.",
+            "Sámediggi doalai digitála čoahkkima Deanu gielddain skábmamánu 5. beaivvi 2021.",  # noqa: E501
+        ),
+        (
+            "Møte var om at Tana kommune har behov for et mye større tospråklighetstilskudd enn det de bevilges av Sametinget.",  # noqa: E501
+            "Čoahkkin lei Deanu gieldda guovttegielatvuođadoarjaga dárbbuid birra mat leat olu eambbo go doarjja maid Sámediggi juolluda.",  # noqa: E501
+        ),
+        (
+            "Sametingsrådene Mikkel Eskil Mikkelsen og Runar Myrnes Balto var med på møtet.",  # noqa: E501
+            "Sámediggeráđit Mikkel Eskil Mikkelsen ja Runar Myrnes Balto searvvaiga čoahkkimii.",  # noqa: E501
+        ),
+        ("Samisk språkuke", "Sámi báikenammanevvohat"),
+        (
+            "Aldri noensinne har språkuka og samiske språk fått så mye oppmerksomhet i samfunnet.",  # noqa: E501
+            "Sámi giellavahkku Ii goassege leat Giellavahkku ja sámegielat ná bures fuomášuvvon servodagas.",  # noqa: E501
+        ),
+        (
+            "Sametinget så i fjor i forbindelse med pandemien at vi rekker ut til folk med filmer.",  # noqa: E501
+            "Sámediggi oinnii diibmá pandemiija oktavuođas ahte olahit olbmuide filmmaiguin.",  # noqa: E501
+        ),
+        (
+            "Derfor bestilte Sametinget 11 filmer til språkuka.",
+            "Dan dihte diŋgui Sámediggi 11 filmma Giellavahkkui.",
+        ),
+        (
+            "Sametinget har brukt mye ressurser på å synliggjøre språkuka via sosiale media.",  # noqa: E501
+            "Sámediggi lea atnán ollu resurssaid čalmmustahttit Giellavahku sosiála mediaid bokte.",  # noqa: E501
+        ),
+        (
+            "Vi ser at det er med en bredere synliggjøring av språkuka.",
+            "Mii oaidnit ahte dat lea mielde čalmmustahttime Giellavahku viidát.",
+        ),
+        (
+            "Helhetlig ser Sametinget at det Norske samfunnet er klare til å gjøre mer i forbindelse med språkuka så lenge Sametinget har ressurser til å veilede og hjelpe.",  # noqa: E501
+            "Ollislaččat oaidná Sámediggi ahte Norgga servodat lea gearggus dahkat eanet Giellavahku oktavuođas nu guhká go Sámedikkis leat resurssat sin láidestit ja veahkehit.",  # noqa: E501
+        ),
+        (
+            "Sametinget har også muligheter til å samarbeide med større aktører, hvis de begynner å planlegge i god tid.",  # noqa: E501
+            "Sámedikkis lea maid vejolašvuohta oažžut ovttasbarggu stuorit aktevrraiguin, jus buori áiggis oččodišgoahtit ovttasbarggu.",  # noqa: E501
+        ),
+    ]
+
+
 # A simple test of the alignment model
 def test_suggest1():
     trees = [
@@ -193,7 +477,7 @@ def test_suggest1():
             [
                 {
                     "element": (
-                        "Kanskje en innkjøpsordning for kvenskspråklig " "litteratur."
+                        "Kanskje en innkjøpsordning for kvenskspråklig litteratur."
                     ),
                     "element_number": 0,
                     "alignment_number": 0,
