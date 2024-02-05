@@ -33,3 +33,25 @@ class Aligned:
             for t in range(constants.NUM_FILES):
                 for i in range(len(value_got.elements[t])):
                     self.elements[t].append(value_got.elements[t][i])
+
+    def valid_pairs(self) -> list[tuple[str, str]]:
+        """Return a list of valid tuple of elements from the alignments.
+
+        A valid tuple is a tuple of elements from the alignments that have element
+        numbers for all files.
+        """
+        return [
+            tuple(
+                [
+                    " ".join(
+                        [
+                            self.elements[index][element_number]["element"]
+                            for element_number in element_numbers
+                        ]
+                    )
+                    for index, element_numbers in enumerate(link["element_numbers"])
+                ]
+            )
+            for link in self.alignments
+            if all(element_numbers for element_numbers in link["element_numbers"])
+        ]
