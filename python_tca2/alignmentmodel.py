@@ -103,8 +103,8 @@ class AlignmentModel:
             normalised_candidate_score = (
                 candidate.score / candidate.path.get_length_in_sentences()
             )
-            if int(normalised_candidate_score * 1000) > int(
-                normalised_best_score * 1000
+            if int(normalised_candidate_score * 100000) > int(
+                normalised_best_score * 100000
             ):
                 normalised_best_score = normalised_candidate_score
                 best_path = candidate.path
@@ -165,8 +165,8 @@ class AlignmentModel:
         ret_queue_entry.score = new_score
         ret_queue_entry.path.extend(new_step)
 
-        if int(ret_queue_entry.score * 1000) >= int(
-            self.compare.get_score(ret_queue_entry.path.position) * 1000
+        if int(ret_queue_entry.score * 100000) > int(
+            self.compare.get_score(ret_queue_entry.path.position) * 100000
         ):
             self.compare.set_score(ret_queue_entry.path.position, ret_queue_entry.score)
             return ret_queue_entry
