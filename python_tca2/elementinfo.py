@@ -12,7 +12,7 @@ def remove_special_characters(word):
         if word.endswith(special_char):
             word = word[:-1]
 
-    return word
+    return word.strip()
 
 
 def get_scoring_characters(text: str) -> str:
@@ -36,7 +36,11 @@ class ElementInfo:
     ):
         self.element_number = element_number
         self.length = len(text)
-        self.words = [remove_special_characters(word) for word in text.split()]
+        self.words = [
+            rword
+            for rword in [remove_special_characters(word) for word in text.split()]
+            if rword.strip()
+        ]
         self.num_words = len(self.words)
         self.anchor_word_hits: AnchorWordHits = anchor_word_list.get_anchor_word_hits(
             self.words, t, element_number

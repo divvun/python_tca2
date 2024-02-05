@@ -1,10 +1,10 @@
 #!/bin/bash
 
 ANCHOR=bug3/anchor-nob-sme.txt
-IN1=bug3/samediggi-article-42.html_nob.sent
-IN2=bug3/samediggi-article-42.html_sme.sent
+IN1=bug3/giella_no.docx_nob.sent
+IN2=bug3/giella_sam.docx_sme.sent
 
-tca2 \
+/Users/bga001/Library/Caches/pypoetry/virtualenvs/python-tca2-vDuy0Iz_-py3.12/bin/tca2 \
     $ANCHOR \
     $IN1 \
     $IN2 > tca2.txt

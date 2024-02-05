@@ -1,4 +1,3 @@
-import json
 from typing import List
 
 from python_tca2.path import Path
@@ -15,7 +14,11 @@ class QueueEntry:
         self.removed = True
 
     def __str__(self):
-        return json.dumps(self.to_json(), indent=0, ensure_ascii=False)
+        score = f"{self.score:.2f}".replace(".", ",")
+        return (
+            f"QueueEntry: {self.path} {score} "
+            f"{'true' if self.removed else 'false'} {'true' if self.end else 'false'}"
+        )
 
     def to_json(self):
         return {

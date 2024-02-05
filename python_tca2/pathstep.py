@@ -1,4 +1,3 @@
-import json
 from copy import deepcopy
 
 
@@ -13,7 +12,7 @@ class PathStep:
         return True
 
     def __str__(self):
-        return json.dumps(self.to_json(), indent=0, ensure_ascii=False)
+        return "{" + f"{self.increment[0]},{self.increment[1]}" + "}"
 
     def clone(self):
         return deepcopy(self)

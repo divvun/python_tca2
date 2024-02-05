@@ -1,3 +1,4 @@
+import json
 from copy import deepcopy
 
 from lxml import etree
@@ -52,6 +53,7 @@ class AlignmentModel:
         done_aligning = False
 
         while not done_aligning:
+            print(f"run_count = {run_count}")
             self.compare.reset_best_path_scores()
 
             queue_list = self.lengthen_paths()
@@ -65,23 +67,26 @@ class AlignmentModel:
                 # is done
                 done_aligning = True
             else:
+                print(f"queueList.entry.size() = {len(queue_list.entry)}")
                 best_path = self.get_best_path(queue_list)
 
                 if best_path and best_path.steps:
+                    print(f"bestPath.steps.size() = {len(best_path.steps)}")
                     self.find_more_to_align_without_gui(best_path)
                     run_count += 1
                     done_aligning = run_count >= run_limit
 
                     if not done_aligning:
+                        print("flushing")
                         self.flush_aligned_without_gui()
                     else:
                         print_frame("done_aligning run_limit exceeded")
                 else:
                     done_aligning = True
-        # print(
-        #     json.dumps(self.compare.to_json(), indent=0, ensure_ascii=False),
-        #     file=open("compare.json", "w"),
-        # )
+        print(
+            json.dumps(self.compare.to_json(), indent=0, ensure_ascii=False),
+            file=open("compare.json", "w"),
+        )
 
     def flush_aligned_without_gui(self):
         self.aligned.pickup(self.to_align.flush())
@@ -98,17 +103,24 @@ class AlignmentModel:
     def get_best_path(self, queue_list):
         normalised_best_score = constants.BEST_PATH_SCORE_NOT_CALCULATED
 
+        print(f"gbp {normalised_best_score}")
         best_path = None
         for candidate in queue_list.entry:
+            print(
+                f"gbp candidate = {candidate.score} {candidate.path.get_length_in_sentences()}"
+            )
             normalised_candidate_score = (
                 candidate.score / candidate.path.get_length_in_sentences()
             )
+            print(f"gbp normalizedCandidateScore = {normalised_candidate_score}")
             if int(normalised_candidate_score * 100000) > int(
                 normalised_best_score * 100000
             ):
                 normalised_best_score = normalised_candidate_score
+                print(f"gbp normalizedBestScore = {normalised_best_score} {candidate}")
                 best_path = candidate.path
 
+        print(f"gbp bestPath = {best_path}")
         return best_path
 
     def lengthen_paths(self):
@@ -118,18 +130,26 @@ class AlignmentModel:
         step_count = 0
         done_lengthening = False
         while not done_lengthening:
+            print(f"step_count = {step_count}")
             next_queue_list = QueueList()
             for x, queue_entry in enumerate(queue_list.entry):
+                print(f"lp1 {step_count}")
                 if not queue_entry.removed and not queue_entry.end:
+                    print(f"lp2 {step_count} {queue_entry}")
                     self.lengthen_current_path(queue_entry, queue_list, next_queue_list)
+            print(f"1 next.size {len(next_queue_list.entry)}")
             next_queue_list.remove_for_real()
+            print(f"2 next.size {len(next_queue_list.entry)}")
             if next_queue_list.empty():
+                print(f"lp3 {step_count}")
                 done_lengthening = True
             else:
+                print(f"lp4 {step_count}, {len(next_queue_list.entry)}")
                 queue_list = next_queue_list
                 step_count += 1
                 done_lengthening = step_count >= self.max_path_length
 
+        print(f"3 next.size {len(queue_list.entry)}")
         return queue_list
 
     def lengthen_current_path(
@@ -137,20 +157,31 @@ class AlignmentModel:
     ):
         for step in self.compare.step_list:
             try:
+                print(
+                    f"step = {step}".replace("{", "[")
+                    .replace("}", "]")
+                    .replace(",", ", ")
+                )
+                print("1 queueEntry")
                 new_queue_entry = self.make_longer_path(deepcopy(queue_entry), step)
                 if new_queue_entry.path is not None:
                     pos = new_queue_entry.path.position
                     queue_list.remove(pos)
                     next_queue_list.remove(pos)
+                    print("2 queueEntry")
                     next_queue_list.add(new_queue_entry)
             except EndOfAllTextsExceptionError:
                 new_queue_entry = deepcopy(queue_entry)
+                print("3 queueEntry")
                 new_queue_entry.end = True
                 if not next_queue_list.contains(new_queue_entry):
+                    print("4 queueEntry")
                     next_queue_list.add(new_queue_entry)
             except EndOfTextExceptionError:
+                print("lcp EndOfTextException")
                 pass
             except BlockedExceptionError:
+                print("lcp BlockedException")
                 pass
 
     def get_step_score(self, position, step):
@@ -158,19 +189,28 @@ class AlignmentModel:
         return cell.get_score()
 
     def make_longer_path(self, ret_queue_entry, new_step: PathStep):
+        print("1score")
         new_score = ret_queue_entry.score + self.get_step_score(
             ret_queue_entry.path.position, new_step
         )
-
+        print("2score")
         ret_queue_entry.score = new_score
         ret_queue_entry.path.extend(new_step)
 
+        print(
+            f"2.1score {int(ret_queue_entry.score * 100000)} "
+            f"{int(
+            self.compare.get_score(ret_queue_entry.path.position) * 100000
+        )}"
+        )
         if int(ret_queue_entry.score * 100000) > int(
             self.compare.get_score(ret_queue_entry.path.position) * 100000
         ):
+            print("3score")
             self.compare.set_score(ret_queue_entry.path.position, ret_queue_entry.score)
             return ret_queue_entry
         else:
+            print("4score")
             ret_queue_entry.path = None
             return ret_queue_entry
 

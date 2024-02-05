@@ -1,3 +1,5 @@
+import json
+
 import click
 
 from python_tca2 import alignmentmodel
@@ -11,6 +13,7 @@ def parallelize(anchor_file, text_file1, text_file2):
     model.load_text(text_file2, 1)
 
     model.suggets_without_gui()
+    print(json.dumps(model.aligned.to_json(), indent=2, ensure_ascii=False))
     model.save_plain()
 
 
