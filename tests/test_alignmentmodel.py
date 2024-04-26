@@ -79,11 +79,11 @@ def test_aelement_text():
     node = etree.fromstring(
         '<s id="4">9 Økonomiske, administrative&#13; og miljømessige  konsekvenser</s>'
     )
-    aelement = AElement(node, 0)
-
-    assert (
-        aelement.element == "9 Økonomiske, administrative og miljømessige konsekvenser"
+    aelement = AElement(
+        " ".join([text for text in "".join(node.itertext()).split() if text.strip()]), 0
     )
+
+    assert aelement.text == "9 Økonomiske, administrative og miljømessige konsekvenser"
 
 
 def load_text(trees, model):
@@ -91,7 +91,19 @@ def load_text(trees, model):
         model.docs.append(tree)
         model.nodes.append(tree.xpath("//s"))
         for index, node in enumerate(tree.iter("s")):
-            model.unaligned.add(AElement(node, index), t)
+            model.unaligned.add(
+                AElement(
+                    " ".join(
+                        [
+                            text
+                            for text in "".join(node.itertext()).split()
+                            if text.strip()
+                        ]
+                    ),
+                    index,
+                ),
+                t,
+            )
 
 
 # A simple test of transfer from unaligned to toalign
@@ -107,7 +119,15 @@ def test_toalign_pickup():
 
     unaligned = Unaligned()
     for index, node in enumerate(tree.iter("s")):
-        unaligned.add(AElement(node, index), 0)
+        unaligned.add(
+            AElement(
+                " ".join(
+                    [text for text in "".join(node.itertext()).split() if text.strip()]
+                ),
+                index,
+            ),
+            0,
+        )
 
     to_align = ToAlign()
     for element in unaligned.elements[0]:
@@ -115,7 +135,12 @@ def test_toalign_pickup():
 
     elements = []
     for index, node in enumerate(tree.iter("s")):
-        element = AElement(node, index)
+        element = AElement(
+            " ".join(
+                [text for text in "".join(node.itertext()).split() if text.strip()]
+            ),
+            index,
+        )
         element.element_number = index
         element.alignment_number = 0
         elements.append(element)

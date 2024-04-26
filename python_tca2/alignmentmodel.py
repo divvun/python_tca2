@@ -44,7 +44,12 @@ class AlignmentModel:
         self.all_nodes.append(tree.xpath("//s"))
 
         for index, node in enumerate(tree.iter("s")):
-            element = AElement(node, index)
+            element = AElement(
+                " ".join(
+                    [text for text in "".join(node.itertext()).split() if text.strip()]
+                ),
+                index,
+            )
             self.unaligned.add(element, t)
 
     def suggets_without_gui(self):
