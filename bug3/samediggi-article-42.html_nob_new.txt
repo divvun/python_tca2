@@ -1,0 +1,11 @@
+<s id="0">Fremmedspråk og norsk sidemål skriftlig – ikke obligatorisk</s>
+<s id="1">Elever som har samisk som første- eller andrespråk, er fritatt i norsk sidemål skriftlig og i faget fremmedspråk.</s>
+<s id="2">Elever med samisk som førstespråk eller andrespråk, er fritatt for opplæring og vurdering i norsk sidemål både på grunnskole og videregående opplæring, jf.Opplæringslova § 1-11.</s>
+<s id="3">Fremmedspråk (eller språkfordypning eller arbeidslivsfag) er obligatorisk fag for alle unntatt for elever som har samisk som første- eller andrespråk på skolen.</s>
+<s id="4">Disse har tre språkfag;</s>
+<s id="5">samisk, norsk og engelsk, og de er fritatt fra dette både på grunnskolen og videregående opplæring, men de har likevel rett til å ha fremmedspråk dersom de ønsker det, jf. Forskrift til opplæringslova § 1-9 og 1-10.</s>
+<s id="6">For å unngå mye ekstratimer for disse elevene, er det en bestemmelse for grunnskolen om at elever som velger fremmedspråk i tillegg til samisk, kan ha lavere minstetimetall i fremmedspråk på grunnskolen enn det som er det ordinære kravet for faget.</s>
+<s id="7">Dersom en elev ønsker å ha fremmedspråk som fag på videregående, uten å ha hatt faget i grunnskolen, blir det godkjent at de fullfører nivå 1 på bare ett fremmedspråk på videregående opplæring.</s> <s id="8">Elever uten samisk, skal fullføre nivå 1 og 2 i ett fremmedspråk, eller fullføre nivå 1 i to ulike fremmedspråk</s>
+<s id="9">Mere opplysninger om organisering og timetall finner du på Utdanningsdirektoratets nettsider i Rundskriv om fag- og timefordeling.</s>
+<s id="10">NB!</s>
+<s id="11">Denne fornyes hvert år.</s>
