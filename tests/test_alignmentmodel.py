@@ -12,6 +12,15 @@ from python_tca2.toalign import ToAlign
 from python_tca2.unaligned import Unaligned
 
 
+def test_get_score():
+    """Test that the first if in find_dice_matches works as expected"""
+    eitbc = ElementInfoToBeCompared()
+    eitbc.add(element_info=ElementInfo(AnchorWordList(), "Mobil", 0, 0), t=0)
+    eitbc.add(element_info=ElementInfo(AnchorWordList(), "Mobiila", 0, 0), t=1)
+
+    assert eitbc.get_score() == 0
+
+
 def test_find_dice_matches():
     """Test that the first if in find_dice_matches works as expected"""
     eitbc = ElementInfoToBeCompared()
