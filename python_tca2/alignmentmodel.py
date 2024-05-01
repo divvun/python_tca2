@@ -40,17 +40,27 @@ class AlignmentModel:
         # TODO: Add text file name to the model
         tree = etree.parse(text_file)
         self.docs.append(tree)
-        self.nodes.append(tree.xpath("//s"))
         self.all_nodes.append(tree.xpath("//s"))
+        self.load_tree(tree, t)
 
-        for index, node in enumerate(tree.iter("s")):
-            element = AElement(
-                " ".join(
-                    [text for text in "".join(node.itertext()).split() if text.strip()]
-                ),
-                index,
-            )
-            self.unaligned.add(element, t)
+    def load_tree(self, tree, t):
+        self.nodes.append(tree.xpath("//s"))
+        self.unaligned.add_elements(
+            [
+                AElement(
+                    " ".join(
+                        [
+                            text
+                            for text in "".join(node.itertext()).split()
+                            if text.strip()
+                        ]
+                    ),
+                    index,
+                )
+                for index, node in enumerate(tree.iter("s"))
+            ],
+            t,
+        )
 
     def suggets_without_gui(self):
         run_limit = constants.RUN_LIMIT

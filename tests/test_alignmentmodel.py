@@ -93,21 +93,7 @@ def test_aelement_text():
 
 def load_text(trees, model):
     for t, tree in enumerate(trees):
-        model.nodes.append(tree.xpath("//s"))
-        for index, node in enumerate(tree.iter("s")):
-            model.unaligned.add(
-                AElement(
-                    " ".join(
-                        [
-                            text
-                            for text in "".join(node.itertext()).split()
-                            if text.strip()
-                        ]
-                    ),
-                    index,
-                ),
-                t,
-            )
+        model.load_tree(tree, t)
 
 
 # A simple test of transfer from unaligned to toalign
@@ -122,16 +108,18 @@ def test_toalign_pickup():
     )
 
     unaligned = Unaligned()
-    for index, node in enumerate(tree.iter("s")):
-        unaligned.add(
+    unaligned.add_elements(
+        [
             AElement(
                 " ".join(
                     [text for text in "".join(node.itertext()).split() if text.strip()]
                 ),
                 index,
-            ),
-            0,
-        )
+            )
+            for index, node in enumerate(tree.iter("s"))
+        ],
+        0,
+    )
 
     to_align = ToAlign()
     for element in unaligned.elements[0]:
