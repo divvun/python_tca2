@@ -8,7 +8,6 @@ from python_tca2.anchorwordlist import AnchorWordList
 from python_tca2.anchorwordlistentry import AnchorWordListEntry
 from python_tca2.elementinfo import ElementInfo
 from python_tca2.elementinfotobecompared import ElementInfoToBeCompared
-from python_tca2.link import Link
 from python_tca2.toalign import ToAlign
 from python_tca2.unaligned import Unaligned
 
@@ -153,10 +152,6 @@ def test_toalign_pickup():
         element.alignment_number = 0
         elements.append(element)
 
-    link = Link()
-    link.element_numbers[0] = [0, 1]
-    link.alignment_number = 0
-
     assert unaligned.to_json() == {
         "elements": [
             {
@@ -192,7 +187,6 @@ def test_toalign_pickup():
                 },
             ],
         ],
-        "pending": {"alignment_number": 0, "element_numbers": [[0, 1], []]},
     }
 
 
@@ -453,25 +447,19 @@ def test_suggest3():
                             "element_number": 1,
                             "alignment_number": 1,
                             "length": 26,
-                        }
-                    ]
-                ]
-            },
-            {
-                "elements": [
-                    [
+                        },
                         {
                             "element": "Om lov om reindrift (reindriftsloven)",
                             "element_number": 2,
-                            "alignment_number": 2,
+                            "alignment_number": 1,
                             "length": 37,
-                        }
+                        },
                     ],
                     [
                         {
                             "element": "Boazodoallolága birra",
                             "element_number": 1,
-                            "alignment_number": 2,
+                            "alignment_number": 1,
                             "length": 21,
                         }
                     ],
