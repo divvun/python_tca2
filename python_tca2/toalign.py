@@ -1,5 +1,5 @@
 import json
-from typing import List
+from collections import defaultdict
 
 from python_tca2 import constants
 from python_tca2.aelement import AElement
@@ -9,15 +9,17 @@ from python_tca2.link import Link
 
 class ToAlign:
     def __init__(self):
-        self.elements: List[List[AElement]] = [[], []]
-        self.pending: List[Link] = []
+        self.elements: defaultdict[int, list[AElement]] = defaultdict(
+            list
+        )  # noqa: F821
+        self.pending: list[Link] = []
         self.first_alignment_number = 0
 
     def to_json(self):
         return {
             "elements": [
                 [lang_element.to_json() for lang_element in lang_elements]
-                for lang_elements in self.elements
+                for lang_elements in self.elements.values()
             ],
             "pending": [al.to_json() for al in self.pending],
         }

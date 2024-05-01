@@ -175,7 +175,6 @@ def test_toalign_pickup():
                     "length": 46,
                 },
             ],
-            [],
         ],
         "pending": [{"alignment_number": 0, "element_numbers": [[0, 1], []]}],
     }
