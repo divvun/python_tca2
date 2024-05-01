@@ -1,12 +1,12 @@
 import json
-from typing import List
+from collections import defaultdict
 
 from python_tca2.aelement import AElement
 
 
 class Unaligned:
     def __init__(self):
-        self.elements: List[List[AElement]] = [[], []]
+        self.elements: defaultdict[int, list[AElement]] = defaultdict(list)
 
     def pop(self, t: int) -> AElement:
         return self.elements[t].pop(0)
@@ -20,6 +20,8 @@ class Unaligned:
     def to_json(self):
         return {
             "elements": [
-                element.to_json() for elements in self.elements for element in elements
+                element.to_json()
+                for elements in self.elements.values()
+                for element in elements
             ]
         }
