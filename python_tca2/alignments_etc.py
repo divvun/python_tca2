@@ -6,5 +6,5 @@ from python_tca2.link import Link
 
 class AlignmentsEtc:
     def __init__(self):
-        self.alignments: list[Link] = []
+        self.alignments: Link = None
         self.elements: defaultdict[int, list[AElement]] = defaultdict(list)

@@ -176,7 +176,7 @@ def test_toalign_pickup():
                 },
             ],
         ],
-        "pending": [{"alignment_number": 0, "element_numbers": [[0, 1], []]}],
+        "pending": {"alignment_number": 0, "element_numbers": [[0, 1], []]},
     }
 
 

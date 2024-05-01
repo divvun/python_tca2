@@ -9,10 +9,8 @@ from python_tca2.link import Link
 
 class ToAlign:
     def __init__(self):
-        self.elements: defaultdict[int, list[AElement]] = defaultdict(
-            list
-        )  # noqa: F821
-        self.pending: list[Link] = []
+        self.elements: defaultdict[int, list[AElement]] = defaultdict(list)
+        self.pending: Link = None
         self.first_alignment_number = 0
 
     def to_json(self):
@@ -21,7 +19,7 @@ class ToAlign:
                 [lang_element.to_json() for lang_element in lang_elements]
                 for lang_elements in self.elements.values()
             ],
-            "pending": [al.to_json() for al in self.pending],
+            "pending": self.pending.to_json(),
         }
 
     def __str__(self):
@@ -32,25 +30,24 @@ class ToAlign:
 
     def pickup(self, t: int, element: AElement):
         if element is not None:
-            if len(self.pending) == 0:
-                new_link = Link()
-                new_link.alignment_number = self.first_alignment_number
-                self.pending.append(new_link)
+            if self.pending is None:
+                self.pending = Link()
+                self.pending.alignment_number = self.first_alignment_number
 
-            self.pending[-1].element_numbers[t].append(element.element_number)
-            last_alignment_number = self.first_alignment_number + len(self.pending) - 1
+            self.pending.element_numbers[t].append(element.element_number)
+            last_alignment_number = self.first_alignment_number
 
             element.alignment_number = last_alignment_number
             self.elements[t].append(element)
 
     def flush(self) -> AlignmentsEtc:
         if self.pending:
-            self.first_alignment_number = self.pending[-1].alignment_number + 1
+            self.first_alignment_number = self.pending.alignment_number + 1
             return_value = AlignmentsEtc()
-            while len(self.pending) > 0:
-                return_value.alignments.append(self.pending.pop(0))
+            return_value.alignments = self.pending
             for t in range(constants.NUM_FILES):
                 while len(self.elements[t]) > 0:
                     return_value.elements[t].append(self.elements[t].pop(0))
+            self.pending = None
             return return_value
         print("Nothing to flush")

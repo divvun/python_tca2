@@ -28,7 +28,7 @@ class Aligned:
 
     def pickup(self, value_got: AlignmentsEtc):
         if value_got is not None:
-            self.alignments.extend(value_got.alignments)
+            self.alignments.append(value_got.alignments)
             for t, elements in value_got.elements.items():
                 self.elements[t].extend(elements)
 
