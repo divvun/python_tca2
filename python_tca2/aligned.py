@@ -1,7 +1,6 @@
 import json
-from typing import List
+from collections import defaultdict
 
-from python_tca2 import constants
 from python_tca2.aelement import AElement
 from python_tca2.alignments_etc import AlignmentsEtc
 from python_tca2.link import Link
@@ -9,14 +8,14 @@ from python_tca2.link import Link
 
 class Aligned:
     def __init__(self):
-        self.elements: List[List[AElement]] = [[] for _ in range(constants.NUM_FILES)]
-        self.alignments: List[Link] = []
+        self.elements: defaultdict[int, list[AElement]] = defaultdict(list)
+        self.alignments: list[Link] = []
 
     def to_json(self):
         return {
             "elements": [
                 [element.to_json() for element in elements]
-                for elements in self.elements
+                for elements in self.elements.values()
             ],
             "alignments": [al.to_json() for al in self.alignments],
         }
@@ -30,9 +29,8 @@ class Aligned:
     def pickup(self, value_got: AlignmentsEtc):
         if value_got is not None:
             self.alignments.extend(value_got.alignments)
-            for t in range(constants.NUM_FILES):
-                for i in range(len(value_got.elements[t])):
-                    self.elements[t].append(value_got.elements[t][i])
+            for t, elements in value_got.elements.items():
+                self.elements[t].extend(elements)
 
     def valid_pairs(self) -> list[tuple[str, str]]:
         """Return a list of valid tuple of elements from the alignments.
