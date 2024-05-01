@@ -3,6 +3,7 @@ from lxml import etree
 from python_tca2 import alignmentmodel
 from python_tca2.aelement import AElement
 from python_tca2.aligned import Aligned
+from python_tca2.alignments_etc import AlignmentsEtc
 from python_tca2.anchorwordlist import AnchorWordList
 from python_tca2.anchorwordlistentry import AnchorWordListEntry
 from python_tca2.elementinfo import ElementInfo
@@ -18,7 +19,22 @@ def test_get_score():
     eitbc.add(element_info=ElementInfo(AnchorWordList(), "Mobil", 0, 0), t=0)
     eitbc.add(element_info=ElementInfo(AnchorWordList(), "Mobiila", 0, 0), t=1)
 
-    assert eitbc.get_score() == 0
+    assert eitbc.get_score() == 4.0
+
+
+def test_alignment_etcs():
+    alignment_etc = AlignmentsEtc()
+    alignment_etc.elements[0] = [AElement("element0", 0), AElement("element1", 1)]
+    alignment_etc.elements[1] = [
+        AElement("element2", 0),
+        AElement("element3", 1),
+        AElement("element4", 2),
+    ]
+
+    assert alignment_etc.to_tuple() == (
+        "element0 element1",
+        "element2 element3 element4",
+    )
 
 
 def test_find_dice_matches():
@@ -182,42 +198,33 @@ def test_toalign_pickup():
 
 def test_aligned_to_text_file():
     aligned = Aligned()
-    aligned.elements = [
-        [
-            {
-                "element": "Aldri noensinne har språkuka og samiske språk fått så mye oppmerksomhet i samfunnet.",  # noqa: E501
-                "element_number": 5,
-                "alignment_number": 14,
-                "length": 84,
-            },
+    a1 = AlignmentsEtc()
+    a1.elements = {
+        0: [],
+        1: [
+            AElement("Oslon tjïelte ( Oslon geažus -n ea genetiivageažus) .", 13),
         ],
-        [
-            {
-                "element": "Oslon tjïelte ( Oslon geažus -n ea genetiivageažus) .",
-                "element_number": 13,
-                "alignment_number": 13,
-                "length": 53,
-            },
-            {
-                "element": "Sámi giellavahkku",
-                "element_number": 14,
-                "alignment_number": 14,
-                "length": 17,
-            },
-            {
-                "element": "Ii goassege leat Giellavahkku ja sámegielat ná bures fuomášuvvon servodagas.",  # noqa: E501
-                "element_number": 15,
-                "alignment_number": 14,
-                "length": 76,
-            },
+    }
+    a2 = AlignmentsEtc()
+    a2.elements = {
+        0: [
+            AElement(
+                "Aldri noensinne har språkuka og samiske språk fått så mye oppmerksomhet i samfunnet.",  # noqa: E501
+                5,
+            )
         ],
-    ]
-
+        1: [
+            AElement("Sámi giellavahkku", 14),
+            AElement(
+                "Ii goassege leat Giellavahkku ja sámegielat ná bures fuomášuvvon servodagas.",  # noqa: E501
+                15,
+            ),
+        ],
+    }
     aligned.alignments = [
-        {"alignment_number": 13, "element_numbers": [[], [0]]},
-        {"alignment_number": 14, "element_numbers": [[0], [1, 2]]},
+        a1,
+        a2,
     ]
-
     assert aligned.valid_pairs() == [
         (
             "Aldri noensinne har språkuka og samiske språk fått så mye oppmerksomhet i samfunnet.",  # noqa: E501
@@ -252,42 +259,48 @@ def test_suggest1():
     model.suggets_without_gui()
 
     assert model.aligned.to_json() == {
-        "elements": [
-            [
-                {
-                    "element": (
-                        "Kanskje en innkjøpsordning for kvenskspråklig litteratur."
-                    ),
-                    "element_number": 0,
-                    "alignment_number": 0,
-                    "length": 57,
-                },
-                {
-                    "element": "Utvikling av undervisnings- og lærematerialer.",
-                    "element_number": 1,
-                    "alignment_number": 1,
-                    "length": 46,
-                },
-            ],
-            [
-                {
-                    "element": "Kvääninkielinen litteratuuri osto-oorninkhiin piian.",
-                    "element_number": 0,
-                    "alignment_number": 0,
-                    "length": 52,
-                },
-                {
-                    "element": "Opetus- ja oppimateriaaliitten kehittäminen.",
-                    "element_number": 1,
-                    "alignment_number": 1,
-                    "length": 44,
-                },
-            ],
-        ],
         "alignments": [
-            {"alignment_number": 0, "element_numbers": [[0], [0]]},
-            {"alignment_number": 1, "element_numbers": [[1], [1]]},
-        ],
+            {
+                "elements": [
+                    [
+                        {
+                            "element": "Kanskje en innkjøpsordning for kvenskspråklig litteratur.",
+                            "element_number": 0,
+                            "alignment_number": 0,
+                            "length": 57,
+                        }
+                    ],
+                    [
+                        {
+                            "element": "Kvääninkielinen litteratuuri osto-oorninkhiin piian.",
+                            "element_number": 0,
+                            "alignment_number": 0,
+                            "length": 52,
+                        }
+                    ],
+                ]
+            },
+            {
+                "elements": [
+                    [
+                        {
+                            "element": "Utvikling av undervisnings- og lærematerialer.",
+                            "element_number": 1,
+                            "alignment_number": 1,
+                            "length": 46,
+                        }
+                    ],
+                    [
+                        {
+                            "element": "Opetus- ja oppimateriaaliitten kehittäminen.",
+                            "element_number": 1,
+                            "alignment_number": 1,
+                            "length": 44,
+                        }
+                    ],
+                ]
+            },
+        ]
     }
 
 
@@ -318,46 +331,54 @@ def test_suggest2():
     model.suggets_without_gui()
 
     assert model.aligned.to_json() == {
-        "elements": [
-            [
-                {
-                    "element": "Når folk har gått på nybegynnerkursene hos enten instituttet eller universitetet, kan man tilby dem muligheten å få en mentor som de kan snakke kvensk med og gjøre aktiviteter med på kvensk.",  # noqa: E501
-                    "element_number": 0,
-                    "alignment_number": 0,
-                    "length": 190,
-                },
-                {
-                    "element": "Motivere folk til å lære kvensk og vise dem at man får jobb med det, og at det er nok arbeid til alle.",  # noqa: E501
-                    "element_number": 1,
-                    "alignment_number": 0,
-                    "length": 102,
-                },
-                {
-                    "element": "Forsøke selv å være gode forbilder.",
-                    "element_number": 2,
-                    "alignment_number": 1,
-                    "length": 35,
-                },
-            ],
-            [
-                {
-                    "element": "Ko ihmiset oon käynheet institutin tahi universiteetin alkukurssin, niin heile tarjothaan maholisuuen saaja menttorin, jonka kans puhhuut ja tehhä assiita kvääniksi Motiveerata ihmissii siihen ette oppiit kväänin kieltä ja näyttäät heile ette sillä saapi työn ja ette työtä oon nokko kaikile.",  # noqa: E501
-                    "element_number": 0,
-                    "alignment_number": 0,
-                    "length": 292,
-                },
-                {
-                    "element": "Freistata itte olla hyvät esikuvat.",
-                    "element_number": 1,
-                    "alignment_number": 1,
-                    "length": 35,
-                },
-            ],
-        ],
         "alignments": [
-            {"alignment_number": 0, "element_numbers": [[0, 1], [0]]},
-            {"alignment_number": 1, "element_numbers": [[2], [1]]},
-        ],
+            {
+                "elements": [
+                    [
+                        {
+                            "element": "Når folk har gått på nybegynnerkursene hos enten instituttet eller universitetet, kan man tilby dem muligheten å få en mentor som de kan snakke kvensk med og gjøre aktiviteter med på kvensk.",
+                            "element_number": 0,
+                            "alignment_number": 0,
+                            "length": 190,
+                        },
+                        {
+                            "element": "Motivere folk til å lære kvensk og vise dem at man får jobb med det, og at det er nok arbeid til alle.",
+                            "element_number": 1,
+                            "alignment_number": 0,
+                            "length": 102,
+                        },
+                    ],
+                    [
+                        {
+                            "element": "Ko ihmiset oon käynheet institutin tahi universiteetin alkukurssin, niin heile tarjothaan maholisuuen saaja menttorin, jonka kans puhhuut ja tehhä assiita kvääniksi Motiveerata ihmissii siihen ette oppiit kväänin kieltä ja näyttäät heile ette sillä saapi työn ja ette työtä oon nokko kaikile.",
+                            "element_number": 0,
+                            "alignment_number": 0,
+                            "length": 292,
+                        }
+                    ],
+                ]
+            },
+            {
+                "elements": [
+                    [
+                        {
+                            "element": "Forsøke selv å være gode forbilder.",
+                            "element_number": 2,
+                            "alignment_number": 1,
+                            "length": 35,
+                        }
+                    ],
+                    [
+                        {
+                            "element": "Freistata itte olla hyvät esikuvat.",
+                            "element_number": 1,
+                            "alignment_number": 1,
+                            "length": 35,
+                        }
+                    ],
+                ]
+            },
+        ]
     }
 
 
@@ -403,47 +424,60 @@ def test_suggest3():
     model.suggets_without_gui()
 
     assert model.aligned.to_json() == {
-        "elements": [
-            [
-                {
-                    "element": "- regjeringen.no",
-                    "element_number": 0,
-                    "alignment_number": 0,
-                    "length": 16,
-                },
-                {
-                    "element": "Ot.prp. nr. 25 (2006-2007)",
-                    "element_number": 1,
-                    "alignment_number": 1,
-                    "length": 26,
-                },
-                {
-                    "element": "Om lov om reindrift (reindriftsloven)",
-                    "element_number": 2,
-                    "alignment_number": 2,
-                    "length": 37,
-                },
-            ],
-            [
-                {
-                    "element": "- regjeringen.no",
-                    "element_number": 0,
-                    "alignment_number": 0,
-                    "length": 16,
-                },
-                {
-                    "element": "Boazodoallolága birra",
-                    "element_number": 1,
-                    "alignment_number": 2,
-                    "length": 21,
-                },
-            ],
-        ],
         "alignments": [
-            {"alignment_number": 0, "element_numbers": [[0], [0]]},
-            {"alignment_number": 1, "element_numbers": [[1], []]},
-            {"alignment_number": 2, "element_numbers": [[2], [1]]},
-        ],
+            {
+                "elements": [
+                    [
+                        {
+                            "element": "- regjeringen.no",
+                            "element_number": 0,
+                            "alignment_number": 0,
+                            "length": 16,
+                        }
+                    ],
+                    [
+                        {
+                            "element": "- regjeringen.no",
+                            "element_number": 0,
+                            "alignment_number": 0,
+                            "length": 16,
+                        }
+                    ],
+                ]
+            },
+            {
+                "elements": [
+                    [
+                        {
+                            "element": "Ot.prp. nr. 25 (2006-2007)",
+                            "element_number": 1,
+                            "alignment_number": 1,
+                            "length": 26,
+                        }
+                    ]
+                ]
+            },
+            {
+                "elements": [
+                    [
+                        {
+                            "element": "Om lov om reindrift (reindriftsloven)",
+                            "element_number": 2,
+                            "alignment_number": 2,
+                            "length": 37,
+                        }
+                    ],
+                    [
+                        {
+                            "element": "Boazodoallolága birra",
+                            "element_number": 1,
+                            "alignment_number": 2,
+                            "length": 21,
+                        }
+                    ],
+                ]
+            },
+        ]
     }
 
 
