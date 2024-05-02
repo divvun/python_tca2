@@ -1,4 +1,5 @@
 import json
+from dataclasses import asdict
 from typing import List
 
 from python_tca2 import constants
@@ -22,7 +23,7 @@ class Compare:
         return {
             "elements_info": [ei.to_json() for ei in self.elements_info],
             "matrix": self.matrix.to_json(),
-            "step_list": [step.to_json() for step in self.step_list],
+            "step_list": [asdict(step) for step in self.step_list],
         }
 
     def __str__(self):

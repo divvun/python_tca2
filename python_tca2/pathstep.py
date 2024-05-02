@@ -1,21 +1,13 @@
 from copy import deepcopy
+from dataclasses import dataclass
 
 
+@dataclass
 class PathStep:
-    def __init__(self, inc):
-        self.increment = inc
+    increment: list[int]
 
     def is11(self):
-        for t in range(len(self.increment)):
-            if self.increment[t] != 1:
-                return False
-        return True
-
-    def __str__(self):
-        return "{" + f"{self.increment[0]},{self.increment[1]}" + "}"
+        return all(i == 1 for i in self.increment)
 
     def clone(self):
         return deepcopy(self)
-
-    def to_json(self):
-        return {"increment": self.increment}
