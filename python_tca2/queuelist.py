@@ -1,35 +1,26 @@
-import json
+from dataclasses import dataclass
 from typing import List
 
 from python_tca2 import constants
 from python_tca2.queue_entry import QueueEntry
 
 
+@dataclass
 class QueueList:
-    def __init__(self):
-        self.entry: List[QueueEntry] = []
-
-    def to_json(self):
-        return [entry.to_json() for entry in self.entry]
-
-    def __str__(self):
-        return json.dumps(self.to_json(), indent=0, ensure_ascii=False)
+    entries: List[QueueEntry]
 
     def empty(self) -> bool:
-        return len(self.entry) == 0
+        return len(self.entries) == 0
 
     def add(self, queue_entry: QueueEntry):
-        self.entry.append(queue_entry)
+        self.entries.append(queue_entry)
 
     def contains(self, queue_entry: QueueEntry) -> bool:
-        for next_queue_entry in self.entry:
-            if next_queue_entry.path == queue_entry.path:
-                return True
-        return False
+        return queue_entry in self.entries
 
     def remove(self, pos: List[int]):
         t = 0
-        for queue_entry in self.entry:
+        for queue_entry in self.entries:
             hit = False
             current = list(queue_entry.path.position)
             current_ix = len(queue_entry.path.steps) - 1
@@ -64,10 +55,7 @@ class QueueList:
                 queue_entry.remove()
 
     def remove_for_real(self):
-        to_remove = []
-        for queue_entry in self.entry:
-            if queue_entry.removed:
-                to_remove.append(queue_entry)
+        to_remove = [queue_entry for queue_entry in self.entries if queue_entry.removed]
 
         for queue_entry in to_remove:
-            self.entry.remove(queue_entry)
+            self.entries.remove(queue_entry)

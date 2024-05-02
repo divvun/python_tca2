@@ -66,15 +66,15 @@ class AlignmentModel:
             queue_list = self.lengthen_paths()
 
             if (
-                len(queue_list.entry) < constants.NUM_FILES
-                and not queue_list.entry[0].path.steps
+                len(queue_list.entries) < constants.NUM_FILES
+                and not queue_list.entries[0].path.steps
             ):
                 # When the length of the queue list is less than the number of files
                 # and the first path in the queue list has no steps, then aligment
                 # is done
                 done_aligning = True
             else:
-                print(f"queueList.entry.size() = {len(queue_list.entry)}")
+                print(f"queueList.entries.size() = {len(queue_list.entries)}")
                 best_path = self.get_best_path(queue_list)
 
                 if best_path and best_path.steps:
@@ -112,7 +112,7 @@ class AlignmentModel:
 
         print(f"gbp {normalised_best_score}")
         best_path = None
-        for candidate in queue_list.entry:
+        for candidate in queue_list.entries:
             print(
                 f"gbp candidate = {candidate.score} {candidate.path.get_length_in_sentences()}"
             )
@@ -132,31 +132,31 @@ class AlignmentModel:
 
     def lengthen_paths(self):
         position = self.find_start_position()
-        queue_list = QueueList()
+        queue_list = QueueList([])
         queue_list.add(QueueEntry(Path(position), 0))
         step_count = 0
         done_lengthening = False
         while not done_lengthening:
             print(f"step_count = {step_count}")
-            next_queue_list = QueueList()
-            for x, queue_entry in enumerate(queue_list.entry):
+            next_queue_list = QueueList([])
+            for x, queue_entry in enumerate(queue_list.entries):
                 print(f"lp1 {step_count}")
                 if not queue_entry.removed and not queue_entry.end:
                     print(f"lp2 {step_count} {queue_entry}")
                     self.lengthen_current_path(queue_entry, queue_list, next_queue_list)
-            print(f"1 next.size {len(next_queue_list.entry)}")
+            print(f"1 next.size {len(next_queue_list.entries)}")
             next_queue_list.remove_for_real()
-            print(f"2 next.size {len(next_queue_list.entry)}")
+            print(f"2 next.size {len(next_queue_list.entries)}")
             if next_queue_list.empty():
                 print(f"lp3 {step_count}")
                 done_lengthening = True
             else:
-                print(f"lp4 {step_count}, {len(next_queue_list.entry)}")
+                print(f"lp4 {step_count}, {len(next_queue_list.entries)}")
                 queue_list = next_queue_list
                 step_count += 1
                 done_lengthening = step_count >= self.max_path_length
 
-        print(f"3 next.size {len(queue_list.entry)}")
+        print(f"3 next.size {len(queue_list.entries)}")
         return queue_list
 
     def lengthen_current_path(
