@@ -244,18 +244,18 @@ class AlignmentModel:
         for t in range(constants.NUM_FILES):
             self.save_new_line_format_file(f"aligned_{t}.txt", t)
 
-    def save_new_line_format_file(self, filename, t):
+    def save_new_line_format_file(self, filename, t:int):
         with open(filename, "w") as f:
             print(
                 "\n".join(
                     [
                         " ".join(
                             [
-                                self.aligned.elements[t][element_number].text
-                                for element_number in link.element_numbers[t]
+                                element.text
+                                for element in alignments_etc.elements[t]
                             ]
                         )
-                        for link in self.aligned.alignments
+                        for alignments_etc in self.aligned.alignments
                     ]
                 ),
                 file=f,
