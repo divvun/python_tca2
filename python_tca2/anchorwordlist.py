@@ -17,7 +17,7 @@ class AnchorWordList:
                 self.entries.append(AnchorWordListEntry(line.strip()))
 
     def get_anchor_word_hits(self, words, t, element_number):
-        ret = AnchorWordHits()
+        ret = AnchorWordHits([])
         anchor_word_entry_count = 0
         for entry in self.entries:
             synonyms = entry.language[t]

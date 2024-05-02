@@ -1,4 +1,5 @@
 import json
+from dataclasses import asdict
 
 from python_tca2 import constants
 from python_tca2.anchorwordhits import AnchorWordHits
@@ -57,7 +58,7 @@ class ElementInfo:
             "length": self.length,
             "num_words": self.num_words,
             "words": self.words,
-            "anchor_word_hits": self.anchor_word_hits.to_json(),
+            "anchor_word_hits": asdict(self.anchor_word_hits),
             "scoring_characters": self.scoring_characters,
             "proper_names": self.upper_case_words,
         }

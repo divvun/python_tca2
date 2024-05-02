@@ -1,4 +1,5 @@
 from collections import defaultdict
+from dataclasses import asdict
 
 from lxml import etree
 
@@ -81,7 +82,7 @@ def test_find_dice_matches():
                 "length": 5,
                 "num_words": 1,
                 "words": ["Mobil"],
-                "anchor_word_hits": [],
+                "anchor_word_hits": {"hits": []},
                 "scoring_characters": "",
                 "proper_names": ["Mobil"],
             },
@@ -90,7 +91,7 @@ def test_find_dice_matches():
                 "length": 7,
                 "num_words": 1,
                 "words": ["Mobiila"],
-                "anchor_word_hits": [],
+                "anchor_word_hits": {"hits": []},
                 "scoring_characters": "",
                 "proper_names": ["Mobiila"],
             },
@@ -468,7 +469,7 @@ def test_anchorword_hits():
     interesting = model.compare.matrix.cells["0,0,0,0"]
 
     found_hits = [
-        [hit.to_json() for hit in lang_hits]
+        [asdict(hit) for hit in lang_hits]
         for lang_hits in interesting.element_info_to_be_compared.find_hits()
     ]
     assert found_hits == [
@@ -528,15 +529,22 @@ def test_anchor1():
                             "i",
                             "arktisk",
                         ],
-                        "anchor_word_hits": [
-                            {"index": 0, "element_number": 0, "pos": 0, "word": "1"},
-                            {
-                                "index": 1,
-                                "element_number": 0,
-                                "pos": 1,
-                                "word": "million",
-                            },
-                        ],
+                        "anchor_word_hits": {
+                            "hits": [
+                                {
+                                    "index": 0,
+                                    "element_number": 0,
+                                    "pos": 0,
+                                    "word": "1",
+                                },
+                                {
+                                    "index": 1,
+                                    "element_number": 0,
+                                    "pos": 1,
+                                    "word": "million",
+                                },
+                            ]
+                        },
                         "scoring_characters": "",
                         "proper_names": [],
                     },
@@ -545,7 +553,7 @@ def test_anchor1():
                         "length": 13,
                         "num_words": 3,
                         "words": ["27", "juni", "2014"],
-                        "anchor_word_hits": [],
+                        "anchor_word_hits": {"hits": []},
                         "scoring_characters": "",
                         "proper_names": [],
                     },
@@ -566,15 +574,22 @@ def test_anchor1():
                             "i",
                             "nord",
                         ],
-                        "anchor_word_hits": [
-                            {"index": 0, "element_number": 2, "pos": 3, "word": "1"},
-                            {
-                                "index": 1,
-                                "element_number": 2,
-                                "pos": 4,
-                                "word": "millioner",
-                            },
-                        ],
+                        "anchor_word_hits": {
+                            "hits": [
+                                {
+                                    "index": 0,
+                                    "element_number": 2,
+                                    "pos": 3,
+                                    "word": "1",
+                                },
+                                {
+                                    "index": 1,
+                                    "element_number": 2,
+                                    "pos": 4,
+                                    "word": "millioner",
+                                },
+                            ]
+                        },
                         "scoring_characters": "",
                         "proper_names": ["Sametingsrådet", "Arktisk"],
                     },
@@ -589,9 +604,11 @@ def test_anchor1():
                         "length": 35,
                         "num_words": 5,
                         "words": ["1", "miljon", "ruvnno", "árktalaš", "eanadollui"],
-                        "anchor_word_hits": [
-                            {"index": 0, "element_number": 0, "pos": 0, "word": "1"}
-                        ],
+                        "anchor_word_hits": {
+                            "hits": [
+                                {"index": 0, "element_number": 0, "pos": 0, "word": "1"}
+                            ]
+                        },
                         "scoring_characters": "",
                         "proper_names": [],
                     },
@@ -600,7 +617,7 @@ def test_anchor1():
                         "length": 20,
                         "num_words": 3,
                         "words": ["27", "Geassemánnu", "2014"],
-                        "anchor_word_hits": [],
+                        "anchor_word_hits": {"hits": []},
                         "scoring_characters": "",
                         "proper_names": ["Geassemánnu"],
                     },
@@ -619,15 +636,22 @@ def test_anchor1():
                             "eanadollui",
                             "davvin",
                         ],
-                        "anchor_word_hits": [
-                            {"index": 0, "element_number": 2, "pos": 3, "word": "1"},
-                            {
-                                "index": 2,
-                                "element_number": 2,
-                                "pos": 0,
-                                "word": "Sámediggeráđđi",
-                            },
-                        ],
+                        "anchor_word_hits": {
+                            "hits": [
+                                {
+                                    "index": 0,
+                                    "element_number": 2,
+                                    "pos": 3,
+                                    "word": "1",
+                                },
+                                {
+                                    "index": 2,
+                                    "element_number": 2,
+                                    "pos": 0,
+                                    "word": "Sámediggeráđđi",
+                                },
+                            ]
+                        },
                         "scoring_characters": "",
                         "proper_names": ["Sámediggeráđđi"],
                     },
@@ -652,14 +676,16 @@ def test_anchor1():
                                     "árktalaš",
                                     "eanadollui",
                                 ],
-                                "anchor_word_hits": [
-                                    {
-                                        "index": 0,
-                                        "element_number": 0,
-                                        "pos": 0,
-                                        "word": "1",
-                                    }
-                                ],
+                                "anchor_word_hits": {
+                                    "hits": [
+                                        {
+                                            "index": 0,
+                                            "element_number": 0,
+                                            "pos": 0,
+                                            "word": "1",
+                                        }
+                                    ]
+                                },
                                 "scoring_characters": "",
                                 "proper_names": [],
                             }
@@ -685,20 +711,22 @@ def test_anchor1():
                                     "i",
                                     "arktisk",
                                 ],
-                                "anchor_word_hits": [
-                                    {
-                                        "index": 0,
-                                        "element_number": 0,
-                                        "pos": 0,
-                                        "word": "1",
-                                    },
-                                    {
-                                        "index": 1,
-                                        "element_number": 0,
-                                        "pos": 1,
-                                        "word": "million",
-                                    },
-                                ],
+                                "anchor_word_hits": {
+                                    "hits": [
+                                        {
+                                            "index": 0,
+                                            "element_number": 0,
+                                            "pos": 0,
+                                            "word": "1",
+                                        },
+                                        {
+                                            "index": 1,
+                                            "element_number": 0,
+                                            "pos": 1,
+                                            "word": "million",
+                                        },
+                                    ]
+                                },
                                 "scoring_characters": "",
                                 "proper_names": [],
                             }
@@ -767,20 +795,22 @@ def test_anchor1():
                                     "i",
                                     "arktisk",
                                 ],
-                                "anchor_word_hits": [
-                                    {
-                                        "index": 0,
-                                        "element_number": 0,
-                                        "pos": 0,
-                                        "word": "1",
-                                    },
-                                    {
-                                        "index": 1,
-                                        "element_number": 0,
-                                        "pos": 1,
-                                        "word": "million",
-                                    },
-                                ],
+                                "anchor_word_hits": {
+                                    "hits": [
+                                        {
+                                            "index": 0,
+                                            "element_number": 0,
+                                            "pos": 0,
+                                            "word": "1",
+                                        },
+                                        {
+                                            "index": 1,
+                                            "element_number": 0,
+                                            "pos": 1,
+                                            "word": "million",
+                                        },
+                                    ]
+                                },
                                 "scoring_characters": "",
                                 "proper_names": [],
                             },
@@ -795,14 +825,16 @@ def test_anchor1():
                                     "árktalaš",
                                     "eanadollui",
                                 ],
-                                "anchor_word_hits": [
-                                    {
-                                        "index": 0,
-                                        "element_number": 0,
-                                        "pos": 0,
-                                        "word": "1",
-                                    }
-                                ],
+                                "anchor_word_hits": {
+                                    "hits": [
+                                        {
+                                            "index": 0,
+                                            "element_number": 0,
+                                            "pos": 0,
+                                            "word": "1",
+                                        }
+                                    ]
+                                },
                                 "scoring_characters": "",
                                 "proper_names": [],
                             },
@@ -871,20 +903,22 @@ def test_anchor1():
                                     "i",
                                     "arktisk",
                                 ],
-                                "anchor_word_hits": [
-                                    {
-                                        "index": 0,
-                                        "element_number": 0,
-                                        "pos": 0,
-                                        "word": "1",
-                                    },
-                                    {
-                                        "index": 1,
-                                        "element_number": 0,
-                                        "pos": 1,
-                                        "word": "million",
-                                    },
-                                ],
+                                "anchor_word_hits": {
+                                    "hits": [
+                                        {
+                                            "index": 0,
+                                            "element_number": 0,
+                                            "pos": 0,
+                                            "word": "1",
+                                        },
+                                        {
+                                            "index": 1,
+                                            "element_number": 0,
+                                            "pos": 1,
+                                            "word": "million",
+                                        },
+                                    ]
+                                },
                                 "scoring_characters": "",
                                 "proper_names": [],
                             },
@@ -899,14 +933,16 @@ def test_anchor1():
                                     "árktalaš",
                                     "eanadollui",
                                 ],
-                                "anchor_word_hits": [
-                                    {
-                                        "index": 0,
-                                        "element_number": 0,
-                                        "pos": 0,
-                                        "word": "1",
-                                    }
-                                ],
+                                "anchor_word_hits": {
+                                    "hits": [
+                                        {
+                                            "index": 0,
+                                            "element_number": 0,
+                                            "pos": 0,
+                                            "word": "1",
+                                        }
+                                    ]
+                                },
                                 "scoring_characters": "",
                                 "proper_names": [],
                             },
@@ -915,7 +951,7 @@ def test_anchor1():
                                 "length": 20,
                                 "num_words": 3,
                                 "words": ["27", "Geassemánnu", "2014"],
-                                "anchor_word_hits": [],
+                                "anchor_word_hits": {"hits": []},
                                 "scoring_characters": "",
                                 "proper_names": ["Geassemánnu"],
                             },
@@ -941,20 +977,22 @@ def test_anchor1():
                                     "i",
                                     "arktisk",
                                 ],
-                                "anchor_word_hits": [
-                                    {
-                                        "index": 0,
-                                        "element_number": 0,
-                                        "pos": 0,
-                                        "word": "1",
-                                    },
-                                    {
-                                        "index": 1,
-                                        "element_number": 0,
-                                        "pos": 1,
-                                        "word": "million",
-                                    },
-                                ],
+                                "anchor_word_hits": {
+                                    "hits": [
+                                        {
+                                            "index": 0,
+                                            "element_number": 0,
+                                            "pos": 0,
+                                            "word": "1",
+                                        },
+                                        {
+                                            "index": 1,
+                                            "element_number": 0,
+                                            "pos": 1,
+                                            "word": "million",
+                                        },
+                                    ]
+                                },
                                 "scoring_characters": "",
                                 "proper_names": [],
                             },
@@ -963,7 +1001,7 @@ def test_anchor1():
                                 "length": 13,
                                 "num_words": 3,
                                 "words": ["27", "juni", "2014"],
-                                "anchor_word_hits": [],
+                                "anchor_word_hits": {"hits": []},
                                 "scoring_characters": "",
                                 "proper_names": [],
                             },
@@ -978,14 +1016,16 @@ def test_anchor1():
                                     "árktalaš",
                                     "eanadollui",
                                 ],
-                                "anchor_word_hits": [
-                                    {
-                                        "index": 0,
-                                        "element_number": 0,
-                                        "pos": 0,
-                                        "word": "1",
-                                    }
-                                ],
+                                "anchor_word_hits": {
+                                    "hits": [
+                                        {
+                                            "index": 0,
+                                            "element_number": 0,
+                                            "pos": 0,
+                                            "word": "1",
+                                        }
+                                    ]
+                                },
                                 "scoring_characters": "",
                                 "proper_names": [],
                             },
@@ -1003,7 +1043,7 @@ def test_anchor1():
                                 "length": 20,
                                 "num_words": 3,
                                 "words": ["27", "Geassemánnu", "2014"],
-                                "anchor_word_hits": [],
+                                "anchor_word_hits": {"hits": []},
                                 "scoring_characters": "",
                                 "proper_names": ["Geassemánnu"],
                             }
@@ -1029,20 +1069,22 @@ def test_anchor1():
                                     "i",
                                     "arktisk",
                                 ],
-                                "anchor_word_hits": [
-                                    {
-                                        "index": 0,
-                                        "element_number": 0,
-                                        "pos": 0,
-                                        "word": "1",
-                                    },
-                                    {
-                                        "index": 1,
-                                        "element_number": 0,
-                                        "pos": 1,
-                                        "word": "million",
-                                    },
-                                ],
+                                "anchor_word_hits": {
+                                    "hits": [
+                                        {
+                                            "index": 0,
+                                            "element_number": 0,
+                                            "pos": 0,
+                                            "word": "1",
+                                        },
+                                        {
+                                            "index": 1,
+                                            "element_number": 0,
+                                            "pos": 1,
+                                            "word": "million",
+                                        },
+                                    ]
+                                },
                                 "scoring_characters": "",
                                 "proper_names": [],
                             }
@@ -1068,20 +1110,22 @@ def test_anchor1():
                                     "i",
                                     "arktisk",
                                 ],
-                                "anchor_word_hits": [
-                                    {
-                                        "index": 0,
-                                        "element_number": 0,
-                                        "pos": 0,
-                                        "word": "1",
-                                    },
-                                    {
-                                        "index": 1,
-                                        "element_number": 0,
-                                        "pos": 1,
-                                        "word": "million",
-                                    },
-                                ],
+                                "anchor_word_hits": {
+                                    "hits": [
+                                        {
+                                            "index": 0,
+                                            "element_number": 0,
+                                            "pos": 0,
+                                            "word": "1",
+                                        },
+                                        {
+                                            "index": 1,
+                                            "element_number": 0,
+                                            "pos": 1,
+                                            "word": "million",
+                                        },
+                                    ]
+                                },
                                 "scoring_characters": "",
                                 "proper_names": [],
                             },
@@ -1090,7 +1134,7 @@ def test_anchor1():
                                 "length": 20,
                                 "num_words": 3,
                                 "words": ["27", "Geassemánnu", "2014"],
-                                "anchor_word_hits": [],
+                                "anchor_word_hits": {"hits": []},
                                 "scoring_characters": "",
                                 "proper_names": ["Geassemánnu"],
                             },
@@ -1116,20 +1160,22 @@ def test_anchor1():
                                     "i",
                                     "arktisk",
                                 ],
-                                "anchor_word_hits": [
-                                    {
-                                        "index": 0,
-                                        "element_number": 0,
-                                        "pos": 0,
-                                        "word": "1",
-                                    },
-                                    {
-                                        "index": 1,
-                                        "element_number": 0,
-                                        "pos": 1,
-                                        "word": "million",
-                                    },
-                                ],
+                                "anchor_word_hits": {
+                                    "hits": [
+                                        {
+                                            "index": 0,
+                                            "element_number": 0,
+                                            "pos": 0,
+                                            "word": "1",
+                                        },
+                                        {
+                                            "index": 1,
+                                            "element_number": 0,
+                                            "pos": 1,
+                                            "word": "million",
+                                        },
+                                    ]
+                                },
                                 "scoring_characters": "",
                                 "proper_names": [],
                             },
@@ -1138,7 +1184,7 @@ def test_anchor1():
                                 "length": 20,
                                 "num_words": 3,
                                 "words": ["27", "Geassemánnu", "2014"],
-                                "anchor_word_hits": [],
+                                "anchor_word_hits": {"hits": []},
                                 "scoring_characters": "",
                                 "proper_names": ["Geassemánnu"],
                             },
@@ -1157,20 +1203,22 @@ def test_anchor1():
                                     "eanadollui",
                                     "davvin",
                                 ],
-                                "anchor_word_hits": [
-                                    {
-                                        "index": 0,
-                                        "element_number": 2,
-                                        "pos": 3,
-                                        "word": "1",
-                                    },
-                                    {
-                                        "index": 2,
-                                        "element_number": 2,
-                                        "pos": 0,
-                                        "word": "Sámediggeráđđi",
-                                    },
-                                ],
+                                "anchor_word_hits": {
+                                    "hits": [
+                                        {
+                                            "index": 0,
+                                            "element_number": 2,
+                                            "pos": 3,
+                                            "word": "1",
+                                        },
+                                        {
+                                            "index": 2,
+                                            "element_number": 2,
+                                            "pos": 0,
+                                            "word": "Sámediggeráđđi",
+                                        },
+                                    ]
+                                },
                                 "scoring_characters": "",
                                 "proper_names": ["Sámediggeráđđi"],
                             },
@@ -1196,20 +1244,22 @@ def test_anchor1():
                                     "i",
                                     "arktisk",
                                 ],
-                                "anchor_word_hits": [
-                                    {
-                                        "index": 0,
-                                        "element_number": 0,
-                                        "pos": 0,
-                                        "word": "1",
-                                    },
-                                    {
-                                        "index": 1,
-                                        "element_number": 0,
-                                        "pos": 1,
-                                        "word": "million",
-                                    },
-                                ],
+                                "anchor_word_hits": {
+                                    "hits": [
+                                        {
+                                            "index": 0,
+                                            "element_number": 0,
+                                            "pos": 0,
+                                            "word": "1",
+                                        },
+                                        {
+                                            "index": 1,
+                                            "element_number": 0,
+                                            "pos": 1,
+                                            "word": "million",
+                                        },
+                                    ]
+                                },
                                 "scoring_characters": "",
                                 "proper_names": [],
                             },
@@ -1218,7 +1268,7 @@ def test_anchor1():
                                 "length": 13,
                                 "num_words": 3,
                                 "words": ["27", "juni", "2014"],
-                                "anchor_word_hits": [],
+                                "anchor_word_hits": {"hits": []},
                                 "scoring_characters": "",
                                 "proper_names": [],
                             },
@@ -1227,7 +1277,7 @@ def test_anchor1():
                                 "length": 20,
                                 "num_words": 3,
                                 "words": ["27", "Geassemánnu", "2014"],
-                                "anchor_word_hits": [],
+                                "anchor_word_hits": {"hits": []},
                                 "scoring_characters": "",
                                 "proper_names": ["Geassemánnu"],
                             },
@@ -1255,20 +1305,22 @@ def test_anchor1():
                                     "eanadollui",
                                     "davvin",
                                 ],
-                                "anchor_word_hits": [
-                                    {
-                                        "index": 0,
-                                        "element_number": 2,
-                                        "pos": 3,
-                                        "word": "1",
-                                    },
-                                    {
-                                        "index": 2,
-                                        "element_number": 2,
-                                        "pos": 0,
-                                        "word": "Sámediggeráđđi",
-                                    },
-                                ],
+                                "anchor_word_hits": {
+                                    "hits": [
+                                        {
+                                            "index": 0,
+                                            "element_number": 2,
+                                            "pos": 3,
+                                            "word": "1",
+                                        },
+                                        {
+                                            "index": 2,
+                                            "element_number": 2,
+                                            "pos": 0,
+                                            "word": "Sámediggeráđđi",
+                                        },
+                                    ]
+                                },
                                 "scoring_characters": "",
                                 "proper_names": ["Sámediggeráđđi"],
                             }
@@ -1294,20 +1346,22 @@ def test_anchor1():
                                     "i",
                                     "arktisk",
                                 ],
-                                "anchor_word_hits": [
-                                    {
-                                        "index": 0,
-                                        "element_number": 0,
-                                        "pos": 0,
-                                        "word": "1",
-                                    },
-                                    {
-                                        "index": 1,
-                                        "element_number": 0,
-                                        "pos": 1,
-                                        "word": "million",
-                                    },
-                                ],
+                                "anchor_word_hits": {
+                                    "hits": [
+                                        {
+                                            "index": 0,
+                                            "element_number": 0,
+                                            "pos": 0,
+                                            "word": "1",
+                                        },
+                                        {
+                                            "index": 1,
+                                            "element_number": 0,
+                                            "pos": 1,
+                                            "word": "million",
+                                        },
+                                    ]
+                                },
                                 "scoring_characters": "",
                                 "proper_names": [],
                             }
@@ -1376,20 +1430,22 @@ def test_anchor1():
                                     "i",
                                     "arktisk",
                                 ],
-                                "anchor_word_hits": [
-                                    {
-                                        "index": 0,
-                                        "element_number": 0,
-                                        "pos": 0,
-                                        "word": "1",
-                                    },
-                                    {
-                                        "index": 1,
-                                        "element_number": 0,
-                                        "pos": 1,
-                                        "word": "million",
-                                    },
-                                ],
+                                "anchor_word_hits": {
+                                    "hits": [
+                                        {
+                                            "index": 0,
+                                            "element_number": 0,
+                                            "pos": 0,
+                                            "word": "1",
+                                        },
+                                        {
+                                            "index": 1,
+                                            "element_number": 0,
+                                            "pos": 1,
+                                            "word": "million",
+                                        },
+                                    ]
+                                },
                                 "scoring_characters": "",
                                 "proper_names": [],
                             },
@@ -1408,20 +1464,22 @@ def test_anchor1():
                                     "eanadollui",
                                     "davvin",
                                 ],
-                                "anchor_word_hits": [
-                                    {
-                                        "index": 0,
-                                        "element_number": 2,
-                                        "pos": 3,
-                                        "word": "1",
-                                    },
-                                    {
-                                        "index": 2,
-                                        "element_number": 2,
-                                        "pos": 0,
-                                        "word": "Sámediggeráđđi",
-                                    },
-                                ],
+                                "anchor_word_hits": {
+                                    "hits": [
+                                        {
+                                            "index": 0,
+                                            "element_number": 2,
+                                            "pos": 3,
+                                            "word": "1",
+                                        },
+                                        {
+                                            "index": 2,
+                                            "element_number": 2,
+                                            "pos": 0,
+                                            "word": "Sámediggeráđđi",
+                                        },
+                                    ]
+                                },
                                 "scoring_characters": "",
                                 "proper_names": ["Sámediggeráđđi"],
                             },
@@ -1490,20 +1548,22 @@ def test_anchor1():
                                     "i",
                                     "arktisk",
                                 ],
-                                "anchor_word_hits": [
-                                    {
-                                        "index": 0,
-                                        "element_number": 0,
-                                        "pos": 0,
-                                        "word": "1",
-                                    },
-                                    {
-                                        "index": 1,
-                                        "element_number": 0,
-                                        "pos": 1,
-                                        "word": "million",
-                                    },
-                                ],
+                                "anchor_word_hits": {
+                                    "hits": [
+                                        {
+                                            "index": 0,
+                                            "element_number": 0,
+                                            "pos": 0,
+                                            "word": "1",
+                                        },
+                                        {
+                                            "index": 1,
+                                            "element_number": 0,
+                                            "pos": 1,
+                                            "word": "million",
+                                        },
+                                    ]
+                                },
                                 "scoring_characters": "",
                                 "proper_names": [],
                             },
@@ -1512,7 +1572,7 @@ def test_anchor1():
                                 "length": 13,
                                 "num_words": 3,
                                 "words": ["27", "juni", "2014"],
-                                "anchor_word_hits": [],
+                                "anchor_word_hits": {"hits": []},
                                 "scoring_characters": "",
                                 "proper_names": [],
                             },
@@ -1531,20 +1591,22 @@ def test_anchor1():
                                     "eanadollui",
                                     "davvin",
                                 ],
-                                "anchor_word_hits": [
-                                    {
-                                        "index": 0,
-                                        "element_number": 2,
-                                        "pos": 3,
-                                        "word": "1",
-                                    },
-                                    {
-                                        "index": 2,
-                                        "element_number": 2,
-                                        "pos": 0,
-                                        "word": "Sámediggeráđđi",
-                                    },
-                                ],
+                                "anchor_word_hits": {
+                                    "hits": [
+                                        {
+                                            "index": 0,
+                                            "element_number": 2,
+                                            "pos": 3,
+                                            "word": "1",
+                                        },
+                                        {
+                                            "index": 2,
+                                            "element_number": 2,
+                                            "pos": 0,
+                                            "word": "Sámediggeráđđi",
+                                        },
+                                    ]
+                                },
                                 "scoring_characters": "",
                                 "proper_names": ["Sámediggeráđđi"],
                             },
@@ -1570,20 +1632,22 @@ def test_anchor1():
                                     "i",
                                     "arktisk",
                                 ],
-                                "anchor_word_hits": [
-                                    {
-                                        "index": 0,
-                                        "element_number": 0,
-                                        "pos": 0,
-                                        "word": "1",
-                                    },
-                                    {
-                                        "index": 1,
-                                        "element_number": 0,
-                                        "pos": 1,
-                                        "word": "million",
-                                    },
-                                ],
+                                "anchor_word_hits": {
+                                    "hits": [
+                                        {
+                                            "index": 0,
+                                            "element_number": 0,
+                                            "pos": 0,
+                                            "word": "1",
+                                        },
+                                        {
+                                            "index": 1,
+                                            "element_number": 0,
+                                            "pos": 1,
+                                            "word": "million",
+                                        },
+                                    ]
+                                },
                                 "scoring_characters": "",
                                 "proper_names": [],
                             }
@@ -1607,14 +1671,16 @@ def test_anchor1():
                                     "árktalaš",
                                     "eanadollui",
                                 ],
-                                "anchor_word_hits": [
-                                    {
-                                        "index": 0,
-                                        "element_number": 0,
-                                        "pos": 0,
-                                        "word": "1",
-                                    }
-                                ],
+                                "anchor_word_hits": {
+                                    "hits": [
+                                        {
+                                            "index": 0,
+                                            "element_number": 0,
+                                            "pos": 0,
+                                            "word": "1",
+                                        }
+                                    ]
+                                },
                                 "scoring_characters": "",
                                 "proper_names": [],
                             }
@@ -1632,7 +1698,7 @@ def test_anchor1():
                                 "length": 13,
                                 "num_words": 3,
                                 "words": ["27", "juni", "2014"],
-                                "anchor_word_hits": [],
+                                "anchor_word_hits": {"hits": []},
                                 "scoring_characters": "",
                                 "proper_names": [],
                             }
@@ -1650,7 +1716,7 @@ def test_anchor1():
                                 "length": 13,
                                 "num_words": 3,
                                 "words": ["27", "juni", "2014"],
-                                "anchor_word_hits": [],
+                                "anchor_word_hits": {"hits": []},
                                 "scoring_characters": "",
                                 "proper_names": [],
                             },
@@ -1665,14 +1731,16 @@ def test_anchor1():
                                     "árktalaš",
                                     "eanadollui",
                                 ],
-                                "anchor_word_hits": [
-                                    {
-                                        "index": 0,
-                                        "element_number": 0,
-                                        "pos": 0,
-                                        "word": "1",
-                                    }
-                                ],
+                                "anchor_word_hits": {
+                                    "hits": [
+                                        {
+                                            "index": 0,
+                                            "element_number": 0,
+                                            "pos": 0,
+                                            "word": "1",
+                                        }
+                                    ]
+                                },
                                 "scoring_characters": "",
                                 "proper_names": [],
                             },
@@ -1690,7 +1758,7 @@ def test_anchor1():
                                 "length": 13,
                                 "num_words": 3,
                                 "words": ["27", "juni", "2014"],
-                                "anchor_word_hits": [],
+                                "anchor_word_hits": {"hits": []},
                                 "scoring_characters": "",
                                 "proper_names": [],
                             },
@@ -1705,14 +1773,16 @@ def test_anchor1():
                                     "árktalaš",
                                     "eanadollui",
                                 ],
-                                "anchor_word_hits": [
-                                    {
-                                        "index": 0,
-                                        "element_number": 0,
-                                        "pos": 0,
-                                        "word": "1",
-                                    }
-                                ],
+                                "anchor_word_hits": {
+                                    "hits": [
+                                        {
+                                            "index": 0,
+                                            "element_number": 0,
+                                            "pos": 0,
+                                            "word": "1",
+                                        }
+                                    ]
+                                },
                                 "scoring_characters": "",
                                 "proper_names": [],
                             },
@@ -1721,7 +1791,7 @@ def test_anchor1():
                                 "length": 20,
                                 "num_words": 3,
                                 "words": ["27", "Geassemánnu", "2014"],
-                                "anchor_word_hits": [],
+                                "anchor_word_hits": {"hits": []},
                                 "scoring_characters": "",
                                 "proper_names": ["Geassemánnu"],
                             },
@@ -1739,7 +1809,7 @@ def test_anchor1():
                                 "length": 13,
                                 "num_words": 3,
                                 "words": ["27", "juni", "2014"],
-                                "anchor_word_hits": [],
+                                "anchor_word_hits": {"hits": []},
                                 "scoring_characters": "",
                                 "proper_names": [],
                             },
@@ -1760,20 +1830,22 @@ def test_anchor1():
                                     "i",
                                     "nord",
                                 ],
-                                "anchor_word_hits": [
-                                    {
-                                        "index": 0,
-                                        "element_number": 2,
-                                        "pos": 3,
-                                        "word": "1",
-                                    },
-                                    {
-                                        "index": 1,
-                                        "element_number": 2,
-                                        "pos": 4,
-                                        "word": "millioner",
-                                    },
-                                ],
+                                "anchor_word_hits": {
+                                    "hits": [
+                                        {
+                                            "index": 0,
+                                            "element_number": 2,
+                                            "pos": 3,
+                                            "word": "1",
+                                        },
+                                        {
+                                            "index": 1,
+                                            "element_number": 2,
+                                            "pos": 4,
+                                            "word": "millioner",
+                                        },
+                                    ]
+                                },
                                 "scoring_characters": "",
                                 "proper_names": ["Sametingsrådet", "Arktisk"],
                             },
@@ -1788,14 +1860,16 @@ def test_anchor1():
                                     "árktalaš",
                                     "eanadollui",
                                 ],
-                                "anchor_word_hits": [
-                                    {
-                                        "index": 0,
-                                        "element_number": 0,
-                                        "pos": 0,
-                                        "word": "1",
-                                    }
-                                ],
+                                "anchor_word_hits": {
+                                    "hits": [
+                                        {
+                                            "index": 0,
+                                            "element_number": 0,
+                                            "pos": 0,
+                                            "word": "1",
+                                        }
+                                    ]
+                                },
                                 "scoring_characters": "",
                                 "proper_names": [],
                             },
@@ -1813,7 +1887,7 @@ def test_anchor1():
                                 "length": 20,
                                 "num_words": 3,
                                 "words": ["27", "Geassemánnu", "2014"],
-                                "anchor_word_hits": [],
+                                "anchor_word_hits": {"hits": []},
                                 "scoring_characters": "",
                                 "proper_names": ["Geassemánnu"],
                             }
@@ -1831,7 +1905,7 @@ def test_anchor1():
                                 "length": 13,
                                 "num_words": 3,
                                 "words": ["27", "juni", "2014"],
-                                "anchor_word_hits": [],
+                                "anchor_word_hits": {"hits": []},
                                 "scoring_characters": "",
                                 "proper_names": [],
                             }
@@ -1896,7 +1970,7 @@ def test_anchor1():
                                 "length": 13,
                                 "num_words": 3,
                                 "words": ["27", "juni", "2014"],
-                                "anchor_word_hits": [],
+                                "anchor_word_hits": {"hits": []},
                                 "scoring_characters": "",
                                 "proper_names": [],
                             },
@@ -1905,7 +1979,7 @@ def test_anchor1():
                                 "length": 20,
                                 "num_words": 3,
                                 "words": ["27", "Geassemánnu", "2014"],
-                                "anchor_word_hits": [],
+                                "anchor_word_hits": {"hits": []},
                                 "scoring_characters": "",
                                 "proper_names": ["Geassemánnu"],
                             },
@@ -1923,7 +1997,7 @@ def test_anchor1():
                                 "length": 13,
                                 "num_words": 3,
                                 "words": ["27", "juni", "2014"],
-                                "anchor_word_hits": [],
+                                "anchor_word_hits": {"hits": []},
                                 "scoring_characters": "",
                                 "proper_names": [],
                             },
@@ -1932,7 +2006,7 @@ def test_anchor1():
                                 "length": 20,
                                 "num_words": 3,
                                 "words": ["27", "Geassemánnu", "2014"],
-                                "anchor_word_hits": [],
+                                "anchor_word_hits": {"hits": []},
                                 "scoring_characters": "",
                                 "proper_names": ["Geassemánnu"],
                             },
@@ -1951,20 +2025,22 @@ def test_anchor1():
                                     "eanadollui",
                                     "davvin",
                                 ],
-                                "anchor_word_hits": [
-                                    {
-                                        "index": 0,
-                                        "element_number": 2,
-                                        "pos": 3,
-                                        "word": "1",
-                                    },
-                                    {
-                                        "index": 2,
-                                        "element_number": 2,
-                                        "pos": 0,
-                                        "word": "Sámediggeráđđi",
-                                    },
-                                ],
+                                "anchor_word_hits": {
+                                    "hits": [
+                                        {
+                                            "index": 0,
+                                            "element_number": 2,
+                                            "pos": 3,
+                                            "word": "1",
+                                        },
+                                        {
+                                            "index": 2,
+                                            "element_number": 2,
+                                            "pos": 0,
+                                            "word": "Sámediggeráđđi",
+                                        },
+                                    ]
+                                },
                                 "scoring_characters": "",
                                 "proper_names": ["Sámediggeráđđi"],
                             },
@@ -1982,7 +2058,7 @@ def test_anchor1():
                                 "length": 13,
                                 "num_words": 3,
                                 "words": ["27", "juni", "2014"],
-                                "anchor_word_hits": [],
+                                "anchor_word_hits": {"hits": []},
                                 "scoring_characters": "",
                                 "proper_names": [],
                             },
@@ -2003,20 +2079,22 @@ def test_anchor1():
                                     "i",
                                     "nord",
                                 ],
-                                "anchor_word_hits": [
-                                    {
-                                        "index": 0,
-                                        "element_number": 2,
-                                        "pos": 3,
-                                        "word": "1",
-                                    },
-                                    {
-                                        "index": 1,
-                                        "element_number": 2,
-                                        "pos": 4,
-                                        "word": "millioner",
-                                    },
-                                ],
+                                "anchor_word_hits": {
+                                    "hits": [
+                                        {
+                                            "index": 0,
+                                            "element_number": 2,
+                                            "pos": 3,
+                                            "word": "1",
+                                        },
+                                        {
+                                            "index": 1,
+                                            "element_number": 2,
+                                            "pos": 4,
+                                            "word": "millioner",
+                                        },
+                                    ]
+                                },
                                 "scoring_characters": "",
                                 "proper_names": ["Sametingsrådet", "Arktisk"],
                             },
@@ -2025,7 +2103,7 @@ def test_anchor1():
                                 "length": 20,
                                 "num_words": 3,
                                 "words": ["27", "Geassemánnu", "2014"],
-                                "anchor_word_hits": [],
+                                "anchor_word_hits": {"hits": []},
                                 "scoring_characters": "",
                                 "proper_names": ["Geassemánnu"],
                             },
@@ -2053,20 +2131,22 @@ def test_anchor1():
                                     "eanadollui",
                                     "davvin",
                                 ],
-                                "anchor_word_hits": [
-                                    {
-                                        "index": 0,
-                                        "element_number": 2,
-                                        "pos": 3,
-                                        "word": "1",
-                                    },
-                                    {
-                                        "index": 2,
-                                        "element_number": 2,
-                                        "pos": 0,
-                                        "word": "Sámediggeráđđi",
-                                    },
-                                ],
+                                "anchor_word_hits": {
+                                    "hits": [
+                                        {
+                                            "index": 0,
+                                            "element_number": 2,
+                                            "pos": 3,
+                                            "word": "1",
+                                        },
+                                        {
+                                            "index": 2,
+                                            "element_number": 2,
+                                            "pos": 0,
+                                            "word": "Sámediggeráđđi",
+                                        },
+                                    ]
+                                },
                                 "scoring_characters": "",
                                 "proper_names": ["Sámediggeráđđi"],
                             }
@@ -2084,7 +2164,7 @@ def test_anchor1():
                                 "length": 13,
                                 "num_words": 3,
                                 "words": ["27", "juni", "2014"],
-                                "anchor_word_hits": [],
+                                "anchor_word_hits": {"hits": []},
                                 "scoring_characters": "",
                                 "proper_names": [],
                             }
@@ -2102,7 +2182,7 @@ def test_anchor1():
                                 "length": 13,
                                 "num_words": 3,
                                 "words": ["27", "juni", "2014"],
-                                "anchor_word_hits": [],
+                                "anchor_word_hits": {"hits": []},
                                 "scoring_characters": "",
                                 "proper_names": [],
                             },
@@ -2121,20 +2201,22 @@ def test_anchor1():
                                     "eanadollui",
                                     "davvin",
                                 ],
-                                "anchor_word_hits": [
-                                    {
-                                        "index": 0,
-                                        "element_number": 2,
-                                        "pos": 3,
-                                        "word": "1",
-                                    },
-                                    {
-                                        "index": 2,
-                                        "element_number": 2,
-                                        "pos": 0,
-                                        "word": "Sámediggeráđđi",
-                                    },
-                                ],
+                                "anchor_word_hits": {
+                                    "hits": [
+                                        {
+                                            "index": 0,
+                                            "element_number": 2,
+                                            "pos": 3,
+                                            "word": "1",
+                                        },
+                                        {
+                                            "index": 2,
+                                            "element_number": 2,
+                                            "pos": 0,
+                                            "word": "Sámediggeráđđi",
+                                        },
+                                    ]
+                                },
                                 "scoring_characters": "",
                                 "proper_names": ["Sámediggeráđđi"],
                             },
@@ -2195,7 +2277,7 @@ def test_anchor1():
                                 "length": 13,
                                 "num_words": 3,
                                 "words": ["27", "juni", "2014"],
-                                "anchor_word_hits": [],
+                                "anchor_word_hits": {"hits": []},
                                 "scoring_characters": "",
                                 "proper_names": [],
                             },
@@ -2216,20 +2298,22 @@ def test_anchor1():
                                     "i",
                                     "nord",
                                 ],
-                                "anchor_word_hits": [
-                                    {
-                                        "index": 0,
-                                        "element_number": 2,
-                                        "pos": 3,
-                                        "word": "1",
-                                    },
-                                    {
-                                        "index": 1,
-                                        "element_number": 2,
-                                        "pos": 4,
-                                        "word": "millioner",
-                                    },
-                                ],
+                                "anchor_word_hits": {
+                                    "hits": [
+                                        {
+                                            "index": 0,
+                                            "element_number": 2,
+                                            "pos": 3,
+                                            "word": "1",
+                                        },
+                                        {
+                                            "index": 1,
+                                            "element_number": 2,
+                                            "pos": 4,
+                                            "word": "millioner",
+                                        },
+                                    ]
+                                },
                                 "scoring_characters": "",
                                 "proper_names": ["Sametingsrådet", "Arktisk"],
                             },
@@ -2248,20 +2332,22 @@ def test_anchor1():
                                     "eanadollui",
                                     "davvin",
                                 ],
-                                "anchor_word_hits": [
-                                    {
-                                        "index": 0,
-                                        "element_number": 2,
-                                        "pos": 3,
-                                        "word": "1",
-                                    },
-                                    {
-                                        "index": 2,
-                                        "element_number": 2,
-                                        "pos": 0,
-                                        "word": "Sámediggeráđđi",
-                                    },
-                                ],
+                                "anchor_word_hits": {
+                                    "hits": [
+                                        {
+                                            "index": 0,
+                                            "element_number": 2,
+                                            "pos": 3,
+                                            "word": "1",
+                                        },
+                                        {
+                                            "index": 2,
+                                            "element_number": 2,
+                                            "pos": 0,
+                                            "word": "Sámediggeráđđi",
+                                        },
+                                    ]
+                                },
                                 "scoring_characters": "",
                                 "proper_names": ["Sámediggeráđđi"],
                             },
@@ -2279,7 +2365,7 @@ def test_anchor1():
                                 "length": 13,
                                 "num_words": 3,
                                 "words": ["27", "juni", "2014"],
-                                "anchor_word_hits": [],
+                                "anchor_word_hits": {"hits": []},
                                 "scoring_characters": "",
                                 "proper_names": [],
                             }
@@ -2303,14 +2389,16 @@ def test_anchor1():
                                     "árktalaš",
                                     "eanadollui",
                                 ],
-                                "anchor_word_hits": [
-                                    {
-                                        "index": 0,
-                                        "element_number": 0,
-                                        "pos": 0,
-                                        "word": "1",
-                                    }
-                                ],
+                                "anchor_word_hits": {
+                                    "hits": [
+                                        {
+                                            "index": 0,
+                                            "element_number": 0,
+                                            "pos": 0,
+                                            "word": "1",
+                                        }
+                                    ]
+                                },
                                 "scoring_characters": "",
                                 "proper_names": [],
                             }
@@ -2340,20 +2428,22 @@ def test_anchor1():
                                     "i",
                                     "nord",
                                 ],
-                                "anchor_word_hits": [
-                                    {
-                                        "index": 0,
-                                        "element_number": 2,
-                                        "pos": 3,
-                                        "word": "1",
-                                    },
-                                    {
-                                        "index": 1,
-                                        "element_number": 2,
-                                        "pos": 4,
-                                        "word": "millioner",
-                                    },
-                                ],
+                                "anchor_word_hits": {
+                                    "hits": [
+                                        {
+                                            "index": 0,
+                                            "element_number": 2,
+                                            "pos": 3,
+                                            "word": "1",
+                                        },
+                                        {
+                                            "index": 1,
+                                            "element_number": 2,
+                                            "pos": 4,
+                                            "word": "millioner",
+                                        },
+                                    ]
+                                },
                                 "scoring_characters": "",
                                 "proper_names": ["Sametingsrådet", "Arktisk"],
                             }
@@ -2426,20 +2516,22 @@ def test_anchor1():
                                     "i",
                                     "nord",
                                 ],
-                                "anchor_word_hits": [
-                                    {
-                                        "index": 0,
-                                        "element_number": 2,
-                                        "pos": 3,
-                                        "word": "1",
-                                    },
-                                    {
-                                        "index": 1,
-                                        "element_number": 2,
-                                        "pos": 4,
-                                        "word": "millioner",
-                                    },
-                                ],
+                                "anchor_word_hits": {
+                                    "hits": [
+                                        {
+                                            "index": 0,
+                                            "element_number": 2,
+                                            "pos": 3,
+                                            "word": "1",
+                                        },
+                                        {
+                                            "index": 1,
+                                            "element_number": 2,
+                                            "pos": 4,
+                                            "word": "millioner",
+                                        },
+                                    ]
+                                },
                                 "scoring_characters": "",
                                 "proper_names": ["Sametingsrådet", "Arktisk"],
                             },
@@ -2454,14 +2546,16 @@ def test_anchor1():
                                     "árktalaš",
                                     "eanadollui",
                                 ],
-                                "anchor_word_hits": [
-                                    {
-                                        "index": 0,
-                                        "element_number": 0,
-                                        "pos": 0,
-                                        "word": "1",
-                                    }
-                                ],
+                                "anchor_word_hits": {
+                                    "hits": [
+                                        {
+                                            "index": 0,
+                                            "element_number": 0,
+                                            "pos": 0,
+                                            "word": "1",
+                                        }
+                                    ]
+                                },
                                 "scoring_characters": "",
                                 "proper_names": [],
                             },
@@ -2534,20 +2628,22 @@ def test_anchor1():
                                     "i",
                                     "nord",
                                 ],
-                                "anchor_word_hits": [
-                                    {
-                                        "index": 0,
-                                        "element_number": 2,
-                                        "pos": 3,
-                                        "word": "1",
-                                    },
-                                    {
-                                        "index": 1,
-                                        "element_number": 2,
-                                        "pos": 4,
-                                        "word": "millioner",
-                                    },
-                                ],
+                                "anchor_word_hits": {
+                                    "hits": [
+                                        {
+                                            "index": 0,
+                                            "element_number": 2,
+                                            "pos": 3,
+                                            "word": "1",
+                                        },
+                                        {
+                                            "index": 1,
+                                            "element_number": 2,
+                                            "pos": 4,
+                                            "word": "millioner",
+                                        },
+                                    ]
+                                },
                                 "scoring_characters": "",
                                 "proper_names": ["Sametingsrådet", "Arktisk"],
                             },
@@ -2562,14 +2658,16 @@ def test_anchor1():
                                     "árktalaš",
                                     "eanadollui",
                                 ],
-                                "anchor_word_hits": [
-                                    {
-                                        "index": 0,
-                                        "element_number": 0,
-                                        "pos": 0,
-                                        "word": "1",
-                                    }
-                                ],
+                                "anchor_word_hits": {
+                                    "hits": [
+                                        {
+                                            "index": 0,
+                                            "element_number": 0,
+                                            "pos": 0,
+                                            "word": "1",
+                                        }
+                                    ]
+                                },
                                 "scoring_characters": "",
                                 "proper_names": [],
                             },
@@ -2578,7 +2676,7 @@ def test_anchor1():
                                 "length": 20,
                                 "num_words": 3,
                                 "words": ["27", "Geassemánnu", "2014"],
-                                "anchor_word_hits": [],
+                                "anchor_word_hits": {"hits": []},
                                 "scoring_characters": "",
                                 "proper_names": ["Geassemánnu"],
                             },
@@ -2596,7 +2694,7 @@ def test_anchor1():
                                 "length": 20,
                                 "num_words": 3,
                                 "words": ["27", "Geassemánnu", "2014"],
-                                "anchor_word_hits": [],
+                                "anchor_word_hits": {"hits": []},
                                 "scoring_characters": "",
                                 "proper_names": ["Geassemánnu"],
                             }
@@ -2626,20 +2724,22 @@ def test_anchor1():
                                     "i",
                                     "nord",
                                 ],
-                                "anchor_word_hits": [
-                                    {
-                                        "index": 0,
-                                        "element_number": 2,
-                                        "pos": 3,
-                                        "word": "1",
-                                    },
-                                    {
-                                        "index": 1,
-                                        "element_number": 2,
-                                        "pos": 4,
-                                        "word": "millioner",
-                                    },
-                                ],
+                                "anchor_word_hits": {
+                                    "hits": [
+                                        {
+                                            "index": 0,
+                                            "element_number": 2,
+                                            "pos": 3,
+                                            "word": "1",
+                                        },
+                                        {
+                                            "index": 1,
+                                            "element_number": 2,
+                                            "pos": 4,
+                                            "word": "millioner",
+                                        },
+                                    ]
+                                },
                                 "scoring_characters": "",
                                 "proper_names": ["Sametingsrådet", "Arktisk"],
                             }
@@ -2669,20 +2769,22 @@ def test_anchor1():
                                     "i",
                                     "nord",
                                 ],
-                                "anchor_word_hits": [
-                                    {
-                                        "index": 0,
-                                        "element_number": 2,
-                                        "pos": 3,
-                                        "word": "1",
-                                    },
-                                    {
-                                        "index": 1,
-                                        "element_number": 2,
-                                        "pos": 4,
-                                        "word": "millioner",
-                                    },
-                                ],
+                                "anchor_word_hits": {
+                                    "hits": [
+                                        {
+                                            "index": 0,
+                                            "element_number": 2,
+                                            "pos": 3,
+                                            "word": "1",
+                                        },
+                                        {
+                                            "index": 1,
+                                            "element_number": 2,
+                                            "pos": 4,
+                                            "word": "millioner",
+                                        },
+                                    ]
+                                },
                                 "scoring_characters": "",
                                 "proper_names": ["Sametingsrådet", "Arktisk"],
                             },
@@ -2691,7 +2793,7 @@ def test_anchor1():
                                 "length": 20,
                                 "num_words": 3,
                                 "words": ["27", "Geassemánnu", "2014"],
-                                "anchor_word_hits": [],
+                                "anchor_word_hits": {"hits": []},
                                 "scoring_characters": "",
                                 "proper_names": ["Geassemánnu"],
                             },
@@ -2764,20 +2866,22 @@ def test_anchor1():
                                     "i",
                                     "nord",
                                 ],
-                                "anchor_word_hits": [
-                                    {
-                                        "index": 0,
-                                        "element_number": 2,
-                                        "pos": 3,
-                                        "word": "1",
-                                    },
-                                    {
-                                        "index": 1,
-                                        "element_number": 2,
-                                        "pos": 4,
-                                        "word": "millioner",
-                                    },
-                                ],
+                                "anchor_word_hits": {
+                                    "hits": [
+                                        {
+                                            "index": 0,
+                                            "element_number": 2,
+                                            "pos": 3,
+                                            "word": "1",
+                                        },
+                                        {
+                                            "index": 1,
+                                            "element_number": 2,
+                                            "pos": 4,
+                                            "word": "millioner",
+                                        },
+                                    ]
+                                },
                                 "scoring_characters": "",
                                 "proper_names": ["Sametingsrådet", "Arktisk"],
                             },
@@ -2786,7 +2890,7 @@ def test_anchor1():
                                 "length": 20,
                                 "num_words": 3,
                                 "words": ["27", "Geassemánnu", "2014"],
-                                "anchor_word_hits": [],
+                                "anchor_word_hits": {"hits": []},
                                 "scoring_characters": "",
                                 "proper_names": ["Geassemánnu"],
                             },
@@ -2805,20 +2909,22 @@ def test_anchor1():
                                     "eanadollui",
                                     "davvin",
                                 ],
-                                "anchor_word_hits": [
-                                    {
-                                        "index": 0,
-                                        "element_number": 2,
-                                        "pos": 3,
-                                        "word": "1",
-                                    },
-                                    {
-                                        "index": 2,
-                                        "element_number": 2,
-                                        "pos": 0,
-                                        "word": "Sámediggeráđđi",
-                                    },
-                                ],
+                                "anchor_word_hits": {
+                                    "hits": [
+                                        {
+                                            "index": 0,
+                                            "element_number": 2,
+                                            "pos": 3,
+                                            "word": "1",
+                                        },
+                                        {
+                                            "index": 2,
+                                            "element_number": 2,
+                                            "pos": 0,
+                                            "word": "Sámediggeráđđi",
+                                        },
+                                    ]
+                                },
                                 "scoring_characters": "",
                                 "proper_names": ["Sámediggeráđđi"],
                             },
@@ -2846,20 +2952,22 @@ def test_anchor1():
                                     "eanadollui",
                                     "davvin",
                                 ],
-                                "anchor_word_hits": [
-                                    {
-                                        "index": 0,
-                                        "element_number": 2,
-                                        "pos": 3,
-                                        "word": "1",
-                                    },
-                                    {
-                                        "index": 2,
-                                        "element_number": 2,
-                                        "pos": 0,
-                                        "word": "Sámediggeráđđi",
-                                    },
-                                ],
+                                "anchor_word_hits": {
+                                    "hits": [
+                                        {
+                                            "index": 0,
+                                            "element_number": 2,
+                                            "pos": 3,
+                                            "word": "1",
+                                        },
+                                        {
+                                            "index": 2,
+                                            "element_number": 2,
+                                            "pos": 0,
+                                            "word": "Sámediggeráđđi",
+                                        },
+                                    ]
+                                },
                                 "scoring_characters": "",
                                 "proper_names": ["Sámediggeráđđi"],
                             }
@@ -2889,20 +2997,22 @@ def test_anchor1():
                                     "i",
                                     "nord",
                                 ],
-                                "anchor_word_hits": [
-                                    {
-                                        "index": 0,
-                                        "element_number": 2,
-                                        "pos": 3,
-                                        "word": "1",
-                                    },
-                                    {
-                                        "index": 1,
-                                        "element_number": 2,
-                                        "pos": 4,
-                                        "word": "millioner",
-                                    },
-                                ],
+                                "anchor_word_hits": {
+                                    "hits": [
+                                        {
+                                            "index": 0,
+                                            "element_number": 2,
+                                            "pos": 3,
+                                            "word": "1",
+                                        },
+                                        {
+                                            "index": 1,
+                                            "element_number": 2,
+                                            "pos": 4,
+                                            "word": "millioner",
+                                        },
+                                    ]
+                                },
                                 "scoring_characters": "",
                                 "proper_names": ["Sametingsrådet", "Arktisk"],
                             }
@@ -2975,20 +3085,22 @@ def test_anchor1():
                                     "i",
                                     "nord",
                                 ],
-                                "anchor_word_hits": [
-                                    {
-                                        "index": 0,
-                                        "element_number": 2,
-                                        "pos": 3,
-                                        "word": "1",
-                                    },
-                                    {
-                                        "index": 1,
-                                        "element_number": 2,
-                                        "pos": 4,
-                                        "word": "millioner",
-                                    },
-                                ],
+                                "anchor_word_hits": {
+                                    "hits": [
+                                        {
+                                            "index": 0,
+                                            "element_number": 2,
+                                            "pos": 3,
+                                            "word": "1",
+                                        },
+                                        {
+                                            "index": 1,
+                                            "element_number": 2,
+                                            "pos": 4,
+                                            "word": "millioner",
+                                        },
+                                    ]
+                                },
                                 "scoring_characters": "",
                                 "proper_names": ["Sametingsrådet", "Arktisk"],
                             },
@@ -3007,20 +3119,22 @@ def test_anchor1():
                                     "eanadollui",
                                     "davvin",
                                 ],
-                                "anchor_word_hits": [
-                                    {
-                                        "index": 0,
-                                        "element_number": 2,
-                                        "pos": 3,
-                                        "word": "1",
-                                    },
-                                    {
-                                        "index": 2,
-                                        "element_number": 2,
-                                        "pos": 0,
-                                        "word": "Sámediggeráđđi",
-                                    },
-                                ],
+                                "anchor_word_hits": {
+                                    "hits": [
+                                        {
+                                            "index": 0,
+                                            "element_number": 2,
+                                            "pos": 3,
+                                            "word": "1",
+                                        },
+                                        {
+                                            "index": 2,
+                                            "element_number": 2,
+                                            "pos": 0,
+                                            "word": "Sámediggeráđđi",
+                                        },
+                                    ]
+                                },
                                 "scoring_characters": "",
                                 "proper_names": ["Sámediggeráđđi"],
                             },
@@ -3050,20 +3164,22 @@ def test_anchor1():
                                     "i",
                                     "nord",
                                 ],
-                                "anchor_word_hits": [
-                                    {
-                                        "index": 0,
-                                        "element_number": 2,
-                                        "pos": 3,
-                                        "word": "1",
-                                    },
-                                    {
-                                        "index": 1,
-                                        "element_number": 2,
-                                        "pos": 4,
-                                        "word": "millioner",
-                                    },
-                                ],
+                                "anchor_word_hits": {
+                                    "hits": [
+                                        {
+                                            "index": 0,
+                                            "element_number": 2,
+                                            "pos": 3,
+                                            "word": "1",
+                                        },
+                                        {
+                                            "index": 1,
+                                            "element_number": 2,
+                                            "pos": 4,
+                                            "word": "millioner",
+                                        },
+                                    ]
+                                },
                                 "scoring_characters": "",
                                 "proper_names": ["Sametingsrådet", "Arktisk"],
                             }
@@ -3087,14 +3203,16 @@ def test_anchor1():
                                     "árktalaš",
                                     "eanadollui",
                                 ],
-                                "anchor_word_hits": [
-                                    {
-                                        "index": 0,
-                                        "element_number": 0,
-                                        "pos": 0,
-                                        "word": "1",
-                                    }
-                                ],
+                                "anchor_word_hits": {
+                                    "hits": [
+                                        {
+                                            "index": 0,
+                                            "element_number": 0,
+                                            "pos": 0,
+                                            "word": "1",
+                                        }
+                                    ]
+                                },
                                 "scoring_characters": "",
                                 "proper_names": [],
                             }
@@ -3112,7 +3230,7 @@ def test_anchor1():
                                 "length": 20,
                                 "num_words": 3,
                                 "words": ["27", "Geassemánnu", "2014"],
-                                "anchor_word_hits": [],
+                                "anchor_word_hits": {"hits": []},
                                 "scoring_characters": "",
                                 "proper_names": ["Geassemánnu"],
                             }
@@ -3140,20 +3258,22 @@ def test_anchor1():
                                     "eanadollui",
                                     "davvin",
                                 ],
-                                "anchor_word_hits": [
-                                    {
-                                        "index": 0,
-                                        "element_number": 2,
-                                        "pos": 3,
-                                        "word": "1",
-                                    },
-                                    {
-                                        "index": 2,
-                                        "element_number": 2,
-                                        "pos": 0,
-                                        "word": "Sámediggeráđđi",
-                                    },
-                                ],
+                                "anchor_word_hits": {
+                                    "hits": [
+                                        {
+                                            "index": 0,
+                                            "element_number": 2,
+                                            "pos": 3,
+                                            "word": "1",
+                                        },
+                                        {
+                                            "index": 2,
+                                            "element_number": 2,
+                                            "pos": 0,
+                                            "word": "Sámediggeráđđi",
+                                        },
+                                    ]
+                                },
                                 "scoring_characters": "",
                                 "proper_names": ["Sámediggeráđđi"],
                             }
