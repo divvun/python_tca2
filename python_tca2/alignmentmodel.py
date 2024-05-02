@@ -13,6 +13,7 @@ from python_tca2.exceptions import (
     EndOfAllTextsExceptionError,
     EndOfTextExceptionError,
 )
+from python_tca2.path import Path
 from python_tca2.pathstep import PathStep
 from python_tca2.queue_entry import QueueEntry
 from python_tca2.queuelist import QueueList
@@ -132,7 +133,7 @@ class AlignmentModel:
     def lengthen_paths(self):
         position = self.find_start_position()
         queue_list = QueueList()
-        queue_list.add(QueueEntry(position, 0))
+        queue_list.add(QueueEntry(Path(position), 0))
         step_count = 0
         done_lengthening = False
         while not done_lengthening:
