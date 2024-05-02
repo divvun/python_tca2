@@ -45,12 +45,13 @@ class AnchorWordList:
         matching_phrase = []  # the actual phrase occurring in the text
         for w2 in range(len(anchor_phrase)):
             word = words[w + w2]
-            anchor_word = anchor_phrase[w2]
-            if similarity_utils.anchor_match(anchor_word, word):
-                if w2 > 0:
-                    matching_phrase.append(" ")
-                matching_phrase.append(word)
-            else:
-                success = False
-                break
+            if not similarity_utils.anchor_match(
+                compiled_anchor_pattern=anchor_phrase[w2], word=word
+            ):
+                return False, []
+
+            if w2 > 0:
+                matching_phrase.append(" ")
+            matching_phrase.append(word)
+
         return success, matching_phrase
