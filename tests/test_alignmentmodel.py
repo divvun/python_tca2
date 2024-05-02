@@ -168,8 +168,8 @@ def test_toalign_pickup():
         ]
     }
 
-    assert to_align.to_json() == {
-        "elements": {
+    assert to_align == ToAlign(
+        {
             0: [
                 AElement(
                     text="Kanskje en innkjøpsordning for kvenskspråklig litteratur.",
@@ -181,7 +181,7 @@ def test_toalign_pickup():
                 ),
             ]
         }
-    }
+    )
 
 
 def test_aligned_to_text_file():

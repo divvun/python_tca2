@@ -9,9 +9,6 @@ from python_tca2.alignments_etc import AlignmentsEtc
 class ToAlign:
     elements: defaultdict[int, list[AElement]]
 
-    def to_json(self):
-        return {"elements": dict(self.elements)}
-
     def empty(self) -> bool:
         return all(len(elements) == 0 for elements in self.elements.values())
 
