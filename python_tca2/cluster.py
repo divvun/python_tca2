@@ -19,20 +19,12 @@ class Cluster:
     def clone(self):
         return super().clone()
 
-    def get_refs(self):
-        return self.refs
-
     def add(self, other_ref: Ref):
-        for ref in self.refs:
-            if ref == other_ref:
-                return
-        self.refs.append(other_ref)
+        if other_ref not in self.refs:
+            self.refs.append(other_ref)
 
     def matches(self, other_ref: Ref):
-        for ref in self.refs:
-            if ref.matches(other_ref):
-                return True
-        return False
+        return any(ref.matches(other_ref) for ref in self.refs)
 
     def add_cluster(self, other_cluster: "Cluster"):
         for other_ref in other_cluster.refs:
