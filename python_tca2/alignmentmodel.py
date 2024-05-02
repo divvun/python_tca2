@@ -26,7 +26,8 @@ class AlignmentModel:
     scoring_characters = constants.DEFAULT_SCORING_CHARACTERS
     max_path_length = constants.MAX_PATH_LENGTH
 
-    def __init__(self):
+    def __init__(self, keys=None):
+        self.keys = keys
         self.docs = []
         self.nodes = []
         self.all_nodes = []
@@ -108,7 +109,7 @@ class AlignmentModel:
 
     def find_more_to_align_without_gui(self, best_path):
         step_suggestion = best_path.steps[0]
-        for t in range(constants.NUM_FILES):
+        for t in self.keys:
             i = 0
             while i < step_suggestion.increment[t]:
                 self.to_align.pickup(t, self.unaligned.pop(t))
@@ -231,7 +232,7 @@ class AlignmentModel:
 
     def find_start_position(self):
         position = [0] * constants.NUM_FILES
-        for t in range(constants.NUM_FILES):
+        for t in self.keys:
             if len(self.unaligned.elements[t]) > 0:
                 first_unaligned = self.unaligned.elements[t][0]
                 position[t] = first_unaligned.element_number - 1
@@ -241,7 +242,7 @@ class AlignmentModel:
         return position
 
     def save_plain(self):
-        for t in range(constants.NUM_FILES):
+        for t in self.keys:
             self.save_new_line_format_file(f"aligned_{t}.txt", t)
 
     def save_new_line_format_file(self, filename, t:int):

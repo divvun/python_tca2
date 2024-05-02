@@ -248,7 +248,7 @@ def test_suggest1():
         ),
     ]
 
-    model = alignmentmodel.AlignmentModel()
+    model = alignmentmodel.AlignmentModel(keys=range(2))
     load_text(trees, model)
     model.suggets_without_gui()
 
@@ -320,7 +320,7 @@ def test_suggest2():
         ),
     ]
 
-    model = alignmentmodel.AlignmentModel()
+    model = alignmentmodel.AlignmentModel(keys=range(2))
     load_text(trees, model)
     model.suggets_without_gui()
 
@@ -411,7 +411,7 @@ def test_suggest3():
         ),
     ]
 
-    model = alignmentmodel.AlignmentModel()
+    model = alignmentmodel.AlignmentModel(keys=range(2))
     load_text(trees, model)
     model.anchor_word_list = load_anchor_words()
 
@@ -487,7 +487,7 @@ def test_anchorword_hits():
         ),
     ]
 
-    model = alignmentmodel.AlignmentModel()
+    model = alignmentmodel.AlignmentModel(keys=range(2))
     load_text(trees, model)
     model.anchor_word_list = load_anchor_words()
     model.suggets_without_gui()
@@ -529,7 +529,7 @@ def test_anchor1():
         ),
     ]
 
-    model = alignmentmodel.AlignmentModel()
+    model = alignmentmodel.AlignmentModel(keys=range(2))
     load_text(trees, model)
     model.anchor_word_list = load_anchor_words()
 
