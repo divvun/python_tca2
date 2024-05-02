@@ -108,11 +108,6 @@ def test_aelement_text():
     assert aelement.text == "9 Økonomiske, administrative og miljømessige konsekvenser"
 
 
-def load_text(trees, model):
-    for t, tree in enumerate(trees):
-        model.load_tree(tree, t)
-
-
 # A simple test of transfer from unaligned to toalign
 def test_toalign_pickup():
     tree = etree.fromstring(
@@ -124,18 +119,23 @@ def test_toalign_pickup():
     """
     )
 
-    unaligned = Unaligned()
-    unaligned.add_elements(
-        [
-            AElement(
-                " ".join(
-                    [text for text in "".join(node.itertext()).split() if text.strip()]
-                ),
-                index,
-            )
-            for index, node in enumerate(tree.iter("s"))
-        ],
-        0,
+    unaligned = Unaligned(
+        elements={
+            0: [
+                AElement(
+                    " ".join(
+                        [
+                            text
+                            for text in "".join(node.itertext()).split()
+                            if text.strip()
+                        ]
+                    ),
+                    index,
+                )
+                for index, node in enumerate(tree.iter("s"))
+            ],
+            1: [],
+        }
     )
 
     to_align = ToAlign()
@@ -250,7 +250,7 @@ def test_suggest1():
     ]
 
     model = alignmentmodel.AlignmentModel(keys=range(2))
-    load_text(trees, model)
+    model.load_trees(trees)
     model.suggets_without_gui()
 
     assert model.aligned.to_json() == {
@@ -314,7 +314,7 @@ def test_suggest2():
     ]
 
     model = alignmentmodel.AlignmentModel(keys=range(2))
-    load_text(trees, model)
+    model.load_trees(trees)
     model.suggets_without_gui()
 
     assert model.aligned.to_json() == {
@@ -396,7 +396,7 @@ def test_suggest3():
     ]
 
     model = alignmentmodel.AlignmentModel(keys=range(2))
-    load_text(trees, model)
+    model.load_trees(trees)
     model.anchor_word_list = load_anchor_words()
 
     model.suggets_without_gui()
@@ -463,7 +463,7 @@ def test_anchorword_hits():
     ]
 
     model = alignmentmodel.AlignmentModel(keys=range(2))
-    load_text(trees, model)
+    model.load_trees(trees)
     model.anchor_word_list = load_anchor_words()
     model.suggets_without_gui()
     interesting = model.compare.matrix.cells["0,0,0,0"]
@@ -505,7 +505,7 @@ def test_anchor1():
     ]
 
     model = alignmentmodel.AlignmentModel(keys=range(2))
-    load_text(trees, model)
+    model.load_trees(trees)
     model.anchor_word_list = load_anchor_words()
 
     model.suggets_without_gui()

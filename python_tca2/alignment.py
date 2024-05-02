@@ -1,19 +1,15 @@
-import json
-
 import click
+from lxml import etree
 
 from python_tca2 import alignmentmodel
 
 
 def parallelize(anchor_file, files: list[str]):
-    model = alignmentmodel.AlignmentModel(keys=range(len(files)))
+    model = alignmentmodel.AlignmentModel(files)
 
     model.anchor_word_list.load_from_file(anchor_file)
-    for index, filename in enumerate(files):
-        model.load_text(filename, index)
-
+    model.load_trees([etree.parse(filename) for filename in files])
     model.suggets_without_gui()
-    print(json.dumps(model.aligned.to_json(), indent=2, ensure_ascii=False))
     model.save_plain()
 
 

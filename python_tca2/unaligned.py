@@ -1,13 +1,13 @@
 import json
 from collections import defaultdict
-from dataclasses import asdict
+from dataclasses import asdict, dataclass
 
 from python_tca2.aelement import AElement
 
 
+@dataclass
 class Unaligned:
-    def __init__(self):
-        self.elements: defaultdict[int, list[AElement]] = defaultdict(list)
+    elements: defaultdict[int, list[AElement]]
 
     def pop(self, t: int) -> AElement:
         return self.elements[t].pop(0)

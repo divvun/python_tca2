@@ -1,8 +1,6 @@
 import json
 from copy import deepcopy
 
-from lxml import etree
-
 from python_tca2 import constants
 from python_tca2.aelement import AElement
 from python_tca2.aligned import Aligned
@@ -26,42 +24,33 @@ class AlignmentModel:
     scoring_characters = constants.DEFAULT_SCORING_CHARACTERS
     max_path_length = constants.MAX_PATH_LENGTH
 
-    def __init__(self, keys=None):
+    def __init__(self, keys: list[int]):
         self.keys = keys
-        self.docs = []
         self.nodes = []
-        self.all_nodes = []
         self.aligned = Aligned()
         self.to_align = ToAlign()
-        self.unaligned = Unaligned()
         self.compare = Compare()
         self.anchor_word_list = AnchorWordList()
 
-    def load_text(self, text_file, t):
-        # TODO: Add text file name to the model
-        tree = etree.parse(text_file)
-        self.docs.append(tree)
-        self.all_nodes.append(tree.xpath("//s"))
-        self.load_tree(tree, t)
-
-    def load_tree(self, tree, t):
-        self.nodes.append(tree.xpath("//s"))
-        self.unaligned.add_elements(
-            [
-                AElement(
-                    " ".join(
-                        [
-                            text
-                            for text in "".join(node.itertext()).split()
-                            if text.strip()
-                        ]
-                    ),
-                    index,
-                )
-                for index, node in enumerate(tree.iter("s"))
-            ],
-            t,
+    def load_trees(self, trees):
+        self.unaligned = Unaligned(
+            elements={
+                index: self.load_tree(tree)
+                for index, tree in enumerate(trees)
+            }
         )
+
+    def load_tree(self, tree) -> list[AElement]:
+        self.nodes.append(tree.xpath("//s"))
+        return [
+            AElement(
+                " ".join(
+                    [text for text in "".join(node.itertext()).split() if text.strip()]
+                ),
+                index,
+            )
+            for index, node in enumerate(tree.iter("s"))
+        ]
 
     def suggets_without_gui(self):
         run_limit = constants.RUN_LIMIT
@@ -109,7 +98,7 @@ class AlignmentModel:
 
     def find_more_to_align_without_gui(self, best_path):
         step_suggestion = best_path.steps[0]
-        for t in self.keys:
+        for t in self.unaligned.elements.keys():
             i = 0
             while i < step_suggestion.increment[t]:
                 self.to_align.pickup(t, self.unaligned.pop(t))
@@ -232,7 +221,7 @@ class AlignmentModel:
 
     def find_start_position(self):
         position = [0] * constants.NUM_FILES
-        for t in self.keys:
+        for t in self.unaligned.elements.keys():
             if len(self.unaligned.elements[t]) > 0:
                 first_unaligned = self.unaligned.elements[t][0]
                 position[t] = first_unaligned.element_number - 1
@@ -242,19 +231,16 @@ class AlignmentModel:
         return position
 
     def save_plain(self):
-        for t in self.keys:
+        for t in self.unaligned.elements.keys():
             self.save_new_line_format_file(f"aligned_{t}.txt", t)
 
-    def save_new_line_format_file(self, filename, t:int):
+    def save_new_line_format_file(self, filename, t: int):
         with open(filename, "w") as f:
             print(
                 "\n".join(
                     [
                         " ".join(
-                            [
-                                element.text
-                                for element in alignments_etc.elements[t]
-                            ]
+                            [element.text for element in alignments_etc.elements[t]]
                         )
                         for alignments_etc in self.aligned.alignments
                     ]
