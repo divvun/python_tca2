@@ -1,5 +1,6 @@
 import json
 from collections import defaultdict
+from dataclasses import asdict
 
 from python_tca2.aelement import AElement
 
@@ -20,7 +21,7 @@ class Unaligned:
     def to_json(self):
         return {
             "elements": [
-                element.to_json()
+                asdict(element)
                 for elements in self.elements.values()
                 for element in elements
             ]

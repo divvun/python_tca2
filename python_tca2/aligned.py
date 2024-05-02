@@ -9,7 +9,7 @@ class Aligned:
 
     def to_json(self):
         return {
-            "alignments": [al.to_json() for al in self.alignments],
+            "alignments": [dict(al.elements) for al in self.alignments],
         }
 
     def __eq__(self, other):

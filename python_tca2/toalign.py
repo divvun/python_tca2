@@ -1,5 +1,6 @@
 import json
 from collections import defaultdict
+from dataclasses import asdict
 
 from python_tca2.aelement import AElement
 from python_tca2.alignments_etc import AlignmentsEtc
@@ -13,7 +14,7 @@ class ToAlign:
     def to_json(self):
         return {
             "elements": [
-                [lang_element.to_json() for lang_element in lang_elements]
+                [asdict(lang_element) for lang_element in lang_elements]
                 for lang_elements in self.elements.values()
             ],
         }
@@ -30,11 +31,10 @@ class ToAlign:
             self.elements[t].append(element)
 
     def flush(self) -> AlignmentsEtc:
-        if all(elements for elements in self.elements.values()):
+        if any(elements for elements in self.elements.values()):
             self.first_alignment_number += 1
-            return_value = AlignmentsEtc()
-            for t in self.elements.keys():
-                while len(self.elements[t]) > 0:
-                    return_value.elements[t].append(self.elements[t].pop(0))
+            return_value = AlignmentsEtc(self.elements)
+            self.elements = defaultdict(list)
+
             return return_value
         print("Nothing to flush")

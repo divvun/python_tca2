@@ -1,19 +1,12 @@
 from collections import defaultdict
+from dataclasses import dataclass
 
 from python_tca2.aelement import AElement
 
 
+@dataclass
 class AlignmentsEtc:
-    def __init__(self):
-        self.elements: defaultdict[int, list[AElement]] = defaultdict(list)
-
-    def to_json(self):
-        return {
-            "elements": [
-                [lang_element.to_json() for lang_element in lang_elements]
-                for lang_elements in self.elements.values()
-            ],
-        }
+    elements: defaultdict[int, list[AElement]]
 
     def to_tuple(self):
         return tuple(
