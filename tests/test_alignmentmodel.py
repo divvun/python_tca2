@@ -1,3 +1,5 @@
+from collections import defaultdict
+
 from lxml import etree
 
 from python_tca2 import alignmentmodel
@@ -138,7 +140,7 @@ def test_toalign_pickup():
         }
     )
 
-    to_align = ToAlign()
+    to_align = ToAlign(defaultdict(list))
     for element in unaligned.elements[0]:
         to_align.pickup(0, element)
 
@@ -170,22 +172,20 @@ def test_toalign_pickup():
     }
 
     assert to_align.to_json() == {
-        "elements": [
-            [
-                {
-                    "text": (
-                        "Kanskje en innkjøpsordning for kvenskspråklig litteratur."
-                    ),
-                    "element_number": 0,
-                    "alignment_number": 0,
-                },
-                {
-                    "text": "Utvikling av undervisnings- og lærematerialer.",
-                    "element_number": 1,
-                    "alignment_number": 0,
-                },
-            ],
-        ],
+        "elements": {
+            0: [
+                AElement(
+                    text="Kanskje en innkjøpsordning for kvenskspråklig litteratur.",
+                    element_number=0,
+                    alignment_number=0,
+                ),
+                AElement(
+                    text="Utvikling av undervisnings- og lærematerialer.",
+                    element_number=1,
+                    alignment_number=0,
+                ),
+            ]
+        }
     }
 
 

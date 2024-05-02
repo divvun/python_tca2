@@ -1,4 +1,5 @@
 import json
+from collections import defaultdict
 from copy import deepcopy
 
 from python_tca2 import constants
@@ -28,7 +29,7 @@ class AlignmentModel:
         self.keys = keys
         self.nodes = []
         self.aligned = Aligned()
-        self.to_align = ToAlign()
+        self.to_align = ToAlign(defaultdict(list))
         self.compare = Compare()
         self.anchor_word_list = AnchorWordList()
 
