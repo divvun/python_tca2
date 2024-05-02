@@ -28,7 +28,7 @@ class AlignmentModel:
     def __init__(self, keys: list[int]):
         self.keys = keys
         self.nodes = []
-        self.aligned = Aligned()
+        self.aligned = Aligned([])
         self.to_align = ToAlign(defaultdict(list))
         self.compare = Compare()
         self.anchor_word_list = AnchorWordList()

@@ -1,22 +1,11 @@
-import json
+from dataclasses import dataclass
 
 from python_tca2.alignments_etc import AlignmentsEtc
 
 
+@dataclass
 class Aligned:
-    def __init__(self):
-        self.alignments: list[AlignmentsEtc] = []
-
-    def to_json(self):
-        return {
-            "alignments": [dict(al.elements) for al in self.alignments],
-        }
-
-    def __eq__(self, other):
-        return self.elements == other.elements and self.alignments == other.alignments
-
-    def __str__(self):
-        return json.dumps(self.to_json(), indent=0, ensure_ascii=False)
+    alignments: list[AlignmentsEtc]
 
     def pickup(self, value_got: AlignmentsEtc):
         if value_got is not None:

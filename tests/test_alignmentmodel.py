@@ -190,7 +190,7 @@ def test_toalign_pickup():
 
 
 def test_aligned_to_text_file():
-    aligned = Aligned()
+    aligned = Aligned([])
     a1 = AlignmentsEtc(
         {
             0: [],
@@ -253,42 +253,46 @@ def test_suggest1():
     model.load_trees(trees)
     model.suggets_without_gui()
 
-    assert model.aligned.to_json() == {
-        "alignments": [
-            {
-                0: [
-                    AElement(
-                        text="Kanskje en innkjøpsordning for kvenskspråklig litteratur.",
-                        element_number=0,
-                        alignment_number=0,
-                    )
-                ],
-                1: [
-                    AElement(
-                        text="Kvääninkielinen litteratuuri osto-oorninkhiin piian.",
-                        element_number=0,
-                        alignment_number=0,
-                    )
-                ],
-            },
-            {
-                0: [
-                    AElement(
-                        text="Utvikling av undervisnings- og lærematerialer.",
-                        element_number=1,
-                        alignment_number=1,
-                    )
-                ],
-                1: [
-                    AElement(
-                        text="Opetus- ja oppimateriaaliitten kehittäminen.",
-                        element_number=1,
-                        alignment_number=1,
-                    )
-                ],
-            },
+    assert model.aligned == Aligned(
+        [
+            AlignmentsEtc(
+                {
+                    0: [
+                        AElement(
+                            text="Kanskje en innkjøpsordning for kvenskspråklig litteratur.",
+                            element_number=0,
+                            alignment_number=0,
+                        )
+                    ],
+                    1: [
+                        AElement(
+                            text="Kvääninkielinen litteratuuri osto-oorninkhiin piian.",
+                            element_number=0,
+                            alignment_number=0,
+                        )
+                    ],
+                }
+            ),
+            AlignmentsEtc(
+                {
+                    0: [
+                        AElement(
+                            text="Utvikling av undervisnings- og lærematerialer.",
+                            element_number=1,
+                            alignment_number=1,
+                        )
+                    ],
+                    1: [
+                        AElement(
+                            text="Opetus- ja oppimateriaaliitten kehittäminen.",
+                            element_number=1,
+                            alignment_number=1,
+                        )
+                    ],
+                }
+            ),
         ]
-    }
+    )
 
 
 # A test of the alignment model, with different number of sentences
@@ -317,47 +321,51 @@ def test_suggest2():
     model.load_trees(trees)
     model.suggets_without_gui()
 
-    assert model.aligned.to_json() == {
-        "alignments": [
-            {
-                0: [
-                    AElement(
-                        text="Når folk har gått på nybegynnerkursene hos enten instituttet eller universitetet, kan man tilby dem muligheten å få en mentor som de kan snakke kvensk med og gjøre aktiviteter med på kvensk.",
-                        element_number=0,
-                        alignment_number=0,
-                    ),
-                    AElement(
-                        text="Motivere folk til å lære kvensk og vise dem at man får jobb med det, og at det er nok arbeid til alle.",
-                        element_number=1,
-                        alignment_number=0,
-                    ),
-                ],
-                1: [
-                    AElement(
-                        text="Ko ihmiset oon käynheet institutin tahi universiteetin alkukurssin, niin heile tarjothaan maholisuuen saaja menttorin, jonka kans puhhuut ja tehhä assiita kvääniksi Motiveerata ihmissii siihen ette oppiit kväänin kieltä ja näyttäät heile ette sillä saapi työn ja ette työtä oon nokko kaikile.",
-                        element_number=0,
-                        alignment_number=0,
-                    )
-                ],
-            },
-            {
-                0: [
-                    AElement(
-                        text="Forsøke selv å være gode forbilder.",
-                        element_number=2,
-                        alignment_number=1,
-                    )
-                ],
-                1: [
-                    AElement(
-                        text="Freistata itte olla hyvät esikuvat.",
-                        element_number=1,
-                        alignment_number=1,
-                    )
-                ],
-            },
+    assert model.aligned == Aligned(
+        [
+            AlignmentsEtc(
+                {
+                    0: [
+                        AElement(
+                            text="Når folk har gått på nybegynnerkursene hos enten instituttet eller universitetet, kan man tilby dem muligheten å få en mentor som de kan snakke kvensk med og gjøre aktiviteter med på kvensk.",
+                            element_number=0,
+                            alignment_number=0,
+                        ),
+                        AElement(
+                            text="Motivere folk til å lære kvensk og vise dem at man får jobb med det, og at det er nok arbeid til alle.",
+                            element_number=1,
+                            alignment_number=0,
+                        ),
+                    ],
+                    1: [
+                        AElement(
+                            text="Ko ihmiset oon käynheet institutin tahi universiteetin alkukurssin, niin heile tarjothaan maholisuuen saaja menttorin, jonka kans puhhuut ja tehhä assiita kvääniksi Motiveerata ihmissii siihen ette oppiit kväänin kieltä ja näyttäät heile ette sillä saapi työn ja ette työtä oon nokko kaikile.",
+                            element_number=0,
+                            alignment_number=0,
+                        )
+                    ],
+                }
+            ),
+            AlignmentsEtc(
+                {
+                    0: [
+                        AElement(
+                            text="Forsøke selv å være gode forbilder.",
+                            element_number=2,
+                            alignment_number=1,
+                        )
+                    ],
+                    1: [
+                        AElement(
+                            text="Freistata itte olla hyvät esikuvat.",
+                            element_number=1,
+                            alignment_number=1,
+                        )
+                    ],
+                }
+            ),
         ]
-    }
+    )
 
 
 def load_anchor_words():
@@ -401,47 +409,57 @@ def test_suggest3():
 
     model.suggets_without_gui()
 
-    assert model.aligned.to_json() == {
-        "alignments": [
-            {
-                0: [
-                    AElement(
-                        text="- regjeringen.no", element_number=0, alignment_number=0
-                    )
-                ],
-                1: [
-                    AElement(
-                        text="- regjeringen.no", element_number=0, alignment_number=0
-                    )
-                ],
-            },
-            {
-                0: [
-                    AElement(
-                        text="Ot.prp. nr. 25 (2006-2007)",
-                        element_number=1,
-                        alignment_number=1,
-                    )
-                ]
-            },
-            {
-                0: [
-                    AElement(
-                        text="Om lov om reindrift (reindriftsloven)",
-                        element_number=2,
-                        alignment_number=2,
-                    )
-                ],
-                1: [
-                    AElement(
-                        text="Boazodoallolága birra",
-                        element_number=1,
-                        alignment_number=2,
-                    )
-                ],
-            },
+    assert model.aligned == Aligned(
+        [
+            AlignmentsEtc(
+                {
+                    0: [
+                        AElement(
+                            text="- regjeringen.no",
+                            element_number=0,
+                            alignment_number=0,
+                        )
+                    ],
+                    1: [
+                        AElement(
+                            text="- regjeringen.no",
+                            element_number=0,
+                            alignment_number=0,
+                        )
+                    ],
+                }
+            ),
+            AlignmentsEtc(
+                {
+                    0: [
+                        AElement(
+                            text="Ot.prp. nr. 25 (2006-2007)",
+                            element_number=1,
+                            alignment_number=1,
+                        )
+                    ]
+                }
+            ),
+            AlignmentsEtc(
+                {
+                    0: [
+                        AElement(
+                            text="Om lov om reindrift (reindriftsloven)",
+                            element_number=2,
+                            alignment_number=2,
+                        )
+                    ],
+                    1: [
+                        AElement(
+                            text="Boazodoallolága birra",
+                            element_number=1,
+                            alignment_number=2,
+                        )
+                    ],
+                }
+            ),
         ]
-    }
+    )
 
 
 def test_anchorword_hits():
