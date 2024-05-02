@@ -1,5 +1,5 @@
 import json
-from typing import List
+from collections import defaultdict
 
 from python_tca2 import (
     constants,
@@ -19,13 +19,13 @@ class ElementInfoToBeCompared:
     def __init__(self):
         self.common_clusters = Clusters()
         self.score = constants.ELEMENTINFO_SCORE_NOT_CALCULATED
-        self.info: List[List[ElementInfo]] = [[] for _ in range(constants.NUM_FILES)]
+        self.info: defaultdict[int, list[ElementInfo]] = defaultdict(list)
 
     def to_json(self):
         return {
             "score": self.get_score(),
             "common_clusters": self.common_clusters.to_json(),
-            "info": [info.to_json() for infos in self.info for info in infos],
+            "info": [info.to_json() for infos in self.info.values() for info in infos],
         }
 
     def __str__(self):
@@ -362,5 +362,5 @@ class ElementInfoToBeCompared:
     def find_hits(self) -> list[AnchorWordHits]:
         return [
             [hit for info in info_list for hit in info.anchor_word_hits.hits]
-            for info_list in self.info
+            for info_list in self.info.values()
         ]
