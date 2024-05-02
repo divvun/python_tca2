@@ -153,7 +153,6 @@ def test_toalign_pickup():
             index,
         )
         element.element_number = index
-        element.alignment_number = 0
         elements.append(element)
 
     assert unaligned.to_json() == {
@@ -161,12 +160,10 @@ def test_toalign_pickup():
             {
                 "text": "Kanskje en innkjøpsordning for kvenskspråklig litteratur.",
                 "element_number": 0,
-                "alignment_number": 0,
             },
             {
                 "text": "Utvikling av undervisnings- og lærematerialer.",
                 "element_number": 1,
-                "alignment_number": 0,
             },
         ]
     }
@@ -177,12 +174,10 @@ def test_toalign_pickup():
                 AElement(
                     text="Kanskje en innkjøpsordning for kvenskspråklig litteratur.",
                     element_number=0,
-                    alignment_number=0,
                 ),
                 AElement(
                     text="Utvikling av undervisnings- og lærematerialer.",
                     element_number=1,
-                    alignment_number=0,
                 ),
             ]
         }
@@ -261,14 +256,12 @@ def test_suggest1():
                         AElement(
                             text="Kanskje en innkjøpsordning for kvenskspråklig litteratur.",
                             element_number=0,
-                            alignment_number=0,
                         )
                     ],
                     1: [
                         AElement(
                             text="Kvääninkielinen litteratuuri osto-oorninkhiin piian.",
                             element_number=0,
-                            alignment_number=0,
                         )
                     ],
                 }
@@ -279,14 +272,12 @@ def test_suggest1():
                         AElement(
                             text="Utvikling av undervisnings- og lærematerialer.",
                             element_number=1,
-                            alignment_number=1,
                         )
                     ],
                     1: [
                         AElement(
                             text="Opetus- ja oppimateriaaliitten kehittäminen.",
                             element_number=1,
-                            alignment_number=1,
                         )
                     ],
                 }
@@ -329,19 +320,16 @@ def test_suggest2():
                         AElement(
                             text="Når folk har gått på nybegynnerkursene hos enten instituttet eller universitetet, kan man tilby dem muligheten å få en mentor som de kan snakke kvensk med og gjøre aktiviteter med på kvensk.",
                             element_number=0,
-                            alignment_number=0,
                         ),
                         AElement(
                             text="Motivere folk til å lære kvensk og vise dem at man får jobb med det, og at det er nok arbeid til alle.",
                             element_number=1,
-                            alignment_number=0,
                         ),
                     ],
                     1: [
                         AElement(
                             text="Ko ihmiset oon käynheet institutin tahi universiteetin alkukurssin, niin heile tarjothaan maholisuuen saaja menttorin, jonka kans puhhuut ja tehhä assiita kvääniksi Motiveerata ihmissii siihen ette oppiit kväänin kieltä ja näyttäät heile ette sillä saapi työn ja ette työtä oon nokko kaikile.",
                             element_number=0,
-                            alignment_number=0,
                         )
                     ],
                 }
@@ -352,14 +340,12 @@ def test_suggest2():
                         AElement(
                             text="Forsøke selv å være gode forbilder.",
                             element_number=2,
-                            alignment_number=1,
                         )
                     ],
                     1: [
                         AElement(
                             text="Freistata itte olla hyvät esikuvat.",
                             element_number=1,
-                            alignment_number=1,
                         )
                     ],
                 }
@@ -417,14 +403,12 @@ def test_suggest3():
                         AElement(
                             text="- regjeringen.no",
                             element_number=0,
-                            alignment_number=0,
                         )
                     ],
                     1: [
                         AElement(
                             text="- regjeringen.no",
                             element_number=0,
-                            alignment_number=0,
                         )
                     ],
                 }
@@ -435,7 +419,6 @@ def test_suggest3():
                         AElement(
                             text="Ot.prp. nr. 25 (2006-2007)",
                             element_number=1,
-                            alignment_number=1,
                         )
                     ]
                 }
@@ -446,14 +429,12 @@ def test_suggest3():
                         AElement(
                             text="Om lov om reindrift (reindriftsloven)",
                             element_number=2,
-                            alignment_number=2,
                         )
                     ],
                     1: [
                         AElement(
                             text="Boazodoallolága birra",
                             element_number=1,
-                            alignment_number=2,
                         )
                     ],
                 }

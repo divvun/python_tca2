@@ -1,4 +1,3 @@
-import json
 from collections import defaultdict
 from dataclasses import asdict, dataclass
 
@@ -14,9 +13,6 @@ class Unaligned:
 
     def add_elements(self, elements: list[AElement], t: int):
         self.elements[t] = elements
-
-    def __str__(self):
-        return json.dumps(self.to_json(), indent=0, ensure_ascii=False)
 
     def to_json(self):
         return {
