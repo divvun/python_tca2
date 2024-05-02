@@ -1,4 +1,5 @@
 import json
+from dataclasses import asdict
 from typing import List
 
 from python_tca2 import constants
@@ -10,7 +11,7 @@ class Cluster:
         self.refs: List[Ref] = []
 
     def to_json(self):
-        return {"refs": [ref.to_json() for ref in self.refs]}
+        return {"refs": [asdict(ref) for ref in self.refs]}
 
     def __str__(self):
         return json.dumps(self.to_json(), indent=0, ensure_ascii=False)
@@ -23,7 +24,7 @@ class Cluster:
 
     def add(self, other_ref: Ref):
         for ref in self.refs:
-            if ref.exactly_matches(other_ref):
+            if ref == other_ref:
                 return
         self.refs.append(other_ref)
 
