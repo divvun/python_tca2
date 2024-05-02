@@ -11,9 +11,6 @@ class Unaligned:
     def pop(self, t: int) -> AElement:
         return self.elements[t].pop(0)
 
-    def add_elements(self, elements: list[AElement], t: int):
-        self.elements[t] = elements
-
     def to_json(self):
         return {
             "elements": [
