@@ -221,15 +221,10 @@ class AlignmentModel:
             return ret_queue_entry
 
     def find_start_position(self):
-        position = [0] * constants.NUM_FILES
-        for t in self.unaligned.elements.keys():
-            if len(self.unaligned.elements[t]) > 0:
-                first_unaligned = self.unaligned.elements[t][0]
-                position[t] = first_unaligned.element_number - 1
-            else:
-                position[t] = len(self.nodes[t]) - 1
-
-        return position
+        return [
+            elements[0].element_number - 1 if elements else len(self.nodes[t]) - 1
+            for t, elements in self.unaligned.elements.items()
+        ]
 
     def save_plain(self):
         for t in self.unaligned.elements.keys():
