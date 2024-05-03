@@ -2,6 +2,7 @@ from python_tca2.constants import ELEMENTINFO_SCORE_HOPELESS
 from python_tca2.similarity_utils import (
     adjust_for_length_correlation,
     bad_length_correlation,
+    count_shared_bigrams,
     dice_match1,
 )
 
@@ -85,3 +86,23 @@ def test_bad_length_correlation():
 
     # Test case 8: Matching words with lower_limit < c < upper_limit, c <= kill_limit
     assert bad_length_correlation(5, 5, 3, 3, 0.7) is False
+
+
+def test_count_shared_bigrams():
+    # Matching words with no shared bigrams
+    assert count_shared_bigrams("apple", "banana") == 0
+
+    # Matching words with all shared bigrams
+    assert count_shared_bigrams("hello", "hello") == 4
+
+    # Matching words with one empty string
+    assert count_shared_bigrams("", "hello") == 0
+
+    # Matching words with empty strings
+    assert count_shared_bigrams("", "") == 0
+
+    # Matching words with special characters
+    assert count_shared_bigrams("hello!", "hello?") == 4
+
+    # Matching words with different letter cases
+    assert count_shared_bigrams("Hello", "hello") == 3
