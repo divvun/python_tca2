@@ -3,6 +3,7 @@ from python_tca2.similarity_utils import (
     adjust_for_length_correlation,
     bad_length_correlation,
     count_shared_bigrams,
+    count_unique_bigrams,
     dice_match1,
 )
 
@@ -106,3 +107,20 @@ def test_count_shared_bigrams():
 
     # Matching words with different letter cases
     assert count_shared_bigrams("Hello", "hello") == 3
+
+
+def test_count_unique_bigrams():
+    # Word with no repeated bigrams
+    assert count_unique_bigrams("hello") == 4
+
+    # Word with repeated bigrams
+    assert count_unique_bigrams("banana") == 3
+
+    # Empty word
+    assert count_unique_bigrams("") == 0
+
+    # Word with special characters
+    assert count_unique_bigrams("hello!") == 5
+
+    # Word with different letter cases
+    assert count_unique_bigrams("Hello") == 4
