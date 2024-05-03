@@ -43,45 +43,46 @@ def dice_match2(word_a, word_b, word_c, type_, dice_min_counting_score):
     phrase_word1_lower_case = phrase_word1.lower()
     phrase_word2_lower_case = phrase_word2.lower()
 
-    unique_bigrams_in_word = {}
-    count_bigrams_in_word = 0
-    for i in range(len(word_lower_case) - 1):
-        unique_bigrams_in_word[word_lower_case[i : i + 2]] = 1
-    count_bigrams_in_word = len(unique_bigrams_in_word)
+    count_bigrams_in_phrase_word1 = count_unique_bigrams(phrase_word1_lower_case)
+    count_bigrams_in_phrase_word2 = count_unique_bigrams(phrase_word2_lower_case)
 
-    unique_bigrams_in_phrase_word1 = {}
-    count_bigrams_in_phrase_word1 = 0
-    for i in range(len(phrase_word1_lower_case) - 1):
-        unique_bigrams_in_phrase_word1[phrase_word1_lower_case[i : i + 2]] = 1
-    count_bigrams_in_phrase_word1 = len(unique_bigrams_in_phrase_word1)
-
-    count_shared_bigrams1 = 0
-    for bigram in unique_bigrams_in_word.keys():
-        if bigram in unique_bigrams_in_phrase_word1:
-            count_shared_bigrams1 += 1
-
-    unique_bigrams_in_phrase_word2 = {}
-    count_bigrams_in_phrase_word2 = 0
-    for i in range(len(phrase_word2_lower_case) - 1):
-        unique_bigrams_in_phrase_word2[phrase_word2_lower_case[i : i + 2]] = 1
-    count_bigrams_in_phrase_word2 = len(unique_bigrams_in_phrase_word2)
-
-    count_shared_bigrams2 = 0
-    for bigram in unique_bigrams_in_word.keys():
-        if bigram in unique_bigrams_in_phrase_word2:
-            count_shared_bigrams2 += 1
+    count_shared_bigrams1 = count_shared_bigrams(
+        word_lower_case, phrase_word1_lower_case
+    )
+    count_shared_bigrams2 = count_shared_bigrams(
+        word_lower_case, phrase_word2_lower_case
+    )
 
     dice_score1 = 0.0
-    if count_bigrams_in_word != 0 and count_bigrams_in_phrase_word1 != 0:
+    if count_bigrams_in_phrase_word1 != 0:
         dice_score1 = count_shared_bigrams1 / count_bigrams_in_phrase_word1
 
     dice_score2 = 0.0
-    if count_bigrams_in_word != 0 and count_bigrams_in_phrase_word2 != 0:
+    if count_bigrams_in_phrase_word2 != 0:
         dice_score2 = count_shared_bigrams2 / count_bigrams_in_phrase_word2
 
     return (dice_score1 >= dice_min_counting_score) and (
         dice_score2 >= dice_min_counting_score
     )
+
+
+def count_unique_bigrams(word):
+    unique_bigrams = {}
+    for i in range(len(word) - 1):
+        unique_bigrams[word[i : i + 2]] = 1
+    return len(unique_bigrams)
+
+
+def count_shared_bigrams(word, phrase_word):
+    count_shared_bigrams = 0
+    unique_bigrams_in_word = {word[i : i + 2] for i in range(len(word) - 1)}
+    unique_bigrams_in_phrase_word = {
+        phrase_word[i : i + 2] for i in range(len(phrase_word) - 1)
+    }
+    count_shared_bigrams = len(
+        unique_bigrams_in_word.intersection(unique_bigrams_in_phrase_word)
+    )
+    return count_shared_bigrams
 
 
 def anchor_match(compiled_anchor_pattern, word):
@@ -98,7 +99,7 @@ def bad_length_correlation(length1, length2, element_count1, element_count2, rat
     ) and (c > kill_limit)
 
 
-def adjust_for_length_correlation(
+def adjust_for_length_correlation(  # noqa: PLR0913
     score, length1, length2, element_count1, element_count2, ratio
 ):
     new_score = 0.0
