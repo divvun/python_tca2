@@ -229,11 +229,58 @@ class ElementInfoToBeCompared:
             if smallest == float("inf"):
                 break
 
-            anchor_word_clusters = self.make_anchor_word_clusters(
-                hits, current, smallest, present_in_all_texts
-            )
+            anchor_word_clusters = Clusters()
+            for t in range(constants.NUM_FILES):
+                if current[t] < len(hits[t]):
+                    current[t] += self.make_anchor_word_clusters(
+                        hits,
+                        current[t],
+                        smallest,
+                        present_in_all_texts,
+                        anchor_word_clusters,
+                        t,
+                    )
+
             if anchor_word_clusters.clusters:
                 self.common_clusters.add_clusters(anchor_word_clusters)
+
+    @staticmethod
+    def make_anchor_word_clusters(
+        hits,
+        c,
+        smallest,
+        present_in_all_texts,
+        anchor_word_clusters,
+        t,
+    ):
+        count = 0
+        while True:
+            if c >= len(hits[t]):
+                return count
+
+            hit = hits[t][c]
+            index = hit.index
+            if index != smallest:
+                return count
+
+            if present_in_all_texts:
+                anchor_word_clusters.add_ref(
+                    Ref(
+                        match_type=index,
+                        weight=(
+                            constants.DEFAULT_ANCHORPHRASE_MATCH_WEIGHT
+                            if count_words(hit.word) > 1
+                            else constants.DEFAULT_ANCHOR_WORD_MATCH_WEIGHT
+                        ),
+                        t=t,
+                        element_number=hit.element_number,
+                        pos=hit.pos,
+                        length=count_words(hit.word),
+                        word=hit.word,
+                    )
+                )
+            count += 1
+            c += 1
 
     def variables_for_propername_matches(self, t: int, tt: int):
         for info1 in self.info[t]:
@@ -334,43 +381,6 @@ class ElementInfoToBeCompared:
                 char1,
                 char2,
             )
-
-    def make_anchor_word_clusters(self, hits, current, smallest, present_in_all_texts):
-        anchor_word_clusters = Clusters()
-        for t in range(constants.NUM_FILES):
-            count = 0
-            if current[t] < len(hits[t]):
-                done2 = False
-                c = current[t]
-                while not done2:
-                    hit = hits[t][c]
-                    index = hit.index
-                    if index != smallest:
-                        done2 = True
-                    else:
-                        if present_in_all_texts:
-                            anchor_word_clusters.add_ref(
-                                Ref(
-                                    match_type=index,
-                                    weight=(
-                                        constants.DEFAULT_ANCHORPHRASE_MATCH_WEIGHT
-                                        if count_words(hit.word) > 1
-                                        else constants.DEFAULT_ANCHOR_WORD_MATCH_WEIGHT
-                                    ),
-                                    t=t,
-                                    element_number=hit.element_number,
-                                    pos=hit.pos,
-                                    length=count_words(hit.word),
-                                    word=hit.word,
-                                )
-                            )
-                        count += 1
-                    c += 1
-                    if c >= len(hits[t]):
-                        done2 = True
-                current[t] += count
-
-        return anchor_word_clusters
 
     def find_hits(self) -> list[AnchorWordHits]:
         return [
