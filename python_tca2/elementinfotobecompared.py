@@ -35,11 +35,8 @@ class ElementInfoToBeCompared:
         self.info[t].append(element_info)
 
     def empty(self):
-        for t in range(constants.NUM_FILES):
-            if len(self.info[t]) == 0:
-                return True
-
-        return False
+        """Both branches of self.info must have elements to be non-empty."""
+        return len(self.info) < constants.NUM_FILES
 
     def get_score(self):
         if self.score == constants.ELEMENTINFO_SCORE_NOT_CALCULATED:
