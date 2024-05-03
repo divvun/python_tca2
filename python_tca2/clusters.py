@@ -20,8 +20,8 @@ class Clusters:
         self,
         match_type,
         weight,
-        t,
-        tt,
+        text_number1,
+        text_number2,
         element_number1,
         element_number2,
         pos1,
@@ -32,8 +32,12 @@ class Clusters:
         word2,
     ):
         new_cluster = Cluster()
-        new_cluster.add(Ref(match_type, weight, t, element_number1, pos1, len1, word1))
-        new_cluster.add(Ref(match_type, weight, tt, element_number2, pos2, len2, word2))
+        new_cluster.add(
+            Ref(match_type, weight, text_number1, element_number1, pos1, len1, word1)
+        )
+        new_cluster.add(
+            Ref(match_type, weight, text_number2, element_number2, pos2, len2, word2)
+        )
         self.add_cluster(new_cluster)
 
     def add_ref(self, ref: Ref):

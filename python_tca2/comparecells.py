@@ -10,11 +10,16 @@ class CompareCells:
         self.element_info_to_be_compared = ElementInfoToBeCompared()
         self.best_path_score: float = -1.0
         text_end_count = 0
-        for t in range(constants.NUM_FILES):
-            for x in range(position[t] + 1, position[t] + step.increment[t] + 1):
+        for text_number in range(constants.NUM_FILES):
+            for x in range(
+                position[text_number] + 1,
+                position[text_number] + step.increment[text_number] + 1,
+            ):
                 try:
-                    info = model.compare.elements_info[t].get_element_info(model, x, t)
-                    self.element_info_to_be_compared.add(info, t)
+                    info = model.compare.elements_info[text_number].get_element_info(
+                        model, x, text_number
+                    )
+                    self.element_info_to_be_compared.add(info, text_number)
                 except EndOfTextExceptionError:
                     text_end_count += 1
                     break

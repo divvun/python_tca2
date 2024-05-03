@@ -34,11 +34,11 @@ class Cluster:
         high = 0
         low = float("inf")
         cluster_weight = 0.0
-        for t in range(constants.NUM_FILES):
+        for text_number in range(constants.NUM_FILES):
             count = 0
             positions = []
             for ref in self.refs:
-                if ref.is_in_text(t):
+                if ref.is_in_text(text_number):
                     if ref.pos not in positions:
                         positions.append(ref.pos)
                     cluster_weight = max(cluster_weight, ref.weight)

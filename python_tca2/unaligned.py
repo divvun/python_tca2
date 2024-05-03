@@ -8,8 +8,8 @@ from python_tca2.aelement import AElement
 class Unaligned:
     elements: defaultdict[int, list[AElement]]
 
-    def pop(self, t: int) -> AElement:
-        return self.elements[t].pop(0)
+    def pop(self, text_number: int) -> AElement:
+        return self.elements[text_number].pop(0)
 
     def to_json(self):
         return {

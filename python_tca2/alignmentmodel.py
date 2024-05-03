@@ -36,10 +36,7 @@ class AlignmentModel:
 
     def load_trees(self, trees):
         self.unaligned = Unaligned(
-            elements={
-                index: self.load_tree(tree)
-                for index, tree in enumerate(trees)
-            }
+            elements={index: self.load_tree(tree) for index, tree in enumerate(trees)}
         )
 
     def load_tree(self, tree) -> list[AElement]:
@@ -100,11 +97,11 @@ class AlignmentModel:
 
     def find_more_to_align_without_gui(self, best_path):
         step_suggestion = best_path.steps[0]
-        for t in self.unaligned.elements.keys():
-            i = 0
-            while i < step_suggestion.increment[t]:
-                self.to_align.pickup(t, self.unaligned.pop(t))
-                i += 1
+        for text_number in self.unaligned.elements.keys():
+            number_of_steps = 0
+            while number_of_steps < step_suggestion.increment[text_number]:
+                self.to_align.pickup(text_number, self.unaligned.pop(text_number))
+                number_of_steps += 1
         return step_suggestion
 
     def get_best_path(self, queue_list):
@@ -223,21 +220,28 @@ class AlignmentModel:
 
     def find_start_position(self):
         return [
-            elements[0].element_number - 1 if elements else len(self.nodes[t]) - 1
-            for t, elements in self.unaligned.elements.items()
+            (
+                elements[0].element_number - 1
+                if elements
+                else len(self.nodes[text_number]) - 1
+            )
+            for text_number, elements in self.unaligned.elements.items()
         ]
 
     def save_plain(self):
-        for t in self.unaligned.elements.keys():
-            self.save_new_line_format_file(f"aligned_{t}.txt", t)
+        for text_number in self.unaligned.elements.keys():
+            self.save_new_line_format_file(f"aligned_{text_number}.txt", text_number)
 
-    def save_new_line_format_file(self, filename, t: int):
+    def save_new_line_format_file(self, filename, text_number: int):
         with open(filename, "w") as f:
             print(
                 "\n".join(
                     [
                         " ".join(
-                            [element.text for element in alignments_etc.elements[t]]
+                            [
+                                element.text
+                                for element in alignments_etc.elements[text_number]
+                            ]
                         )
                         for alignments_etc in self.aligned.alignments
                     ]

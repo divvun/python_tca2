@@ -14,14 +14,14 @@ class AnchorWordList:
         with open(from_file, "r") as file:
             self.entries = [AnchorWordListEntry(line.strip()) for line in file]
 
-    def get_synonyms(self, t):
+    def get_synonyms(self, text_number):
         return [
             (anchor_word_entry_count, anchor_phrase)
             for anchor_word_entry_count, entry in enumerate(self.entries)
-            for anchor_phrase in entry.language[t]
+            for anchor_phrase in entry.language[text_number]
         ]
 
-    def get_anchor_word_hits(self, words, t, element_number):
+    def get_anchor_word_hits(self, words, text_number, element_number):
         return AnchorWordHits(
             [
                 AnchorWordHit(
@@ -30,7 +30,9 @@ class AnchorWordList:
                     w,
                     " ".join(matching_phrase),
                 )
-                for anchor_word_entry_count, anchor_phrase in self.get_synonyms(t)
+                for anchor_word_entry_count, anchor_phrase in self.get_synonyms(
+                    text_number
+                )
                 for w in range(len(words) - len(anchor_phrase) + 1)
                 for success, matching_phrase in [
                     self.found_success(words, anchor_phrase, w)

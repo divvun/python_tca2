@@ -20,8 +20,8 @@ class Path:
 
     def extend(self, step):
         self.steps.append(step.clone())
-        for t in range(constants.NUM_FILES):
-            self.position[t] += step.increment[t]
+        for text_number in range(constants.NUM_FILES):
+            self.position[text_number] += step.increment[text_number]
 
     def __str__(self):
         return (
@@ -39,6 +39,6 @@ class Path:
     def get_length_in_sentences(self):
         count = 0
         for step in self.steps:
-            for t in range(constants.NUM_FILES):
-                count += step.increment[t]
+            for text_number in range(constants.NUM_FILES):
+                count += step.increment[text_number]
         return count

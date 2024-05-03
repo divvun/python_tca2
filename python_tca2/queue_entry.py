@@ -26,11 +26,16 @@ class QueueEntry:
         current_ix = len(self.path.steps) - 1
 
         while current_ix > -1:
-            if all(current[t] == pos[t] for t in range(len(pos))):
+            if all(
+                current[text_number] == pos[text_number]
+                for text_number in range(len(pos))
+            ):
                 return True
 
-            for t in range(len(pos)):
-                current[t] -= self.path.steps[current_ix].increment[t]
+            for text_number in range(len(pos)):
+                current[text_number] -= self.path.steps[current_ix].increment[
+                    text_number
+                ]
             current_ix -= 1
 
         return False

@@ -9,9 +9,9 @@ from python_tca2.alignments_etc import AlignmentsEtc
 class ToAlign:
     elements: defaultdict[int, list[AElement]]
 
-    def pickup(self, t: int, element: AElement):
+    def pickup(self, text_number: int, element: AElement):
         if element is not None:
-            self.elements[t].append(element)
+            self.elements[text_number].append(element)
 
     def flush(self) -> AlignmentsEtc:
         if any(elements for elements in self.elements.values()):

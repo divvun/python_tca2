@@ -23,21 +23,23 @@ class ElementsInfo:
             ],
         }
 
-    def get_element_info(self, model, element_number, t):
+    def get_element_info(self, model, element_number, text_number):
         if element_number < self.first:
-            self.set_first(model, element_number, t)
+            self.set_first(model, element_number, text_number)
         elif element_number > self.last:
-            self.set_last(model, element_number, t)
+            self.set_last(model, element_number, text_number)
 
         return self.element_info[element_number - self.first]
 
-    def set_first(self, model, new_first, t):
+    def set_first(self, model, new_first, text_number):
         if new_first < self.first:
             more = []
             for count in range(self.first - new_first):
                 index = new_first + count
-                text = model.nodes[t][index].text
-                more.append(ElementInfo(model.anchor_word_list, text, t, index))
+                text = model.nodes[text_number][index].text
+                more.append(
+                    ElementInfo(model.anchor_word_list, text, text_number, index)
+                )
             self.element_info = more + self.element_info
             self.first = new_first
         elif new_first > self.last:
@@ -49,18 +51,18 @@ class ElementsInfo:
                 self.element_info.pop(0)
             self.first = new_first
 
-    def set_last(self, model, new_last, t):
+    def set_last(self, model, new_last, text_number):
         if new_last > self.last:
             for count in range(new_last - self.last):
                 index = self.last + count + 1
 
-                if index >= len(model.nodes[t]):
+                if index >= len(model.nodes[text_number]):
                     raise EndOfTextExceptionError()
 
-                text = model.nodes[t][index].text
+                text = model.nodes[text_number][index].text
 
                 self.element_info.append(
-                    ElementInfo(model.anchor_word_list, text, t, index)
+                    ElementInfo(model.anchor_word_list, text, text_number, index)
                 )
             self.last = new_last
         elif new_last < self.first:

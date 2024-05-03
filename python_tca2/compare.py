@@ -31,11 +31,20 @@ class Compare:
 
     def get_cell_values(self, model, position, step):
         key = ",".join(
-            [str(position[t] + 1) for t in range(constants.NUM_FILES)]
-            + [str(position[t] + step.increment[t]) for t in range(constants.NUM_FILES)]
+            [
+                str(position[text_number] + 1)
+                for text_number in range(constants.NUM_FILES)
+            ]
+            + [
+                str(position[text_number] + step.increment[text_number])
+                for text_number in range(constants.NUM_FILES)
+            ]
         )
         best_path_score_key = ",".join(
-            [str(position[t] + step.increment[t]) for t in range(constants.NUM_FILES)]
+            [
+                str(position[text_number] + step.increment[text_number])
+                for text_number in range(constants.NUM_FILES)
+            ]
         )
 
         if key not in self.matrix.cells:
@@ -80,11 +89,13 @@ class Compare:
             maximum = constants.MIN_NUM_TRY - 1
             total = 0
 
-            for t in range(constants.NUM_FILES):
-                increment[t] = constants.MIN_NUM_TRY + int(comb_string[t], range_val)
-                total += increment[t]
-                minimum = min(minimum, increment[t])
-                maximum = max(maximum, increment[t])
+            for text_number in range(constants.NUM_FILES):
+                increment[text_number] = constants.MIN_NUM_TRY + int(
+                    comb_string[text_number], range_val
+                )
+                total += increment[text_number]
+                minimum = min(minimum, increment[text_number])
+                maximum = max(maximum, increment[text_number])
 
             if (
                 maximum > 0

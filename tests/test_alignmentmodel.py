@@ -57,7 +57,7 @@ def test_find_dice_matches():
                         {
                             "match_type": -2,
                             "weight": 3.0,
-                            "t": 0,
+                            "text_number": 0,
                             "element_number": 0,
                             "pos": 0,
                             "length": 1,
@@ -66,7 +66,7 @@ def test_find_dice_matches():
                         {
                             "match_type": -2,
                             "weight": 3.0,
-                            "t": 1,
+                            "text_number": 1,
                             "element_number": 0,
                             "pos": 0,
                             "length": 1,
@@ -744,7 +744,7 @@ def test_anchor1():
                                         {
                                             "match_type": -3,
                                             "weight": 3.0,
-                                            "t": 0,
+                                            "text_number": 0,
                                             "element_number": 0,
                                             "pos": 0,
                                             "length": 1,
@@ -753,7 +753,7 @@ def test_anchor1():
                                         {
                                             "match_type": -3,
                                             "weight": 3.0,
-                                            "t": 1,
+                                            "text_number": 1,
                                             "element_number": 0,
                                             "pos": 0,
                                             "length": 1,
@@ -762,7 +762,7 @@ def test_anchor1():
                                         {
                                             "match_type": 0,
                                             "weight": 1.0,
-                                            "t": 1,
+                                            "text_number": 1,
                                             "element_number": 0,
                                             "pos": 0,
                                             "length": 1,
@@ -771,7 +771,7 @@ def test_anchor1():
                                         {
                                             "match_type": 0,
                                             "weight": 1.0,
-                                            "t": 0,
+                                            "text_number": 0,
                                             "element_number": 0,
                                             "pos": 0,
                                             "length": 1,
@@ -852,7 +852,7 @@ def test_anchor1():
                                         {
                                             "match_type": -3,
                                             "weight": 3.0,
-                                            "t": 0,
+                                            "text_number": 0,
                                             "element_number": 0,
                                             "pos": 0,
                                             "length": 1,
@@ -861,7 +861,7 @@ def test_anchor1():
                                         {
                                             "match_type": -3,
                                             "weight": 3.0,
-                                            "t": 1,
+                                            "text_number": 1,
                                             "element_number": 0,
                                             "pos": 0,
                                             "length": 1,
@@ -870,7 +870,7 @@ def test_anchor1():
                                         {
                                             "match_type": 0,
                                             "weight": 1.0,
-                                            "t": 1,
+                                            "text_number": 1,
                                             "element_number": 0,
                                             "pos": 0,
                                             "length": 1,
@@ -879,7 +879,7 @@ def test_anchor1():
                                         {
                                             "match_type": 0,
                                             "weight": 1.0,
-                                            "t": 0,
+                                            "text_number": 0,
                                             "element_number": 0,
                                             "pos": 0,
                                             "length": 1,
@@ -1379,7 +1379,7 @@ def test_anchor1():
                                         {
                                             "match_type": -3,
                                             "weight": 3.0,
-                                            "t": 0,
+                                            "text_number": 0,
                                             "element_number": 0,
                                             "pos": 0,
                                             "length": 1,
@@ -1388,7 +1388,7 @@ def test_anchor1():
                                         {
                                             "match_type": -3,
                                             "weight": 3.0,
-                                            "t": 1,
+                                            "text_number": 1,
                                             "element_number": 2,
                                             "pos": 3,
                                             "length": 1,
@@ -1397,7 +1397,7 @@ def test_anchor1():
                                         {
                                             "match_type": 0,
                                             "weight": 1.0,
-                                            "t": 1,
+                                            "text_number": 1,
                                             "element_number": 2,
                                             "pos": 3,
                                             "length": 1,
@@ -1406,7 +1406,7 @@ def test_anchor1():
                                         {
                                             "match_type": 0,
                                             "weight": 1.0,
-                                            "t": 0,
+                                            "text_number": 0,
                                             "element_number": 0,
                                             "pos": 0,
                                             "length": 1,
@@ -1497,7 +1497,7 @@ def test_anchor1():
                                         {
                                             "match_type": -3,
                                             "weight": 3.0,
-                                            "t": 0,
+                                            "text_number": 0,
                                             "element_number": 0,
                                             "pos": 0,
                                             "length": 1,
@@ -1506,7 +1506,7 @@ def test_anchor1():
                                         {
                                             "match_type": -3,
                                             "weight": 3.0,
-                                            "t": 1,
+                                            "text_number": 1,
                                             "element_number": 2,
                                             "pos": 3,
                                             "length": 1,
@@ -1515,7 +1515,7 @@ def test_anchor1():
                                         {
                                             "match_type": 0,
                                             "weight": 1.0,
-                                            "t": 1,
+                                            "text_number": 1,
                                             "element_number": 2,
                                             "pos": 3,
                                             "length": 1,
@@ -1524,7 +1524,7 @@ def test_anchor1():
                                         {
                                             "match_type": 0,
                                             "weight": 1.0,
-                                            "t": 0,
+                                            "text_number": 0,
                                             "element_number": 0,
                                             "pos": 0,
                                             "length": 1,
@@ -1923,7 +1923,7 @@ def test_anchor1():
                                         {
                                             "match_type": -3,
                                             "weight": 3.0,
-                                            "t": 0,
+                                            "text_number": 0,
                                             "element_number": 1,
                                             "pos": 0,
                                             "length": 1,
@@ -1932,7 +1932,7 @@ def test_anchor1():
                                         {
                                             "match_type": -3,
                                             "weight": 3.0,
-                                            "t": 1,
+                                            "text_number": 1,
                                             "element_number": 1,
                                             "pos": 0,
                                             "length": 1,
@@ -1945,7 +1945,7 @@ def test_anchor1():
                                         {
                                             "match_type": -3,
                                             "weight": 3.0,
-                                            "t": 0,
+                                            "text_number": 0,
                                             "element_number": 1,
                                             "pos": 2,
                                             "length": 1,
@@ -1954,7 +1954,7 @@ def test_anchor1():
                                         {
                                             "match_type": -3,
                                             "weight": 3.0,
-                                            "t": 1,
+                                            "text_number": 1,
                                             "element_number": 1,
                                             "pos": 2,
                                             "length": 1,
@@ -2234,7 +2234,7 @@ def test_anchor1():
                                         {
                                             "match_type": -3,
                                             "weight": 3.0,
-                                            "t": 0,
+                                            "text_number": 0,
                                             "element_number": 2,
                                             "pos": 3,
                                             "length": 1,
@@ -2243,7 +2243,7 @@ def test_anchor1():
                                         {
                                             "match_type": -3,
                                             "weight": 3.0,
-                                            "t": 1,
+                                            "text_number": 1,
                                             "element_number": 2,
                                             "pos": 3,
                                             "length": 1,
@@ -2252,7 +2252,7 @@ def test_anchor1():
                                         {
                                             "match_type": 0,
                                             "weight": 1.0,
-                                            "t": 1,
+                                            "text_number": 1,
                                             "element_number": 2,
                                             "pos": 3,
                                             "length": 1,
@@ -2261,7 +2261,7 @@ def test_anchor1():
                                         {
                                             "match_type": 0,
                                             "weight": 1.0,
-                                            "t": 0,
+                                            "text_number": 0,
                                             "element_number": 2,
                                             "pos": 3,
                                             "length": 1,
@@ -2461,7 +2461,7 @@ def test_anchor1():
                                         {
                                             "match_type": -3,
                                             "weight": 3.0,
-                                            "t": 0,
+                                            "text_number": 0,
                                             "element_number": 2,
                                             "pos": 3,
                                             "length": 1,
@@ -2470,7 +2470,7 @@ def test_anchor1():
                                         {
                                             "match_type": -3,
                                             "weight": 3.0,
-                                            "t": 1,
+                                            "text_number": 1,
                                             "element_number": 0,
                                             "pos": 0,
                                             "length": 1,
@@ -2479,7 +2479,7 @@ def test_anchor1():
                                         {
                                             "match_type": 0,
                                             "weight": 1.0,
-                                            "t": 1,
+                                            "text_number": 1,
                                             "element_number": 0,
                                             "pos": 0,
                                             "length": 1,
@@ -2488,7 +2488,7 @@ def test_anchor1():
                                         {
                                             "match_type": 0,
                                             "weight": 1.0,
-                                            "t": 0,
+                                            "text_number": 0,
                                             "element_number": 2,
                                             "pos": 3,
                                             "length": 1,
@@ -2573,7 +2573,7 @@ def test_anchor1():
                                         {
                                             "match_type": -3,
                                             "weight": 3.0,
-                                            "t": 0,
+                                            "text_number": 0,
                                             "element_number": 2,
                                             "pos": 3,
                                             "length": 1,
@@ -2582,7 +2582,7 @@ def test_anchor1():
                                         {
                                             "match_type": -3,
                                             "weight": 3.0,
-                                            "t": 1,
+                                            "text_number": 1,
                                             "element_number": 0,
                                             "pos": 0,
                                             "length": 1,
@@ -2591,7 +2591,7 @@ def test_anchor1():
                                         {
                                             "match_type": 0,
                                             "weight": 1.0,
-                                            "t": 1,
+                                            "text_number": 1,
                                             "element_number": 0,
                                             "pos": 0,
                                             "length": 1,
@@ -2600,7 +2600,7 @@ def test_anchor1():
                                         {
                                             "match_type": 0,
                                             "weight": 1.0,
-                                            "t": 0,
+                                            "text_number": 0,
                                             "element_number": 2,
                                             "pos": 3,
                                             "length": 1,
@@ -2811,7 +2811,7 @@ def test_anchor1():
                                         {
                                             "match_type": -3,
                                             "weight": 3.0,
-                                            "t": 0,
+                                            "text_number": 0,
                                             "element_number": 2,
                                             "pos": 3,
                                             "length": 1,
@@ -2820,7 +2820,7 @@ def test_anchor1():
                                         {
                                             "match_type": -3,
                                             "weight": 3.0,
-                                            "t": 1,
+                                            "text_number": 1,
                                             "element_number": 2,
                                             "pos": 3,
                                             "length": 1,
@@ -2829,7 +2829,7 @@ def test_anchor1():
                                         {
                                             "match_type": 0,
                                             "weight": 1.0,
-                                            "t": 1,
+                                            "text_number": 1,
                                             "element_number": 2,
                                             "pos": 3,
                                             "length": 1,
@@ -2838,7 +2838,7 @@ def test_anchor1():
                                         {
                                             "match_type": 0,
                                             "weight": 1.0,
-                                            "t": 0,
+                                            "text_number": 0,
                                             "element_number": 2,
                                             "pos": 3,
                                             "length": 1,
@@ -3030,7 +3030,7 @@ def test_anchor1():
                                         {
                                             "match_type": -3,
                                             "weight": 3.0,
-                                            "t": 0,
+                                            "text_number": 0,
                                             "element_number": 2,
                                             "pos": 3,
                                             "length": 1,
@@ -3039,7 +3039,7 @@ def test_anchor1():
                                         {
                                             "match_type": -3,
                                             "weight": 3.0,
-                                            "t": 1,
+                                            "text_number": 1,
                                             "element_number": 2,
                                             "pos": 3,
                                             "length": 1,
@@ -3048,7 +3048,7 @@ def test_anchor1():
                                         {
                                             "match_type": 0,
                                             "weight": 1.0,
-                                            "t": 1,
+                                            "text_number": 1,
                                             "element_number": 2,
                                             "pos": 3,
                                             "length": 1,
@@ -3057,7 +3057,7 @@ def test_anchor1():
                                         {
                                             "match_type": 0,
                                             "weight": 1.0,
-                                            "t": 0,
+                                            "text_number": 0,
                                             "element_number": 2,
                                             "pos": 3,
                                             "length": 1,

@@ -20,19 +20,19 @@ class AnchorWordListEntry:
 
             self.language.update(
                 {
-                    t: [
+                    text_number: [
                         phrase
                         for phrase in self.make_phrases(data.split(","))
                         if phrase
                     ]
-                    for t, data in enumerate(pairs)
+                    for text_number, data in enumerate(pairs)
                 }
             )
 
     def make_phrases(self, pairs: list[str]) -> list[list[re.Pattern]]:
         return [
             self.make_phrase(syn)
-            for t, data in enumerate(pairs)
+            for _, data in enumerate(pairs)
             for syn in data.split(",")
         ]
 

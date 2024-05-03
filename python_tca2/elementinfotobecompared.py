@@ -52,9 +52,9 @@ class ElementInfoToBeCompared:
         length = [0, 0]
         element_count = [0, 0]
 
-        for t in range(constants.NUM_FILES):
-            length[t] = sum(info.length for info in self.info[t])
-            element_count[t] = len(self.info[t])
+        for text_number in range(constants.NUM_FILES):
+            length[text_number] = sum(info.length for info in self.info[text_number])
+            element_count[text_number] = len(self.info[text_number])
 
         if similarity_utils.bad_length_correlation(
             length[0],
@@ -72,12 +72,12 @@ class ElementInfoToBeCompared:
 
     def really_get_score2(self):
         self.find_anchor_word_matches()
-        for t in range(constants.NUM_FILES):
-            for tt in range(t + 1, constants.NUM_FILES):
-                self.find_number_matches(t, tt)
-                self.find_propername_matches(t, tt)
-                self.find_dice_matches(t, tt)
-                self.find_special_character_matches(t, tt)
+        for text_number1 in range(constants.NUM_FILES):
+            for text_number2 in range(text_number1 + 1, constants.NUM_FILES):
+                self.find_number_matches(text_number1, text_number2)
+                self.find_propername_matches(text_number1, text_number2)
+                self.find_dice_matches(text_number1, text_number2)
+                self.find_special_character_matches(text_number1, text_number2)
 
         self.score += self.common_clusters.get_score(
             constants.DEFAULT_LARGE_CLUSTER_SCORE_PERCENTAGE
@@ -86,9 +86,9 @@ class ElementInfoToBeCompared:
         length = [0, 0]
         element_count = [0, 0]
 
-        for t in range(constants.NUM_FILES):
-            length[t] = sum(info.length for info in self.info[t])
-            element_count[t] = len(self.info[t])
+        for text_number in range(constants.NUM_FILES):
+            length[text_number] = sum(info.length for info in self.info[text_number])
+            element_count[text_number] = len(self.info[text_number])
 
         self.score = similarity_utils.adjust_for_length_correlation(
             self.score,
@@ -99,22 +99,25 @@ class ElementInfoToBeCompared:
             constants.DEFAULT_LENGTH_RATIO,
         )
 
-        is11: bool = all(len(self.info[t]) == 1 for t in range(constants.NUM_FILES))
+        is11: bool = all(
+            len(self.info[text_number]) == 1
+            for text_number in range(constants.NUM_FILES)
+        )
 
         if not is11:
             self.score -= 0.001
 
         return self.score
 
-    def variables_for_dice_matches(self, t: int, tt: int):
-        for info1 in self.info[t]:
+    def variables_for_dice_matches(self, text_number1: int, text_number2: int):
+        for info1 in self.info[text_number1]:
             for x, word1 in enumerate(info1.words):
                 next_word1 = info1.words[x + 1] if x < len(info1.words) - 1 else ""
-                for info2 in self.info[tt]:
+                for info2 in self.info[text_number2]:
                     for y, word2 in enumerate(info2.words):
                         yield info1, x, word1, next_word1, info2, y, word2
 
-    def find_dice_matches(self, t: int, tt: int):
+    def find_dice_matches(self, text_number1: int, text_number2: int):
         for (
             info1,
             x,
@@ -123,7 +126,7 @@ class ElementInfoToBeCompared:
             info2,
             y,
             word2,
-        ) in self.variables_for_dice_matches(t, tt):
+        ) in self.variables_for_dice_matches(text_number1, text_number2):
             match_type = match.DICE
             weight = constants.DEFAULT_DICEPHRASE_MATCH_WEIGHT
 
@@ -137,8 +140,8 @@ class ElementInfoToBeCompared:
                 self.common_clusters.add(
                     match_type,
                     weight,
-                    t,
-                    tt,
+                    text_number1,
+                    text_number2,
                     info1.element_number,
                     info2.element_number,
                     x,
@@ -164,8 +167,8 @@ class ElementInfoToBeCompared:
                     self.common_clusters.add(
                         match_type,
                         weight,
-                        t,
-                        tt,
+                        text_number1,
+                        text_number2,
                         info1.element_number,
                         info2.element_number,
                         x,
@@ -193,8 +196,8 @@ class ElementInfoToBeCompared:
                     self.common_clusters.add(
                         match_type,
                         weight,
-                        t,
-                        tt,
+                        text_number1,
+                        text_number2,
                         info1.element_number,
                         info2.element_number,
                         x,
@@ -215,9 +218,9 @@ class ElementInfoToBeCompared:
         while not done:
             smallest = float("inf")
             smallest_count = 0
-            for t in range(constants.NUM_FILES):
-                if current[t] < len(hits[t]):
-                    hit = hits[t][current[t]]
+            for text_number in range(constants.NUM_FILES):
+                if current[text_number] < len(hits[text_number]):
+                    hit = hits[text_number][current[text_number]]
                     if hit.index < smallest:
                         smallest = hit.index
                         smallest_count = 1
@@ -230,15 +233,15 @@ class ElementInfoToBeCompared:
                 break
 
             anchor_word_clusters = Clusters()
-            for t in range(constants.NUM_FILES):
-                if current[t] < len(hits[t]):
-                    current[t] += self.make_anchor_word_clusters(
+            for text_number in range(constants.NUM_FILES):
+                if current[text_number] < len(hits[text_number]):
+                    current[text_number] += self.make_anchor_word_clusters(
                         hits,
-                        current[t],
-                        smallest,
-                        present_in_all_texts,
-                        anchor_word_clusters,
-                        t,
+                        current_position=current[text_number],
+                        smallest=smallest,
+                        present_in_all_texts=present_in_all_texts,
+                        anchor_word_clusters=anchor_word_clusters,
+                        text_number=text_number,
                     )
 
             if anchor_word_clusters.clusters:
@@ -246,24 +249,24 @@ class ElementInfoToBeCompared:
 
     @staticmethod
     def make_anchor_word_clusters(
-        hits,
-        c,
-        smallest,
-        present_in_all_texts,
-        anchor_word_clusters,
-        t,
+        hits: list[AnchorWordHits],
+        current_position: int,
+        smallest: int,
+        present_in_all_texts: bool,
+        anchor_word_clusters: Clusters,
+        text_number: int,
     ):
-        count = 0
+        hit_counts = 0  # count of hits
         while True:
-            if c >= len(hits[t]):
-                return count
+            if current_position >= len(hits[text_number]):  # if there are no more hits
+                return hit_counts  # return the count
 
-            hit = hits[t][c]
-            index = hit.index
-            if index != smallest:
-                return count
+            hit = hits[text_number][current_position]  # get the hit
+            index = hit.index  # get the index
+            if index != smallest:  # if the index is not the smallest
+                return hit_counts  # return the count
 
-            if present_in_all_texts:
+            if present_in_all_texts:  # if the smallest index is present in all texts
                 anchor_word_clusters.add_ref(
                     Ref(
                         match_type=index,
@@ -272,21 +275,21 @@ class ElementInfoToBeCompared:
                             if count_words(hit.word) > 1
                             else constants.DEFAULT_ANCHOR_WORD_MATCH_WEIGHT
                         ),
-                        t=t,
+                        text_number=text_number,
                         element_number=hit.element_number,
                         pos=hit.pos,
                         length=count_words(hit.word),
                         word=hit.word,
                     )
                 )
-            count += 1
-            c += 1
+            hit_counts += 1  # increment the count
+            current_position += 1  # increment the index
 
-    def variables_for_propername_matches(self, t: int, tt: int):
-        for info1 in self.info[t]:
+    def variables_for_propername_matches(self, text_number1: int, text_number2: int):
+        for info1 in self.info[text_number1]:
             for x, word1 in enumerate(info1.words):
                 if word1:
-                    for info2 in self.info[tt]:
+                    for info2 in self.info[text_number2]:
                         for y, word2 in enumerate(info2.words):
                             if (
                                 word2
@@ -296,17 +299,17 @@ class ElementInfoToBeCompared:
                             ):
                                 yield info1, x, word1, info2, y, word2
 
-    def find_propername_matches(self, t, tt):
+    def find_propername_matches(self, text_number1, text_number2):
         for info1, x, word1, info2, y, word2 in self.variables_for_propername_matches(
-            t, tt
+            text_number1, text_number2
         ):
             match_type = match.PROPER
             weight = constants.DEFAULT_PROPERNAME_MATCH_WEIGHT
             self.common_clusters.add(
                 match_type,
                 weight,
-                t,
-                tt,
+                text_number1,
+                text_number2,
                 info1.element_number,
                 info2.element_number,
                 x,
@@ -317,16 +320,16 @@ class ElementInfoToBeCompared:
                 word2,
             )
 
-    def variables_for_number_matches(self, t: int, tt: int):
-        for info1 in self.info[t]:
+    def variables_for_number_matches(self, text_number1: int, text_number2: int):
+        for info1 in self.info[text_number1]:
             for x, word1 in enumerate(info1.words):
-                for info2 in self.info[tt]:
+                for info2 in self.info[text_number2]:
                     for y, word2 in enumerate(info2.words):
                         yield info1, x, word1, info2, y, word2
 
-    def find_number_matches(self, t, tt):
+    def find_number_matches(self, text_number1, text_number2):
         for info1, x, word1, info2, y, word2 in self.variables_for_number_matches(
-            t, tt
+            text_number1, text_number2
         ):
             try:
                 num1 = float(word1)
@@ -339,8 +342,8 @@ class ElementInfoToBeCompared:
                     self.common_clusters.add(
                         match_type,
                         weight,
-                        t,
-                        tt,
+                        text_number1,
+                        text_number2,
                         info1.element_number,
                         info2.element_number,
                         x,
@@ -353,25 +356,27 @@ class ElementInfoToBeCompared:
             except ValueError:
                 pass
 
-    def variables_for_special_character_matches(self, t: int, tt: int):
-        for info1 in self.info[t]:
-            for info2 in self.info[tt]:
+    def variables_for_special_character_matches(
+        self, text_number1: int, text_number2: int
+    ):
+        for info1 in self.info[text_number1]:
+            for info2 in self.info[text_number2]:
                 for char1 in info1.scoring_characters:
                     for char2 in info2.scoring_characters:
                         if char1 == char2:
                             yield info1, info2, char1, char2
 
-    def find_special_character_matches(self, t, tt):
+    def find_special_character_matches(self, text_number1, text_number2):
         for info1, info2, char1, char2 in self.variables_for_special_character_matches(
-            t, tt
+            text_number1, text_number2
         ):
             match_type = match.SCORING_CHARACTERS
             weight = constants.DEFAULT_SCORING_CHARACTER_MATCH_WEIGHT
             self.common_clusters.add(
                 match_type,
                 weight,
-                t,
-                tt,
+                text_number1,
+                text_number2,
                 info1.element_number,
                 info2.element_number,
                 info1.scoring_characters.index(char1),
