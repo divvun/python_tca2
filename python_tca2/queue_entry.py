@@ -22,20 +22,4 @@ class QueueEntry:
         Returns:
             bool: True if the position is a hit, False otherwise.
         """
-        current = list(self.path.position)
-        current_ix = len(self.path.steps) - 1
-
-        while current_ix > -1:
-            if all(
-                current[text_number] == pos[text_number]
-                for text_number in range(len(pos))
-            ):
-                return True
-
-            for text_number in range(len(pos)):
-                current[text_number] -= self.path.steps[current_ix].increment[
-                    text_number
-                ]
-            current_ix -= 1
-
-        return False
+        return pos in self.path.position
