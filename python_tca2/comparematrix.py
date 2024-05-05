@@ -22,7 +22,6 @@ class CompareMatrix:
         return json.dumps(self.to_json(), indent=0, ensure_ascii=False)
 
     def get_score(self, position) -> float:
-        print(f"getScore: {position[0]},{position[1]}")
         if any(pos < 0 for pos in position):
             # raise SystemExit("outside")
 
