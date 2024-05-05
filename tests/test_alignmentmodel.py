@@ -3276,13 +3276,6 @@ def test_anchor1():
                 "best_path_score": 16.0,
             },
         },
-        "step_list": [
-            {"increment": [0, 1]},
-            {"increment": [1, 0]},
-            {"increment": [1, 1]},
-            {"increment": [1, 2]},
-            {"increment": [2, 1]},
-        ],
         "best_path_scores": {
             "-1,0": -1.0,
             "0,-1": -1.0,

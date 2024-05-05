@@ -19,17 +19,12 @@ class Compare:
         self.matrix: dict[str, CompareCells] = {}
         self.best_path_scores: dict[str, float] = {}
 
-        self.step_list: List[PathStep] = []
-
-        self.create_step_list()
-
     def to_json(self):
         return {
             "elements_info": [ei.to_json() for ei in self.elements_info],
             "matrix": {
                 key: self.matrix[key].to_json() for key in sorted(self.matrix.keys())
             },
-            "step_list": [asdict(step) for step in self.step_list],
             "best_path_scores": self.best_path_scores,
         }
 
@@ -74,48 +69,6 @@ class Compare:
             ].best_path_score
 
         return self.matrix[key]
-
-    @staticmethod
-    def int_to_base(i, base):
-        if i == 0:
-            return "0"
-        digits = []
-        while i:
-            digits.append(int(i % base))
-            i //= base
-        digits = digits[::-1]
-        return "".join(map(str, digits))
-
-    def create_step_list(self):
-        range_val = constants.MAX_NUM_TRY - constants.MIN_NUM_TRY + 1
-        limit = 1
-        for _ in range(constants.NUM_FILES):
-            limit *= range_val
-
-        for i in range(limit):
-            increment = [0] * constants.NUM_FILES
-
-            comb_string = self.int_to_base(limit + i, range_val)[
-                1 : constants.NUM_FILES + 1
-            ]
-            minimum = constants.MAX_NUM_TRY + 1
-            maximum = constants.MIN_NUM_TRY - 1
-            total = 0
-
-            for text_number in range(constants.NUM_FILES):
-                increment[text_number] = constants.MIN_NUM_TRY + int(
-                    comb_string[text_number], range_val
-                )
-                total += increment[text_number]
-                minimum = min(minimum, increment[text_number])
-                maximum = max(maximum, increment[text_number])
-
-            if (
-                maximum > 0
-                and maximum - minimum <= constants.MAX_DIFF_TRY
-                and total <= constants.MAX_TOTAL_TRY
-            ):
-                self.step_list.append(PathStep(increment))
 
     def get_score(self, position):
         if any(pos < 0 for pos in position):
