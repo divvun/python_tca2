@@ -23,8 +23,6 @@ class CompareMatrix:
 
     def get_score(self, position) -> float:
         if any(pos < 0 for pos in position):
-            # raise SystemExit("outside")
-
             return constants.BEST_PATH_SCORE_BAD
 
         best_path_score_key = ",".join(str(pos) for pos in position)

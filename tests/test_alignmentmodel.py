@@ -255,7 +255,7 @@ def test_suggest1():
                 {
                     0: [
                         AElement(
-                            text="Kanskje en innkjøpsordning for kvenskspråklig litteratur.",
+                            text="Kanskje en innkjøpsordning for kvenskspråklig litteratur.",  # noqa: E501
                             element_number=0,
                         )
                     ],
@@ -319,17 +319,17 @@ def test_suggest2():
                 {
                     0: [
                         AElement(
-                            text="Når folk har gått på nybegynnerkursene hos enten instituttet eller universitetet, kan man tilby dem muligheten å få en mentor som de kan snakke kvensk med og gjøre aktiviteter med på kvensk.",
+                            text="Når folk har gått på nybegynnerkursene hos enten instituttet eller universitetet, kan man tilby dem muligheten å få en mentor som de kan snakke kvensk med og gjøre aktiviteter med på kvensk.",  # noqa: E501
                             element_number=0,
                         ),
                         AElement(
-                            text="Motivere folk til å lære kvensk og vise dem at man får jobb med det, og at det er nok arbeid til alle.",
+                            text="Motivere folk til å lære kvensk og vise dem at man får jobb med det, og at det er nok arbeid til alle.",  # noqa: E501
                             element_number=1,
                         ),
                     ],
                     1: [
                         AElement(
-                            text="Ko ihmiset oon käynheet institutin tahi universiteetin alkukurssin, niin heile tarjothaan maholisuuen saaja menttorin, jonka kans puhhuut ja tehhä assiita kvääniksi Motiveerata ihmissii siihen ette oppiit kväänin kieltä ja näyttäät heile ette sillä saapi työn ja ette työtä oon nokko kaikile.",
+                            text="Ko ihmiset oon käynheet institutin tahi universiteetin alkukurssin, niin heile tarjothaan maholisuuen saaja menttorin, jonka kans puhhuut ja tehhä assiita kvääniksi Motiveerata ihmissii siihen ette oppiit kväänin kieltä ja näyttäät heile ette sillä saapi työn ja ette työtä oon nokko kaikile.",  # noqa: E501
                             element_number=0,
                         )
                     ],

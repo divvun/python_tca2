@@ -33,7 +33,11 @@ def get_upper_case_words(words):
 # Most all attributes are essentially derived from AEelement info, anyway
 class ElementInfo:
     def __init__(
-        self, anchor_word_list: AnchorWordList, text: str, text_number: int, element_number: int
+        self,
+        anchor_word_list: AnchorWordList,
+        text: str,
+        text_number: int,
+        element_number: int,
     ):
         self.element_number = element_number
         self.length = len(text)
