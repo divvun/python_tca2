@@ -26,7 +26,7 @@ class Aligned:
 
     def save_plain(self):
         for text_number in range(NUM_FILES):
-            with open(f"anchor_{text_number}.txt", "w") as f:
+            with open(f"aligned_{text_number}.txt", "w") as f:
                 print(
                     "\n".join(
                         [
