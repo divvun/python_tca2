@@ -246,8 +246,8 @@ def test_suggest1():
     ]
 
     model = alignmentmodel.AlignmentModel(keys=range(2))
-    model.load_trees(trees)
-    aligned = model.suggets_without_gui()
+    model.anchor_word_list = load_anchor_words()
+    aligned = model.suggets_without_gui(trees)
 
     assert aligned == Aligned(
         [
@@ -310,8 +310,8 @@ def test_suggest2():
     ]
 
     model = alignmentmodel.AlignmentModel(keys=range(2))
-    model.load_trees(trees)
-    aligned = model.suggets_without_gui()
+    model.anchor_word_list = load_anchor_words()
+    aligned = model.suggets_without_gui(trees)
 
     assert aligned == Aligned(
         [
@@ -391,10 +391,8 @@ def test_suggest3():
     ]
 
     model = alignmentmodel.AlignmentModel(keys=range(2))
-    model.load_trees(trees)
     model.anchor_word_list = load_anchor_words()
-
-    aligned = model.suggets_without_gui()
+    aligned = model.suggets_without_gui(trees)
 
     assert aligned == Aligned(
         [
@@ -463,9 +461,8 @@ def test_anchorword_hits():
     ]
 
     model = alignmentmodel.AlignmentModel(keys=range(2))
-    model.load_trees(trees)
     model.anchor_word_list = load_anchor_words()
-    model.suggets_without_gui()
+    model.suggets_without_gui(trees)
     interesting = model.compare.matrix.cells["0,0,0,0"]
 
     found_hits = [
@@ -505,10 +502,8 @@ def test_anchor1():
     ]
 
     model = alignmentmodel.AlignmentModel(keys=range(2))
-    model.load_trees(trees)
     model.anchor_word_list = load_anchor_words()
-
-    model.suggets_without_gui()
+    model.suggets_without_gui(trees)
 
     assert model.compare.to_json() == {
         "elements_info": [
