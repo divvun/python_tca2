@@ -29,7 +29,6 @@ class AlignmentModel:
     def __init__(self, keys: list[int]):
         self.keys = keys
         self.nodes = []
-        self.compare = Compare()
         self.anchor_word_list = AnchorWordList()
 
     def load_tree(self, tree) -> list[AElement]:
@@ -52,11 +51,12 @@ class AlignmentModel:
             elements={index: self.load_tree(tree) for index, tree in enumerate(trees)}
         )
         aligned = Aligned([])
+        compare = Compare(anchor_word_list=self.anchor_word_list, nodes=self.nodes)
 
         while not done_aligning:
-            self.compare.reset_best_path_scores()
+            compare.reset_best_path_scores()
 
-            queue_list = self.lengthen_paths(unaligned=unaligned)
+            queue_list = self.lengthen_paths(unaligned=unaligned, compare=compare)
 
             if (
                 len(queue_list.entries) < constants.NUM_FILES
@@ -65,7 +65,7 @@ class AlignmentModel:
                 # When the length of the queue list is less than the number of files
                 # and the first path in the queue list has no steps, then aligment
                 # is done
-                return aligned
+                return aligned, compare
             else:
                 step_suggestion = self.get_best_path(queue_list)
 
@@ -81,7 +81,7 @@ class AlignmentModel:
                     else:
                         print_frame("done_aligning run_limit exceeded")
                 else:
-                    return aligned
+                    return aligned, compare
         print(
             json.dumps(self.compare.to_json(), indent=0, ensure_ascii=False),
             file=open("compare.json", "w"),
@@ -114,7 +114,7 @@ class AlignmentModel:
 
         return step_suggestion
 
-    def lengthen_paths(self, unaligned: Unaligned = None):
+    def lengthen_paths(self, unaligned: Unaligned = None, compare: Compare = None):
         position = self.find_start_position(unaligned=unaligned)
         queue_list = QueueList([])
         queue_list.add(QueueEntry(Path(position), 0))
@@ -124,7 +124,9 @@ class AlignmentModel:
             next_queue_list = QueueList([])
             for queue_entry in queue_list.entries:
                 if not queue_entry.removed and not queue_entry.end:
-                    self.lengthen_current_path(queue_entry, queue_list, next_queue_list)
+                    self.lengthen_current_path(
+                        queue_entry, queue_list, next_queue_list, compare=compare
+                    )
             next_queue_list.remove_for_real()
             if next_queue_list.empty():
                 done_lengthening = True
@@ -136,11 +138,17 @@ class AlignmentModel:
         return queue_list
 
     def lengthen_current_path(
-        self, queue_entry: QueueEntry, queue_list: QueueList, next_queue_list: QueueList
+        self,
+        queue_entry: QueueEntry,
+        queue_list: QueueList,
+        next_queue_list: QueueList,
+        compare: Compare = None,
     ):
-        for step in self.compare.step_list:
+        for step in compare.step_list:
             try:
-                new_queue_entry = self.make_longer_path(deepcopy(queue_entry), step)
+                new_queue_entry = self.make_longer_path(
+                    deepcopy(queue_entry), step, compare=compare
+                )
                 if new_queue_entry.path is not None:
                     pos = new_queue_entry.path.position
                     queue_list.remove(pos)
@@ -156,21 +164,23 @@ class AlignmentModel:
             except BlockedExceptionError:
                 pass
 
-    def get_step_score(self, position, step):
-        cell = self.compare.get_cell_values(self, position, step)
+    def get_step_score(self, position, step, compare: Compare = None):
+        cell = compare.get_cell_values(position, step)
         return cell.get_score()
 
-    def make_longer_path(self, ret_queue_entry, new_step: PathStep):
+    def make_longer_path(
+        self, ret_queue_entry, new_step: PathStep, compare: Compare = None
+    ):
         new_score = ret_queue_entry.score + self.get_step_score(
-            ret_queue_entry.path.position, new_step
+            ret_queue_entry.path.position, new_step, compare=compare
         )
         ret_queue_entry.score = new_score
         ret_queue_entry.path.extend(new_step)
 
         if int(ret_queue_entry.score * 100000) > int(
-            self.compare.get_score(ret_queue_entry.path.position) * 100000
+            compare.get_score(ret_queue_entry.path.position) * 100000
         ):
-            self.compare.set_score(ret_queue_entry.path.position, ret_queue_entry.score)
+            compare.set_score(ret_queue_entry.path.position, ret_queue_entry.score)
             return ret_queue_entry
         else:
             ret_queue_entry.path = None

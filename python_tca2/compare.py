@@ -3,13 +3,16 @@ from dataclasses import asdict
 from typing import List
 
 from python_tca2 import constants
+from python_tca2.anchorwordlist import AnchorWordList
 from python_tca2.comparecells import CompareCells
 from python_tca2.elementsinfo import ElementsInfo
 from python_tca2.pathstep import PathStep
 
 
 class Compare:
-    def __init__(self):
+    def __init__(self, anchor_word_list: AnchorWordList, nodes):
+        self.anchor_word_list = anchor_word_list
+        self.nodes = nodes
         self.elements_info: List[ElementsInfo] = [
             ElementsInfo() for _ in range(constants.NUM_FILES)
         ]
@@ -33,7 +36,7 @@ class Compare:
     def __str__(self):
         return json.dumps(self.to_json(), indent=0, ensure_ascii=False)
 
-    def get_cell_values(self, model, position, step):
+    def get_cell_values(self, position, step):
         key = ",".join(
             [
                 str(position[text_number] + 1)
@@ -52,7 +55,13 @@ class Compare:
         )
 
         if key not in self.matrix:
-            self.matrix[key] = CompareCells(model, position, step)
+            self.matrix[key] = CompareCells(
+                self.elements_info,
+                position,
+                step,
+                self.nodes,
+                self.anchor_word_list,
+            )
 
             if best_path_score_key in self.best_path_scores:
                 temp = self.best_path_scores[best_path_score_key]

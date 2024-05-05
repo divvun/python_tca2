@@ -2,11 +2,20 @@ import json
 
 from python_tca2 import constants
 from python_tca2.elementinfotobecompared import ElementInfoToBeCompared
+from python_tca2.elementsinfo import ElementsInfo
 from python_tca2.exceptions import EndOfAllTextsExceptionError, EndOfTextExceptionError
+from python_tca2.pathstep import PathStep
 
 
 class CompareCells:
-    def __init__(self, model, position, step):
+    def __init__(
+        self,
+        elements_info: list[ElementsInfo],
+        position: list[int],
+        step: PathStep,
+        nodes,
+        anchor_word_list,
+    ):
         self.element_info_to_be_compared = ElementInfoToBeCompared()
         self.best_path_score: float = -1.0
         text_end_count = 0
@@ -16,8 +25,8 @@ class CompareCells:
                 position[text_number] + step.increment[text_number] + 1,
             ):
                 try:
-                    info = model.compare.elements_info[text_number].get_element_info(
-                        model, x, text_number
+                    info = elements_info[text_number].get_element_info(
+                        nodes, anchor_word_list, x, text_number
                     )
                     self.element_info_to_be_compared.add(info, text_number)
                 except EndOfTextExceptionError:
