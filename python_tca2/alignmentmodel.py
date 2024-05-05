@@ -70,10 +70,10 @@ class AlignmentModel:
                 # is done
                 done_aligning = True
             else:
-                best_path = self.get_best_path(queue_list)
+                step_suggestion = self.get_best_path(queue_list)
 
-                if best_path and best_path.steps:
-                    self.find_more_to_align_without_gui(best_path)
+                if step_suggestion is not None:
+                    self.find_more_to_align_without_gui(step_suggestion=step_suggestion)
                     run_count += 1
                     done_aligning = run_count >= run_limit
 
@@ -91,30 +91,29 @@ class AlignmentModel:
     def flush_aligned_without_gui(self):
         self.aligned.pickup(self.to_align.flush())
 
-    def find_more_to_align_without_gui(self, best_path):
-        step_suggestion = best_path.steps[0]
+    def find_more_to_align_without_gui(self, step_suggestion):
         for text_number in self.unaligned.elements.keys():
             number_of_steps = 0
             while number_of_steps < step_suggestion.increment[text_number]:
                 self.to_align.pickup(text_number, self.unaligned.pop(text_number))
                 number_of_steps += 1
-        return step_suggestion
 
     def get_best_path(self, queue_list):
         normalised_best_score = constants.BEST_PATH_SCORE_NOT_CALCULATED
 
-        best_path = None
-        for candidate in queue_list.entries:
+        step_suggestion = None
+        for candidate_entry in queue_list.entries:
             normalised_candidate_score = (
-                candidate.score / candidate.path.get_length_in_sentences()
+                candidate_entry.score / candidate_entry.path.get_length_in_sentences()
             )
             if int(normalised_candidate_score * 100000) > int(
                 normalised_best_score * 100000
             ):
                 normalised_best_score = normalised_candidate_score
-                best_path = candidate.path
+                if candidate_entry.path is not None and candidate_entry.path.steps:
+                    step_suggestion = candidate_entry.path.steps[0]
 
-        return best_path
+        return step_suggestion
 
     def lengthen_paths(self):
         position = self.find_start_position()
@@ -124,8 +123,7 @@ class AlignmentModel:
         done_lengthening = False
         while not done_lengthening:
             next_queue_list = QueueList([])
-            for x, queue_entry in enumerate(queue_list.entries):
-                print(f"lp1 {step_count}")
+            for queue_entry in queue_list.entries:
                 if not queue_entry.removed and not queue_entry.end:
                     self.lengthen_current_path(queue_entry, queue_list, next_queue_list)
             next_queue_list.remove_for_real()
@@ -164,7 +162,6 @@ class AlignmentModel:
         return cell.get_score()
 
     def make_longer_path(self, ret_queue_entry, new_step: PathStep):
-        print("1score")
         new_score = ret_queue_entry.score + self.get_step_score(
             ret_queue_entry.path.position, new_step
         )
