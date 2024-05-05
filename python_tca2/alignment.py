@@ -9,8 +9,8 @@ def parallelize(anchor_file, files: list[str]):
 
     model.anchor_word_list.load_from_file(anchor_file)
     model.load_trees([etree.parse(filename) for filename in files])
-    model.suggets_without_gui()
-    model.save_plain()
+    aligned = model.suggets_without_gui()
+    aligned.save_plain()
 
 
 @click.command()

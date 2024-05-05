@@ -247,9 +247,9 @@ def test_suggest1():
 
     model = alignmentmodel.AlignmentModel(keys=range(2))
     model.load_trees(trees)
-    model.suggets_without_gui()
+    aligned = model.suggets_without_gui()
 
-    assert model.aligned == Aligned(
+    assert aligned == Aligned(
         [
             AlignmentsEtc(
                 {
@@ -311,9 +311,9 @@ def test_suggest2():
 
     model = alignmentmodel.AlignmentModel(keys=range(2))
     model.load_trees(trees)
-    model.suggets_without_gui()
+    aligned = model.suggets_without_gui()
 
-    assert model.aligned == Aligned(
+    assert aligned == Aligned(
         [
             AlignmentsEtc(
                 {
@@ -394,9 +394,9 @@ def test_suggest3():
     model.load_trees(trees)
     model.anchor_word_list = load_anchor_words()
 
-    model.suggets_without_gui()
+    aligned = model.suggets_without_gui()
 
-    assert model.aligned == Aligned(
+    assert aligned == Aligned(
         [
             AlignmentsEtc(
                 {

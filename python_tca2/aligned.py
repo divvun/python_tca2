@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 
 from python_tca2.alignments_etc import AlignmentsEtc
+from python_tca2.constants import NUM_FILES
 
 
 @dataclass
@@ -22,3 +23,21 @@ class Aligned:
             for alignment_etc in self.alignments
             if all(aelements for aelements in alignment_etc.elements.values())
         ]
+
+    def save_plain(self):
+        for text_number in range(NUM_FILES):
+            with open(f"anchor_{text_number}.txt", "w") as f:
+                print(
+                    "\n".join(
+                        [
+                            " ".join(
+                                [
+                                    element.text
+                                    for element in alignments_etc.elements[text_number]
+                                ]
+                            )
+                            for alignments_etc in self.alignments
+                        ]
+                    ),
+                    file=f,
+                )

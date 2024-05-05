@@ -29,8 +29,6 @@ class AlignmentModel:
     def __init__(self, keys: list[int]):
         self.keys = keys
         self.nodes = []
-        self.aligned = Aligned([])
-        self.to_align = ToAlign(defaultdict(list))
         self.compare = Compare()
         self.anchor_word_list = AnchorWordList()
 
@@ -51,10 +49,11 @@ class AlignmentModel:
             for index, node in enumerate(tree.iter("s"))
         ]
 
-    def suggets_without_gui(self):
+    def suggets_without_gui(self) -> Aligned:
         run_limit = constants.RUN_LIMIT
         run_count = 0
         done_aligning = False
+        aligned = Aligned([])
 
         while not done_aligning:
             self.compare.reset_best_path_scores()
@@ -68,35 +67,37 @@ class AlignmentModel:
                 # When the length of the queue list is less than the number of files
                 # and the first path in the queue list has no steps, then aligment
                 # is done
-                done_aligning = True
+                return aligned
             else:
                 step_suggestion = self.get_best_path(queue_list)
 
                 if step_suggestion is not None:
-                    self.find_more_to_align_without_gui(step_suggestion=step_suggestion)
+                    to_align = self.find_more_to_align_without_gui(
+                        step_suggestion=step_suggestion
+                    )
                     run_count += 1
                     done_aligning = run_count >= run_limit
 
                     if not done_aligning:
-                        self.flush_aligned_without_gui()
+                        aligned.pickup(to_align.flush())
                     else:
                         print_frame("done_aligning run_limit exceeded")
                 else:
-                    done_aligning = True
+                    return aligned
         print(
             json.dumps(self.compare.to_json(), indent=0, ensure_ascii=False),
             file=open("compare.json", "w"),
         )
 
-    def flush_aligned_without_gui(self):
-        self.aligned.pickup(self.to_align.flush())
-
     def find_more_to_align_without_gui(self, step_suggestion):
+        to_align = ToAlign(defaultdict(list))
         for text_number in self.unaligned.elements.keys():
             number_of_steps = 0
             while number_of_steps < step_suggestion.increment[text_number]:
-                self.to_align.pickup(text_number, self.unaligned.pop(text_number))
+                to_align.pickup(text_number, self.unaligned.pop(text_number))
                 number_of_steps += 1
+
+        return to_align
 
     def get_best_path(self, queue_list):
         normalised_best_score = constants.BEST_PATH_SCORE_NOT_CALCULATED
@@ -186,24 +187,3 @@ class AlignmentModel:
             )
             for text_number, elements in self.unaligned.elements.items()
         ]
-
-    def save_plain(self):
-        for text_number in self.unaligned.elements.keys():
-            self.save_new_line_format_file(f"aligned_{text_number}.txt", text_number)
-
-    def save_new_line_format_file(self, filename, text_number: int):
-        with open(filename, "w") as f:
-            print(
-                "\n".join(
-                    [
-                        " ".join(
-                            [
-                                element.text
-                                for element in alignments_etc.elements[text_number]
-                            ]
-                        )
-                        for alignments_etc in self.aligned.alignments
-                    ]
-                ),
-                file=f,
-            )
