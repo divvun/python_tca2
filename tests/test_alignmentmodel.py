@@ -463,7 +463,7 @@ def test_anchorword_hits():
     model = alignmentmodel.AlignmentModel(keys=range(2))
     model.anchor_word_list = load_anchor_words()
     model.suggets_without_gui(trees)
-    interesting = model.compare.matrix.cells["0,0,0,0"]
+    interesting = model.compare.matrix["0,0,0,0"]
 
     found_hits = [
         [asdict(hit) for hit in lang_hits]
@@ -654,2645 +654,2626 @@ def test_anchor1():
             },
         ],
         "matrix": {
-            "cells": {
-                "0,0,-1,0": {
-                    "element_info_to_be_compared": {
-                        "score": 0.0,
-                        "common_clusters": {"clusters": []},
-                        "info": [
-                            {
-                                "element_number": 0,
-                                "length": 35,
-                                "num_words": 5,
-                                "words": [
-                                    "1",
-                                    "miljon",
-                                    "ruvnno",
-                                    "árktalaš",
-                                    "eanadollui",
-                                ],
-                                "anchor_word_hits": {
-                                    "hits": [
-                                        {
-                                            "index": 0,
-                                            "element_number": 0,
-                                            "pos": 0,
-                                            "word": "1",
-                                        }
-                                    ]
-                                },
-                                "scoring_characters": "",
-                                "proper_names": [],
-                            }
-                        ],
-                    },
-                    "best_path_score": -1.0,
+            "0,0,-1,0": {
+                "element_info_to_be_compared": {
+                    "score": 0.0,
+                    "common_clusters": {"clusters": []},
+                    "info": [
+                        {
+                            "element_number": 0,
+                            "length": 35,
+                            "num_words": 5,
+                            "words": [
+                                "1",
+                                "miljon",
+                                "ruvnno",
+                                "árktalaš",
+                                "eanadollui",
+                            ],
+                            "anchor_word_hits": {
+                                "hits": [
+                                    {
+                                        "index": 0,
+                                        "element_number": 0,
+                                        "pos": 0,
+                                        "word": "1",
+                                    }
+                                ]
+                            },
+                            "scoring_characters": "",
+                            "proper_names": [],
+                        }
+                    ],
                 },
-                "0,0,0,-1": {
-                    "element_info_to_be_compared": {
-                        "score": 0.0,
-                        "common_clusters": {"clusters": []},
-                        "info": [
-                            {
-                                "element_number": 0,
-                                "length": 41,
-                                "num_words": 7,
-                                "words": [
-                                    "1",
-                                    "million",
-                                    "kroner",
-                                    "til",
-                                    "landbruket",
-                                    "i",
-                                    "arktisk",
-                                ],
-                                "anchor_word_hits": {
-                                    "hits": [
-                                        {
-                                            "index": 0,
-                                            "element_number": 0,
-                                            "pos": 0,
-                                            "word": "1",
-                                        },
-                                        {
-                                            "index": 1,
-                                            "element_number": 0,
-                                            "pos": 1,
-                                            "word": "million",
-                                        },
-                                    ]
-                                },
-                                "scoring_characters": "",
-                                "proper_names": [],
-                            }
-                        ],
-                    },
-                    "best_path_score": -1.0,
-                },
-                "0,0,0,0": {
-                    "element_info_to_be_compared": {
-                        "score": 4.0,
-                        "common_clusters": {
-                            "clusters": [
-                                {
-                                    "refs": [
-                                        {
-                                            "match_type": -3,
-                                            "weight": 3.0,
-                                            "text_number": 0,
-                                            "element_number": 0,
-                                            "pos": 0,
-                                            "length": 1,
-                                            "word": "1",
-                                        },
-                                        {
-                                            "match_type": -3,
-                                            "weight": 3.0,
-                                            "text_number": 1,
-                                            "element_number": 0,
-                                            "pos": 0,
-                                            "length": 1,
-                                            "word": "1",
-                                        },
-                                        {
-                                            "match_type": 0,
-                                            "weight": 1.0,
-                                            "text_number": 1,
-                                            "element_number": 0,
-                                            "pos": 0,
-                                            "length": 1,
-                                            "word": "1",
-                                        },
-                                        {
-                                            "match_type": 0,
-                                            "weight": 1.0,
-                                            "text_number": 0,
-                                            "element_number": 0,
-                                            "pos": 0,
-                                            "length": 1,
-                                            "word": "1",
-                                        },
-                                    ]
-                                }
-                            ]
-                        },
-                        "info": [
-                            {
-                                "element_number": 0,
-                                "length": 41,
-                                "num_words": 7,
-                                "words": [
-                                    "1",
-                                    "million",
-                                    "kroner",
-                                    "til",
-                                    "landbruket",
-                                    "i",
-                                    "arktisk",
-                                ],
-                                "anchor_word_hits": {
-                                    "hits": [
-                                        {
-                                            "index": 0,
-                                            "element_number": 0,
-                                            "pos": 0,
-                                            "word": "1",
-                                        },
-                                        {
-                                            "index": 1,
-                                            "element_number": 0,
-                                            "pos": 1,
-                                            "word": "million",
-                                        },
-                                    ]
-                                },
-                                "scoring_characters": "",
-                                "proper_names": [],
-                            },
-                            {
-                                "element_number": 0,
-                                "length": 35,
-                                "num_words": 5,
-                                "words": [
-                                    "1",
-                                    "miljon",
-                                    "ruvnno",
-                                    "árktalaš",
-                                    "eanadollui",
-                                ],
-                                "anchor_word_hits": {
-                                    "hits": [
-                                        {
-                                            "index": 0,
-                                            "element_number": 0,
-                                            "pos": 0,
-                                            "word": "1",
-                                        }
-                                    ]
-                                },
-                                "scoring_characters": "",
-                                "proper_names": [],
-                            },
-                        ],
-                    },
-                    "best_path_score": -1.0,
-                },
-                "0,0,0,1": {
-                    "element_info_to_be_compared": {
-                        "score": 4.999,
-                        "common_clusters": {
-                            "clusters": [
-                                {
-                                    "refs": [
-                                        {
-                                            "match_type": -3,
-                                            "weight": 3.0,
-                                            "text_number": 0,
-                                            "element_number": 0,
-                                            "pos": 0,
-                                            "length": 1,
-                                            "word": "1",
-                                        },
-                                        {
-                                            "match_type": -3,
-                                            "weight": 3.0,
-                                            "text_number": 1,
-                                            "element_number": 0,
-                                            "pos": 0,
-                                            "length": 1,
-                                            "word": "1",
-                                        },
-                                        {
-                                            "match_type": 0,
-                                            "weight": 1.0,
-                                            "text_number": 1,
-                                            "element_number": 0,
-                                            "pos": 0,
-                                            "length": 1,
-                                            "word": "1",
-                                        },
-                                        {
-                                            "match_type": 0,
-                                            "weight": 1.0,
-                                            "text_number": 0,
-                                            "element_number": 0,
-                                            "pos": 0,
-                                            "length": 1,
-                                            "word": "1",
-                                        },
-                                    ]
-                                }
-                            ]
-                        },
-                        "info": [
-                            {
-                                "element_number": 0,
-                                "length": 41,
-                                "num_words": 7,
-                                "words": [
-                                    "1",
-                                    "million",
-                                    "kroner",
-                                    "til",
-                                    "landbruket",
-                                    "i",
-                                    "arktisk",
-                                ],
-                                "anchor_word_hits": {
-                                    "hits": [
-                                        {
-                                            "index": 0,
-                                            "element_number": 0,
-                                            "pos": 0,
-                                            "word": "1",
-                                        },
-                                        {
-                                            "index": 1,
-                                            "element_number": 0,
-                                            "pos": 1,
-                                            "word": "million",
-                                        },
-                                    ]
-                                },
-                                "scoring_characters": "",
-                                "proper_names": [],
-                            },
-                            {
-                                "element_number": 0,
-                                "length": 35,
-                                "num_words": 5,
-                                "words": [
-                                    "1",
-                                    "miljon",
-                                    "ruvnno",
-                                    "árktalaš",
-                                    "eanadollui",
-                                ],
-                                "anchor_word_hits": {
-                                    "hits": [
-                                        {
-                                            "index": 0,
-                                            "element_number": 0,
-                                            "pos": 0,
-                                            "word": "1",
-                                        }
-                                    ]
-                                },
-                                "scoring_characters": "",
-                                "proper_names": [],
-                            },
-                            {
-                                "element_number": 1,
-                                "length": 20,
-                                "num_words": 3,
-                                "words": ["27", "Geassemánnu", "2014"],
-                                "anchor_word_hits": {"hits": []},
-                                "scoring_characters": "",
-                                "proper_names": ["Geassemánnu"],
-                            },
-                        ],
-                    },
-                    "best_path_score": -1.0,
-                },
-                "0,0,1,0": {
-                    "element_info_to_be_compared": {
-                        "score": -99999.0,
-                        "common_clusters": {"clusters": []},
-                        "info": [
-                            {
-                                "element_number": 0,
-                                "length": 41,
-                                "num_words": 7,
-                                "words": [
-                                    "1",
-                                    "million",
-                                    "kroner",
-                                    "til",
-                                    "landbruket",
-                                    "i",
-                                    "arktisk",
-                                ],
-                                "anchor_word_hits": {
-                                    "hits": [
-                                        {
-                                            "index": 0,
-                                            "element_number": 0,
-                                            "pos": 0,
-                                            "word": "1",
-                                        },
-                                        {
-                                            "index": 1,
-                                            "element_number": 0,
-                                            "pos": 1,
-                                            "word": "million",
-                                        },
-                                    ]
-                                },
-                                "scoring_characters": "",
-                                "proper_names": [],
-                            },
-                            {
-                                "element_number": 1,
-                                "length": 13,
-                                "num_words": 3,
-                                "words": ["27", "juni", "2014"],
-                                "anchor_word_hits": {"hits": []},
-                                "scoring_characters": "",
-                                "proper_names": [],
-                            },
-                            {
-                                "element_number": 0,
-                                "length": 35,
-                                "num_words": 5,
-                                "words": [
-                                    "1",
-                                    "miljon",
-                                    "ruvnno",
-                                    "árktalaš",
-                                    "eanadollui",
-                                ],
-                                "anchor_word_hits": {
-                                    "hits": [
-                                        {
-                                            "index": 0,
-                                            "element_number": 0,
-                                            "pos": 0,
-                                            "word": "1",
-                                        }
-                                    ]
-                                },
-                                "scoring_characters": "",
-                                "proper_names": [],
-                            },
-                        ],
-                    },
-                    "best_path_score": -1.0,
-                },
-                "0,1,-1,1": {
-                    "element_info_to_be_compared": {
-                        "score": 0.0,
-                        "common_clusters": {"clusters": []},
-                        "info": [
-                            {
-                                "element_number": 1,
-                                "length": 20,
-                                "num_words": 3,
-                                "words": ["27", "Geassemánnu", "2014"],
-                                "anchor_word_hits": {"hits": []},
-                                "scoring_characters": "",
-                                "proper_names": ["Geassemánnu"],
-                            }
-                        ],
-                    },
-                    "best_path_score": -1.0,
-                },
-                "0,1,0,0": {
-                    "element_info_to_be_compared": {
-                        "score": 0.0,
-                        "common_clusters": {"clusters": []},
-                        "info": [
-                            {
-                                "element_number": 0,
-                                "length": 41,
-                                "num_words": 7,
-                                "words": [
-                                    "1",
-                                    "million",
-                                    "kroner",
-                                    "til",
-                                    "landbruket",
-                                    "i",
-                                    "arktisk",
-                                ],
-                                "anchor_word_hits": {
-                                    "hits": [
-                                        {
-                                            "index": 0,
-                                            "element_number": 0,
-                                            "pos": 0,
-                                            "word": "1",
-                                        },
-                                        {
-                                            "index": 1,
-                                            "element_number": 0,
-                                            "pos": 1,
-                                            "word": "million",
-                                        },
-                                    ]
-                                },
-                                "scoring_characters": "",
-                                "proper_names": [],
-                            }
-                        ],
-                    },
-                    "best_path_score": 4.0,
-                },
-                "0,1,0,1": {
-                    "element_info_to_be_compared": {
-                        "score": 0.0,
-                        "common_clusters": {"clusters": []},
-                        "info": [
-                            {
-                                "element_number": 0,
-                                "length": 41,
-                                "num_words": 7,
-                                "words": [
-                                    "1",
-                                    "million",
-                                    "kroner",
-                                    "til",
-                                    "landbruket",
-                                    "i",
-                                    "arktisk",
-                                ],
-                                "anchor_word_hits": {
-                                    "hits": [
-                                        {
-                                            "index": 0,
-                                            "element_number": 0,
-                                            "pos": 0,
-                                            "word": "1",
-                                        },
-                                        {
-                                            "index": 1,
-                                            "element_number": 0,
-                                            "pos": 1,
-                                            "word": "million",
-                                        },
-                                    ]
-                                },
-                                "scoring_characters": "",
-                                "proper_names": [],
-                            },
-                            {
-                                "element_number": 1,
-                                "length": 20,
-                                "num_words": 3,
-                                "words": ["27", "Geassemánnu", "2014"],
-                                "anchor_word_hits": {"hits": []},
-                                "scoring_characters": "",
-                                "proper_names": ["Geassemánnu"],
-                            },
-                        ],
-                    },
-                    "best_path_score": 4.999,
-                },
-                "0,1,0,2": {
-                    "element_info_to_be_compared": {
-                        "score": -99999.0,
-                        "common_clusters": {"clusters": []},
-                        "info": [
-                            {
-                                "element_number": 0,
-                                "length": 41,
-                                "num_words": 7,
-                                "words": [
-                                    "1",
-                                    "million",
-                                    "kroner",
-                                    "til",
-                                    "landbruket",
-                                    "i",
-                                    "arktisk",
-                                ],
-                                "anchor_word_hits": {
-                                    "hits": [
-                                        {
-                                            "index": 0,
-                                            "element_number": 0,
-                                            "pos": 0,
-                                            "word": "1",
-                                        },
-                                        {
-                                            "index": 1,
-                                            "element_number": 0,
-                                            "pos": 1,
-                                            "word": "million",
-                                        },
-                                    ]
-                                },
-                                "scoring_characters": "",
-                                "proper_names": [],
-                            },
-                            {
-                                "element_number": 1,
-                                "length": 20,
-                                "num_words": 3,
-                                "words": ["27", "Geassemánnu", "2014"],
-                                "anchor_word_hits": {"hits": []},
-                                "scoring_characters": "",
-                                "proper_names": ["Geassemánnu"],
-                            },
-                            {
-                                "element_number": 2,
-                                "length": 72,
-                                "num_words": 9,
-                                "words": [
-                                    "Sámediggeráđđi",
-                                    "lea",
-                                    "juolludan",
-                                    "1",
-                                    "miljon",
-                                    "ruvnno",
-                                    "árktalaš",
-                                    "eanadollui",
-                                    "davvin",
-                                ],
-                                "anchor_word_hits": {
-                                    "hits": [
-                                        {
-                                            "index": 0,
-                                            "element_number": 2,
-                                            "pos": 3,
-                                            "word": "1",
-                                        },
-                                        {
-                                            "index": 2,
-                                            "element_number": 2,
-                                            "pos": 0,
-                                            "word": "Sámediggeráđđi",
-                                        },
-                                    ]
-                                },
-                                "scoring_characters": "",
-                                "proper_names": ["Sámediggeráđđi"],
-                            },
-                        ],
-                    },
-                    "best_path_score": -1.0,
-                },
-                "0,1,1,1": {
-                    "element_info_to_be_compared": {
-                        "score": -99999.0,
-                        "common_clusters": {"clusters": []},
-                        "info": [
-                            {
-                                "element_number": 0,
-                                "length": 41,
-                                "num_words": 7,
-                                "words": [
-                                    "1",
-                                    "million",
-                                    "kroner",
-                                    "til",
-                                    "landbruket",
-                                    "i",
-                                    "arktisk",
-                                ],
-                                "anchor_word_hits": {
-                                    "hits": [
-                                        {
-                                            "index": 0,
-                                            "element_number": 0,
-                                            "pos": 0,
-                                            "word": "1",
-                                        },
-                                        {
-                                            "index": 1,
-                                            "element_number": 0,
-                                            "pos": 1,
-                                            "word": "million",
-                                        },
-                                    ]
-                                },
-                                "scoring_characters": "",
-                                "proper_names": [],
-                            },
-                            {
-                                "element_number": 1,
-                                "length": 13,
-                                "num_words": 3,
-                                "words": ["27", "juni", "2014"],
-                                "anchor_word_hits": {"hits": []},
-                                "scoring_characters": "",
-                                "proper_names": [],
-                            },
-                            {
-                                "element_number": 1,
-                                "length": 20,
-                                "num_words": 3,
-                                "words": ["27", "Geassemánnu", "2014"],
-                                "anchor_word_hits": {"hits": []},
-                                "scoring_characters": "",
-                                "proper_names": ["Geassemánnu"],
-                            },
-                        ],
-                    },
-                    "best_path_score": -1.0,
-                },
-                "0,2,-1,2": {
-                    "element_info_to_be_compared": {
-                        "score": 0.0,
-                        "common_clusters": {"clusters": []},
-                        "info": [
-                            {
-                                "element_number": 2,
-                                "length": 72,
-                                "num_words": 9,
-                                "words": [
-                                    "Sámediggeráđđi",
-                                    "lea",
-                                    "juolludan",
-                                    "1",
-                                    "miljon",
-                                    "ruvnno",
-                                    "árktalaš",
-                                    "eanadollui",
-                                    "davvin",
-                                ],
-                                "anchor_word_hits": {
-                                    "hits": [
-                                        {
-                                            "index": 0,
-                                            "element_number": 2,
-                                            "pos": 3,
-                                            "word": "1",
-                                        },
-                                        {
-                                            "index": 2,
-                                            "element_number": 2,
-                                            "pos": 0,
-                                            "word": "Sámediggeráđđi",
-                                        },
-                                    ]
-                                },
-                                "scoring_characters": "",
-                                "proper_names": ["Sámediggeráđđi"],
-                            }
-                        ],
-                    },
-                    "best_path_score": -1.0,
-                },
-                "0,2,0,1": {
-                    "element_info_to_be_compared": {
-                        "score": 0.0,
-                        "common_clusters": {"clusters": []},
-                        "info": [
-                            {
-                                "element_number": 0,
-                                "length": 41,
-                                "num_words": 7,
-                                "words": [
-                                    "1",
-                                    "million",
-                                    "kroner",
-                                    "til",
-                                    "landbruket",
-                                    "i",
-                                    "arktisk",
-                                ],
-                                "anchor_word_hits": {
-                                    "hits": [
-                                        {
-                                            "index": 0,
-                                            "element_number": 0,
-                                            "pos": 0,
-                                            "word": "1",
-                                        },
-                                        {
-                                            "index": 1,
-                                            "element_number": 0,
-                                            "pos": 1,
-                                            "word": "million",
-                                        },
-                                    ]
-                                },
-                                "scoring_characters": "",
-                                "proper_names": [],
-                            }
-                        ],
-                    },
-                    "best_path_score": 4.999,
-                },
-                "0,2,0,2": {
-                    "element_info_to_be_compared": {
-                        "score": 3.0,
-                        "common_clusters": {
-                            "clusters": [
-                                {
-                                    "refs": [
-                                        {
-                                            "match_type": -3,
-                                            "weight": 3.0,
-                                            "text_number": 0,
-                                            "element_number": 0,
-                                            "pos": 0,
-                                            "length": 1,
-                                            "word": "1",
-                                        },
-                                        {
-                                            "match_type": -3,
-                                            "weight": 3.0,
-                                            "text_number": 1,
-                                            "element_number": 2,
-                                            "pos": 3,
-                                            "length": 1,
-                                            "word": "1",
-                                        },
-                                        {
-                                            "match_type": 0,
-                                            "weight": 1.0,
-                                            "text_number": 1,
-                                            "element_number": 2,
-                                            "pos": 3,
-                                            "length": 1,
-                                            "word": "1",
-                                        },
-                                        {
-                                            "match_type": 0,
-                                            "weight": 1.0,
-                                            "text_number": 0,
-                                            "element_number": 0,
-                                            "pos": 0,
-                                            "length": 1,
-                                            "word": "1",
-                                        },
-                                    ]
-                                }
-                            ]
-                        },
-                        "info": [
-                            {
-                                "element_number": 0,
-                                "length": 41,
-                                "num_words": 7,
-                                "words": [
-                                    "1",
-                                    "million",
-                                    "kroner",
-                                    "til",
-                                    "landbruket",
-                                    "i",
-                                    "arktisk",
-                                ],
-                                "anchor_word_hits": {
-                                    "hits": [
-                                        {
-                                            "index": 0,
-                                            "element_number": 0,
-                                            "pos": 0,
-                                            "word": "1",
-                                        },
-                                        {
-                                            "index": 1,
-                                            "element_number": 0,
-                                            "pos": 1,
-                                            "word": "million",
-                                        },
-                                    ]
-                                },
-                                "scoring_characters": "",
-                                "proper_names": [],
-                            },
-                            {
-                                "element_number": 2,
-                                "length": 72,
-                                "num_words": 9,
-                                "words": [
-                                    "Sámediggeráđđi",
-                                    "lea",
-                                    "juolludan",
-                                    "1",
-                                    "miljon",
-                                    "ruvnno",
-                                    "árktalaš",
-                                    "eanadollui",
-                                    "davvin",
-                                ],
-                                "anchor_word_hits": {
-                                    "hits": [
-                                        {
-                                            "index": 0,
-                                            "element_number": 2,
-                                            "pos": 3,
-                                            "word": "1",
-                                        },
-                                        {
-                                            "index": 2,
-                                            "element_number": 2,
-                                            "pos": 0,
-                                            "word": "Sámediggeráđđi",
-                                        },
-                                    ]
-                                },
-                                "scoring_characters": "",
-                                "proper_names": ["Sámediggeráđđi"],
-                            },
-                        ],
-                    },
-                    "best_path_score": 4.999,
-                },
-                "0,2,1,2": {
-                    "element_info_to_be_compared": {
-                        "score": 4.999,
-                        "common_clusters": {
-                            "clusters": [
-                                {
-                                    "refs": [
-                                        {
-                                            "match_type": -3,
-                                            "weight": 3.0,
-                                            "text_number": 0,
-                                            "element_number": 0,
-                                            "pos": 0,
-                                            "length": 1,
-                                            "word": "1",
-                                        },
-                                        {
-                                            "match_type": -3,
-                                            "weight": 3.0,
-                                            "text_number": 1,
-                                            "element_number": 2,
-                                            "pos": 3,
-                                            "length": 1,
-                                            "word": "1",
-                                        },
-                                        {
-                                            "match_type": 0,
-                                            "weight": 1.0,
-                                            "text_number": 1,
-                                            "element_number": 2,
-                                            "pos": 3,
-                                            "length": 1,
-                                            "word": "1",
-                                        },
-                                        {
-                                            "match_type": 0,
-                                            "weight": 1.0,
-                                            "text_number": 0,
-                                            "element_number": 0,
-                                            "pos": 0,
-                                            "length": 1,
-                                            "word": "1",
-                                        },
-                                    ]
-                                }
-                            ]
-                        },
-                        "info": [
-                            {
-                                "element_number": 0,
-                                "length": 41,
-                                "num_words": 7,
-                                "words": [
-                                    "1",
-                                    "million",
-                                    "kroner",
-                                    "til",
-                                    "landbruket",
-                                    "i",
-                                    "arktisk",
-                                ],
-                                "anchor_word_hits": {
-                                    "hits": [
-                                        {
-                                            "index": 0,
-                                            "element_number": 0,
-                                            "pos": 0,
-                                            "word": "1",
-                                        },
-                                        {
-                                            "index": 1,
-                                            "element_number": 0,
-                                            "pos": 1,
-                                            "word": "million",
-                                        },
-                                    ]
-                                },
-                                "scoring_characters": "",
-                                "proper_names": [],
-                            },
-                            {
-                                "element_number": 1,
-                                "length": 13,
-                                "num_words": 3,
-                                "words": ["27", "juni", "2014"],
-                                "anchor_word_hits": {"hits": []},
-                                "scoring_characters": "",
-                                "proper_names": [],
-                            },
-                            {
-                                "element_number": 2,
-                                "length": 72,
-                                "num_words": 9,
-                                "words": [
-                                    "Sámediggeráđđi",
-                                    "lea",
-                                    "juolludan",
-                                    "1",
-                                    "miljon",
-                                    "ruvnno",
-                                    "árktalaš",
-                                    "eanadollui",
-                                    "davvin",
-                                ],
-                                "anchor_word_hits": {
-                                    "hits": [
-                                        {
-                                            "index": 0,
-                                            "element_number": 2,
-                                            "pos": 3,
-                                            "word": "1",
-                                        },
-                                        {
-                                            "index": 2,
-                                            "element_number": 2,
-                                            "pos": 0,
-                                            "word": "Sámediggeráđđi",
-                                        },
-                                    ]
-                                },
-                                "scoring_characters": "",
-                                "proper_names": ["Sámediggeráđđi"],
-                            },
-                        ],
-                    },
-                    "best_path_score": 4.999,
-                },
-                "0,3,0,2": {
-                    "element_info_to_be_compared": {
-                        "score": 0.0,
-                        "common_clusters": {"clusters": []},
-                        "info": [
-                            {
-                                "element_number": 0,
-                                "length": 41,
-                                "num_words": 7,
-                                "words": [
-                                    "1",
-                                    "million",
-                                    "kroner",
-                                    "til",
-                                    "landbruket",
-                                    "i",
-                                    "arktisk",
-                                ],
-                                "anchor_word_hits": {
-                                    "hits": [
-                                        {
-                                            "index": 0,
-                                            "element_number": 0,
-                                            "pos": 0,
-                                            "word": "1",
-                                        },
-                                        {
-                                            "index": 1,
-                                            "element_number": 0,
-                                            "pos": 1,
-                                            "word": "million",
-                                        },
-                                    ]
-                                },
-                                "scoring_characters": "",
-                                "proper_names": [],
-                            }
-                        ],
-                    },
-                    "best_path_score": 4.999,
-                },
-                "1,0,0,0": {
-                    "element_info_to_be_compared": {
-                        "score": 0.0,
-                        "common_clusters": {"clusters": []},
-                        "info": [
-                            {
-                                "element_number": 0,
-                                "length": 35,
-                                "num_words": 5,
-                                "words": [
-                                    "1",
-                                    "miljon",
-                                    "ruvnno",
-                                    "árktalaš",
-                                    "eanadollui",
-                                ],
-                                "anchor_word_hits": {
-                                    "hits": [
-                                        {
-                                            "index": 0,
-                                            "element_number": 0,
-                                            "pos": 0,
-                                            "word": "1",
-                                        }
-                                    ]
-                                },
-                                "scoring_characters": "",
-                                "proper_names": [],
-                            }
-                        ],
-                    },
-                    "best_path_score": 4.0,
-                },
-                "1,0,1,-1": {
-                    "element_info_to_be_compared": {
-                        "score": 0.0,
-                        "common_clusters": {"clusters": []},
-                        "info": [
-                            {
-                                "element_number": 1,
-                                "length": 13,
-                                "num_words": 3,
-                                "words": ["27", "juni", "2014"],
-                                "anchor_word_hits": {"hits": []},
-                                "scoring_characters": "",
-                                "proper_names": [],
-                            }
-                        ],
-                    },
-                    "best_path_score": -1.0,
-                },
-                "1,0,1,0": {
-                    "element_info_to_be_compared": {
-                        "score": 0.0,
-                        "common_clusters": {"clusters": []},
-                        "info": [
-                            {
-                                "element_number": 1,
-                                "length": 13,
-                                "num_words": 3,
-                                "words": ["27", "juni", "2014"],
-                                "anchor_word_hits": {"hits": []},
-                                "scoring_characters": "",
-                                "proper_names": [],
-                            },
-                            {
-                                "element_number": 0,
-                                "length": 35,
-                                "num_words": 5,
-                                "words": [
-                                    "1",
-                                    "miljon",
-                                    "ruvnno",
-                                    "árktalaš",
-                                    "eanadollui",
-                                ],
-                                "anchor_word_hits": {
-                                    "hits": [
-                                        {
-                                            "index": 0,
-                                            "element_number": 0,
-                                            "pos": 0,
-                                            "word": "1",
-                                        }
-                                    ]
-                                },
-                                "scoring_characters": "",
-                                "proper_names": [],
-                            },
-                        ],
-                    },
-                    "best_path_score": -1.0,
-                },
-                "1,0,1,1": {
-                    "element_info_to_be_compared": {
-                        "score": -99999.0,
-                        "common_clusters": {"clusters": []},
-                        "info": [
-                            {
-                                "element_number": 1,
-                                "length": 13,
-                                "num_words": 3,
-                                "words": ["27", "juni", "2014"],
-                                "anchor_word_hits": {"hits": []},
-                                "scoring_characters": "",
-                                "proper_names": [],
-                            },
-                            {
-                                "element_number": 0,
-                                "length": 35,
-                                "num_words": 5,
-                                "words": [
-                                    "1",
-                                    "miljon",
-                                    "ruvnno",
-                                    "árktalaš",
-                                    "eanadollui",
-                                ],
-                                "anchor_word_hits": {
-                                    "hits": [
-                                        {
-                                            "index": 0,
-                                            "element_number": 0,
-                                            "pos": 0,
-                                            "word": "1",
-                                        }
-                                    ]
-                                },
-                                "scoring_characters": "",
-                                "proper_names": [],
-                            },
-                            {
-                                "element_number": 1,
-                                "length": 20,
-                                "num_words": 3,
-                                "words": ["27", "Geassemánnu", "2014"],
-                                "anchor_word_hits": {"hits": []},
-                                "scoring_characters": "",
-                                "proper_names": ["Geassemánnu"],
-                            },
-                        ],
-                    },
-                    "best_path_score": -1.0,
-                },
-                "1,0,2,0": {
-                    "element_info_to_be_compared": {
-                        "score": -99999.0,
-                        "common_clusters": {"clusters": []},
-                        "info": [
-                            {
-                                "element_number": 1,
-                                "length": 13,
-                                "num_words": 3,
-                                "words": ["27", "juni", "2014"],
-                                "anchor_word_hits": {"hits": []},
-                                "scoring_characters": "",
-                                "proper_names": [],
-                            },
-                            {
-                                "element_number": 2,
-                                "length": 75,
-                                "num_words": 11,
-                                "words": [
-                                    "Sametingsrådet",
-                                    "har",
-                                    "bevilget",
-                                    "1",
-                                    "millioner",
-                                    "kroner",
-                                    "til",
-                                    "Arktisk",
-                                    "landbruk",
-                                    "i",
-                                    "nord",
-                                ],
-                                "anchor_word_hits": {
-                                    "hits": [
-                                        {
-                                            "index": 0,
-                                            "element_number": 2,
-                                            "pos": 3,
-                                            "word": "1",
-                                        },
-                                        {
-                                            "index": 1,
-                                            "element_number": 2,
-                                            "pos": 4,
-                                            "word": "millioner",
-                                        },
-                                    ]
-                                },
-                                "scoring_characters": "",
-                                "proper_names": ["Sametingsrådet", "Arktisk"],
-                            },
-                            {
-                                "element_number": 0,
-                                "length": 35,
-                                "num_words": 5,
-                                "words": [
-                                    "1",
-                                    "miljon",
-                                    "ruvnno",
-                                    "árktalaš",
-                                    "eanadollui",
-                                ],
-                                "anchor_word_hits": {
-                                    "hits": [
-                                        {
-                                            "index": 0,
-                                            "element_number": 0,
-                                            "pos": 0,
-                                            "word": "1",
-                                        }
-                                    ]
-                                },
-                                "scoring_characters": "",
-                                "proper_names": [],
-                            },
-                        ],
-                    },
-                    "best_path_score": -1.0,
-                },
-                "1,1,0,1": {
-                    "element_info_to_be_compared": {
-                        "score": 0.0,
-                        "common_clusters": {"clusters": []},
-                        "info": [
-                            {
-                                "element_number": 1,
-                                "length": 20,
-                                "num_words": 3,
-                                "words": ["27", "Geassemánnu", "2014"],
-                                "anchor_word_hits": {"hits": []},
-                                "scoring_characters": "",
-                                "proper_names": ["Geassemánnu"],
-                            }
-                        ],
-                    },
-                    "best_path_score": 4.999,
-                },
-                "1,1,1,0": {
-                    "element_info_to_be_compared": {
-                        "score": 0.0,
-                        "common_clusters": {"clusters": []},
-                        "info": [
-                            {
-                                "element_number": 1,
-                                "length": 13,
-                                "num_words": 3,
-                                "words": ["27", "juni", "2014"],
-                                "anchor_word_hits": {"hits": []},
-                                "scoring_characters": "",
-                                "proper_names": [],
-                            }
-                        ],
-                    },
-                    "best_path_score": 0.0,
-                },
-                "1,1,1,1": {
-                    "element_info_to_be_compared": {
-                        "score": 7.0,
-                        "common_clusters": {
-                            "clusters": [
-                                {
-                                    "refs": [
-                                        {
-                                            "match_type": -3,
-                                            "weight": 3.0,
-                                            "text_number": 0,
-                                            "element_number": 1,
-                                            "pos": 0,
-                                            "length": 1,
-                                            "word": "27",
-                                        },
-                                        {
-                                            "match_type": -3,
-                                            "weight": 3.0,
-                                            "text_number": 1,
-                                            "element_number": 1,
-                                            "pos": 0,
-                                            "length": 1,
-                                            "word": "27",
-                                        },
-                                    ]
-                                },
-                                {
-                                    "refs": [
-                                        {
-                                            "match_type": -3,
-                                            "weight": 3.0,
-                                            "text_number": 0,
-                                            "element_number": 1,
-                                            "pos": 2,
-                                            "length": 1,
-                                            "word": "2014",
-                                        },
-                                        {
-                                            "match_type": -3,
-                                            "weight": 3.0,
-                                            "text_number": 1,
-                                            "element_number": 1,
-                                            "pos": 2,
-                                            "length": 1,
-                                            "word": "2014",
-                                        },
-                                    ]
-                                },
-                            ]
-                        },
-                        "info": [
-                            {
-                                "element_number": 1,
-                                "length": 13,
-                                "num_words": 3,
-                                "words": ["27", "juni", "2014"],
-                                "anchor_word_hits": {"hits": []},
-                                "scoring_characters": "",
-                                "proper_names": [],
-                            },
-                            {
-                                "element_number": 1,
-                                "length": 20,
-                                "num_words": 3,
-                                "words": ["27", "Geassemánnu", "2014"],
-                                "anchor_word_hits": {"hits": []},
-                                "scoring_characters": "",
-                                "proper_names": ["Geassemánnu"],
-                            },
-                        ],
-                    },
-                    "best_path_score": -1.0,
-                },
-                "1,1,1,2": {
-                    "element_info_to_be_compared": {
-                        "score": -99999.0,
-                        "common_clusters": {"clusters": []},
-                        "info": [
-                            {
-                                "element_number": 1,
-                                "length": 13,
-                                "num_words": 3,
-                                "words": ["27", "juni", "2014"],
-                                "anchor_word_hits": {"hits": []},
-                                "scoring_characters": "",
-                                "proper_names": [],
-                            },
-                            {
-                                "element_number": 1,
-                                "length": 20,
-                                "num_words": 3,
-                                "words": ["27", "Geassemánnu", "2014"],
-                                "anchor_word_hits": {"hits": []},
-                                "scoring_characters": "",
-                                "proper_names": ["Geassemánnu"],
-                            },
-                            {
-                                "element_number": 2,
-                                "length": 72,
-                                "num_words": 9,
-                                "words": [
-                                    "Sámediggeráđđi",
-                                    "lea",
-                                    "juolludan",
-                                    "1",
-                                    "miljon",
-                                    "ruvnno",
-                                    "árktalaš",
-                                    "eanadollui",
-                                    "davvin",
-                                ],
-                                "anchor_word_hits": {
-                                    "hits": [
-                                        {
-                                            "index": 0,
-                                            "element_number": 2,
-                                            "pos": 3,
-                                            "word": "1",
-                                        },
-                                        {
-                                            "index": 2,
-                                            "element_number": 2,
-                                            "pos": 0,
-                                            "word": "Sámediggeráđđi",
-                                        },
-                                    ]
-                                },
-                                "scoring_characters": "",
-                                "proper_names": ["Sámediggeráđđi"],
-                            },
-                        ],
-                    },
-                    "best_path_score": -1.0,
-                },
-                "1,1,2,1": {
-                    "element_info_to_be_compared": {
-                        "score": -99999.0,
-                        "common_clusters": {"clusters": []},
-                        "info": [
-                            {
-                                "element_number": 1,
-                                "length": 13,
-                                "num_words": 3,
-                                "words": ["27", "juni", "2014"],
-                                "anchor_word_hits": {"hits": []},
-                                "scoring_characters": "",
-                                "proper_names": [],
-                            },
-                            {
-                                "element_number": 2,
-                                "length": 75,
-                                "num_words": 11,
-                                "words": [
-                                    "Sametingsrådet",
-                                    "har",
-                                    "bevilget",
-                                    "1",
-                                    "millioner",
-                                    "kroner",
-                                    "til",
-                                    "Arktisk",
-                                    "landbruk",
-                                    "i",
-                                    "nord",
-                                ],
-                                "anchor_word_hits": {
-                                    "hits": [
-                                        {
-                                            "index": 0,
-                                            "element_number": 2,
-                                            "pos": 3,
-                                            "word": "1",
-                                        },
-                                        {
-                                            "index": 1,
-                                            "element_number": 2,
-                                            "pos": 4,
-                                            "word": "millioner",
-                                        },
-                                    ]
-                                },
-                                "scoring_characters": "",
-                                "proper_names": ["Sametingsrådet", "Arktisk"],
-                            },
-                            {
-                                "element_number": 1,
-                                "length": 20,
-                                "num_words": 3,
-                                "words": ["27", "Geassemánnu", "2014"],
-                                "anchor_word_hits": {"hits": []},
-                                "scoring_characters": "",
-                                "proper_names": ["Geassemánnu"],
-                            },
-                        ],
-                    },
-                    "best_path_score": -1.0,
-                },
-                "1,2,0,2": {
-                    "element_info_to_be_compared": {
-                        "score": 0.0,
-                        "common_clusters": {"clusters": []},
-                        "info": [
-                            {
-                                "element_number": 2,
-                                "length": 72,
-                                "num_words": 9,
-                                "words": [
-                                    "Sámediggeráđđi",
-                                    "lea",
-                                    "juolludan",
-                                    "1",
-                                    "miljon",
-                                    "ruvnno",
-                                    "árktalaš",
-                                    "eanadollui",
-                                    "davvin",
-                                ],
-                                "anchor_word_hits": {
-                                    "hits": [
-                                        {
-                                            "index": 0,
-                                            "element_number": 2,
-                                            "pos": 3,
-                                            "word": "1",
-                                        },
-                                        {
-                                            "index": 2,
-                                            "element_number": 2,
-                                            "pos": 0,
-                                            "word": "Sámediggeráđđi",
-                                        },
-                                    ]
-                                },
-                                "scoring_characters": "",
-                                "proper_names": ["Sámediggeráđđi"],
-                            }
-                        ],
-                    },
-                    "best_path_score": -1.0,
-                },
-                "1,2,1,1": {
-                    "element_info_to_be_compared": {
-                        "score": 0.0,
-                        "common_clusters": {"clusters": []},
-                        "info": [
-                            {
-                                "element_number": 1,
-                                "length": 13,
-                                "num_words": 3,
-                                "words": ["27", "juni", "2014"],
-                                "anchor_word_hits": {"hits": []},
-                                "scoring_characters": "",
-                                "proper_names": [],
-                            }
-                        ],
-                    },
-                    "best_path_score": 11.0,
-                },
-                "1,2,1,2": {
-                    "element_info_to_be_compared": {
-                        "score": 0.0,
-                        "common_clusters": {"clusters": []},
-                        "info": [
-                            {
-                                "element_number": 1,
-                                "length": 13,
-                                "num_words": 3,
-                                "words": ["27", "juni", "2014"],
-                                "anchor_word_hits": {"hits": []},
-                                "scoring_characters": "",
-                                "proper_names": [],
-                            },
-                            {
-                                "element_number": 2,
-                                "length": 72,
-                                "num_words": 9,
-                                "words": [
-                                    "Sámediggeráđđi",
-                                    "lea",
-                                    "juolludan",
-                                    "1",
-                                    "miljon",
-                                    "ruvnno",
-                                    "árktalaš",
-                                    "eanadollui",
-                                    "davvin",
-                                ],
-                                "anchor_word_hits": {
-                                    "hits": [
-                                        {
-                                            "index": 0,
-                                            "element_number": 2,
-                                            "pos": 3,
-                                            "word": "1",
-                                        },
-                                        {
-                                            "index": 2,
-                                            "element_number": 2,
-                                            "pos": 0,
-                                            "word": "Sámediggeráđđi",
-                                        },
-                                    ]
-                                },
-                                "scoring_characters": "",
-                                "proper_names": ["Sámediggeráđđi"],
-                            },
-                        ],
-                    },
-                    "best_path_score": -1.0,
-                },
-                "1,2,2,2": {
-                    "element_info_to_be_compared": {
-                        "score": 3.999,
-                        "common_clusters": {
-                            "clusters": [
-                                {
-                                    "refs": [
-                                        {
-                                            "match_type": -3,
-                                            "weight": 3.0,
-                                            "text_number": 0,
-                                            "element_number": 2,
-                                            "pos": 3,
-                                            "length": 1,
-                                            "word": "1",
-                                        },
-                                        {
-                                            "match_type": -3,
-                                            "weight": 3.0,
-                                            "text_number": 1,
-                                            "element_number": 2,
-                                            "pos": 3,
-                                            "length": 1,
-                                            "word": "1",
-                                        },
-                                        {
-                                            "match_type": 0,
-                                            "weight": 1.0,
-                                            "text_number": 1,
-                                            "element_number": 2,
-                                            "pos": 3,
-                                            "length": 1,
-                                            "word": "1",
-                                        },
-                                        {
-                                            "match_type": 0,
-                                            "weight": 1.0,
-                                            "text_number": 0,
-                                            "element_number": 2,
-                                            "pos": 3,
-                                            "length": 1,
-                                            "word": "1",
-                                        },
-                                    ]
-                                }
-                            ]
-                        },
-                        "info": [
-                            {
-                                "element_number": 1,
-                                "length": 13,
-                                "num_words": 3,
-                                "words": ["27", "juni", "2014"],
-                                "anchor_word_hits": {"hits": []},
-                                "scoring_characters": "",
-                                "proper_names": [],
-                            },
-                            {
-                                "element_number": 2,
-                                "length": 75,
-                                "num_words": 11,
-                                "words": [
-                                    "Sametingsrådet",
-                                    "har",
-                                    "bevilget",
-                                    "1",
-                                    "millioner",
-                                    "kroner",
-                                    "til",
-                                    "Arktisk",
-                                    "landbruk",
-                                    "i",
-                                    "nord",
-                                ],
-                                "anchor_word_hits": {
-                                    "hits": [
-                                        {
-                                            "index": 0,
-                                            "element_number": 2,
-                                            "pos": 3,
-                                            "word": "1",
-                                        },
-                                        {
-                                            "index": 1,
-                                            "element_number": 2,
-                                            "pos": 4,
-                                            "word": "millioner",
-                                        },
-                                    ]
-                                },
-                                "scoring_characters": "",
-                                "proper_names": ["Sametingsrådet", "Arktisk"],
-                            },
-                            {
-                                "element_number": 2,
-                                "length": 72,
-                                "num_words": 9,
-                                "words": [
-                                    "Sámediggeráđđi",
-                                    "lea",
-                                    "juolludan",
-                                    "1",
-                                    "miljon",
-                                    "ruvnno",
-                                    "árktalaš",
-                                    "eanadollui",
-                                    "davvin",
-                                ],
-                                "anchor_word_hits": {
-                                    "hits": [
-                                        {
-                                            "index": 0,
-                                            "element_number": 2,
-                                            "pos": 3,
-                                            "word": "1",
-                                        },
-                                        {
-                                            "index": 2,
-                                            "element_number": 2,
-                                            "pos": 0,
-                                            "word": "Sámediggeráđđi",
-                                        },
-                                    ]
-                                },
-                                "scoring_characters": "",
-                                "proper_names": ["Sámediggeráđđi"],
-                            },
-                        ],
-                    },
-                    "best_path_score": -1.0,
-                },
-                "1,3,1,2": {
-                    "element_info_to_be_compared": {
-                        "score": 0.0,
-                        "common_clusters": {"clusters": []},
-                        "info": [
-                            {
-                                "element_number": 1,
-                                "length": 13,
-                                "num_words": 3,
-                                "words": ["27", "juni", "2014"],
-                                "anchor_word_hits": {"hits": []},
-                                "scoring_characters": "",
-                                "proper_names": [],
-                            }
-                        ],
-                    },
-                    "best_path_score": 11.0,
-                },
-                "2,0,1,0": {
-                    "element_info_to_be_compared": {
-                        "score": 0.0,
-                        "common_clusters": {"clusters": []},
-                        "info": [
-                            {
-                                "element_number": 0,
-                                "length": 35,
-                                "num_words": 5,
-                                "words": [
-                                    "1",
-                                    "miljon",
-                                    "ruvnno",
-                                    "árktalaš",
-                                    "eanadollui",
-                                ],
-                                "anchor_word_hits": {
-                                    "hits": [
-                                        {
-                                            "index": 0,
-                                            "element_number": 0,
-                                            "pos": 0,
-                                            "word": "1",
-                                        }
-                                    ]
-                                },
-                                "scoring_characters": "",
-                                "proper_names": [],
-                            }
-                        ],
-                    },
-                    "best_path_score": 4.0,
-                },
-                "2,0,2,-1": {
-                    "element_info_to_be_compared": {
-                        "score": 0.0,
-                        "common_clusters": {"clusters": []},
-                        "info": [
-                            {
-                                "element_number": 2,
-                                "length": 75,
-                                "num_words": 11,
-                                "words": [
-                                    "Sametingsrådet",
-                                    "har",
-                                    "bevilget",
-                                    "1",
-                                    "millioner",
-                                    "kroner",
-                                    "til",
-                                    "Arktisk",
-                                    "landbruk",
-                                    "i",
-                                    "nord",
-                                ],
-                                "anchor_word_hits": {
-                                    "hits": [
-                                        {
-                                            "index": 0,
-                                            "element_number": 2,
-                                            "pos": 3,
-                                            "word": "1",
-                                        },
-                                        {
-                                            "index": 1,
-                                            "element_number": 2,
-                                            "pos": 4,
-                                            "word": "millioner",
-                                        },
-                                    ]
-                                },
-                                "scoring_characters": "",
-                                "proper_names": ["Sametingsrådet", "Arktisk"],
-                            }
-                        ],
-                    },
-                    "best_path_score": -1.0,
-                },
-                "2,0,2,0": {
-                    "element_info_to_be_compared": {
-                        "score": 3.0,
-                        "common_clusters": {
-                            "clusters": [
-                                {
-                                    "refs": [
-                                        {
-                                            "match_type": -3,
-                                            "weight": 3.0,
-                                            "text_number": 0,
-                                            "element_number": 2,
-                                            "pos": 3,
-                                            "length": 1,
-                                            "word": "1",
-                                        },
-                                        {
-                                            "match_type": -3,
-                                            "weight": 3.0,
-                                            "text_number": 1,
-                                            "element_number": 0,
-                                            "pos": 0,
-                                            "length": 1,
-                                            "word": "1",
-                                        },
-                                        {
-                                            "match_type": 0,
-                                            "weight": 1.0,
-                                            "text_number": 1,
-                                            "element_number": 0,
-                                            "pos": 0,
-                                            "length": 1,
-                                            "word": "1",
-                                        },
-                                        {
-                                            "match_type": 0,
-                                            "weight": 1.0,
-                                            "text_number": 0,
-                                            "element_number": 2,
-                                            "pos": 3,
-                                            "length": 1,
-                                            "word": "1",
-                                        },
-                                    ]
-                                }
-                            ]
-                        },
-                        "info": [
-                            {
-                                "element_number": 2,
-                                "length": 75,
-                                "num_words": 11,
-                                "words": [
-                                    "Sametingsrådet",
-                                    "har",
-                                    "bevilget",
-                                    "1",
-                                    "millioner",
-                                    "kroner",
-                                    "til",
-                                    "Arktisk",
-                                    "landbruk",
-                                    "i",
-                                    "nord",
-                                ],
-                                "anchor_word_hits": {
-                                    "hits": [
-                                        {
-                                            "index": 0,
-                                            "element_number": 2,
-                                            "pos": 3,
-                                            "word": "1",
-                                        },
-                                        {
-                                            "index": 1,
-                                            "element_number": 2,
-                                            "pos": 4,
-                                            "word": "millioner",
-                                        },
-                                    ]
-                                },
-                                "scoring_characters": "",
-                                "proper_names": ["Sametingsrådet", "Arktisk"],
-                            },
-                            {
-                                "element_number": 0,
-                                "length": 35,
-                                "num_words": 5,
-                                "words": [
-                                    "1",
-                                    "miljon",
-                                    "ruvnno",
-                                    "árktalaš",
-                                    "eanadollui",
-                                ],
-                                "anchor_word_hits": {
-                                    "hits": [
-                                        {
-                                            "index": 0,
-                                            "element_number": 0,
-                                            "pos": 0,
-                                            "word": "1",
-                                        }
-                                    ]
-                                },
-                                "scoring_characters": "",
-                                "proper_names": [],
-                            },
-                        ],
-                    },
-                    "best_path_score": -1.0,
-                },
-                "2,0,2,1": {
-                    "element_info_to_be_compared": {
-                        "score": 2.999,
-                        "common_clusters": {
-                            "clusters": [
-                                {
-                                    "refs": [
-                                        {
-                                            "match_type": -3,
-                                            "weight": 3.0,
-                                            "text_number": 0,
-                                            "element_number": 2,
-                                            "pos": 3,
-                                            "length": 1,
-                                            "word": "1",
-                                        },
-                                        {
-                                            "match_type": -3,
-                                            "weight": 3.0,
-                                            "text_number": 1,
-                                            "element_number": 0,
-                                            "pos": 0,
-                                            "length": 1,
-                                            "word": "1",
-                                        },
-                                        {
-                                            "match_type": 0,
-                                            "weight": 1.0,
-                                            "text_number": 1,
-                                            "element_number": 0,
-                                            "pos": 0,
-                                            "length": 1,
-                                            "word": "1",
-                                        },
-                                        {
-                                            "match_type": 0,
-                                            "weight": 1.0,
-                                            "text_number": 0,
-                                            "element_number": 2,
-                                            "pos": 3,
-                                            "length": 1,
-                                            "word": "1",
-                                        },
-                                    ]
-                                }
-                            ]
-                        },
-                        "info": [
-                            {
-                                "element_number": 2,
-                                "length": 75,
-                                "num_words": 11,
-                                "words": [
-                                    "Sametingsrådet",
-                                    "har",
-                                    "bevilget",
-                                    "1",
-                                    "millioner",
-                                    "kroner",
-                                    "til",
-                                    "Arktisk",
-                                    "landbruk",
-                                    "i",
-                                    "nord",
-                                ],
-                                "anchor_word_hits": {
-                                    "hits": [
-                                        {
-                                            "index": 0,
-                                            "element_number": 2,
-                                            "pos": 3,
-                                            "word": "1",
-                                        },
-                                        {
-                                            "index": 1,
-                                            "element_number": 2,
-                                            "pos": 4,
-                                            "word": "millioner",
-                                        },
-                                    ]
-                                },
-                                "scoring_characters": "",
-                                "proper_names": ["Sametingsrådet", "Arktisk"],
-                            },
-                            {
-                                "element_number": 0,
-                                "length": 35,
-                                "num_words": 5,
-                                "words": [
-                                    "1",
-                                    "miljon",
-                                    "ruvnno",
-                                    "árktalaš",
-                                    "eanadollui",
-                                ],
-                                "anchor_word_hits": {
-                                    "hits": [
-                                        {
-                                            "index": 0,
-                                            "element_number": 0,
-                                            "pos": 0,
-                                            "word": "1",
-                                        }
-                                    ]
-                                },
-                                "scoring_characters": "",
-                                "proper_names": [],
-                            },
-                            {
-                                "element_number": 1,
-                                "length": 20,
-                                "num_words": 3,
-                                "words": ["27", "Geassemánnu", "2014"],
-                                "anchor_word_hits": {"hits": []},
-                                "scoring_characters": "",
-                                "proper_names": ["Geassemánnu"],
-                            },
-                        ],
-                    },
-                    "best_path_score": -1.0,
-                },
-                "2,1,1,1": {
-                    "element_info_to_be_compared": {
-                        "score": 0.0,
-                        "common_clusters": {"clusters": []},
-                        "info": [
-                            {
-                                "element_number": 1,
-                                "length": 20,
-                                "num_words": 3,
-                                "words": ["27", "Geassemánnu", "2014"],
-                                "anchor_word_hits": {"hits": []},
-                                "scoring_characters": "",
-                                "proper_names": ["Geassemánnu"],
-                            }
-                        ],
-                    },
-                    "best_path_score": 11.0,
-                },
-                "2,1,2,0": {
-                    "element_info_to_be_compared": {
-                        "score": 0.0,
-                        "common_clusters": {"clusters": []},
-                        "info": [
-                            {
-                                "element_number": 2,
-                                "length": 75,
-                                "num_words": 11,
-                                "words": [
-                                    "Sametingsrådet",
-                                    "har",
-                                    "bevilget",
-                                    "1",
-                                    "millioner",
-                                    "kroner",
-                                    "til",
-                                    "Arktisk",
-                                    "landbruk",
-                                    "i",
-                                    "nord",
-                                ],
-                                "anchor_word_hits": {
-                                    "hits": [
-                                        {
-                                            "index": 0,
-                                            "element_number": 2,
-                                            "pos": 3,
-                                            "word": "1",
-                                        },
-                                        {
-                                            "index": 1,
-                                            "element_number": 2,
-                                            "pos": 4,
-                                            "word": "millioner",
-                                        },
-                                    ]
-                                },
-                                "scoring_characters": "",
-                                "proper_names": ["Sametingsrådet", "Arktisk"],
-                            }
-                        ],
-                    },
-                    "best_path_score": 3.0,
-                },
-                "2,1,2,1": {
-                    "element_info_to_be_compared": {
-                        "score": 0.0,
-                        "common_clusters": {"clusters": []},
-                        "info": [
-                            {
-                                "element_number": 2,
-                                "length": 75,
-                                "num_words": 11,
-                                "words": [
-                                    "Sametingsrådet",
-                                    "har",
-                                    "bevilget",
-                                    "1",
-                                    "millioner",
-                                    "kroner",
-                                    "til",
-                                    "Arktisk",
-                                    "landbruk",
-                                    "i",
-                                    "nord",
-                                ],
-                                "anchor_word_hits": {
-                                    "hits": [
-                                        {
-                                            "index": 0,
-                                            "element_number": 2,
-                                            "pos": 3,
-                                            "word": "1",
-                                        },
-                                        {
-                                            "index": 1,
-                                            "element_number": 2,
-                                            "pos": 4,
-                                            "word": "millioner",
-                                        },
-                                    ]
-                                },
-                                "scoring_characters": "",
-                                "proper_names": ["Sametingsrådet", "Arktisk"],
-                            },
-                            {
-                                "element_number": 1,
-                                "length": 20,
-                                "num_words": 3,
-                                "words": ["27", "Geassemánnu", "2014"],
-                                "anchor_word_hits": {"hits": []},
-                                "scoring_characters": "",
-                                "proper_names": ["Geassemánnu"],
-                            },
-                        ],
-                    },
-                    "best_path_score": 2.999,
-                },
-                "2,1,2,2": {
-                    "element_info_to_be_compared": {
-                        "score": 4.999,
-                        "common_clusters": {
-                            "clusters": [
-                                {
-                                    "refs": [
-                                        {
-                                            "match_type": -3,
-                                            "weight": 3.0,
-                                            "text_number": 0,
-                                            "element_number": 2,
-                                            "pos": 3,
-                                            "length": 1,
-                                            "word": "1",
-                                        },
-                                        {
-                                            "match_type": -3,
-                                            "weight": 3.0,
-                                            "text_number": 1,
-                                            "element_number": 2,
-                                            "pos": 3,
-                                            "length": 1,
-                                            "word": "1",
-                                        },
-                                        {
-                                            "match_type": 0,
-                                            "weight": 1.0,
-                                            "text_number": 1,
-                                            "element_number": 2,
-                                            "pos": 3,
-                                            "length": 1,
-                                            "word": "1",
-                                        },
-                                        {
-                                            "match_type": 0,
-                                            "weight": 1.0,
-                                            "text_number": 0,
-                                            "element_number": 2,
-                                            "pos": 3,
-                                            "length": 1,
-                                            "word": "1",
-                                        },
-                                    ]
-                                }
-                            ]
-                        },
-                        "info": [
-                            {
-                                "element_number": 2,
-                                "length": 75,
-                                "num_words": 11,
-                                "words": [
-                                    "Sametingsrådet",
-                                    "har",
-                                    "bevilget",
-                                    "1",
-                                    "millioner",
-                                    "kroner",
-                                    "til",
-                                    "Arktisk",
-                                    "landbruk",
-                                    "i",
-                                    "nord",
-                                ],
-                                "anchor_word_hits": {
-                                    "hits": [
-                                        {
-                                            "index": 0,
-                                            "element_number": 2,
-                                            "pos": 3,
-                                            "word": "1",
-                                        },
-                                        {
-                                            "index": 1,
-                                            "element_number": 2,
-                                            "pos": 4,
-                                            "word": "millioner",
-                                        },
-                                    ]
-                                },
-                                "scoring_characters": "",
-                                "proper_names": ["Sametingsrådet", "Arktisk"],
-                            },
-                            {
-                                "element_number": 1,
-                                "length": 20,
-                                "num_words": 3,
-                                "words": ["27", "Geassemánnu", "2014"],
-                                "anchor_word_hits": {"hits": []},
-                                "scoring_characters": "",
-                                "proper_names": ["Geassemánnu"],
-                            },
-                            {
-                                "element_number": 2,
-                                "length": 72,
-                                "num_words": 9,
-                                "words": [
-                                    "Sámediggeráđđi",
-                                    "lea",
-                                    "juolludan",
-                                    "1",
-                                    "miljon",
-                                    "ruvnno",
-                                    "árktalaš",
-                                    "eanadollui",
-                                    "davvin",
-                                ],
-                                "anchor_word_hits": {
-                                    "hits": [
-                                        {
-                                            "index": 0,
-                                            "element_number": 2,
-                                            "pos": 3,
-                                            "word": "1",
-                                        },
-                                        {
-                                            "index": 2,
-                                            "element_number": 2,
-                                            "pos": 0,
-                                            "word": "Sámediggeráđđi",
-                                        },
-                                    ]
-                                },
-                                "scoring_characters": "",
-                                "proper_names": ["Sámediggeráđđi"],
-                            },
-                        ],
-                    },
-                    "best_path_score": 8.998,
-                },
-                "2,2,1,2": {
-                    "element_info_to_be_compared": {
-                        "score": 0.0,
-                        "common_clusters": {"clusters": []},
-                        "info": [
-                            {
-                                "element_number": 2,
-                                "length": 72,
-                                "num_words": 9,
-                                "words": [
-                                    "Sámediggeráđđi",
-                                    "lea",
-                                    "juolludan",
-                                    "1",
-                                    "miljon",
-                                    "ruvnno",
-                                    "árktalaš",
-                                    "eanadollui",
-                                    "davvin",
-                                ],
-                                "anchor_word_hits": {
-                                    "hits": [
-                                        {
-                                            "index": 0,
-                                            "element_number": 2,
-                                            "pos": 3,
-                                            "word": "1",
-                                        },
-                                        {
-                                            "index": 2,
-                                            "element_number": 2,
-                                            "pos": 0,
-                                            "word": "Sámediggeráđđi",
-                                        },
-                                    ]
-                                },
-                                "scoring_characters": "",
-                                "proper_names": ["Sámediggeráđđi"],
-                            }
-                        ],
-                    },
-                    "best_path_score": 4.999,
-                },
-                "2,2,2,1": {
-                    "element_info_to_be_compared": {
-                        "score": 0.0,
-                        "common_clusters": {"clusters": []},
-                        "info": [
-                            {
-                                "element_number": 2,
-                                "length": 75,
-                                "num_words": 11,
-                                "words": [
-                                    "Sametingsrådet",
-                                    "har",
-                                    "bevilget",
-                                    "1",
-                                    "millioner",
-                                    "kroner",
-                                    "til",
-                                    "Arktisk",
-                                    "landbruk",
-                                    "i",
-                                    "nord",
-                                ],
-                                "anchor_word_hits": {
-                                    "hits": [
-                                        {
-                                            "index": 0,
-                                            "element_number": 2,
-                                            "pos": 3,
-                                            "word": "1",
-                                        },
-                                        {
-                                            "index": 1,
-                                            "element_number": 2,
-                                            "pos": 4,
-                                            "word": "millioner",
-                                        },
-                                    ]
-                                },
-                                "scoring_characters": "",
-                                "proper_names": ["Sametingsrådet", "Arktisk"],
-                            }
-                        ],
-                    },
-                    "best_path_score": 4.0,
-                },
-                "2,2,2,2": {
-                    "element_info_to_be_compared": {
-                        "score": 5.0,
-                        "common_clusters": {
-                            "clusters": [
-                                {
-                                    "refs": [
-                                        {
-                                            "match_type": -3,
-                                            "weight": 3.0,
-                                            "text_number": 0,
-                                            "element_number": 2,
-                                            "pos": 3,
-                                            "length": 1,
-                                            "word": "1",
-                                        },
-                                        {
-                                            "match_type": -3,
-                                            "weight": 3.0,
-                                            "text_number": 1,
-                                            "element_number": 2,
-                                            "pos": 3,
-                                            "length": 1,
-                                            "word": "1",
-                                        },
-                                        {
-                                            "match_type": 0,
-                                            "weight": 1.0,
-                                            "text_number": 1,
-                                            "element_number": 2,
-                                            "pos": 3,
-                                            "length": 1,
-                                            "word": "1",
-                                        },
-                                        {
-                                            "match_type": 0,
-                                            "weight": 1.0,
-                                            "text_number": 0,
-                                            "element_number": 2,
-                                            "pos": 3,
-                                            "length": 1,
-                                            "word": "1",
-                                        },
-                                    ]
-                                }
-                            ]
-                        },
-                        "info": [
-                            {
-                                "element_number": 2,
-                                "length": 75,
-                                "num_words": 11,
-                                "words": [
-                                    "Sametingsrådet",
-                                    "har",
-                                    "bevilget",
-                                    "1",
-                                    "millioner",
-                                    "kroner",
-                                    "til",
-                                    "Arktisk",
-                                    "landbruk",
-                                    "i",
-                                    "nord",
-                                ],
-                                "anchor_word_hits": {
-                                    "hits": [
-                                        {
-                                            "index": 0,
-                                            "element_number": 2,
-                                            "pos": 3,
-                                            "word": "1",
-                                        },
-                                        {
-                                            "index": 1,
-                                            "element_number": 2,
-                                            "pos": 4,
-                                            "word": "millioner",
-                                        },
-                                    ]
-                                },
-                                "scoring_characters": "",
-                                "proper_names": ["Sametingsrådet", "Arktisk"],
-                            },
-                            {
-                                "element_number": 2,
-                                "length": 72,
-                                "num_words": 9,
-                                "words": [
-                                    "Sámediggeráđđi",
-                                    "lea",
-                                    "juolludan",
-                                    "1",
-                                    "miljon",
-                                    "ruvnno",
-                                    "árktalaš",
-                                    "eanadollui",
-                                    "davvin",
-                                ],
-                                "anchor_word_hits": {
-                                    "hits": [
-                                        {
-                                            "index": 0,
-                                            "element_number": 2,
-                                            "pos": 3,
-                                            "word": "1",
-                                        },
-                                        {
-                                            "index": 2,
-                                            "element_number": 2,
-                                            "pos": 0,
-                                            "word": "Sámediggeráđđi",
-                                        },
-                                    ]
-                                },
-                                "scoring_characters": "",
-                                "proper_names": ["Sámediggeráđđi"],
-                            },
-                        ],
-                    },
-                    "best_path_score": 8.998999999999999,
-                },
-                "2,3,2,2": {
-                    "element_info_to_be_compared": {
-                        "score": 0.0,
-                        "common_clusters": {"clusters": []},
-                        "info": [
-                            {
-                                "element_number": 2,
-                                "length": 75,
-                                "num_words": 11,
-                                "words": [
-                                    "Sametingsrådet",
-                                    "har",
-                                    "bevilget",
-                                    "1",
-                                    "millioner",
-                                    "kroner",
-                                    "til",
-                                    "Arktisk",
-                                    "landbruk",
-                                    "i",
-                                    "nord",
-                                ],
-                                "anchor_word_hits": {
-                                    "hits": [
-                                        {
-                                            "index": 0,
-                                            "element_number": 2,
-                                            "pos": 3,
-                                            "word": "1",
-                                        },
-                                        {
-                                            "index": 1,
-                                            "element_number": 2,
-                                            "pos": 4,
-                                            "word": "millioner",
-                                        },
-                                    ]
-                                },
-                                "scoring_characters": "",
-                                "proper_names": ["Sametingsrådet", "Arktisk"],
-                            }
-                        ],
-                    },
-                    "best_path_score": 16.0,
-                },
-                "3,0,2,0": {
-                    "element_info_to_be_compared": {
-                        "score": 0.0,
-                        "common_clusters": {"clusters": []},
-                        "info": [
-                            {
-                                "element_number": 0,
-                                "length": 35,
-                                "num_words": 5,
-                                "words": [
-                                    "1",
-                                    "miljon",
-                                    "ruvnno",
-                                    "árktalaš",
-                                    "eanadollui",
-                                ],
-                                "anchor_word_hits": {
-                                    "hits": [
-                                        {
-                                            "index": 0,
-                                            "element_number": 0,
-                                            "pos": 0,
-                                            "word": "1",
-                                        }
-                                    ]
-                                },
-                                "scoring_characters": "",
-                                "proper_names": [],
-                            }
-                        ],
-                    },
-                    "best_path_score": 4.0,
-                },
-                "3,1,2,1": {
-                    "element_info_to_be_compared": {
-                        "score": 0.0,
-                        "common_clusters": {"clusters": []},
-                        "info": [
-                            {
-                                "element_number": 1,
-                                "length": 20,
-                                "num_words": 3,
-                                "words": ["27", "Geassemánnu", "2014"],
-                                "anchor_word_hits": {"hits": []},
-                                "scoring_characters": "",
-                                "proper_names": ["Geassemánnu"],
-                            }
-                        ],
-                    },
-                    "best_path_score": 11.0,
-                },
-                "3,2,2,2": {
-                    "element_info_to_be_compared": {
-                        "score": 0.0,
-                        "common_clusters": {"clusters": []},
-                        "info": [
-                            {
-                                "element_number": 2,
-                                "length": 72,
-                                "num_words": 9,
-                                "words": [
-                                    "Sámediggeráđđi",
-                                    "lea",
-                                    "juolludan",
-                                    "1",
-                                    "miljon",
-                                    "ruvnno",
-                                    "árktalaš",
-                                    "eanadollui",
-                                    "davvin",
-                                ],
-                                "anchor_word_hits": {
-                                    "hits": [
-                                        {
-                                            "index": 0,
-                                            "element_number": 2,
-                                            "pos": 3,
-                                            "word": "1",
-                                        },
-                                        {
-                                            "index": 2,
-                                            "element_number": 2,
-                                            "pos": 0,
-                                            "word": "Sámediggeráđđi",
-                                        },
-                                    ]
-                                },
-                                "scoring_characters": "",
-                                "proper_names": ["Sámediggeráđđi"],
-                            }
-                        ],
-                    },
-                    "best_path_score": 16.0,
-                },
+                "best_path_score": -1.0,
             },
-            "best_path_scores": {
-                "-1,0": -1.0,
-                "0,-1": -1.0,
-                "0,0": -1.0,
-                "0,1": -1.0,
-                "1,0": -1.0,
-                "-1,1": -1.0,
-                "0,2": -1.0,
-                "1,1": -1.0,
-                "1,-1": -1.0,
-                "2,0": -1.0,
-                "1,2": -1.0,
-                "2,1": -1.0,
-                "2,2": -1.0,
-                "-1,2": -1.0,
-                "2,-1": -1.0,
+            "0,0,0,-1": {
+                "element_info_to_be_compared": {
+                    "score": 0.0,
+                    "common_clusters": {"clusters": []},
+                    "info": [
+                        {
+                            "element_number": 0,
+                            "length": 41,
+                            "num_words": 7,
+                            "words": [
+                                "1",
+                                "million",
+                                "kroner",
+                                "til",
+                                "landbruket",
+                                "i",
+                                "arktisk",
+                            ],
+                            "anchor_word_hits": {
+                                "hits": [
+                                    {
+                                        "index": 0,
+                                        "element_number": 0,
+                                        "pos": 0,
+                                        "word": "1",
+                                    },
+                                    {
+                                        "index": 1,
+                                        "element_number": 0,
+                                        "pos": 1,
+                                        "word": "million",
+                                    },
+                                ]
+                            },
+                            "scoring_characters": "",
+                            "proper_names": [],
+                        }
+                    ],
+                },
+                "best_path_score": -1.0,
+            },
+            "0,0,0,0": {
+                "element_info_to_be_compared": {
+                    "score": 4.0,
+                    "common_clusters": {
+                        "clusters": [
+                            {
+                                "refs": [
+                                    {
+                                        "match_type": -3,
+                                        "weight": 3.0,
+                                        "text_number": 0,
+                                        "element_number": 0,
+                                        "pos": 0,
+                                        "length": 1,
+                                        "word": "1",
+                                    },
+                                    {
+                                        "match_type": -3,
+                                        "weight": 3.0,
+                                        "text_number": 1,
+                                        "element_number": 0,
+                                        "pos": 0,
+                                        "length": 1,
+                                        "word": "1",
+                                    },
+                                    {
+                                        "match_type": 0,
+                                        "weight": 1.0,
+                                        "text_number": 1,
+                                        "element_number": 0,
+                                        "pos": 0,
+                                        "length": 1,
+                                        "word": "1",
+                                    },
+                                    {
+                                        "match_type": 0,
+                                        "weight": 1.0,
+                                        "text_number": 0,
+                                        "element_number": 0,
+                                        "pos": 0,
+                                        "length": 1,
+                                        "word": "1",
+                                    },
+                                ]
+                            }
+                        ]
+                    },
+                    "info": [
+                        {
+                            "element_number": 0,
+                            "length": 41,
+                            "num_words": 7,
+                            "words": [
+                                "1",
+                                "million",
+                                "kroner",
+                                "til",
+                                "landbruket",
+                                "i",
+                                "arktisk",
+                            ],
+                            "anchor_word_hits": {
+                                "hits": [
+                                    {
+                                        "index": 0,
+                                        "element_number": 0,
+                                        "pos": 0,
+                                        "word": "1",
+                                    },
+                                    {
+                                        "index": 1,
+                                        "element_number": 0,
+                                        "pos": 1,
+                                        "word": "million",
+                                    },
+                                ]
+                            },
+                            "scoring_characters": "",
+                            "proper_names": [],
+                        },
+                        {
+                            "element_number": 0,
+                            "length": 35,
+                            "num_words": 5,
+                            "words": [
+                                "1",
+                                "miljon",
+                                "ruvnno",
+                                "árktalaš",
+                                "eanadollui",
+                            ],
+                            "anchor_word_hits": {
+                                "hits": [
+                                    {
+                                        "index": 0,
+                                        "element_number": 0,
+                                        "pos": 0,
+                                        "word": "1",
+                                    }
+                                ]
+                            },
+                            "scoring_characters": "",
+                            "proper_names": [],
+                        },
+                    ],
+                },
+                "best_path_score": -1.0,
+            },
+            "0,0,0,1": {
+                "element_info_to_be_compared": {
+                    "score": 4.999,
+                    "common_clusters": {
+                        "clusters": [
+                            {
+                                "refs": [
+                                    {
+                                        "match_type": -3,
+                                        "weight": 3.0,
+                                        "text_number": 0,
+                                        "element_number": 0,
+                                        "pos": 0,
+                                        "length": 1,
+                                        "word": "1",
+                                    },
+                                    {
+                                        "match_type": -3,
+                                        "weight": 3.0,
+                                        "text_number": 1,
+                                        "element_number": 0,
+                                        "pos": 0,
+                                        "length": 1,
+                                        "word": "1",
+                                    },
+                                    {
+                                        "match_type": 0,
+                                        "weight": 1.0,
+                                        "text_number": 1,
+                                        "element_number": 0,
+                                        "pos": 0,
+                                        "length": 1,
+                                        "word": "1",
+                                    },
+                                    {
+                                        "match_type": 0,
+                                        "weight": 1.0,
+                                        "text_number": 0,
+                                        "element_number": 0,
+                                        "pos": 0,
+                                        "length": 1,
+                                        "word": "1",
+                                    },
+                                ]
+                            }
+                        ]
+                    },
+                    "info": [
+                        {
+                            "element_number": 0,
+                            "length": 41,
+                            "num_words": 7,
+                            "words": [
+                                "1",
+                                "million",
+                                "kroner",
+                                "til",
+                                "landbruket",
+                                "i",
+                                "arktisk",
+                            ],
+                            "anchor_word_hits": {
+                                "hits": [
+                                    {
+                                        "index": 0,
+                                        "element_number": 0,
+                                        "pos": 0,
+                                        "word": "1",
+                                    },
+                                    {
+                                        "index": 1,
+                                        "element_number": 0,
+                                        "pos": 1,
+                                        "word": "million",
+                                    },
+                                ]
+                            },
+                            "scoring_characters": "",
+                            "proper_names": [],
+                        },
+                        {
+                            "element_number": 0,
+                            "length": 35,
+                            "num_words": 5,
+                            "words": [
+                                "1",
+                                "miljon",
+                                "ruvnno",
+                                "árktalaš",
+                                "eanadollui",
+                            ],
+                            "anchor_word_hits": {
+                                "hits": [
+                                    {
+                                        "index": 0,
+                                        "element_number": 0,
+                                        "pos": 0,
+                                        "word": "1",
+                                    }
+                                ]
+                            },
+                            "scoring_characters": "",
+                            "proper_names": [],
+                        },
+                        {
+                            "element_number": 1,
+                            "length": 20,
+                            "num_words": 3,
+                            "words": ["27", "Geassemánnu", "2014"],
+                            "anchor_word_hits": {"hits": []},
+                            "scoring_characters": "",
+                            "proper_names": ["Geassemánnu"],
+                        },
+                    ],
+                },
+                "best_path_score": -1.0,
+            },
+            "0,0,1,0": {
+                "element_info_to_be_compared": {
+                    "score": -99999.0,
+                    "common_clusters": {"clusters": []},
+                    "info": [
+                        {
+                            "element_number": 0,
+                            "length": 41,
+                            "num_words": 7,
+                            "words": [
+                                "1",
+                                "million",
+                                "kroner",
+                                "til",
+                                "landbruket",
+                                "i",
+                                "arktisk",
+                            ],
+                            "anchor_word_hits": {
+                                "hits": [
+                                    {
+                                        "index": 0,
+                                        "element_number": 0,
+                                        "pos": 0,
+                                        "word": "1",
+                                    },
+                                    {
+                                        "index": 1,
+                                        "element_number": 0,
+                                        "pos": 1,
+                                        "word": "million",
+                                    },
+                                ]
+                            },
+                            "scoring_characters": "",
+                            "proper_names": [],
+                        },
+                        {
+                            "element_number": 1,
+                            "length": 13,
+                            "num_words": 3,
+                            "words": ["27", "juni", "2014"],
+                            "anchor_word_hits": {"hits": []},
+                            "scoring_characters": "",
+                            "proper_names": [],
+                        },
+                        {
+                            "element_number": 0,
+                            "length": 35,
+                            "num_words": 5,
+                            "words": [
+                                "1",
+                                "miljon",
+                                "ruvnno",
+                                "árktalaš",
+                                "eanadollui",
+                            ],
+                            "anchor_word_hits": {
+                                "hits": [
+                                    {
+                                        "index": 0,
+                                        "element_number": 0,
+                                        "pos": 0,
+                                        "word": "1",
+                                    }
+                                ]
+                            },
+                            "scoring_characters": "",
+                            "proper_names": [],
+                        },
+                    ],
+                },
+                "best_path_score": -1.0,
+            },
+            "0,1,-1,1": {
+                "element_info_to_be_compared": {
+                    "score": 0.0,
+                    "common_clusters": {"clusters": []},
+                    "info": [
+                        {
+                            "element_number": 1,
+                            "length": 20,
+                            "num_words": 3,
+                            "words": ["27", "Geassemánnu", "2014"],
+                            "anchor_word_hits": {"hits": []},
+                            "scoring_characters": "",
+                            "proper_names": ["Geassemánnu"],
+                        }
+                    ],
+                },
+                "best_path_score": -1.0,
+            },
+            "0,1,0,0": {
+                "element_info_to_be_compared": {
+                    "score": 0.0,
+                    "common_clusters": {"clusters": []},
+                    "info": [
+                        {
+                            "element_number": 0,
+                            "length": 41,
+                            "num_words": 7,
+                            "words": [
+                                "1",
+                                "million",
+                                "kroner",
+                                "til",
+                                "landbruket",
+                                "i",
+                                "arktisk",
+                            ],
+                            "anchor_word_hits": {
+                                "hits": [
+                                    {
+                                        "index": 0,
+                                        "element_number": 0,
+                                        "pos": 0,
+                                        "word": "1",
+                                    },
+                                    {
+                                        "index": 1,
+                                        "element_number": 0,
+                                        "pos": 1,
+                                        "word": "million",
+                                    },
+                                ]
+                            },
+                            "scoring_characters": "",
+                            "proper_names": [],
+                        }
+                    ],
+                },
+                "best_path_score": 4.0,
+            },
+            "0,1,0,1": {
+                "element_info_to_be_compared": {
+                    "score": 0.0,
+                    "common_clusters": {"clusters": []},
+                    "info": [
+                        {
+                            "element_number": 0,
+                            "length": 41,
+                            "num_words": 7,
+                            "words": [
+                                "1",
+                                "million",
+                                "kroner",
+                                "til",
+                                "landbruket",
+                                "i",
+                                "arktisk",
+                            ],
+                            "anchor_word_hits": {
+                                "hits": [
+                                    {
+                                        "index": 0,
+                                        "element_number": 0,
+                                        "pos": 0,
+                                        "word": "1",
+                                    },
+                                    {
+                                        "index": 1,
+                                        "element_number": 0,
+                                        "pos": 1,
+                                        "word": "million",
+                                    },
+                                ]
+                            },
+                            "scoring_characters": "",
+                            "proper_names": [],
+                        },
+                        {
+                            "element_number": 1,
+                            "length": 20,
+                            "num_words": 3,
+                            "words": ["27", "Geassemánnu", "2014"],
+                            "anchor_word_hits": {"hits": []},
+                            "scoring_characters": "",
+                            "proper_names": ["Geassemánnu"],
+                        },
+                    ],
+                },
+                "best_path_score": 4.999,
+            },
+            "0,1,0,2": {
+                "element_info_to_be_compared": {
+                    "score": -99999.0,
+                    "common_clusters": {"clusters": []},
+                    "info": [
+                        {
+                            "element_number": 0,
+                            "length": 41,
+                            "num_words": 7,
+                            "words": [
+                                "1",
+                                "million",
+                                "kroner",
+                                "til",
+                                "landbruket",
+                                "i",
+                                "arktisk",
+                            ],
+                            "anchor_word_hits": {
+                                "hits": [
+                                    {
+                                        "index": 0,
+                                        "element_number": 0,
+                                        "pos": 0,
+                                        "word": "1",
+                                    },
+                                    {
+                                        "index": 1,
+                                        "element_number": 0,
+                                        "pos": 1,
+                                        "word": "million",
+                                    },
+                                ]
+                            },
+                            "scoring_characters": "",
+                            "proper_names": [],
+                        },
+                        {
+                            "element_number": 1,
+                            "length": 20,
+                            "num_words": 3,
+                            "words": ["27", "Geassemánnu", "2014"],
+                            "anchor_word_hits": {"hits": []},
+                            "scoring_characters": "",
+                            "proper_names": ["Geassemánnu"],
+                        },
+                        {
+                            "element_number": 2,
+                            "length": 72,
+                            "num_words": 9,
+                            "words": [
+                                "Sámediggeráđđi",
+                                "lea",
+                                "juolludan",
+                                "1",
+                                "miljon",
+                                "ruvnno",
+                                "árktalaš",
+                                "eanadollui",
+                                "davvin",
+                            ],
+                            "anchor_word_hits": {
+                                "hits": [
+                                    {
+                                        "index": 0,
+                                        "element_number": 2,
+                                        "pos": 3,
+                                        "word": "1",
+                                    },
+                                    {
+                                        "index": 2,
+                                        "element_number": 2,
+                                        "pos": 0,
+                                        "word": "Sámediggeráđđi",
+                                    },
+                                ]
+                            },
+                            "scoring_characters": "",
+                            "proper_names": ["Sámediggeráđđi"],
+                        },
+                    ],
+                },
+                "best_path_score": -1.0,
+            },
+            "0,1,1,1": {
+                "element_info_to_be_compared": {
+                    "score": -99999.0,
+                    "common_clusters": {"clusters": []},
+                    "info": [
+                        {
+                            "element_number": 0,
+                            "length": 41,
+                            "num_words": 7,
+                            "words": [
+                                "1",
+                                "million",
+                                "kroner",
+                                "til",
+                                "landbruket",
+                                "i",
+                                "arktisk",
+                            ],
+                            "anchor_word_hits": {
+                                "hits": [
+                                    {
+                                        "index": 0,
+                                        "element_number": 0,
+                                        "pos": 0,
+                                        "word": "1",
+                                    },
+                                    {
+                                        "index": 1,
+                                        "element_number": 0,
+                                        "pos": 1,
+                                        "word": "million",
+                                    },
+                                ]
+                            },
+                            "scoring_characters": "",
+                            "proper_names": [],
+                        },
+                        {
+                            "element_number": 1,
+                            "length": 13,
+                            "num_words": 3,
+                            "words": ["27", "juni", "2014"],
+                            "anchor_word_hits": {"hits": []},
+                            "scoring_characters": "",
+                            "proper_names": [],
+                        },
+                        {
+                            "element_number": 1,
+                            "length": 20,
+                            "num_words": 3,
+                            "words": ["27", "Geassemánnu", "2014"],
+                            "anchor_word_hits": {"hits": []},
+                            "scoring_characters": "",
+                            "proper_names": ["Geassemánnu"],
+                        },
+                    ],
+                },
+                "best_path_score": -1.0,
+            },
+            "0,2,-1,2": {
+                "element_info_to_be_compared": {
+                    "score": 0.0,
+                    "common_clusters": {"clusters": []},
+                    "info": [
+                        {
+                            "element_number": 2,
+                            "length": 72,
+                            "num_words": 9,
+                            "words": [
+                                "Sámediggeráđđi",
+                                "lea",
+                                "juolludan",
+                                "1",
+                                "miljon",
+                                "ruvnno",
+                                "árktalaš",
+                                "eanadollui",
+                                "davvin",
+                            ],
+                            "anchor_word_hits": {
+                                "hits": [
+                                    {
+                                        "index": 0,
+                                        "element_number": 2,
+                                        "pos": 3,
+                                        "word": "1",
+                                    },
+                                    {
+                                        "index": 2,
+                                        "element_number": 2,
+                                        "pos": 0,
+                                        "word": "Sámediggeráđđi",
+                                    },
+                                ]
+                            },
+                            "scoring_characters": "",
+                            "proper_names": ["Sámediggeráđđi"],
+                        }
+                    ],
+                },
+                "best_path_score": -1.0,
+            },
+            "0,2,0,1": {
+                "element_info_to_be_compared": {
+                    "score": 0.0,
+                    "common_clusters": {"clusters": []},
+                    "info": [
+                        {
+                            "element_number": 0,
+                            "length": 41,
+                            "num_words": 7,
+                            "words": [
+                                "1",
+                                "million",
+                                "kroner",
+                                "til",
+                                "landbruket",
+                                "i",
+                                "arktisk",
+                            ],
+                            "anchor_word_hits": {
+                                "hits": [
+                                    {
+                                        "index": 0,
+                                        "element_number": 0,
+                                        "pos": 0,
+                                        "word": "1",
+                                    },
+                                    {
+                                        "index": 1,
+                                        "element_number": 0,
+                                        "pos": 1,
+                                        "word": "million",
+                                    },
+                                ]
+                            },
+                            "scoring_characters": "",
+                            "proper_names": [],
+                        }
+                    ],
+                },
+                "best_path_score": 4.999,
+            },
+            "0,2,0,2": {
+                "element_info_to_be_compared": {
+                    "score": 3.0,
+                    "common_clusters": {
+                        "clusters": [
+                            {
+                                "refs": [
+                                    {
+                                        "match_type": -3,
+                                        "weight": 3.0,
+                                        "text_number": 0,
+                                        "element_number": 0,
+                                        "pos": 0,
+                                        "length": 1,
+                                        "word": "1",
+                                    },
+                                    {
+                                        "match_type": -3,
+                                        "weight": 3.0,
+                                        "text_number": 1,
+                                        "element_number": 2,
+                                        "pos": 3,
+                                        "length": 1,
+                                        "word": "1",
+                                    },
+                                    {
+                                        "match_type": 0,
+                                        "weight": 1.0,
+                                        "text_number": 1,
+                                        "element_number": 2,
+                                        "pos": 3,
+                                        "length": 1,
+                                        "word": "1",
+                                    },
+                                    {
+                                        "match_type": 0,
+                                        "weight": 1.0,
+                                        "text_number": 0,
+                                        "element_number": 0,
+                                        "pos": 0,
+                                        "length": 1,
+                                        "word": "1",
+                                    },
+                                ]
+                            }
+                        ]
+                    },
+                    "info": [
+                        {
+                            "element_number": 0,
+                            "length": 41,
+                            "num_words": 7,
+                            "words": [
+                                "1",
+                                "million",
+                                "kroner",
+                                "til",
+                                "landbruket",
+                                "i",
+                                "arktisk",
+                            ],
+                            "anchor_word_hits": {
+                                "hits": [
+                                    {
+                                        "index": 0,
+                                        "element_number": 0,
+                                        "pos": 0,
+                                        "word": "1",
+                                    },
+                                    {
+                                        "index": 1,
+                                        "element_number": 0,
+                                        "pos": 1,
+                                        "word": "million",
+                                    },
+                                ]
+                            },
+                            "scoring_characters": "",
+                            "proper_names": [],
+                        },
+                        {
+                            "element_number": 2,
+                            "length": 72,
+                            "num_words": 9,
+                            "words": [
+                                "Sámediggeráđđi",
+                                "lea",
+                                "juolludan",
+                                "1",
+                                "miljon",
+                                "ruvnno",
+                                "árktalaš",
+                                "eanadollui",
+                                "davvin",
+                            ],
+                            "anchor_word_hits": {
+                                "hits": [
+                                    {
+                                        "index": 0,
+                                        "element_number": 2,
+                                        "pos": 3,
+                                        "word": "1",
+                                    },
+                                    {
+                                        "index": 2,
+                                        "element_number": 2,
+                                        "pos": 0,
+                                        "word": "Sámediggeráđđi",
+                                    },
+                                ]
+                            },
+                            "scoring_characters": "",
+                            "proper_names": ["Sámediggeráđđi"],
+                        },
+                    ],
+                },
+                "best_path_score": 4.999,
+            },
+            "0,2,1,2": {
+                "element_info_to_be_compared": {
+                    "score": 4.999,
+                    "common_clusters": {
+                        "clusters": [
+                            {
+                                "refs": [
+                                    {
+                                        "match_type": -3,
+                                        "weight": 3.0,
+                                        "text_number": 0,
+                                        "element_number": 0,
+                                        "pos": 0,
+                                        "length": 1,
+                                        "word": "1",
+                                    },
+                                    {
+                                        "match_type": -3,
+                                        "weight": 3.0,
+                                        "text_number": 1,
+                                        "element_number": 2,
+                                        "pos": 3,
+                                        "length": 1,
+                                        "word": "1",
+                                    },
+                                    {
+                                        "match_type": 0,
+                                        "weight": 1.0,
+                                        "text_number": 1,
+                                        "element_number": 2,
+                                        "pos": 3,
+                                        "length": 1,
+                                        "word": "1",
+                                    },
+                                    {
+                                        "match_type": 0,
+                                        "weight": 1.0,
+                                        "text_number": 0,
+                                        "element_number": 0,
+                                        "pos": 0,
+                                        "length": 1,
+                                        "word": "1",
+                                    },
+                                ]
+                            }
+                        ]
+                    },
+                    "info": [
+                        {
+                            "element_number": 0,
+                            "length": 41,
+                            "num_words": 7,
+                            "words": [
+                                "1",
+                                "million",
+                                "kroner",
+                                "til",
+                                "landbruket",
+                                "i",
+                                "arktisk",
+                            ],
+                            "anchor_word_hits": {
+                                "hits": [
+                                    {
+                                        "index": 0,
+                                        "element_number": 0,
+                                        "pos": 0,
+                                        "word": "1",
+                                    },
+                                    {
+                                        "index": 1,
+                                        "element_number": 0,
+                                        "pos": 1,
+                                        "word": "million",
+                                    },
+                                ]
+                            },
+                            "scoring_characters": "",
+                            "proper_names": [],
+                        },
+                        {
+                            "element_number": 1,
+                            "length": 13,
+                            "num_words": 3,
+                            "words": ["27", "juni", "2014"],
+                            "anchor_word_hits": {"hits": []},
+                            "scoring_characters": "",
+                            "proper_names": [],
+                        },
+                        {
+                            "element_number": 2,
+                            "length": 72,
+                            "num_words": 9,
+                            "words": [
+                                "Sámediggeráđđi",
+                                "lea",
+                                "juolludan",
+                                "1",
+                                "miljon",
+                                "ruvnno",
+                                "árktalaš",
+                                "eanadollui",
+                                "davvin",
+                            ],
+                            "anchor_word_hits": {
+                                "hits": [
+                                    {
+                                        "index": 0,
+                                        "element_number": 2,
+                                        "pos": 3,
+                                        "word": "1",
+                                    },
+                                    {
+                                        "index": 2,
+                                        "element_number": 2,
+                                        "pos": 0,
+                                        "word": "Sámediggeráđđi",
+                                    },
+                                ]
+                            },
+                            "scoring_characters": "",
+                            "proper_names": ["Sámediggeráđđi"],
+                        },
+                    ],
+                },
+                "best_path_score": 4.999,
+            },
+            "0,3,0,2": {
+                "element_info_to_be_compared": {
+                    "score": 0.0,
+                    "common_clusters": {"clusters": []},
+                    "info": [
+                        {
+                            "element_number": 0,
+                            "length": 41,
+                            "num_words": 7,
+                            "words": [
+                                "1",
+                                "million",
+                                "kroner",
+                                "til",
+                                "landbruket",
+                                "i",
+                                "arktisk",
+                            ],
+                            "anchor_word_hits": {
+                                "hits": [
+                                    {
+                                        "index": 0,
+                                        "element_number": 0,
+                                        "pos": 0,
+                                        "word": "1",
+                                    },
+                                    {
+                                        "index": 1,
+                                        "element_number": 0,
+                                        "pos": 1,
+                                        "word": "million",
+                                    },
+                                ]
+                            },
+                            "scoring_characters": "",
+                            "proper_names": [],
+                        }
+                    ],
+                },
+                "best_path_score": 4.999,
+            },
+            "1,0,0,0": {
+                "element_info_to_be_compared": {
+                    "score": 0.0,
+                    "common_clusters": {"clusters": []},
+                    "info": [
+                        {
+                            "element_number": 0,
+                            "length": 35,
+                            "num_words": 5,
+                            "words": [
+                                "1",
+                                "miljon",
+                                "ruvnno",
+                                "árktalaš",
+                                "eanadollui",
+                            ],
+                            "anchor_word_hits": {
+                                "hits": [
+                                    {
+                                        "index": 0,
+                                        "element_number": 0,
+                                        "pos": 0,
+                                        "word": "1",
+                                    }
+                                ]
+                            },
+                            "scoring_characters": "",
+                            "proper_names": [],
+                        }
+                    ],
+                },
+                "best_path_score": 4.0,
+            },
+            "1,0,1,-1": {
+                "element_info_to_be_compared": {
+                    "score": 0.0,
+                    "common_clusters": {"clusters": []},
+                    "info": [
+                        {
+                            "element_number": 1,
+                            "length": 13,
+                            "num_words": 3,
+                            "words": ["27", "juni", "2014"],
+                            "anchor_word_hits": {"hits": []},
+                            "scoring_characters": "",
+                            "proper_names": [],
+                        }
+                    ],
+                },
+                "best_path_score": -1.0,
+            },
+            "1,0,1,0": {
+                "element_info_to_be_compared": {
+                    "score": 0.0,
+                    "common_clusters": {"clusters": []},
+                    "info": [
+                        {
+                            "element_number": 1,
+                            "length": 13,
+                            "num_words": 3,
+                            "words": ["27", "juni", "2014"],
+                            "anchor_word_hits": {"hits": []},
+                            "scoring_characters": "",
+                            "proper_names": [],
+                        },
+                        {
+                            "element_number": 0,
+                            "length": 35,
+                            "num_words": 5,
+                            "words": [
+                                "1",
+                                "miljon",
+                                "ruvnno",
+                                "árktalaš",
+                                "eanadollui",
+                            ],
+                            "anchor_word_hits": {
+                                "hits": [
+                                    {
+                                        "index": 0,
+                                        "element_number": 0,
+                                        "pos": 0,
+                                        "word": "1",
+                                    }
+                                ]
+                            },
+                            "scoring_characters": "",
+                            "proper_names": [],
+                        },
+                    ],
+                },
+                "best_path_score": -1.0,
+            },
+            "1,0,1,1": {
+                "element_info_to_be_compared": {
+                    "score": -99999.0,
+                    "common_clusters": {"clusters": []},
+                    "info": [
+                        {
+                            "element_number": 1,
+                            "length": 13,
+                            "num_words": 3,
+                            "words": ["27", "juni", "2014"],
+                            "anchor_word_hits": {"hits": []},
+                            "scoring_characters": "",
+                            "proper_names": [],
+                        },
+                        {
+                            "element_number": 0,
+                            "length": 35,
+                            "num_words": 5,
+                            "words": [
+                                "1",
+                                "miljon",
+                                "ruvnno",
+                                "árktalaš",
+                                "eanadollui",
+                            ],
+                            "anchor_word_hits": {
+                                "hits": [
+                                    {
+                                        "index": 0,
+                                        "element_number": 0,
+                                        "pos": 0,
+                                        "word": "1",
+                                    }
+                                ]
+                            },
+                            "scoring_characters": "",
+                            "proper_names": [],
+                        },
+                        {
+                            "element_number": 1,
+                            "length": 20,
+                            "num_words": 3,
+                            "words": ["27", "Geassemánnu", "2014"],
+                            "anchor_word_hits": {"hits": []},
+                            "scoring_characters": "",
+                            "proper_names": ["Geassemánnu"],
+                        },
+                    ],
+                },
+                "best_path_score": -1.0,
+            },
+            "1,0,2,0": {
+                "element_info_to_be_compared": {
+                    "score": -99999.0,
+                    "common_clusters": {"clusters": []},
+                    "info": [
+                        {
+                            "element_number": 1,
+                            "length": 13,
+                            "num_words": 3,
+                            "words": ["27", "juni", "2014"],
+                            "anchor_word_hits": {"hits": []},
+                            "scoring_characters": "",
+                            "proper_names": [],
+                        },
+                        {
+                            "element_number": 2,
+                            "length": 75,
+                            "num_words": 11,
+                            "words": [
+                                "Sametingsrådet",
+                                "har",
+                                "bevilget",
+                                "1",
+                                "millioner",
+                                "kroner",
+                                "til",
+                                "Arktisk",
+                                "landbruk",
+                                "i",
+                                "nord",
+                            ],
+                            "anchor_word_hits": {
+                                "hits": [
+                                    {
+                                        "index": 0,
+                                        "element_number": 2,
+                                        "pos": 3,
+                                        "word": "1",
+                                    },
+                                    {
+                                        "index": 1,
+                                        "element_number": 2,
+                                        "pos": 4,
+                                        "word": "millioner",
+                                    },
+                                ]
+                            },
+                            "scoring_characters": "",
+                            "proper_names": ["Sametingsrådet", "Arktisk"],
+                        },
+                        {
+                            "element_number": 0,
+                            "length": 35,
+                            "num_words": 5,
+                            "words": [
+                                "1",
+                                "miljon",
+                                "ruvnno",
+                                "árktalaš",
+                                "eanadollui",
+                            ],
+                            "anchor_word_hits": {
+                                "hits": [
+                                    {
+                                        "index": 0,
+                                        "element_number": 0,
+                                        "pos": 0,
+                                        "word": "1",
+                                    }
+                                ]
+                            },
+                            "scoring_characters": "",
+                            "proper_names": [],
+                        },
+                    ],
+                },
+                "best_path_score": -1.0,
+            },
+            "1,1,0,1": {
+                "element_info_to_be_compared": {
+                    "score": 0.0,
+                    "common_clusters": {"clusters": []},
+                    "info": [
+                        {
+                            "element_number": 1,
+                            "length": 20,
+                            "num_words": 3,
+                            "words": ["27", "Geassemánnu", "2014"],
+                            "anchor_word_hits": {"hits": []},
+                            "scoring_characters": "",
+                            "proper_names": ["Geassemánnu"],
+                        }
+                    ],
+                },
+                "best_path_score": 4.999,
+            },
+            "1,1,1,0": {
+                "element_info_to_be_compared": {
+                    "score": 0.0,
+                    "common_clusters": {"clusters": []},
+                    "info": [
+                        {
+                            "element_number": 1,
+                            "length": 13,
+                            "num_words": 3,
+                            "words": ["27", "juni", "2014"],
+                            "anchor_word_hits": {"hits": []},
+                            "scoring_characters": "",
+                            "proper_names": [],
+                        }
+                    ],
+                },
+                "best_path_score": 0.0,
+            },
+            "1,1,1,1": {
+                "element_info_to_be_compared": {
+                    "score": 7.0,
+                    "common_clusters": {
+                        "clusters": [
+                            {
+                                "refs": [
+                                    {
+                                        "match_type": -3,
+                                        "weight": 3.0,
+                                        "text_number": 0,
+                                        "element_number": 1,
+                                        "pos": 0,
+                                        "length": 1,
+                                        "word": "27",
+                                    },
+                                    {
+                                        "match_type": -3,
+                                        "weight": 3.0,
+                                        "text_number": 1,
+                                        "element_number": 1,
+                                        "pos": 0,
+                                        "length": 1,
+                                        "word": "27",
+                                    },
+                                ]
+                            },
+                            {
+                                "refs": [
+                                    {
+                                        "match_type": -3,
+                                        "weight": 3.0,
+                                        "text_number": 0,
+                                        "element_number": 1,
+                                        "pos": 2,
+                                        "length": 1,
+                                        "word": "2014",
+                                    },
+                                    {
+                                        "match_type": -3,
+                                        "weight": 3.0,
+                                        "text_number": 1,
+                                        "element_number": 1,
+                                        "pos": 2,
+                                        "length": 1,
+                                        "word": "2014",
+                                    },
+                                ]
+                            },
+                        ]
+                    },
+                    "info": [
+                        {
+                            "element_number": 1,
+                            "length": 13,
+                            "num_words": 3,
+                            "words": ["27", "juni", "2014"],
+                            "anchor_word_hits": {"hits": []},
+                            "scoring_characters": "",
+                            "proper_names": [],
+                        },
+                        {
+                            "element_number": 1,
+                            "length": 20,
+                            "num_words": 3,
+                            "words": ["27", "Geassemánnu", "2014"],
+                            "anchor_word_hits": {"hits": []},
+                            "scoring_characters": "",
+                            "proper_names": ["Geassemánnu"],
+                        },
+                    ],
+                },
+                "best_path_score": -1.0,
+            },
+            "1,1,1,2": {
+                "element_info_to_be_compared": {
+                    "score": -99999.0,
+                    "common_clusters": {"clusters": []},
+                    "info": [
+                        {
+                            "element_number": 1,
+                            "length": 13,
+                            "num_words": 3,
+                            "words": ["27", "juni", "2014"],
+                            "anchor_word_hits": {"hits": []},
+                            "scoring_characters": "",
+                            "proper_names": [],
+                        },
+                        {
+                            "element_number": 1,
+                            "length": 20,
+                            "num_words": 3,
+                            "words": ["27", "Geassemánnu", "2014"],
+                            "anchor_word_hits": {"hits": []},
+                            "scoring_characters": "",
+                            "proper_names": ["Geassemánnu"],
+                        },
+                        {
+                            "element_number": 2,
+                            "length": 72,
+                            "num_words": 9,
+                            "words": [
+                                "Sámediggeráđđi",
+                                "lea",
+                                "juolludan",
+                                "1",
+                                "miljon",
+                                "ruvnno",
+                                "árktalaš",
+                                "eanadollui",
+                                "davvin",
+                            ],
+                            "anchor_word_hits": {
+                                "hits": [
+                                    {
+                                        "index": 0,
+                                        "element_number": 2,
+                                        "pos": 3,
+                                        "word": "1",
+                                    },
+                                    {
+                                        "index": 2,
+                                        "element_number": 2,
+                                        "pos": 0,
+                                        "word": "Sámediggeráđđi",
+                                    },
+                                ]
+                            },
+                            "scoring_characters": "",
+                            "proper_names": ["Sámediggeráđđi"],
+                        },
+                    ],
+                },
+                "best_path_score": -1.0,
+            },
+            "1,1,2,1": {
+                "element_info_to_be_compared": {
+                    "score": -99999.0,
+                    "common_clusters": {"clusters": []},
+                    "info": [
+                        {
+                            "element_number": 1,
+                            "length": 13,
+                            "num_words": 3,
+                            "words": ["27", "juni", "2014"],
+                            "anchor_word_hits": {"hits": []},
+                            "scoring_characters": "",
+                            "proper_names": [],
+                        },
+                        {
+                            "element_number": 2,
+                            "length": 75,
+                            "num_words": 11,
+                            "words": [
+                                "Sametingsrådet",
+                                "har",
+                                "bevilget",
+                                "1",
+                                "millioner",
+                                "kroner",
+                                "til",
+                                "Arktisk",
+                                "landbruk",
+                                "i",
+                                "nord",
+                            ],
+                            "anchor_word_hits": {
+                                "hits": [
+                                    {
+                                        "index": 0,
+                                        "element_number": 2,
+                                        "pos": 3,
+                                        "word": "1",
+                                    },
+                                    {
+                                        "index": 1,
+                                        "element_number": 2,
+                                        "pos": 4,
+                                        "word": "millioner",
+                                    },
+                                ]
+                            },
+                            "scoring_characters": "",
+                            "proper_names": ["Sametingsrådet", "Arktisk"],
+                        },
+                        {
+                            "element_number": 1,
+                            "length": 20,
+                            "num_words": 3,
+                            "words": ["27", "Geassemánnu", "2014"],
+                            "anchor_word_hits": {"hits": []},
+                            "scoring_characters": "",
+                            "proper_names": ["Geassemánnu"],
+                        },
+                    ],
+                },
+                "best_path_score": -1.0,
+            },
+            "1,2,0,2": {
+                "element_info_to_be_compared": {
+                    "score": 0.0,
+                    "common_clusters": {"clusters": []},
+                    "info": [
+                        {
+                            "element_number": 2,
+                            "length": 72,
+                            "num_words": 9,
+                            "words": [
+                                "Sámediggeráđđi",
+                                "lea",
+                                "juolludan",
+                                "1",
+                                "miljon",
+                                "ruvnno",
+                                "árktalaš",
+                                "eanadollui",
+                                "davvin",
+                            ],
+                            "anchor_word_hits": {
+                                "hits": [
+                                    {
+                                        "index": 0,
+                                        "element_number": 2,
+                                        "pos": 3,
+                                        "word": "1",
+                                    },
+                                    {
+                                        "index": 2,
+                                        "element_number": 2,
+                                        "pos": 0,
+                                        "word": "Sámediggeráđđi",
+                                    },
+                                ]
+                            },
+                            "scoring_characters": "",
+                            "proper_names": ["Sámediggeráđđi"],
+                        }
+                    ],
+                },
+                "best_path_score": -1.0,
+            },
+            "1,2,1,1": {
+                "element_info_to_be_compared": {
+                    "score": 0.0,
+                    "common_clusters": {"clusters": []},
+                    "info": [
+                        {
+                            "element_number": 1,
+                            "length": 13,
+                            "num_words": 3,
+                            "words": ["27", "juni", "2014"],
+                            "anchor_word_hits": {"hits": []},
+                            "scoring_characters": "",
+                            "proper_names": [],
+                        }
+                    ],
+                },
+                "best_path_score": 11.0,
+            },
+            "1,2,1,2": {
+                "element_info_to_be_compared": {
+                    "score": 0.0,
+                    "common_clusters": {"clusters": []},
+                    "info": [
+                        {
+                            "element_number": 1,
+                            "length": 13,
+                            "num_words": 3,
+                            "words": ["27", "juni", "2014"],
+                            "anchor_word_hits": {"hits": []},
+                            "scoring_characters": "",
+                            "proper_names": [],
+                        },
+                        {
+                            "element_number": 2,
+                            "length": 72,
+                            "num_words": 9,
+                            "words": [
+                                "Sámediggeráđđi",
+                                "lea",
+                                "juolludan",
+                                "1",
+                                "miljon",
+                                "ruvnno",
+                                "árktalaš",
+                                "eanadollui",
+                                "davvin",
+                            ],
+                            "anchor_word_hits": {
+                                "hits": [
+                                    {
+                                        "index": 0,
+                                        "element_number": 2,
+                                        "pos": 3,
+                                        "word": "1",
+                                    },
+                                    {
+                                        "index": 2,
+                                        "element_number": 2,
+                                        "pos": 0,
+                                        "word": "Sámediggeráđđi",
+                                    },
+                                ]
+                            },
+                            "scoring_characters": "",
+                            "proper_names": ["Sámediggeráđđi"],
+                        },
+                    ],
+                },
+                "best_path_score": -1.0,
+            },
+            "1,2,2,2": {
+                "element_info_to_be_compared": {
+                    "score": 3.999,
+                    "common_clusters": {
+                        "clusters": [
+                            {
+                                "refs": [
+                                    {
+                                        "match_type": -3,
+                                        "weight": 3.0,
+                                        "text_number": 0,
+                                        "element_number": 2,
+                                        "pos": 3,
+                                        "length": 1,
+                                        "word": "1",
+                                    },
+                                    {
+                                        "match_type": -3,
+                                        "weight": 3.0,
+                                        "text_number": 1,
+                                        "element_number": 2,
+                                        "pos": 3,
+                                        "length": 1,
+                                        "word": "1",
+                                    },
+                                    {
+                                        "match_type": 0,
+                                        "weight": 1.0,
+                                        "text_number": 1,
+                                        "element_number": 2,
+                                        "pos": 3,
+                                        "length": 1,
+                                        "word": "1",
+                                    },
+                                    {
+                                        "match_type": 0,
+                                        "weight": 1.0,
+                                        "text_number": 0,
+                                        "element_number": 2,
+                                        "pos": 3,
+                                        "length": 1,
+                                        "word": "1",
+                                    },
+                                ]
+                            }
+                        ]
+                    },
+                    "info": [
+                        {
+                            "element_number": 1,
+                            "length": 13,
+                            "num_words": 3,
+                            "words": ["27", "juni", "2014"],
+                            "anchor_word_hits": {"hits": []},
+                            "scoring_characters": "",
+                            "proper_names": [],
+                        },
+                        {
+                            "element_number": 2,
+                            "length": 75,
+                            "num_words": 11,
+                            "words": [
+                                "Sametingsrådet",
+                                "har",
+                                "bevilget",
+                                "1",
+                                "millioner",
+                                "kroner",
+                                "til",
+                                "Arktisk",
+                                "landbruk",
+                                "i",
+                                "nord",
+                            ],
+                            "anchor_word_hits": {
+                                "hits": [
+                                    {
+                                        "index": 0,
+                                        "element_number": 2,
+                                        "pos": 3,
+                                        "word": "1",
+                                    },
+                                    {
+                                        "index": 1,
+                                        "element_number": 2,
+                                        "pos": 4,
+                                        "word": "millioner",
+                                    },
+                                ]
+                            },
+                            "scoring_characters": "",
+                            "proper_names": ["Sametingsrådet", "Arktisk"],
+                        },
+                        {
+                            "element_number": 2,
+                            "length": 72,
+                            "num_words": 9,
+                            "words": [
+                                "Sámediggeráđđi",
+                                "lea",
+                                "juolludan",
+                                "1",
+                                "miljon",
+                                "ruvnno",
+                                "árktalaš",
+                                "eanadollui",
+                                "davvin",
+                            ],
+                            "anchor_word_hits": {
+                                "hits": [
+                                    {
+                                        "index": 0,
+                                        "element_number": 2,
+                                        "pos": 3,
+                                        "word": "1",
+                                    },
+                                    {
+                                        "index": 2,
+                                        "element_number": 2,
+                                        "pos": 0,
+                                        "word": "Sámediggeráđđi",
+                                    },
+                                ]
+                            },
+                            "scoring_characters": "",
+                            "proper_names": ["Sámediggeráđđi"],
+                        },
+                    ],
+                },
+                "best_path_score": -1.0,
+            },
+            "1,3,1,2": {
+                "element_info_to_be_compared": {
+                    "score": 0.0,
+                    "common_clusters": {"clusters": []},
+                    "info": [
+                        {
+                            "element_number": 1,
+                            "length": 13,
+                            "num_words": 3,
+                            "words": ["27", "juni", "2014"],
+                            "anchor_word_hits": {"hits": []},
+                            "scoring_characters": "",
+                            "proper_names": [],
+                        }
+                    ],
+                },
+                "best_path_score": 11.0,
+            },
+            "2,0,1,0": {
+                "element_info_to_be_compared": {
+                    "score": 0.0,
+                    "common_clusters": {"clusters": []},
+                    "info": [
+                        {
+                            "element_number": 0,
+                            "length": 35,
+                            "num_words": 5,
+                            "words": [
+                                "1",
+                                "miljon",
+                                "ruvnno",
+                                "árktalaš",
+                                "eanadollui",
+                            ],
+                            "anchor_word_hits": {
+                                "hits": [
+                                    {
+                                        "index": 0,
+                                        "element_number": 0,
+                                        "pos": 0,
+                                        "word": "1",
+                                    }
+                                ]
+                            },
+                            "scoring_characters": "",
+                            "proper_names": [],
+                        }
+                    ],
+                },
+                "best_path_score": 4.0,
+            },
+            "2,0,2,-1": {
+                "element_info_to_be_compared": {
+                    "score": 0.0,
+                    "common_clusters": {"clusters": []},
+                    "info": [
+                        {
+                            "element_number": 2,
+                            "length": 75,
+                            "num_words": 11,
+                            "words": [
+                                "Sametingsrådet",
+                                "har",
+                                "bevilget",
+                                "1",
+                                "millioner",
+                                "kroner",
+                                "til",
+                                "Arktisk",
+                                "landbruk",
+                                "i",
+                                "nord",
+                            ],
+                            "anchor_word_hits": {
+                                "hits": [
+                                    {
+                                        "index": 0,
+                                        "element_number": 2,
+                                        "pos": 3,
+                                        "word": "1",
+                                    },
+                                    {
+                                        "index": 1,
+                                        "element_number": 2,
+                                        "pos": 4,
+                                        "word": "millioner",
+                                    },
+                                ]
+                            },
+                            "scoring_characters": "",
+                            "proper_names": ["Sametingsrådet", "Arktisk"],
+                        }
+                    ],
+                },
+                "best_path_score": -1.0,
+            },
+            "2,0,2,0": {
+                "element_info_to_be_compared": {
+                    "score": 3.0,
+                    "common_clusters": {
+                        "clusters": [
+                            {
+                                "refs": [
+                                    {
+                                        "match_type": -3,
+                                        "weight": 3.0,
+                                        "text_number": 0,
+                                        "element_number": 2,
+                                        "pos": 3,
+                                        "length": 1,
+                                        "word": "1",
+                                    },
+                                    {
+                                        "match_type": -3,
+                                        "weight": 3.0,
+                                        "text_number": 1,
+                                        "element_number": 0,
+                                        "pos": 0,
+                                        "length": 1,
+                                        "word": "1",
+                                    },
+                                    {
+                                        "match_type": 0,
+                                        "weight": 1.0,
+                                        "text_number": 1,
+                                        "element_number": 0,
+                                        "pos": 0,
+                                        "length": 1,
+                                        "word": "1",
+                                    },
+                                    {
+                                        "match_type": 0,
+                                        "weight": 1.0,
+                                        "text_number": 0,
+                                        "element_number": 2,
+                                        "pos": 3,
+                                        "length": 1,
+                                        "word": "1",
+                                    },
+                                ]
+                            }
+                        ]
+                    },
+                    "info": [
+                        {
+                            "element_number": 2,
+                            "length": 75,
+                            "num_words": 11,
+                            "words": [
+                                "Sametingsrådet",
+                                "har",
+                                "bevilget",
+                                "1",
+                                "millioner",
+                                "kroner",
+                                "til",
+                                "Arktisk",
+                                "landbruk",
+                                "i",
+                                "nord",
+                            ],
+                            "anchor_word_hits": {
+                                "hits": [
+                                    {
+                                        "index": 0,
+                                        "element_number": 2,
+                                        "pos": 3,
+                                        "word": "1",
+                                    },
+                                    {
+                                        "index": 1,
+                                        "element_number": 2,
+                                        "pos": 4,
+                                        "word": "millioner",
+                                    },
+                                ]
+                            },
+                            "scoring_characters": "",
+                            "proper_names": ["Sametingsrådet", "Arktisk"],
+                        },
+                        {
+                            "element_number": 0,
+                            "length": 35,
+                            "num_words": 5,
+                            "words": [
+                                "1",
+                                "miljon",
+                                "ruvnno",
+                                "árktalaš",
+                                "eanadollui",
+                            ],
+                            "anchor_word_hits": {
+                                "hits": [
+                                    {
+                                        "index": 0,
+                                        "element_number": 0,
+                                        "pos": 0,
+                                        "word": "1",
+                                    }
+                                ]
+                            },
+                            "scoring_characters": "",
+                            "proper_names": [],
+                        },
+                    ],
+                },
+                "best_path_score": -1.0,
+            },
+            "2,0,2,1": {
+                "element_info_to_be_compared": {
+                    "score": 2.999,
+                    "common_clusters": {
+                        "clusters": [
+                            {
+                                "refs": [
+                                    {
+                                        "match_type": -3,
+                                        "weight": 3.0,
+                                        "text_number": 0,
+                                        "element_number": 2,
+                                        "pos": 3,
+                                        "length": 1,
+                                        "word": "1",
+                                    },
+                                    {
+                                        "match_type": -3,
+                                        "weight": 3.0,
+                                        "text_number": 1,
+                                        "element_number": 0,
+                                        "pos": 0,
+                                        "length": 1,
+                                        "word": "1",
+                                    },
+                                    {
+                                        "match_type": 0,
+                                        "weight": 1.0,
+                                        "text_number": 1,
+                                        "element_number": 0,
+                                        "pos": 0,
+                                        "length": 1,
+                                        "word": "1",
+                                    },
+                                    {
+                                        "match_type": 0,
+                                        "weight": 1.0,
+                                        "text_number": 0,
+                                        "element_number": 2,
+                                        "pos": 3,
+                                        "length": 1,
+                                        "word": "1",
+                                    },
+                                ]
+                            }
+                        ]
+                    },
+                    "info": [
+                        {
+                            "element_number": 2,
+                            "length": 75,
+                            "num_words": 11,
+                            "words": [
+                                "Sametingsrådet",
+                                "har",
+                                "bevilget",
+                                "1",
+                                "millioner",
+                                "kroner",
+                                "til",
+                                "Arktisk",
+                                "landbruk",
+                                "i",
+                                "nord",
+                            ],
+                            "anchor_word_hits": {
+                                "hits": [
+                                    {
+                                        "index": 0,
+                                        "element_number": 2,
+                                        "pos": 3,
+                                        "word": "1",
+                                    },
+                                    {
+                                        "index": 1,
+                                        "element_number": 2,
+                                        "pos": 4,
+                                        "word": "millioner",
+                                    },
+                                ]
+                            },
+                            "scoring_characters": "",
+                            "proper_names": ["Sametingsrådet", "Arktisk"],
+                        },
+                        {
+                            "element_number": 0,
+                            "length": 35,
+                            "num_words": 5,
+                            "words": [
+                                "1",
+                                "miljon",
+                                "ruvnno",
+                                "árktalaš",
+                                "eanadollui",
+                            ],
+                            "anchor_word_hits": {
+                                "hits": [
+                                    {
+                                        "index": 0,
+                                        "element_number": 0,
+                                        "pos": 0,
+                                        "word": "1",
+                                    }
+                                ]
+                            },
+                            "scoring_characters": "",
+                            "proper_names": [],
+                        },
+                        {
+                            "element_number": 1,
+                            "length": 20,
+                            "num_words": 3,
+                            "words": ["27", "Geassemánnu", "2014"],
+                            "anchor_word_hits": {"hits": []},
+                            "scoring_characters": "",
+                            "proper_names": ["Geassemánnu"],
+                        },
+                    ],
+                },
+                "best_path_score": -1.0,
+            },
+            "2,1,1,1": {
+                "element_info_to_be_compared": {
+                    "score": 0.0,
+                    "common_clusters": {"clusters": []},
+                    "info": [
+                        {
+                            "element_number": 1,
+                            "length": 20,
+                            "num_words": 3,
+                            "words": ["27", "Geassemánnu", "2014"],
+                            "anchor_word_hits": {"hits": []},
+                            "scoring_characters": "",
+                            "proper_names": ["Geassemánnu"],
+                        }
+                    ],
+                },
+                "best_path_score": 11.0,
+            },
+            "2,1,2,0": {
+                "element_info_to_be_compared": {
+                    "score": 0.0,
+                    "common_clusters": {"clusters": []},
+                    "info": [
+                        {
+                            "element_number": 2,
+                            "length": 75,
+                            "num_words": 11,
+                            "words": [
+                                "Sametingsrådet",
+                                "har",
+                                "bevilget",
+                                "1",
+                                "millioner",
+                                "kroner",
+                                "til",
+                                "Arktisk",
+                                "landbruk",
+                                "i",
+                                "nord",
+                            ],
+                            "anchor_word_hits": {
+                                "hits": [
+                                    {
+                                        "index": 0,
+                                        "element_number": 2,
+                                        "pos": 3,
+                                        "word": "1",
+                                    },
+                                    {
+                                        "index": 1,
+                                        "element_number": 2,
+                                        "pos": 4,
+                                        "word": "millioner",
+                                    },
+                                ]
+                            },
+                            "scoring_characters": "",
+                            "proper_names": ["Sametingsrådet", "Arktisk"],
+                        }
+                    ],
+                },
+                "best_path_score": 3.0,
+            },
+            "2,1,2,1": {
+                "element_info_to_be_compared": {
+                    "score": 0.0,
+                    "common_clusters": {"clusters": []},
+                    "info": [
+                        {
+                            "element_number": 2,
+                            "length": 75,
+                            "num_words": 11,
+                            "words": [
+                                "Sametingsrådet",
+                                "har",
+                                "bevilget",
+                                "1",
+                                "millioner",
+                                "kroner",
+                                "til",
+                                "Arktisk",
+                                "landbruk",
+                                "i",
+                                "nord",
+                            ],
+                            "anchor_word_hits": {
+                                "hits": [
+                                    {
+                                        "index": 0,
+                                        "element_number": 2,
+                                        "pos": 3,
+                                        "word": "1",
+                                    },
+                                    {
+                                        "index": 1,
+                                        "element_number": 2,
+                                        "pos": 4,
+                                        "word": "millioner",
+                                    },
+                                ]
+                            },
+                            "scoring_characters": "",
+                            "proper_names": ["Sametingsrådet", "Arktisk"],
+                        },
+                        {
+                            "element_number": 1,
+                            "length": 20,
+                            "num_words": 3,
+                            "words": ["27", "Geassemánnu", "2014"],
+                            "anchor_word_hits": {"hits": []},
+                            "scoring_characters": "",
+                            "proper_names": ["Geassemánnu"],
+                        },
+                    ],
+                },
+                "best_path_score": 2.999,
+            },
+            "2,1,2,2": {
+                "element_info_to_be_compared": {
+                    "score": 4.999,
+                    "common_clusters": {
+                        "clusters": [
+                            {
+                                "refs": [
+                                    {
+                                        "match_type": -3,
+                                        "weight": 3.0,
+                                        "text_number": 0,
+                                        "element_number": 2,
+                                        "pos": 3,
+                                        "length": 1,
+                                        "word": "1",
+                                    },
+                                    {
+                                        "match_type": -3,
+                                        "weight": 3.0,
+                                        "text_number": 1,
+                                        "element_number": 2,
+                                        "pos": 3,
+                                        "length": 1,
+                                        "word": "1",
+                                    },
+                                    {
+                                        "match_type": 0,
+                                        "weight": 1.0,
+                                        "text_number": 1,
+                                        "element_number": 2,
+                                        "pos": 3,
+                                        "length": 1,
+                                        "word": "1",
+                                    },
+                                    {
+                                        "match_type": 0,
+                                        "weight": 1.0,
+                                        "text_number": 0,
+                                        "element_number": 2,
+                                        "pos": 3,
+                                        "length": 1,
+                                        "word": "1",
+                                    },
+                                ]
+                            }
+                        ]
+                    },
+                    "info": [
+                        {
+                            "element_number": 2,
+                            "length": 75,
+                            "num_words": 11,
+                            "words": [
+                                "Sametingsrådet",
+                                "har",
+                                "bevilget",
+                                "1",
+                                "millioner",
+                                "kroner",
+                                "til",
+                                "Arktisk",
+                                "landbruk",
+                                "i",
+                                "nord",
+                            ],
+                            "anchor_word_hits": {
+                                "hits": [
+                                    {
+                                        "index": 0,
+                                        "element_number": 2,
+                                        "pos": 3,
+                                        "word": "1",
+                                    },
+                                    {
+                                        "index": 1,
+                                        "element_number": 2,
+                                        "pos": 4,
+                                        "word": "millioner",
+                                    },
+                                ]
+                            },
+                            "scoring_characters": "",
+                            "proper_names": ["Sametingsrådet", "Arktisk"],
+                        },
+                        {
+                            "element_number": 1,
+                            "length": 20,
+                            "num_words": 3,
+                            "words": ["27", "Geassemánnu", "2014"],
+                            "anchor_word_hits": {"hits": []},
+                            "scoring_characters": "",
+                            "proper_names": ["Geassemánnu"],
+                        },
+                        {
+                            "element_number": 2,
+                            "length": 72,
+                            "num_words": 9,
+                            "words": [
+                                "Sámediggeráđđi",
+                                "lea",
+                                "juolludan",
+                                "1",
+                                "miljon",
+                                "ruvnno",
+                                "árktalaš",
+                                "eanadollui",
+                                "davvin",
+                            ],
+                            "anchor_word_hits": {
+                                "hits": [
+                                    {
+                                        "index": 0,
+                                        "element_number": 2,
+                                        "pos": 3,
+                                        "word": "1",
+                                    },
+                                    {
+                                        "index": 2,
+                                        "element_number": 2,
+                                        "pos": 0,
+                                        "word": "Sámediggeráđđi",
+                                    },
+                                ]
+                            },
+                            "scoring_characters": "",
+                            "proper_names": ["Sámediggeráđđi"],
+                        },
+                    ],
+                },
+                "best_path_score": 8.998,
+            },
+            "2,2,1,2": {
+                "element_info_to_be_compared": {
+                    "score": 0.0,
+                    "common_clusters": {"clusters": []},
+                    "info": [
+                        {
+                            "element_number": 2,
+                            "length": 72,
+                            "num_words": 9,
+                            "words": [
+                                "Sámediggeráđđi",
+                                "lea",
+                                "juolludan",
+                                "1",
+                                "miljon",
+                                "ruvnno",
+                                "árktalaš",
+                                "eanadollui",
+                                "davvin",
+                            ],
+                            "anchor_word_hits": {
+                                "hits": [
+                                    {
+                                        "index": 0,
+                                        "element_number": 2,
+                                        "pos": 3,
+                                        "word": "1",
+                                    },
+                                    {
+                                        "index": 2,
+                                        "element_number": 2,
+                                        "pos": 0,
+                                        "word": "Sámediggeráđđi",
+                                    },
+                                ]
+                            },
+                            "scoring_characters": "",
+                            "proper_names": ["Sámediggeráđđi"],
+                        }
+                    ],
+                },
+                "best_path_score": 4.999,
+            },
+            "2,2,2,1": {
+                "element_info_to_be_compared": {
+                    "score": 0.0,
+                    "common_clusters": {"clusters": []},
+                    "info": [
+                        {
+                            "element_number": 2,
+                            "length": 75,
+                            "num_words": 11,
+                            "words": [
+                                "Sametingsrådet",
+                                "har",
+                                "bevilget",
+                                "1",
+                                "millioner",
+                                "kroner",
+                                "til",
+                                "Arktisk",
+                                "landbruk",
+                                "i",
+                                "nord",
+                            ],
+                            "anchor_word_hits": {
+                                "hits": [
+                                    {
+                                        "index": 0,
+                                        "element_number": 2,
+                                        "pos": 3,
+                                        "word": "1",
+                                    },
+                                    {
+                                        "index": 1,
+                                        "element_number": 2,
+                                        "pos": 4,
+                                        "word": "millioner",
+                                    },
+                                ]
+                            },
+                            "scoring_characters": "",
+                            "proper_names": ["Sametingsrådet", "Arktisk"],
+                        }
+                    ],
+                },
+                "best_path_score": 4.0,
+            },
+            "2,2,2,2": {
+                "element_info_to_be_compared": {
+                    "score": 5.0,
+                    "common_clusters": {
+                        "clusters": [
+                            {
+                                "refs": [
+                                    {
+                                        "match_type": -3,
+                                        "weight": 3.0,
+                                        "text_number": 0,
+                                        "element_number": 2,
+                                        "pos": 3,
+                                        "length": 1,
+                                        "word": "1",
+                                    },
+                                    {
+                                        "match_type": -3,
+                                        "weight": 3.0,
+                                        "text_number": 1,
+                                        "element_number": 2,
+                                        "pos": 3,
+                                        "length": 1,
+                                        "word": "1",
+                                    },
+                                    {
+                                        "match_type": 0,
+                                        "weight": 1.0,
+                                        "text_number": 1,
+                                        "element_number": 2,
+                                        "pos": 3,
+                                        "length": 1,
+                                        "word": "1",
+                                    },
+                                    {
+                                        "match_type": 0,
+                                        "weight": 1.0,
+                                        "text_number": 0,
+                                        "element_number": 2,
+                                        "pos": 3,
+                                        "length": 1,
+                                        "word": "1",
+                                    },
+                                ]
+                            }
+                        ]
+                    },
+                    "info": [
+                        {
+                            "element_number": 2,
+                            "length": 75,
+                            "num_words": 11,
+                            "words": [
+                                "Sametingsrådet",
+                                "har",
+                                "bevilget",
+                                "1",
+                                "millioner",
+                                "kroner",
+                                "til",
+                                "Arktisk",
+                                "landbruk",
+                                "i",
+                                "nord",
+                            ],
+                            "anchor_word_hits": {
+                                "hits": [
+                                    {
+                                        "index": 0,
+                                        "element_number": 2,
+                                        "pos": 3,
+                                        "word": "1",
+                                    },
+                                    {
+                                        "index": 1,
+                                        "element_number": 2,
+                                        "pos": 4,
+                                        "word": "millioner",
+                                    },
+                                ]
+                            },
+                            "scoring_characters": "",
+                            "proper_names": ["Sametingsrådet", "Arktisk"],
+                        },
+                        {
+                            "element_number": 2,
+                            "length": 72,
+                            "num_words": 9,
+                            "words": [
+                                "Sámediggeráđđi",
+                                "lea",
+                                "juolludan",
+                                "1",
+                                "miljon",
+                                "ruvnno",
+                                "árktalaš",
+                                "eanadollui",
+                                "davvin",
+                            ],
+                            "anchor_word_hits": {
+                                "hits": [
+                                    {
+                                        "index": 0,
+                                        "element_number": 2,
+                                        "pos": 3,
+                                        "word": "1",
+                                    },
+                                    {
+                                        "index": 2,
+                                        "element_number": 2,
+                                        "pos": 0,
+                                        "word": "Sámediggeráđđi",
+                                    },
+                                ]
+                            },
+                            "scoring_characters": "",
+                            "proper_names": ["Sámediggeráđđi"],
+                        },
+                    ],
+                },
+                "best_path_score": 8.998999999999999,
+            },
+            "2,3,2,2": {
+                "element_info_to_be_compared": {
+                    "score": 0.0,
+                    "common_clusters": {"clusters": []},
+                    "info": [
+                        {
+                            "element_number": 2,
+                            "length": 75,
+                            "num_words": 11,
+                            "words": [
+                                "Sametingsrådet",
+                                "har",
+                                "bevilget",
+                                "1",
+                                "millioner",
+                                "kroner",
+                                "til",
+                                "Arktisk",
+                                "landbruk",
+                                "i",
+                                "nord",
+                            ],
+                            "anchor_word_hits": {
+                                "hits": [
+                                    {
+                                        "index": 0,
+                                        "element_number": 2,
+                                        "pos": 3,
+                                        "word": "1",
+                                    },
+                                    {
+                                        "index": 1,
+                                        "element_number": 2,
+                                        "pos": 4,
+                                        "word": "millioner",
+                                    },
+                                ]
+                            },
+                            "scoring_characters": "",
+                            "proper_names": ["Sametingsrådet", "Arktisk"],
+                        }
+                    ],
+                },
+                "best_path_score": 16.0,
+            },
+            "3,0,2,0": {
+                "element_info_to_be_compared": {
+                    "score": 0.0,
+                    "common_clusters": {"clusters": []},
+                    "info": [
+                        {
+                            "element_number": 0,
+                            "length": 35,
+                            "num_words": 5,
+                            "words": [
+                                "1",
+                                "miljon",
+                                "ruvnno",
+                                "árktalaš",
+                                "eanadollui",
+                            ],
+                            "anchor_word_hits": {
+                                "hits": [
+                                    {
+                                        "index": 0,
+                                        "element_number": 0,
+                                        "pos": 0,
+                                        "word": "1",
+                                    }
+                                ]
+                            },
+                            "scoring_characters": "",
+                            "proper_names": [],
+                        }
+                    ],
+                },
+                "best_path_score": 4.0,
+            },
+            "3,1,2,1": {
+                "element_info_to_be_compared": {
+                    "score": 0.0,
+                    "common_clusters": {"clusters": []},
+                    "info": [
+                        {
+                            "element_number": 1,
+                            "length": 20,
+                            "num_words": 3,
+                            "words": ["27", "Geassemánnu", "2014"],
+                            "anchor_word_hits": {"hits": []},
+                            "scoring_characters": "",
+                            "proper_names": ["Geassemánnu"],
+                        }
+                    ],
+                },
+                "best_path_score": 11.0,
+            },
+            "3,2,2,2": {
+                "element_info_to_be_compared": {
+                    "score": 0.0,
+                    "common_clusters": {"clusters": []},
+                    "info": [
+                        {
+                            "element_number": 2,
+                            "length": 72,
+                            "num_words": 9,
+                            "words": [
+                                "Sámediggeráđđi",
+                                "lea",
+                                "juolludan",
+                                "1",
+                                "miljon",
+                                "ruvnno",
+                                "árktalaš",
+                                "eanadollui",
+                                "davvin",
+                            ],
+                            "anchor_word_hits": {
+                                "hits": [
+                                    {
+                                        "index": 0,
+                                        "element_number": 2,
+                                        "pos": 3,
+                                        "word": "1",
+                                    },
+                                    {
+                                        "index": 2,
+                                        "element_number": 2,
+                                        "pos": 0,
+                                        "word": "Sámediggeráđđi",
+                                    },
+                                ]
+                            },
+                            "scoring_characters": "",
+                            "proper_names": ["Sámediggeráđđi"],
+                        }
+                    ],
+                },
+                "best_path_score": 16.0,
             },
         },
         "step_list": [
@@ -3302,4 +3283,21 @@ def test_anchor1():
             {"increment": [1, 2]},
             {"increment": [2, 1]},
         ],
+        "best_path_scores": {
+            "-1,0": -1.0,
+            "0,-1": -1.0,
+            "0,0": -1.0,
+            "0,1": -1.0,
+            "1,0": -1.0,
+            "-1,1": -1.0,
+            "0,2": -1.0,
+            "1,1": -1.0,
+            "1,-1": -1.0,
+            "2,0": -1.0,
+            "1,2": -1.0,
+            "2,1": -1.0,
+            "2,2": -1.0,
+            "-1,2": -1.0,
+            "2,-1": -1.0,
+        },
     }

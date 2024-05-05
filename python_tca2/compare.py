@@ -4,7 +4,6 @@ from typing import List
 
 from python_tca2 import constants
 from python_tca2.comparecells import CompareCells
-from python_tca2.comparematrix import CompareMatrix
 from python_tca2.elementsinfo import ElementsInfo
 from python_tca2.pathstep import PathStep
 
@@ -14,7 +13,9 @@ class Compare:
         self.elements_info: List[ElementsInfo] = [
             ElementsInfo() for _ in range(constants.NUM_FILES)
         ]
-        self.matrix: CompareMatrix = CompareMatrix()
+        self.matrix: dict[str, CompareCells] = {}
+        self.best_path_scores: dict[str, float] = {}
+
         self.step_list: List[PathStep] = []
 
         self.create_step_list()
@@ -22,8 +23,11 @@ class Compare:
     def to_json(self):
         return {
             "elements_info": [ei.to_json() for ei in self.elements_info],
-            "matrix": self.matrix.to_json(),
+            "matrix": {
+                key: self.matrix[key].to_json() for key in sorted(self.matrix.keys())
+            },
             "step_list": [asdict(step) for step in self.step_list],
+            "best_path_scores": self.best_path_scores,
         }
 
     def __str__(self):
@@ -47,20 +51,20 @@ class Compare:
             ]
         )
 
-        if key not in self.matrix.cells:
-            self.matrix.cells[key] = CompareCells(model, position, step)
+        if key not in self.matrix:
+            self.matrix[key] = CompareCells(model, position, step)
 
-            if best_path_score_key in self.matrix.best_path_scores:
-                temp = self.matrix.best_path_scores[best_path_score_key]
-                self.matrix.cells[key].best_path_score = temp
+            if best_path_score_key in self.best_path_scores:
+                temp = self.best_path_scores[best_path_score_key]
+                self.matrix[key].best_path_score = temp
             else:
-                self.matrix.cells[key].best_path_score = constants.BEST_PATH_SCORE_BAD
+                self.matrix[key].best_path_score = constants.BEST_PATH_SCORE_BAD
 
-            self.matrix.best_path_scores[best_path_score_key] = self.matrix.cells[
+            self.best_path_scores[best_path_score_key] = self.matrix[
                 key
             ].best_path_score
 
-        return self.matrix.cells[key]
+        return self.matrix[key]
 
     @staticmethod
     def int_to_base(i, base):
@@ -105,10 +109,19 @@ class Compare:
                 self.step_list.append(PathStep(increment))
 
     def get_score(self, position):
-        return self.matrix.get_score(position)
+        if any(pos < 0 for pos in position):
+            return constants.BEST_PATH_SCORE_BAD
+
+        best_path_score_key = ",".join(str(pos) for pos in position)
+        if best_path_score_key not in self.best_path_scores:
+            raise SystemExit("best_path_score_key not in self.best_path_scores")
+        else:
+            return self.best_path_scores[best_path_score_key]
 
     def set_score(self, position, score):
-        self.matrix.set_score(position, score)
+        best_path_score_key = ",".join(str(pos) for pos in position)
+        self.best_path_scores[best_path_score_key] = score
 
     def reset_best_path_scores(self):
-        self.matrix.reset_best_path_scores()
+        for key in self.best_path_scores.keys():
+            self.best_path_scores[key] = constants.BEST_PATH_SCORE_NOT_CALCULATED
