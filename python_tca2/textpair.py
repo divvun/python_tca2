@@ -5,7 +5,7 @@ from python_tca2.aelement import AElement
 
 
 @dataclass
-class Unaligned:
+class TextPair:
     elements: defaultdict[int, list[AElement]]
 
     def pop(self, text_number: int) -> AElement:

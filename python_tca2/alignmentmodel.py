@@ -17,8 +17,8 @@ from python_tca2.path import Path
 from python_tca2.pathstep import PathStep
 from python_tca2.queue_entry import QueueEntry
 from python_tca2.queuelist import QueueList
+from python_tca2.textpair import TextPair
 from python_tca2.toalign import ToAlign
-from python_tca2.unaligned import Unaligned
 
 
 class AlignmentModel:
@@ -47,7 +47,7 @@ class AlignmentModel:
         run_limit = constants.RUN_LIMIT
         run_count = 0
         done_aligning = False
-        unaligned = Unaligned(
+        textpair = TextPair(
             elements={index: self.load_tree(tree) for index, tree in enumerate(trees)}
         )
         aligned = Aligned([])
@@ -56,7 +56,7 @@ class AlignmentModel:
         while not done_aligning:
             compare.reset_best_path_scores()
 
-            queue_list = self.lengthen_paths(unaligned=unaligned, compare=compare)
+            queue_list = self.lengthen_paths(textpair=textpair, compare=compare)
 
             if (
                 len(queue_list.entries) < constants.NUM_FILES
@@ -71,7 +71,7 @@ class AlignmentModel:
 
                 if step_suggestion is not None:
                     to_align = self.find_more_to_align_without_gui(
-                        step_suggestion=step_suggestion, unaligned=unaligned
+                        step_suggestion=step_suggestion, textpair=textpair
                     )
                     run_count += 1
                     done_aligning = run_count >= run_limit
@@ -87,12 +87,12 @@ class AlignmentModel:
             file=open("compare.json", "w"),
         )
 
-    def find_more_to_align_without_gui(self, step_suggestion, unaligned: Unaligned):
+    def find_more_to_align_without_gui(self, step_suggestion, textpair: TextPair):
         to_align = ToAlign(defaultdict(list))
-        for text_number in unaligned.elements.keys():
+        for text_number in textpair.elements.keys():
             number_of_steps = 0
             while number_of_steps < step_suggestion.increment[text_number]:
-                to_align.pickup(text_number, unaligned.pop(text_number))
+                to_align.pickup(text_number, textpair.pop(text_number))
                 number_of_steps += 1
 
         return to_align
@@ -114,8 +114,8 @@ class AlignmentModel:
 
         return step_suggestion
 
-    def lengthen_paths(self, unaligned: Unaligned = None, compare: Compare = None):
-        position = self.find_start_position(unaligned=unaligned)
+    def lengthen_paths(self, textpair: TextPair = None, compare: Compare = None):
+        position = self.find_start_position(textpair=textpair)
         queue_list = QueueList([])
         queue_list.add(QueueEntry(Path(position), 0))
         step_count = 0
@@ -186,12 +186,12 @@ class AlignmentModel:
             ret_queue_entry.path = None
             return ret_queue_entry
 
-    def find_start_position(self, unaligned: Unaligned):
+    def find_start_position(self, textpair: TextPair):
         return [
             (
                 elements[0].element_number - 1
                 if elements
                 else len(self.nodes[text_number]) - 1
             )
-            for text_number, elements in unaligned.elements.items()
+            for text_number, elements in textpair.elements.items()
         ]

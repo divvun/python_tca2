@@ -12,7 +12,7 @@ from python_tca2.anchorwordlistentry import AnchorWordListEntry
 from python_tca2.elementinfo import ElementInfo
 from python_tca2.elementinfotobecompared import ElementInfoToBeCompared
 from python_tca2.toalign import ToAlign
-from python_tca2.unaligned import Unaligned
+from python_tca2.textpair import TextPair
 
 
 def test_get_score():
@@ -111,7 +111,7 @@ def test_aelement_text():
     assert aelement.text == "9 Økonomiske, administrative og miljømessige konsekvenser"
 
 
-# A simple test of transfer from unaligned to toalign
+# A simple test of transfer from textpair to toalign
 def test_toalign_pickup():
     tree = etree.fromstring(
         """
@@ -122,7 +122,7 @@ def test_toalign_pickup():
     """
     )
 
-    unaligned = Unaligned(
+    textpair = TextPair(
         elements={
             0: [
                 AElement(
@@ -142,7 +142,7 @@ def test_toalign_pickup():
     )
 
     to_align = ToAlign(defaultdict(list))
-    for element in unaligned.elements[0]:
+    for element in textpair.elements[0]:
         to_align.pickup(0, element)
 
     elements = []
@@ -156,7 +156,7 @@ def test_toalign_pickup():
         element.element_number = index
         elements.append(element)
 
-    assert unaligned.to_json() == {
+    assert textpair.to_json() == {
         "elements": [
             {
                 "text": "Kanskje en innkjøpsordning for kvenskspråklig litteratur.",
