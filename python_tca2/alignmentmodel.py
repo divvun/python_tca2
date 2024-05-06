@@ -56,7 +56,9 @@ class AlignmentModel:
         while not done_aligning:
             compare.reset_best_path_scores()
 
-            queue_list = self.lengthen_paths(textpair=textpair, compare=compare)
+            queue_list = self.lengthen_paths(
+                start_position=textpair.start_position, compare=compare
+            )
 
             if (
                 len(queue_list.entries) < constants.NUM_FILES
@@ -92,7 +94,7 @@ class AlignmentModel:
         for text_number in textpair.elements.keys():
             number_of_steps = 0
             while number_of_steps < step_suggestion.increment[text_number]:
-                to_align.pickup(text_number, textpair.pop(text_number))
+                to_align.pickup(text_number, textpair.get_next_element(text_number))
                 number_of_steps += 1
 
         return to_align
@@ -114,10 +116,9 @@ class AlignmentModel:
 
         return step_suggestion
 
-    def lengthen_paths(self, textpair: TextPair = None, compare: Compare = None):
-        position = self.find_start_position(textpair=textpair)
+    def lengthen_paths(self, start_position, compare: Compare = None):
         queue_list = QueueList([])
-        queue_list.add(QueueEntry(Path(position), 0))
+        queue_list.add(QueueEntry(Path(start_position), 0))
         step_count = 0
         done_lengthening = False
         while not done_lengthening:
@@ -185,13 +186,3 @@ class AlignmentModel:
         else:
             ret_queue_entry.path = None
             return ret_queue_entry
-
-    def find_start_position(self, textpair: TextPair):
-        return [
-            (
-                elements[0].element_number - 1
-                if elements
-                else len(self.nodes[text_number]) - 1
-            )
-            for text_number, elements in textpair.elements.items()
-        ]
