@@ -2,7 +2,7 @@ import json
 from collections import defaultdict
 from copy import deepcopy
 
-from python_tca2 import constants
+from python_tca2 import constants, steplist
 from python_tca2.aelement import AElement
 from python_tca2.aligned import Aligned
 from python_tca2.alignment_utils import print_frame
@@ -137,50 +137,6 @@ class AlignmentModel:
 
         return queue_list
 
-    @staticmethod
-    def int_to_base(i, base):
-        if i == 0:
-            return "0"
-        digits = []
-        while i:
-            digits.append(int(i % base))
-            i //= base
-        digits = digits[::-1]
-        return "".join(map(str, digits))
-
-    def create_step_list(self):
-        step_list: list[PathStep] = []
-        range_val = constants.MAX_NUM_TRY - constants.MIN_NUM_TRY + 1
-        limit = 1
-        for _ in range(constants.NUM_FILES):
-            limit *= range_val
-
-        for i in range(limit):
-            increment = [0] * constants.NUM_FILES
-
-            comb_string = self.int_to_base(limit + i, range_val)[
-                1 : constants.NUM_FILES + 1
-            ]
-            minimum = constants.MAX_NUM_TRY + 1
-            maximum = constants.MIN_NUM_TRY - 1
-            total = 0
-
-            for text_number in range(constants.NUM_FILES):
-                increment[text_number] = constants.MIN_NUM_TRY + int(
-                    comb_string[text_number], range_val
-                )
-                total += increment[text_number]
-                minimum = min(minimum, increment[text_number])
-                maximum = max(maximum, increment[text_number])
-
-            if (
-                maximum > 0
-                and maximum - minimum <= constants.MAX_DIFF_TRY
-                and total <= constants.MAX_TOTAL_TRY
-            ):
-                step_list.append(PathStep(increment))
-        return step_list
-
     def lengthen_current_path(
         self,
         queue_entry: QueueEntry,
@@ -188,8 +144,7 @@ class AlignmentModel:
         next_queue_list: QueueList,
         compare: Compare = None,
     ):
-        step_list = self.create_step_list()
-        for step in step_list:
+        for step in steplist.create_step_list(len(self.keys)):
             try:
                 new_queue_entry = self.make_longer_path(
                     deepcopy(queue_entry), step, compare=compare
