@@ -5,12 +5,12 @@ from python_tca2 import alignmentmodel
 
 
 def parallelize(anchor_file, files: list[str]):
-    model = alignmentmodel.AlignmentModel(files)
+    model = alignmentmodel.AlignmentModel(
+        {index: etree.parse(filename) for index, filename in enumerate(files)}
+    )
 
     model.anchor_word_list.load_from_file(anchor_file)
-    aligned, _ = model.suggets_without_gui(
-        [etree.parse(filename) for filename in files]
-    )
+    aligned, _ = model.suggets_without_gui()
     aligned.save_plain()
 
 

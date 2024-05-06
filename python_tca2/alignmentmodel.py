@@ -26,10 +26,13 @@ class AlignmentModel:
     scoring_characters = constants.DEFAULT_SCORING_CHARACTERS
     max_path_length = constants.MAX_PATH_LENGTH
 
-    def __init__(self, keys: list[int]):
-        self.keys = keys
+    def __init__(self, tree_dict: dict):
+        self.keys = list(tree_dict.keys())
         self.nodes = []
         self.anchor_word_list = AnchorWordList()
+        self.textpair = TextPair(
+            elements={index: self.load_tree(tree) for index, tree in tree_dict.items()}
+        )
 
     def load_tree(self, tree) -> list[AElement]:
         self.nodes.append(tree.xpath("//s"))
@@ -43,22 +46,17 @@ class AlignmentModel:
             for index, node in enumerate(tree.iter("s"))
         ]
 
-    def suggets_without_gui(self, trees) -> Aligned:
+    def suggets_without_gui(self) -> Aligned:
         run_limit = constants.RUN_LIMIT
         run_count = 0
         done_aligning = False
-        textpair = TextPair(
-            elements={index: self.load_tree(tree) for index, tree in enumerate(trees)}
-        )
         aligned = Aligned([])
         compare = Compare(anchor_word_list=self.anchor_word_list, nodes=self.nodes)
 
         while not done_aligning:
             compare.reset_best_path_scores()
 
-            queue_list = self.lengthen_paths(
-                start_position=textpair.start_position, compare=compare
-            )
+            queue_list = self.lengthen_paths(compare=compare)
 
             if (
                 len(queue_list.entries) < constants.NUM_FILES
@@ -73,7 +71,7 @@ class AlignmentModel:
 
                 if step_suggestion is not None:
                     to_align = self.find_more_to_align_without_gui(
-                        step_suggestion=step_suggestion, textpair=textpair
+                        step_suggestion=step_suggestion
                     )
                     run_count += 1
                     done_aligning = run_count >= run_limit
@@ -89,12 +87,14 @@ class AlignmentModel:
             file=open("compare.json", "w"),
         )
 
-    def find_more_to_align_without_gui(self, step_suggestion, textpair: TextPair):
+    def find_more_to_align_without_gui(self, step_suggestion):
         to_align = ToAlign(defaultdict(list))
-        for text_number in textpair.elements.keys():
+        for text_number in self.keys:
             number_of_steps = 0
             while number_of_steps < step_suggestion.increment[text_number]:
-                to_align.pickup(text_number, textpair.get_next_element(text_number))
+                to_align.pickup(
+                    text_number, self.textpair.get_next_element(text_number)
+                )
                 number_of_steps += 1
 
         return to_align
@@ -116,9 +116,9 @@ class AlignmentModel:
 
         return step_suggestion
 
-    def lengthen_paths(self, start_position, compare: Compare = None):
+    def lengthen_paths(self, compare: Compare = None):
         queue_list = QueueList([])
-        queue_list.add(QueueEntry(Path(start_position), 0))
+        queue_list.add(QueueEntry(Path(self.textpair.start_position), 0))
         step_count = 0
         done_lengthening = False
         while not done_lengthening:

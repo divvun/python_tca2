@@ -11,8 +11,8 @@ from python_tca2.anchorwordlist import AnchorWordList
 from python_tca2.anchorwordlistentry import AnchorWordListEntry
 from python_tca2.elementinfo import ElementInfo
 from python_tca2.elementinfotobecompared import ElementInfoToBeCompared
-from python_tca2.toalign import ToAlign
 from python_tca2.textpair import TextPair
+from python_tca2.toalign import ToAlign
 
 
 def test_get_score():
@@ -245,9 +245,9 @@ def test_suggest1():
         ),
     ]
 
-    model = alignmentmodel.AlignmentModel(keys=range(2))
+    model = alignmentmodel.AlignmentModel(dict(enumerate(trees)))
     model.anchor_word_list = load_anchor_words()
-    aligned, _ = model.suggets_without_gui(trees)
+    aligned, _ = model.suggets_without_gui()
 
     assert aligned == Aligned(
         [
@@ -309,9 +309,9 @@ def test_suggest2():
         ),
     ]
 
-    model = alignmentmodel.AlignmentModel(keys=range(2))
+    model = alignmentmodel.AlignmentModel(dict(enumerate(trees)))
     model.anchor_word_list = load_anchor_words()
-    aligned, _ = model.suggets_without_gui(trees)
+    aligned, _ = model.suggets_without_gui()
 
     assert aligned == Aligned(
         [
@@ -390,9 +390,9 @@ def test_suggest3():
         ),
     ]
 
-    model = alignmentmodel.AlignmentModel(keys=range(2))
+    model = alignmentmodel.AlignmentModel(dict(enumerate(trees)))
     model.anchor_word_list = load_anchor_words()
-    aligned, _ = model.suggets_without_gui(trees)
+    aligned, _ = model.suggets_without_gui()
 
     assert aligned == Aligned(
         [
@@ -460,9 +460,9 @@ def test_anchorword_hits():
         ),
     ]
 
-    model = alignmentmodel.AlignmentModel(keys=range(2))
+    model = alignmentmodel.AlignmentModel(dict(enumerate(trees)))
     model.anchor_word_list = load_anchor_words()
-    _, compare = model.suggets_without_gui(trees)
+    _, compare = model.suggets_without_gui()
     interesting = compare.matrix["0,0,0,0"]
 
     found_hits = [
@@ -501,9 +501,9 @@ def test_anchor1():
         ),
     ]
 
-    model = alignmentmodel.AlignmentModel(keys=range(2))
+    model = alignmentmodel.AlignmentModel(dict(enumerate(trees)))
     model.anchor_word_list = load_anchor_words()
-    _, compare = model.suggets_without_gui(trees)
+    _, compare = model.suggets_without_gui()
 
     assert compare.to_json() == {
         "elements_info": [
