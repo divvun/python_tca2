@@ -8,7 +8,7 @@ from python_tca2.pathstep import PathStep
 
 
 class CompareCells:
-    def __init__(
+    def __init__(  # noqa: PLR0913
         self,
         elements_info: list[ElementsInfo],
         position: list[int],
@@ -17,7 +17,14 @@ class CompareCells:
         anchor_word_list,
     ):
         self.element_info_to_be_compared = ElementInfoToBeCompared()
+        self.build_elementstobecompared(
+            position, step, nodes, anchor_word_list, elements_info
+        )
         self.best_path_score: float = -1.0
+
+    def build_elementstobecompared(  # noqa: PLR0913
+        self, position, step, nodes, anchor_word_list, elements_info
+    ):
         text_end_count = 0
         for text_number in range(constants.NUM_FILES):
             for x in range(
