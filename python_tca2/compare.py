@@ -1,12 +1,11 @@
 import json
-from dataclasses import asdict
 from typing import List
 
 from python_tca2 import constants
 from python_tca2.anchorwordlist import AnchorWordList
 from python_tca2.comparecells import CompareCells
+from python_tca2.elementinfotobecompared import ElementInfoToBeCompared
 from python_tca2.elementsinfo import ElementsInfo
-from python_tca2.pathstep import PathStep
 
 
 class Compare:
@@ -50,12 +49,16 @@ class Compare:
         )
 
         if key not in self.matrix:
-            self.matrix[key] = CompareCells(
-                self.elements_info,
+            element_info_to_be_compared = ElementInfoToBeCompared()
+            element_info_to_be_compared.build_elementstobecompared(
                 position,
                 step,
                 self.nodes,
                 self.anchor_word_list,
+                self.elements_info,
+            )
+            self.matrix[key] = CompareCells(
+                element_info_to_be_compared=element_info_to_be_compared
             )
 
             if best_path_score_key in self.best_path_scores:
