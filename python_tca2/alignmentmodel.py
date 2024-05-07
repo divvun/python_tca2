@@ -28,14 +28,12 @@ class AlignmentModel:
 
     def __init__(self, tree_dict: dict):
         self.keys = list(tree_dict.keys())
-        self.nodes = []
         self.anchor_word_list = AnchorWordList()
         self.textpair = TextPair(
             elements={index: self.load_tree(tree) for index, tree in tree_dict.items()}
         )
 
     def load_tree(self, tree) -> list[AElement]:
-        self.nodes.append(tree.xpath("//s"))
         return [
             AElement(
                 " ".join(
@@ -51,7 +49,9 @@ class AlignmentModel:
         run_count = 0
         done_aligning = False
         aligned = Aligned([])
-        compare = Compare(anchor_word_list=self.anchor_word_list, nodes=self.nodes)
+        compare = Compare(
+            anchor_word_list=self.anchor_word_list, nodes=self.textpair.elements
+        )
 
         while not done_aligning:
             compare.reset_best_path_scores()
