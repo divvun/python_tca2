@@ -10,6 +10,7 @@ from python_tca2.alignment_utils import count_words
 from python_tca2.anchorwordhits import AnchorWordHits
 from python_tca2.clusters import Clusters
 from python_tca2.elementinfo import ElementInfo
+from python_tca2.exceptions import EndOfAllTextsExceptionError, EndOfTextExceptionError
 from python_tca2.ref import Ref
 
 
@@ -20,6 +21,28 @@ class ElementInfoToBeCompared:
         self.common_clusters = Clusters()
         self.score = constants.ELEMENTINFO_SCORE_NOT_CALCULATED
         self.info: defaultdict[int, list[ElementInfo]] = defaultdict(list)
+
+    def build_elementstobecompared(  # noqa: PLR0913
+        self, position, step, nodes, anchor_word_list, elements_info
+    ):
+        text_end_count = 0
+        for text_number in range(constants.NUM_FILES):
+            for x in range(
+                position[text_number] + 1,
+                position[text_number] + step.increment[text_number] + 1,
+            ):
+                try:
+                    info = elements_info[text_number].get_element_info(
+                        nodes, anchor_word_list, x, text_number
+                    )
+                    self.add(info, text_number)
+                except EndOfTextExceptionError:
+                    text_end_count += 1
+                    break
+        if text_end_count >= constants.NUM_FILES:
+            raise EndOfAllTextsExceptionError()
+        elif text_end_count > 0:
+            raise EndOfTextExceptionError()
 
     def to_json(self):
         return {
