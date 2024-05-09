@@ -2,14 +2,18 @@ import json
 from typing import List
 
 from python_tca2 import constants
+from python_tca2.aelement import AElement
 from python_tca2.anchorwordlist import AnchorWordList
 from python_tca2.comparecells import CompareCells
 from python_tca2.elementinfotobecompared import ElementInfoToBeCompared
 from python_tca2.elementsinfo import ElementsInfo
+from python_tca2.pathstep import PathStep
 
 
 class Compare:
-    def __init__(self, anchor_word_list: AnchorWordList, nodes):
+    def __init__(
+        self, anchor_word_list: AnchorWordList, nodes: dict[int, List[AElement]]
+    ):
         self.anchor_word_list = anchor_word_list
         self.nodes = nodes
         self.elements_info: List[ElementsInfo] = [
@@ -30,7 +34,7 @@ class Compare:
     def __str__(self):
         return json.dumps(self.to_json(), indent=0, ensure_ascii=False)
 
-    def get_cell_values(self, position, step):
+    def get_cell_values(self, position: list[int], step: PathStep):
         key = ",".join(
             [
                 str(position[text_number] + 1)
@@ -73,7 +77,7 @@ class Compare:
 
         return self.matrix[key]
 
-    def get_score(self, position):
+    def get_score(self, position: list[int]) -> float:
         if any(pos < 0 for pos in position):
             return constants.BEST_PATH_SCORE_BAD
 
@@ -83,7 +87,7 @@ class Compare:
         else:
             return self.best_path_scores[best_path_score_key]
 
-    def set_score(self, position, score):
+    def set_score(self, position: list[int], score: float):
         best_path_score_key = ",".join(str(pos) for pos in position)
         self.best_path_scores[best_path_score_key] = score
 

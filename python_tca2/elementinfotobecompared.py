@@ -6,11 +6,15 @@ from python_tca2 import (
     match,
     similarity_utils,
 )
+from python_tca2.aelement import AElement
 from python_tca2.alignment_utils import count_words
 from python_tca2.anchorwordhits import AnchorWordHits
+from python_tca2.anchorwordlist import AnchorWordList
 from python_tca2.clusters import Clusters
 from python_tca2.elementinfo import ElementInfo
+from python_tca2.elementsinfo import ElementsInfo
 from python_tca2.exceptions import EndOfAllTextsExceptionError, EndOfTextExceptionError
+from python_tca2.pathstep import PathStep
 from python_tca2.ref import Ref
 
 
@@ -23,7 +27,12 @@ class ElementInfoToBeCompared:
         self.info: defaultdict[int, list[ElementInfo]] = defaultdict(list)
 
     def build_elementstobecompared(  # noqa: PLR0913
-        self, position, step, nodes, anchor_word_list, elements_info
+        self,
+        position: list[int],
+        step: PathStep,
+        nodes: dict[int, list[AElement]],
+        anchor_word_list: AnchorWordList,
+        elements_info: list[ElementsInfo],
     ):
         text_end_count = 0
         for text_number in range(constants.NUM_FILES):
@@ -54,8 +63,8 @@ class ElementInfoToBeCompared:
     def __str__(self):
         return json.dumps(self.to_json(), indent=0, ensure_ascii=False)
 
-    def add(self, element_info, t):
-        self.info[t].append(element_info)
+    def add(self, element_info: ElementInfo, text_number: int):
+        self.info[text_number].append(element_info)
 
     def empty(self):
         """Both branches of self.info must have elements to be non-empty."""
