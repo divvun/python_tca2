@@ -35,7 +35,7 @@ class ElementInfoToBeCompared:
         elements_info: list[ElementsInfo],
     ):
         text_end_count = 0
-        for text_number in range(constants.NUM_FILES):
+        for text_number in nodes.keys():
             for x in range(
                 position[text_number] + 1,
                 position[text_number] + step.increment[text_number] + 1,
@@ -169,76 +169,97 @@ class ElementInfoToBeCompared:
                     word1, word2, constants.DEFAULT_DICE_MIN_COUNTING_SCORE
                 )
             ):
-                self.common_clusters.add(
+                ref1 = Ref(
                     match_type,
                     weight,
                     text_number1,
-                    text_number2,
                     info1.element_number,
-                    info2.element_number,
                     x,
-                    y,
-                    1,
                     1,
                     word1,
+                )
+                ref2 = Ref(
+                    match_type,
+                    weight,
+                    text_number2,
+                    info2.element_number,
+                    y,
+                    1,
                     word2,
                 )
+                self.common_clusters.add(ref1, ref2)
 
-            if next_word1 != "":
-                show_phrase = word1 + " " + next_word1
-                if all(
+            if (
+                next_word1 != ""
+                and all(
                     len(word) >= constants.DEFAULT_DICE_MIN_WORD_LENGTH
                     for word in [word2, next_word1, word1]
-                ) and similarity_utils.dice_match2(
+                )
+                and similarity_utils.dice_match2(
                     word1,
                     next_word1,
                     word2,
                     "2-1",
                     constants.DEFAULT_DICE_MIN_COUNTING_SCORE,
-                ):
-                    self.common_clusters.add(
-                        match_type,
-                        weight,
-                        text_number1,
-                        text_number2,
-                        info1.element_number,
-                        info2.element_number,
-                        x,
-                        y,
-                        2,
-                        1,
-                        show_phrase,
-                        word2,
-                    )
+                )
+            ):
+                show_phrase = word1 + " " + next_word1
+                ref1 = Ref(
+                    match_type,
+                    weight,
+                    text_number1,
+                    info1.element_number,
+                    x,
+                    2,
+                    show_phrase,
+                )
+                ref2 = Ref(
+                    match_type,
+                    weight,
+                    text_number2,
+                    info2.element_number,
+                    y,
+                    1,
+                    word2,
+                )
+                self.common_clusters.add(ref1, ref2)
 
             next_word2 = info2.words[y + 1] if y < len(info2.words) - 1 else ""
-            if next_word2 != "":
-                show_phrase = word2 + " " + next_word2
-                if all(
+            if (
+                next_word2 != ""
+                and all(
                     len(word) >= constants.DEFAULT_DICE_MIN_WORD_LENGTH
                     for word in [word1, next_word2, word2]
-                ) and similarity_utils.dice_match2(
+                )
+                and similarity_utils.dice_match2(
                     word1,
                     word2,
                     next_word2,
                     "1-2",
                     constants.DEFAULT_DICE_MIN_COUNTING_SCORE,
-                ):
-                    show_phrase2 = word2 + " " + next_word2
-                    self.common_clusters.add(
-                        match_type,
-                        weight,
-                        text_number1,
-                        text_number2,
-                        info1.element_number,
-                        info2.element_number,
-                        x,
-                        y,
-                        1,
-                        2,
-                        word1,
-                        show_phrase2,
-                    )
+                )
+            ):
+                show_phrase2 = word2 + " " + next_word2
+                ref1 = Ref(
+                    match_type,
+                    weight,
+                    text_number1,
+                    info1.element_number,
+                    x,
+                    1,
+                    word1,
+                )
+                ref2 = Ref(
+                    match_type,
+                    weight,
+                    text_number2,
+                    info2.element_number,
+                    y,
+                    2,
+                    show_phrase2,
+                )
+
+                self.common_clusters.add(ref1, ref2)
 
     def find_anchor_word_matches(self):
         hits = [
@@ -337,20 +358,25 @@ class ElementInfoToBeCompared:
         ):
             match_type = match.PROPER
             weight = constants.DEFAULT_PROPERNAME_MATCH_WEIGHT
-            self.common_clusters.add(
+            ref1 = Ref(
                 match_type,
                 weight,
                 text_number1,
-                text_number2,
                 info1.element_number,
-                info2.element_number,
                 x,
-                y,
-                1,
                 1,
                 word1,
+            )
+            ref2 = Ref(
+                match_type,
+                weight,
+                text_number2,
+                info2.element_number,
+                y,
+                1,
                 word2,
             )
+            self.common_clusters.add(ref1=ref1, ref2=ref2)
 
     def variables_for_number_matches(self, text_number1: int, text_number2: int):
         for info1 in self.info[text_number1]:
@@ -371,20 +397,25 @@ class ElementInfoToBeCompared:
                     # add to cluster list
                     match_type = match.NUMBER
                     weight = constants.DEFAULT_NUMBER_MATCH_WEIGHT
-                    self.common_clusters.add(
+                    ref1 = Ref(
                         match_type,
                         weight,
                         text_number1,
-                        text_number2,
                         info1.element_number,
-                        info2.element_number,
                         x,
-                        y,
-                        1,
                         1,
                         word1,
+                    )
+                    ref2 = Ref(
+                        match_type,
+                        weight,
+                        text_number2,
+                        info2.element_number,
+                        y,
+                        1,
                         word2,
-                    )  # 2006-04-07
+                    )
+                    self.common_clusters.add(ref1=ref1, ref2=ref2)
             except ValueError:
                 pass
 
@@ -404,20 +435,25 @@ class ElementInfoToBeCompared:
         ):
             match_type = match.SCORING_CHARACTERS
             weight = constants.DEFAULT_SCORING_CHARACTER_MATCH_WEIGHT
-            self.common_clusters.add(
+            ref1 = Ref(
                 match_type,
                 weight,
                 text_number1,
-                text_number2,
                 info1.element_number,
-                info2.element_number,
-                info1.scoring_characters.index(char1),
-                info2.scoring_characters.index(char2),
-                1,
+                0,
                 1,
                 char1,
+            )
+            ref2 = Ref(
+                match_type,
+                weight,
+                text_number2,
+                info2.element_number,
+                0,
+                1,
                 char2,
             )
+            self.common_clusters.add(ref1=ref1, ref2=ref2)
 
     def find_hits(self) -> list[AnchorWordHits]:
         return [
