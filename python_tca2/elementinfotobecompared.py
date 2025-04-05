@@ -21,7 +21,7 @@ from python_tca2.ref import Ref
 # TODO: If ElementInfo and AElement are merged, then as a first step,
 # info becomes indexes into e.g. AlignmentModel.elements or whatever
 class ElementInfoToBeCompared:
-    def __init__(self):
+    def __init__(self) -> None:
         self.common_clusters = Clusters()
         self.score = constants.ELEMENTINFO_SCORE_NOT_CALCULATED
         self.info: defaultdict[int, list[ElementInfo]] = defaultdict(list)
@@ -33,7 +33,7 @@ class ElementInfoToBeCompared:
         nodes: dict[int, list[AElement]],
         anchor_word_list: AnchorWordList,
         elements_info: list[ElementsInfo],
-    ):
+    ) -> None:
         text_end_count = 0
         for text_number in nodes.keys():
             for x in range(
@@ -63,20 +63,20 @@ class ElementInfoToBeCompared:
     def __str__(self):
         return json.dumps(self.to_json(), indent=0, ensure_ascii=False)
 
-    def add(self, element_info: ElementInfo, text_number: int):
+    def add(self, element_info: ElementInfo, text_number: int) -> None:
         self.info[text_number].append(element_info)
 
-    def empty(self):
+    def empty(self) -> bool:
         """Both branches of self.info must have elements to be non-empty."""
         return len(self.info) < constants.NUM_FILES
 
-    def get_score(self):
+    def get_score(self) -> float:
         if self.score == constants.ELEMENTINFO_SCORE_NOT_CALCULATED:
             self.score = self.really_get_score()
 
         return self.score
 
-    def really_get_score(self):
+    def really_get_score(self) -> float:
         self.score = 0.0
         if self.empty():
             return self.score
@@ -102,7 +102,7 @@ class ElementInfoToBeCompared:
 
         return self.score
 
-    def really_get_score2(self):
+    def really_get_score2(self) -> float:
         self.find_anchor_word_matches()
         for text_number1 in range(constants.NUM_FILES):
             for text_number2 in range(text_number1 + 1, constants.NUM_FILES):
