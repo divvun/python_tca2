@@ -30,7 +30,9 @@ class AlignmentModel:
         self.keys = list(tree_dict.keys())
         self.anchor_word_list = AnchorWordList()
         self.textpair = TextPair(
-            elements={index: self.load_tree(tree) for index, tree in tree_dict.items()}
+            elements=defaultdict(
+                list, {index: self.load_tree(tree) for index, tree in tree_dict.items()}
+            )
         )
 
     def load_tree(self, tree) -> list[AElement]:
