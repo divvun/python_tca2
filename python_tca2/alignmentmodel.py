@@ -67,7 +67,7 @@ class AlignmentModel:
                 # When the length of the queue list is less than the number of files
                 # and the first path in the queue list has no steps, then aligment
                 # is done
-                return aligned, compare
+                break
             else:
                 step_suggestion = self.get_best_path(queue_list)
 
@@ -83,7 +83,7 @@ class AlignmentModel:
                     else:
                         print_frame("done_aligning run_limit exceeded")
                 else:
-                    return aligned, compare
+                    break
         print(
             json.dumps(compare.to_json(), indent=0, ensure_ascii=False),
             file=open("compare.json", "w"),
