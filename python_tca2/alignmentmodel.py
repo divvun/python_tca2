@@ -2,6 +2,8 @@ import json
 from collections import defaultdict
 from copy import deepcopy
 
+from lxml import etree
+
 from python_tca2 import constants, steplist
 from python_tca2.aelement import AElement
 from python_tca2.aligned import Aligned
@@ -35,7 +37,7 @@ class AlignmentModel:
             )
         )
 
-    def load_tree(self, tree) -> list[AElement]:
+    def load_tree(self, tree: etree._ElementTree) -> list[AElement]:
         return [
             AElement(
                 " ".join(
@@ -47,6 +49,15 @@ class AlignmentModel:
         ]
 
     def suggest_without_gui(self) -> tuple[Aligned, Compare]:
+        """Suggest alignments.
+
+        This method performs text alignment by iteratively processing paths
+        and updating alignment and comparison objects. It stops when alignment
+        is complete or a predefined run limit is exceeded.
+
+        Returns:
+            A tuple containing the aligned object and the comparison object.
+        """
         run_limit = constants.RUN_LIMIT
         run_count = 0
         aligned = Aligned([])
@@ -90,7 +101,15 @@ class AlignmentModel:
 
         return aligned, compare
 
-    def find_more_to_align_without_gui(self, step_suggestion):
+    def find_more_to_align_without_gui(self, step_suggestion: PathStep) -> ToAlign:
+        """Aligns more text elements.
+
+        Args:
+            step_suggestion: Contains the increment steps for alignment.
+
+        Returns:
+            A ToAlign object with the aligned text elements.
+        """
         to_align = ToAlign(defaultdict(list))
         for text_number in self.keys:
             number_of_steps = 0
@@ -102,7 +121,22 @@ class AlignmentModel:
 
         return to_align
 
-    def get_best_path(self, queue_list):
+    def get_best_path(self, queue_list: QueueList) -> PathStep | None:
+        """Determines the best path step from a queue of candidates.
+
+        Iterates through the entries in the provided queue list, calculates a
+        normalized score for each candidate, and selects the step suggestion
+        from the path with the highest normalized score. Returns None if no
+        valid step suggestion is found.
+
+        Args:
+            queue_list: A list of candidate entries with associated paths
+                        and scores.
+
+        Returns:
+            The first step suggestion from the best path, or None if no
+            valid path exists.
+        """
         normalised_best_score = constants.BEST_PATH_SCORE_NOT_CALCULATED
 
         step_suggestion = None
@@ -119,7 +153,18 @@ class AlignmentModel:
 
         return step_suggestion
 
-    def lengthen_paths(self, compare: Compare):
+    def lengthen_paths(self, compare: Compare) -> QueueList:
+        """Lengthens paths in a text pair alignment process.
+
+        This method iteratively extends paths in the alignment model until no
+        further extensions are possible or a maximum path length is reached.
+
+        Args:
+            compare: A comparison object used to evaluate path extensions.
+
+        Returns:
+            A QueueList containing the final set of extended paths.
+        """
         queue_list = QueueList([])
         queue_list.add(QueueEntry(Path(self.textpair.start_position), 0))
         step_count = 0
@@ -147,13 +192,30 @@ class AlignmentModel:
         queue_list: QueueList,
         next_queue_list: QueueList,
         compare: Compare,
-    ):
+    ) -> None:
+        """Extends the current path in the alignment process.
+
+        This method iterates through a list of steps to attempt extending the
+        current path represented by the given queue entry. It handles various
+        exceptions to manage the end of texts or blocked paths.
+
+        Args:
+            queue_entry: The current queue entry to be extended.
+            queue_list: The list of current queue entries.
+            next_queue_list: The list of queue entries for the next iteration.
+            compare: A comparison object used during path extension.
+
+        Raises:
+            EndOfAllTextsExceptionError: Indicates all texts have been processed.
+            EndOfTextExceptionError: Indicates the end of a single text.
+            BlockedExceptionError: Indicates a path is blocked.
+        """
         for step in steplist.create_step_list(len(self.keys)):
             try:
                 new_queue_entry = self.make_longer_path(
                     deepcopy(queue_entry), step, compare=compare
                 )
-                if new_queue_entry.path is not None:
+                if new_queue_entry is not None and new_queue_entry.path is not None:
                     pos = new_queue_entry.path.position
                     queue_list.remove(pos)
                     next_queue_list.remove(pos)
@@ -168,11 +230,34 @@ class AlignmentModel:
             except BlockedExceptionError:
                 pass
 
-    def get_step_score(self, position, step, compare: Compare):
+    @staticmethod
+    def get_step_score(position: list[int], step: PathStep, compare: Compare) -> float:
+        """Calculate the score for a given step at a specific position.
+
+        Args:
+            position: The current position in the alignment.
+            step: The step to evaluate.
+            compare: The comparison object providing cell values.
+
+        Returns:
+            The score for the specified step.
+        """
         cell = compare.get_cell_values(position, step)
         return cell.get_score()
 
-    def make_longer_path(self, ret_queue_entry, new_step: PathStep, compare: Compare):
+    def make_longer_path(
+        self, ret_queue_entry: QueueEntry, new_step: PathStep, compare: Compare
+    ) -> QueueEntry | None:
+        """Extend a path with a new step and update its score.
+
+        Args:
+            ret_queue_entry: The current queue entry containing the path and score.
+            new_step: The new step to add to the path.
+            compare: An object used to compare and update scores.
+
+        Returns:
+            The updated queue entry if the new score is better, otherwise None.
+        """
         new_score = ret_queue_entry.score + self.get_step_score(
             ret_queue_entry.path.position, new_step, compare=compare
         )
@@ -184,6 +269,5 @@ class AlignmentModel:
         ):
             compare.set_score(ret_queue_entry.path.position, ret_queue_entry.score)
             return ret_queue_entry
-        else:
-            ret_queue_entry.path = None
-            return ret_queue_entry
+
+        return None

@@ -1,3 +1,4 @@
+from copy import deepcopy
 from typing import List
 
 from python_tca2 import constants
@@ -5,7 +6,14 @@ from python_tca2.pathstep import PathStep
 
 
 class Path:
-    def __init__(self, initial_position):
+    """Represents a navigational path with steps and positional updates.
+
+    Attributes:
+        steps: A list of PathStep objects representing the path's steps.
+        position: A list representing the current position in the path.
+    """
+
+    def __init__(self, initial_position: list[int]) -> None:
         self.steps: List[PathStep] = []
         self.position = initial_position
 
@@ -18,7 +26,12 @@ class Path:
     def __eq__(self, path):
         return str(self) == str(path)
 
-    def extend(self, step):
+    def extend(self, step: PathStep) -> None:
+        """Extend the current path with a cloned step and update positions.
+
+        Args:
+            step: The path step to be added and used for position updates.
+        """
         self.steps.append(step.clone())
         for text_number in range(constants.NUM_FILES):
             self.position[text_number] += step.increment[text_number]
@@ -32,11 +45,17 @@ class Path:
         )
 
     def clone(self):
-        copy = Path(self.position.copy())
-        copy.steps = [step.clone() for step in self.steps]
-        return copy
+        return deepcopy(self)
 
     def get_length_in_sentences(self):
+        """Calculate the total number of sentences across all steps.
+
+        Iterates through the steps and sums up the sentence increments for each
+        text number to compute the total count.
+
+        Returns:
+            The total count of sentences.
+        """
         count = 0
         for step in self.steps:
             for text_number in range(constants.NUM_FILES):

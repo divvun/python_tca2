@@ -6,7 +6,19 @@ from python_tca2.anchorwordhits import AnchorWordHits
 from python_tca2.anchorwordlist import AnchorWordList
 
 
-def remove_special_characters(word):
+def remove_special_characters(word: str) -> str:
+    """Removes special characters from the start and end of a word.
+
+    Iterates through a predefined list of special characters and removes any
+    occurrences of these characters from the beginning and end of the given word.
+    Strips any remaining whitespace before returning the result.
+
+    Parameters:
+        word: The input string to process.
+
+    Returns:
+        The processed string with special characters removed.
+    """
     for special_char in constants.DEFAULT_SPECIAL_CHARACTERS:
         if word.startswith(special_char):
             word = word[1:]
@@ -17,6 +29,14 @@ def remove_special_characters(word):
 
 
 def get_scoring_characters(text: str) -> str:
+    """Extracts and returns scoring characters from the input text.
+
+    Args:
+        text: The input string to process.
+
+    Returns:
+        A string containing only the scoring characters found in the input text.
+    """
     scoring_characters = constants.DEFAULT_SCORING_CHARACTERS
     ret = ""
     for i in range(len(text)):
@@ -25,7 +45,15 @@ def get_scoring_characters(text: str) -> str:
     return ret
 
 
-def get_upper_case_words(words):
+def get_upper_case_words(words: list[str]) -> list[str]:
+    """Filters a list of words to include only those starting with an uppercase letter.
+
+    Args:
+        words: A list of words to filter.
+
+    Returns:
+        A list of words that start with an uppercase letter.
+    """
     return [word for word in words if len(word) > 0 and word[0].isupper()]
 
 
@@ -38,7 +66,7 @@ class ElementInfo:
         text: str,
         text_number: int,
         element_number: int,
-    ):
+    ) -> None:
         self.element_number = element_number
         self.length = len(text)
         self.words = [

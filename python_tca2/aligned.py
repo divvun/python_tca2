@@ -8,7 +8,13 @@ from python_tca2.constants import NUM_FILES
 class Aligned:
     alignments: list[AlignmentsEtc]
 
-    def pickup(self, value_got: AlignmentsEtc):
+    def pickup(self, value_got: AlignmentsEtc | None) -> None:
+        """Adds a given alignment or related value to the alignments list.
+
+        Args:
+            value_got: The alignment or related value to be added. If None,
+                       no action is taken.
+        """
         if value_got is not None:
             self.alignments.append(value_got)
 
@@ -17,6 +23,9 @@ class Aligned:
 
         A valid tuple is a tuple of elements from the alignments that have element
         numbers for all files.
+
+        Returns:
+            A list of tuples containing valid pairs of strings.
         """
         return [
             alignment_etc.to_tuple()
@@ -24,7 +33,13 @@ class Aligned:
             if all(aelements for aelements in alignment_etc.elements.values())
         ]
 
-    def save_plain(self):
+    def save_plain(self) -> None:
+        """Save aligned text data to plain text files.
+
+        Iterates through a predefined number of text files, processes the
+        alignments, and writes the aligned text data to separate plain text
+        files named "aligned_<text_number>.txt".
+        """
         for text_number in range(NUM_FILES):
             with open(f"aligned_{text_number}.txt", "w") as f:
                 print(

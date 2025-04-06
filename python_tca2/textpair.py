@@ -23,8 +23,7 @@ class TextPair:
     start_position: list[int] = field(default_factory=lambda: [-1, -1])
 
     def get_next_element(self, text_number: int) -> AElement:
-        """
-        Returns the next AElement object for the specified text number.
+        """Returns the next AElement object for the specified text number.
 
         Args:
             text_number (int): The number of the text for which to retrieve the next
@@ -37,8 +36,7 @@ class TextPair:
         return self.elements[text_number][self.start_position[text_number]]
 
     def to_json(self):
-        """
-        Converts the TextPair object to a JSON-compatible dictionary.
+        """Converts the TextPair object to a JSON-compatible dictionary.
 
         Returns:
             dict: A dictionary representation of the TextPair object.

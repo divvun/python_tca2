@@ -7,8 +7,7 @@ MAX_TOTAL_TRY = 3
 
 
 def int_to_base(number: int, base: int) -> str:
-    """
-    Converts an integer to a string representation in the given base.
+    """Converts an integer to a string representation in the given base.
 
     Args:
         number (int): The integer to be converted.
@@ -30,8 +29,7 @@ def int_to_base(number: int, base: int) -> str:
 
 
 def create_step_list(num_files: int) -> list[PathStep]:
-    """
-    Create a list of PathStep objects based on the given number of files.
+    """Create a list of PathStep objects based on the given number of files.
 
     Args:
         num_files (int): The number of files.

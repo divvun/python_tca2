@@ -13,7 +13,20 @@ from python_tca2.pathstep import PathStep
 class Compare:
     def __init__(
         self, anchor_word_list: AnchorWordList, nodes: dict[int, List[AElement]]
-    ):
+    ) -> None:
+        """Initialize the Compare class with anchor words and node elements.
+
+        Args:
+            anchor_word_list: The list of anchor words.
+            nodes: A dictionary mapping integers to lists of elements.
+
+        Attributes:
+            anchor_word_list: Stores the provided anchor word list.
+            nodes: Stores the provided node elements.
+            elements_info: A list of ElementsInfo objects for each file.
+            matrix: A dictionary to store comparison cells.
+            best_path_scores: A dictionary to store the best path scores.
+        """
         self.anchor_word_list = anchor_word_list
         self.nodes = nodes
         self.elements_info: List[ElementsInfo] = [
@@ -22,7 +35,7 @@ class Compare:
         self.matrix: dict[str, CompareCells] = {}
         self.best_path_scores: dict[str, float] = {}
 
-    def to_json(self):
+    def to_json(self) -> dict:
         return {
             "elements_info": [ei.to_json() for ei in self.elements_info],
             "matrix": {
@@ -31,10 +44,20 @@ class Compare:
             "best_path_scores": self.best_path_scores,
         }
 
-    def __str__(self):
+    def __str__(self) -> str:
         return json.dumps(self.to_json(), indent=0, ensure_ascii=False)
 
-    def get_cell_values(self, position: list[int], step: PathStep):
+    def get_cell_values(self, position: list[int], step: PathStep) -> CompareCells:
+        """Retrieve or compute the CompareCells object for a given position and step.
+
+        Args:
+            position: A list representing the current position in the matrix.
+            step: A PathStep object defining the step increments.
+
+        Returns:
+            A CompareCells object containing comparison data for the given position
+            and step.
+        """
         key = ",".join(
             [
                 str(position[text_number] + 1)
@@ -78,6 +101,17 @@ class Compare:
         return self.matrix[key]
 
     def get_score(self, position: list[int]) -> float:
+        """Calculate and return the score for a given position.
+
+        Args:
+            position: A list of integers representing the position.
+
+        Returns:
+            The score as a float for the given position.
+
+        Raises:
+            SystemExit: If the position key is not found in best_path_scores.
+        """
         if any(pos < 0 for pos in position):
             return constants.BEST_PATH_SCORE_BAD
 
@@ -87,10 +121,21 @@ class Compare:
         else:
             return self.best_path_scores[best_path_score_key]
 
-    def set_score(self, position: list[int], score: float):
+    def set_score(self, position: list[int], score: float) -> None:
+        """Sets the score for a specific position in the best path scores.
+
+        Args:
+            position: A list representing the position in the path.
+            score: The score to assign to the specified position.
+        """
         best_path_score_key = ",".join(str(pos) for pos in position)
         self.best_path_scores[best_path_score_key] = score
 
-    def reset_best_path_scores(self):
+    def reset_best_path_scores(self) -> None:
+        """Reset all best path scores to the default uncalculated value.
+
+        This method iterates through the keys in the best_path_scores dictionary
+        and sets each value to the constant BEST_PATH_SCORE_NOT_CALCULATED.
+        """
         for key in self.best_path_scores.keys():
             self.best_path_scores[key] = constants.BEST_PATH_SCORE_NOT_CALCULATED

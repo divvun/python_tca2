@@ -30,6 +30,16 @@ class AnchorWordListEntry:
             )
 
     def make_phrases(self, pairs: list[str]) -> list[list[re.Pattern]]:
+        """Generate a list of phrase patterns from input pairs.
+
+        Args:
+            pairs: A list of strings, where each string contains comma-separated
+                phrases.
+
+        Returns:
+            A list of lists, where each inner list contains compiled regex
+            patterns for the phrases.
+        """
         return [
             self.make_phrase(syn)
             for _, data in enumerate(pairs)
@@ -37,6 +47,14 @@ class AnchorWordListEntry:
         ]
 
     def make_phrase(self, syn: str) -> list[re.Pattern]:
+        """Generates a list of compiled regex patterns from a synonym phrase.
+
+        Args:
+            syn: A string containing words separated by spaces.
+
+        Returns:
+            A list of compiled regex patterns for each non-empty word.
+        """
         return [
             self.make_compiled_pattern(word)
             for word in syn.split(" ")
@@ -44,6 +62,6 @@ class AnchorWordListEntry:
         ]
 
     def make_compiled_pattern(self, anchor_word: str) -> re.Pattern:
-        # make a proper regular expression from the anchor word
+        """Make a proper regular expression from the anchor word"""
         pattern = "^" + anchor_word.replace("*", ".*") + "$"
         return re.compile(pattern, re.IGNORECASE | re.UNICODE)
