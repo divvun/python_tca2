@@ -89,6 +89,8 @@ class AlignmentModel:
             file=open("compare.json", "w"),
         )
 
+        return aligned, compare
+
     def find_more_to_align_without_gui(self, step_suggestion):
         to_align = ToAlign(defaultdict(list))
         for text_number in self.keys:
