@@ -46,7 +46,7 @@ class AlignmentModel:
             for index, node in enumerate(tree.iter("s"))
         ]
 
-    def suggest_without_gui(self) -> Aligned:
+    def suggest_without_gui(self) -> tuple[Aligned, Compare]:
         run_limit = constants.RUN_LIMIT
         run_count = 0
         done_aligning = False
