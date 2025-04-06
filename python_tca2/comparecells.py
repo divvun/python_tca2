@@ -4,7 +4,7 @@ from python_tca2.elementinfotobecompared import ElementInfoToBeCompared
 
 
 class CompareCells:
-    def __init__(  # noqa: PLR0913
+    def __init__(
         self,
         element_info_to_be_compared: ElementInfoToBeCompared,
     ):
