@@ -85,7 +85,7 @@ class AlignmentModel:
                 else:
                     return aligned, compare
         print(
-            json.dumps(self.compare.to_json(), indent=0, ensure_ascii=False),
+            json.dumps(compare.to_json(), indent=0, ensure_ascii=False),
             file=open("compare.json", "w"),
         )
 
