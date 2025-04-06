@@ -49,13 +49,12 @@ class AlignmentModel:
     def suggest_without_gui(self) -> tuple[Aligned, Compare]:
         run_limit = constants.RUN_LIMIT
         run_count = 0
-        done_aligning = False
         aligned = Aligned([])
         compare = Compare(
             anchor_word_list=self.anchor_word_list, nodes=self.textpair.elements
         )
 
-        while not done_aligning:
+        while True:
             compare.reset_best_path_scores()
 
             queue_list = self.lengthen_paths(compare=compare)
