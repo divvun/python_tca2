@@ -10,7 +10,7 @@ def parallelize(anchor_file, files: list[str]):
     )
 
     model.anchor_word_list.load_from_file(anchor_file)
-    aligned, _ = model.suggets_without_gui()
+    aligned, _ = model.suggest_without_gui()
     aligned.save_plain()
 
 
