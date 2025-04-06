@@ -77,13 +77,12 @@ class AlignmentModel:
             to_align = self.find_more_to_align_without_gui(
                 step_suggestion=step_suggestion
             )
-            run_count += 1
-            done_aligning = run_count >= run_limit
+            aligned.pickup(to_align.flush())
 
-            if not done_aligning:
-                aligned.pickup(to_align.flush())
-            else:
+            run_count += 1
+            if run_count >= run_limit:
                 print_frame("done_aligning run_limit exceeded")
+                break
 
         print(
             json.dumps(compare.to_json(), indent=0, ensure_ascii=False),
