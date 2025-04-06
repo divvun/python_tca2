@@ -118,7 +118,7 @@ class AlignmentModel:
 
         return step_suggestion
 
-    def lengthen_paths(self, compare: Compare = None):
+    def lengthen_paths(self, compare: Compare):
         queue_list = QueueList([])
         queue_list.add(QueueEntry(Path(self.textpair.start_position), 0))
         step_count = 0
@@ -145,7 +145,7 @@ class AlignmentModel:
         queue_entry: QueueEntry,
         queue_list: QueueList,
         next_queue_list: QueueList,
-        compare: Compare = None,
+        compare: Compare,
     ):
         for step in steplist.create_step_list(len(self.keys)):
             try:
@@ -167,13 +167,11 @@ class AlignmentModel:
             except BlockedExceptionError:
                 pass
 
-    def get_step_score(self, position, step, compare: Compare = None):
+    def get_step_score(self, position, step, compare: Compare):
         cell = compare.get_cell_values(position, step)
         return cell.get_score()
 
-    def make_longer_path(
-        self, ret_queue_entry, new_step: PathStep, compare: Compare = None
-    ):
+    def make_longer_path(self, ret_queue_entry, new_step: PathStep, compare: Compare):
         new_score = ret_queue_entry.score + self.get_step_score(
             ret_queue_entry.path.position, new_step, compare=compare
         )
