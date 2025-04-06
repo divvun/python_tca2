@@ -55,7 +55,6 @@ class AlignmentModel:
         )
 
         while True:
-            compare.reset_best_path_scores()
 
             queue_list = self.lengthen_paths(compare=compare)
 
@@ -77,6 +76,7 @@ class AlignmentModel:
                 step_suggestion=step_suggestion
             )
             aligned.pickup(to_align.flush())
+            compare.reset_best_path_scores()
 
             run_count += 1
             if run_count >= run_limit:
