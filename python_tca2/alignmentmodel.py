@@ -68,22 +68,22 @@ class AlignmentModel:
                 # and the first path in the queue list has no steps, then aligment
                 # is done
                 break
-            else:
-                step_suggestion = self.get_best_path(queue_list)
+            
+            step_suggestion = self.get_best_path(queue_list)
 
-                if step_suggestion is not None:
-                    to_align = self.find_more_to_align_without_gui(
-                        step_suggestion=step_suggestion
-                    )
-                    run_count += 1
-                    done_aligning = run_count >= run_limit
+            if step_suggestion is not None:
+                to_align = self.find_more_to_align_without_gui(
+                    step_suggestion=step_suggestion
+                )
+                run_count += 1
+                done_aligning = run_count >= run_limit
 
-                    if not done_aligning:
-                        aligned.pickup(to_align.flush())
-                    else:
-                        print_frame("done_aligning run_limit exceeded")
+                if not done_aligning:
+                    aligned.pickup(to_align.flush())
                 else:
-                    break
+                    print_frame("done_aligning run_limit exceeded")
+            else:
+                break
         print(
             json.dumps(compare.to_json(), indent=0, ensure_ascii=False),
             file=open("compare.json", "w"),
