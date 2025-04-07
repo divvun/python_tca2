@@ -11,7 +11,7 @@ from python_tca2.anchorwordlist import AnchorWordList
 from python_tca2.anchorwordlistentry import AnchorWordListEntry
 from python_tca2.elementinfo import ElementInfo
 from python_tca2.elementinfotobecompared import ElementInfoToBeCompared
-from python_tca2.textpair import ParallelDocuments
+from python_tca2.paralleldocuments import ParallelDocuments
 from python_tca2.toalign import ToAlign
 
 

@@ -15,11 +15,11 @@ from python_tca2.exceptions import (
     EndOfAllTextsExceptionError,
     EndOfTextExceptionError,
 )
-from python_tca2.tca2path import Tca2Path
+from python_tca2.paralleldocuments import ParallelDocuments
 from python_tca2.pathstep import PathStep
 from python_tca2.queue_entry import QueueEntry
 from python_tca2.queuelist import QueueList
-from python_tca2.textpair import ParallelDocuments
+from python_tca2.tca2path import Tca2Path
 from python_tca2.toalign import ToAlign
 
 
