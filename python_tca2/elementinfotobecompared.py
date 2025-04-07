@@ -8,7 +8,7 @@ from python_tca2 import (
 )
 from python_tca2.aelement import AElement
 from python_tca2.alignment_utils import count_words
-from python_tca2.anchorwordhits import AnchorWordHits
+from python_tca2.anchorwordhit import AnchorWordHit
 from python_tca2.anchorwordlist import AnchorWordList
 from python_tca2.clusters import Clusters
 from python_tca2.elementinfo import ElementInfo
@@ -301,8 +301,8 @@ class ElementInfoToBeCompared:
                 self.common_clusters.add_clusters(anchor_word_clusters)
 
     @staticmethod
-    def make_anchor_word_clusters(
-        hits: list[AnchorWordHits],
+    def make_anchor_word_clusters(  # noqa: PLR0913
+        hits: list[list[AnchorWordHit]],
         current_position: int,
         smallest: int,
         present_in_all_texts: bool,
@@ -455,7 +455,7 @@ class ElementInfoToBeCompared:
             )
             self.common_clusters.add(ref1=ref1, ref2=ref2)
 
-    def find_hits(self) -> list[AnchorWordHits]:
+    def find_hits(self) -> list[list[AnchorWordHit]]:
         return [
             [hit for info in info_list for hit in info.anchor_word_hits.hits]
             for info_list in self.info.values()
