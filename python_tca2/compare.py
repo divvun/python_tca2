@@ -71,12 +71,25 @@ class Compare:
         )
 
         if key not in self.comparison_matrix:
-            self.build_comparison_matrix_cell(position, step, key)
+            self.comparison_matrix[key] = self.build_comparison_matrix_cell(
+                position, step
+            )
 
         return self.comparison_matrix[key]
 
-    def build_comparison_matrix_cell(self, position, step, key):
+    def build_comparison_matrix_cell(
+        self, position: list[int], step: PathStep
+    ) -> CompareCell:
+        """
+        Builds a comparison matrix cell for the given position and step.
 
+        Args:
+            position: A list representing the current position in the matrix.
+            step: The step to take from the current position.
+
+        Returns:
+            A CompareCell object containing the comparison data and best path score.
+        """
         element_info_to_be_compared = ElementInfoToBeCompared()
         element_info_to_be_compared.build_elementstobecompared(
             position,
@@ -85,24 +98,21 @@ class Compare:
             self.anchor_word_list,
             self.elements_info,
         )
-        self.comparison_matrix[key] = CompareCell(
-            element_info_to_be_compared=element_info_to_be_compared
-        )
-
         best_path_score_key = ",".join(
             [
                 str(position[text_number] + step.increment[text_number])
                 for text_number in range(constants.NUM_FILES)
             ]
         )
+        if self.best_path_scores.get(best_path_score_key) is None:
+            self.best_path_scores[best_path_score_key] = (
+                constants.BEST_PATH_SCORE_NOT_CALCULATED
+            )
 
-        self.comparison_matrix[key].best_path_score = self.best_path_scores.get(
-            best_path_score_key, constants.BEST_PATH_SCORE_BAD
+        return CompareCell(
+            element_info_to_be_compared=element_info_to_be_compared,
+            best_path_score=self.best_path_scores[best_path_score_key],
         )
-
-        self.best_path_scores[best_path_score_key] = self.comparison_matrix[
-            key
-        ].best_path_score
 
     def get_score(self, position: list[int]) -> float:
         """Calculate and return the score for a given position.
