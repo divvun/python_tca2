@@ -41,10 +41,11 @@ class ElementInfoToBeCompared:
                 position[text_number] + step.increment[text_number] + 1,
             ):
                 try:
-                    info = elements_info[text_number].get_element_info(
-                        nodes, anchor_word_list, element_index, text_number
+                    self.info[text_number].append(
+                        elements_info[text_number].get_element_info(
+                            nodes, anchor_word_list, element_index, text_number
+                        )
                     )
-                    self.add(info, text_number)
                 except EndOfTextExceptionError:
                     text_end_count += 1
                     break
@@ -64,9 +65,6 @@ class ElementInfoToBeCompared:
 
     def __str__(self):
         return json.dumps(self.to_json(), indent=0, ensure_ascii=False)
-
-    def add(self, element_info: ElementInfo, text_number: int) -> None:
-        self.info[text_number].append(element_info)
 
     def empty(self) -> bool:
         """Both branches of self.info must have elements to be non-empty."""

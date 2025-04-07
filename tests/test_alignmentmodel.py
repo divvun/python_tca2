@@ -18,8 +18,8 @@ from python_tca2.toalign import ToAlign
 def test_get_score():
     """Test that the first if in find_dice_matches works as expected"""
     eitbc = ElementInfoToBeCompared()
-    eitbc.add(element_info=ElementInfo(AnchorWordList(), "Mobil", 0, 0), t=0)
-    eitbc.add(element_info=ElementInfo(AnchorWordList(), "Mobiila", 0, 0), t=1)
+    eitbc.info[0].append(ElementInfo(AnchorWordList(), "Mobil", 0, 0))
+    eitbc.info[1].append(ElementInfo(AnchorWordList(), "Mobiila", 0, 0))
 
     assert eitbc.get_score() == 4.0
 
@@ -44,10 +44,9 @@ def test_alignment_etcs():
 def test_find_dice_matches():
     """Test that the first if in find_dice_matches works as expected"""
     eitbc = ElementInfoToBeCompared()
-    eitbc.add(element_info=ElementInfo(AnchorWordList(), "Mobil", 0, 0), text_number=0)
-    eitbc.add(
-        element_info=ElementInfo(AnchorWordList(), "Mobiila", 0, 0), text_number=1
-    )
+    eitbc.info[0].append(ElementInfo(AnchorWordList(), "Mobil", 0, 0))
+    eitbc.info[1].append(ElementInfo(AnchorWordList(), "Mobiila", 0, 0))
+
     eitbc.find_dice_matches(0, 1)
 
     assert eitbc.to_json() == {
