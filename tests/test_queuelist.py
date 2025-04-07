@@ -1,6 +1,6 @@
-from python_tca2.tca2path import Tca2Path
 from python_tca2.pathstep import PathStep
 from python_tca2.queue_entry import QueueEntry
+from python_tca2.tca2path import Tca2Path
 
 
 def test_is_hit():
