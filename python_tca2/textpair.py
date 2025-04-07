@@ -9,9 +9,9 @@ class ParallelDocuments:
     """Represents a pair of texts with associated elements.
 
     Attributes:
-        elements (defaultdict[int, list[AElement]]): A dictionary that maps text
+        elements: A dictionary that maps text
             numbers to lists of AElement objects.
-        start_position (list[int]): A list that stores the current position of each
+        start_position: A list that stores the current start position of each
             text in the elements list. Starts off by one less than the first element,
             because the rest of the system expects it to that way.
             Q: Why does the rest of the system expect it to start off by one?

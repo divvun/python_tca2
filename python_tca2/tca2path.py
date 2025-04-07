@@ -5,7 +5,7 @@ from python_tca2 import constants
 from python_tca2.pathstep import PathStep
 
 
-class Path:
+class Tca2Path:
     """Represents a navigational path with steps and positional updates.
 
     Attributes:

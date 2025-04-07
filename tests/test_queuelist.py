@@ -1,10 +1,10 @@
-from python_tca2.path import Path
+from python_tca2.tca2path import Tca2Path
 from python_tca2.pathstep import PathStep
 from python_tca2.queue_entry import QueueEntry
 
 
 def test_is_hit():
-    path = Path(initial_position=[0, 0])
+    path = Tca2Path(initial_position=[0, 0])
     path.steps.extend(
         [
             PathStep(increment=[1, 0]),

@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from python_tca2.path import Path
+from python_tca2.tca2path import Tca2Path
 
 
 @dataclass
@@ -14,7 +14,7 @@ class QueueEntry:
         end: Indicates if the entry marks the end of the queue.
     """
 
-    path: Path
+    path: Tca2Path
     score: float
     removed: bool = False
     end: bool = False

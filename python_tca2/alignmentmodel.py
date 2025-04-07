@@ -15,7 +15,7 @@ from python_tca2.exceptions import (
     EndOfAllTextsExceptionError,
     EndOfTextExceptionError,
 )
-from python_tca2.path import Path
+from python_tca2.tca2path import Tca2Path
 from python_tca2.pathstep import PathStep
 from python_tca2.queue_entry import QueueEntry
 from python_tca2.queuelist import QueueList
@@ -176,7 +176,7 @@ class AlignmentModel:
             A QueueList containing the final set of extended paths.
         """
         queue_list = QueueList([])
-        queue_list.add(QueueEntry(Path(self.parallel_documents.start_position), 0))
+        queue_list.add(QueueEntry(Tca2Path(self.parallel_documents.start_position), 0))
         step_count = 0
         done_lengthening = False
         while not done_lengthening:
@@ -188,11 +188,11 @@ class AlignmentModel:
                     )
             next_queue_list.remove_for_real()
             if next_queue_list.empty():
-                done_lengthening = True
-            else:
-                queue_list = next_queue_list
-                step_count += 1
-                done_lengthening = step_count >= self.max_path_length
+                break
+
+            queue_list = next_queue_list
+            step_count += 1
+            done_lengthening = step_count >= self.max_path_length
 
         return queue_list
 
