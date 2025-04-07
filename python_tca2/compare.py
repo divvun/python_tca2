@@ -96,11 +96,9 @@ class Compare:
             ]
         )
 
-        if best_path_score_key in self.best_path_scores:
-            temp = self.best_path_scores[best_path_score_key]
-            self.comparison_matrix[key].best_path_score = temp
-        else:
-            self.comparison_matrix[key].best_path_score = constants.BEST_PATH_SCORE_BAD
+        self.comparison_matrix[key].best_path_score = self.best_path_scores.get(
+            best_path_score_key, constants.BEST_PATH_SCORE_BAD
+        )
 
         self.best_path_scores[best_path_score_key] = self.comparison_matrix[
             key
