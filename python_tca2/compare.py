@@ -4,7 +4,7 @@ from typing import List
 from python_tca2 import constants
 from python_tca2.aelement import AElement
 from python_tca2.anchorwordlist import AnchorWordList
-from python_tca2.comparecells import CompareCells
+from python_tca2.comparecells import CompareCell
 from python_tca2.elementinfotobecompared import ElementInfoToBeCompared
 from python_tca2.elementsinfo import ElementsInfo
 from python_tca2.pathstep import PathStep
@@ -32,14 +32,15 @@ class Compare:
         self.elements_info: List[ElementsInfo] = [
             ElementsInfo() for _ in range(constants.NUM_FILES)
         ]
-        self.matrix: dict[str, CompareCells] = {}
+        self.comparison_matrix: dict[str, CompareCell] = {}
         self.best_path_scores: dict[str, float] = {}
 
     def to_json(self) -> dict:
         return {
             "elements_info": [ei.to_json() for ei in self.elements_info],
             "matrix": {
-                key: self.matrix[key].to_json() for key in sorted(self.matrix.keys())
+                key: self.comparison_matrix[key].to_json()
+                for key in sorted(self.comparison_matrix.keys())
             },
             "best_path_scores": self.best_path_scores,
         }
@@ -47,7 +48,7 @@ class Compare:
     def __str__(self) -> str:
         return json.dumps(self.to_json(), indent=0, ensure_ascii=False)
 
-    def get_cell_values(self, position: list[int], step: PathStep) -> CompareCells:
+    def get_cell_values(self, position: list[int], step: PathStep) -> CompareCell:
         """Retrieve or compute the CompareCells object for a given position and step.
 
         Args:
@@ -75,7 +76,7 @@ class Compare:
             ]
         )
 
-        if key not in self.matrix:
+        if key not in self.comparison_matrix:
             element_info_to_be_compared = ElementInfoToBeCompared()
             element_info_to_be_compared.build_elementstobecompared(
                 position,
@@ -84,21 +85,23 @@ class Compare:
                 self.anchor_word_list,
                 self.elements_info,
             )
-            self.matrix[key] = CompareCells(
+            self.comparison_matrix[key] = CompareCell(
                 element_info_to_be_compared=element_info_to_be_compared
             )
 
             if best_path_score_key in self.best_path_scores:
                 temp = self.best_path_scores[best_path_score_key]
-                self.matrix[key].best_path_score = temp
+                self.comparison_matrix[key].best_path_score = temp
             else:
-                self.matrix[key].best_path_score = constants.BEST_PATH_SCORE_BAD
+                self.comparison_matrix[key].best_path_score = (
+                    constants.BEST_PATH_SCORE_BAD
+                )
 
-            self.best_path_scores[best_path_score_key] = self.matrix[
+            self.best_path_scores[best_path_score_key] = self.comparison_matrix[
                 key
             ].best_path_score
 
-        return self.matrix[key]
+        return self.comparison_matrix[key]
 
     def get_score(self, position: list[int]) -> float:
         """Calculate and return the score for a given position.

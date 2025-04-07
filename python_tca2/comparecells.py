@@ -3,7 +3,7 @@ import json
 from python_tca2.elementinfotobecompared import ElementInfoToBeCompared
 
 
-class CompareCells:
+class CompareCell:
     def __init__(
         self,
         element_info_to_be_compared: ElementInfoToBeCompared,

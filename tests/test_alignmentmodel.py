@@ -465,7 +465,7 @@ def test_anchorword_hits():
     model = alignmentmodel.AlignmentModel(dict(enumerate(trees)))
     model.anchor_word_list = load_anchor_words()
     _, compare = model.suggest_without_gui()
-    interesting = compare.matrix["0,0,0,0"]
+    interesting = compare.comparison_matrix["0,0,0,0"]
 
     found_hits = [
         [asdict(hit) for hit in lang_hits]
