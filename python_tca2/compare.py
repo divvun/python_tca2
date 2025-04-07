@@ -49,14 +49,14 @@ class Compare:
         return json.dumps(self.to_json(), indent=0, ensure_ascii=False)
 
     def get_cell_values(self, position: list[int], step: PathStep) -> CompareCell:
-        """Retrieve or compute the CompareCells object for a given position and step.
+        """Retrieve or compute the CompareCell object for a given position and step.
 
         Args:
             position: A list representing the current position in the matrix.
             step: A PathStep object defining the step increments.
 
         Returns:
-            A CompareCells object containing comparison data for the given position
+            A CompareCell object containing comparison data for the given position
             and step.
         """
         key = ",".join(
