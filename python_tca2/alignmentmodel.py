@@ -176,7 +176,12 @@ class AlignmentModel:
             A QueueList containing the final set of extended paths.
         """
         queue_list = QueueList([])
-        queue_list.add(QueueEntry(Tca2Path(self.parallel_documents.start_position), 0))
+        queue_list.add(
+            QueueEntry(
+                path=Tca2Path(initial_position=self.parallel_documents.start_position),
+                score=0,
+            )
+        )
         step_count = 0
         done_lengthening = False
         while not done_lengthening:
