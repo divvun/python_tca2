@@ -4,14 +4,14 @@ from dataclasses import asdict
 from lxml import etree
 
 from python_tca2 import alignmentmodel
-from python_tca2.aelement import AElement
+from python_tca2.aelement import AlignmentElement
 from python_tca2.aligned import Aligned
 from python_tca2.alignments_etc import AlignmentsEtc
 from python_tca2.anchorwordlist import AnchorWordList
 from python_tca2.anchorwordlistentry import AnchorWordListEntry
 from python_tca2.elementinfo import ElementInfo
 from python_tca2.elementinfotobecompared import ElementInfoToBeCompared
-from python_tca2.textpair import TextPair
+from python_tca2.textpair import ParallelDocuments
 from python_tca2.toalign import ToAlign
 
 
@@ -27,11 +27,11 @@ def test_get_score():
 def test_alignment_etcs():
     alignment_etc = AlignmentsEtc(
         {
-            0: [AElement("element0", 0), AElement("element1", 1)],
+            0: [AlignmentElement("element0", 0), AlignmentElement("element1", 1)],
             1: [
-                AElement("element2", 0),
-                AElement("element3", 1),
-                AElement("element4", 2),
+                AlignmentElement("element2", 0),
+                AlignmentElement("element3", 1),
+                AlignmentElement("element4", 2),
             ],
         }
     )
@@ -106,7 +106,7 @@ def test_aelement_text():
     node = etree.fromstring(
         '<s id="4">9 Økonomiske, administrative&#13; og miljømessige  konsekvenser</s>'
     )
-    aelement = AElement(
+    aelement = AlignmentElement(
         " ".join([text for text in "".join(node.itertext()).split() if text.strip()]), 0
     )
 
@@ -124,10 +124,10 @@ def test_toalign_pickup():
     """
     )
 
-    textpair = TextPair(
+    textpair = ParallelDocuments(
         elements={
             0: [
-                AElement(
+                AlignmentElement(
                     " ".join(
                         [
                             text
@@ -149,7 +149,7 @@ def test_toalign_pickup():
 
     elements = []
     for index, node in enumerate(tree.iter("s")):
-        element = AElement(
+        element = AlignmentElement(
             " ".join(
                 [text for text in "".join(node.itertext()).split() if text.strip()]
             ),
@@ -174,11 +174,11 @@ def test_toalign_pickup():
     assert to_align == ToAlign(
         {
             0: [
-                AElement(
+                AlignmentElement(
                     text="Kanskje en innkjøpsordning for kvenskspråklig litteratur.",
                     element_number=0,
                 ),
-                AElement(
+                AlignmentElement(
                     text="Utvikling av undervisnings- og lærematerialer.",
                     element_number=1,
                 ),
@@ -193,21 +193,23 @@ def test_aligned_to_text_file():
         {
             0: [],
             1: [
-                AElement("Oslon tjïelte ( Oslon geažus -n ea genetiivageažus) .", 13),
+                AlignmentElement(
+                    "Oslon tjïelte ( Oslon geažus -n ea genetiivageažus) .", 13
+                ),
             ],
         }
     )
     a2 = AlignmentsEtc(
         {
             0: [
-                AElement(
+                AlignmentElement(
                     "Aldri noensinne har språkuka og samiske språk fått så mye oppmerksomhet i samfunnet.",  # noqa: E501
                     5,
                 )
             ],
             1: [
-                AElement("Sámi giellavahkku", 14),
-                AElement(
+                AlignmentElement("Sámi giellavahkku", 14),
+                AlignmentElement(
                     "Ii goassege leat Giellavahkku ja sámegielat ná bures fuomášuvvon servodagas.",  # noqa: E501
                     15,
                 ),
@@ -256,13 +258,13 @@ def test_suggest1():
             AlignmentsEtc(
                 {
                     0: [
-                        AElement(
+                        AlignmentElement(
                             text="Kanskje en innkjøpsordning for kvenskspråklig litteratur.",  # noqa: E501
                             element_number=0,
                         )
                     ],
                     1: [
-                        AElement(
+                        AlignmentElement(
                             text="Kvääninkielinen litteratuuri osto-oorninkhiin piian.",
                             element_number=0,
                         )
@@ -272,13 +274,13 @@ def test_suggest1():
             AlignmentsEtc(
                 {
                     0: [
-                        AElement(
+                        AlignmentElement(
                             text="Utvikling av undervisnings- og lærematerialer.",
                             element_number=1,
                         )
                     ],
                     1: [
-                        AElement(
+                        AlignmentElement(
                             text="Opetus- ja oppimateriaaliitten kehittäminen.",
                             element_number=1,
                         )
@@ -320,17 +322,17 @@ def test_suggest2():
             AlignmentsEtc(
                 {
                     0: [
-                        AElement(
+                        AlignmentElement(
                             text="Når folk har gått på nybegynnerkursene hos enten instituttet eller universitetet, kan man tilby dem muligheten å få en mentor som de kan snakke kvensk med og gjøre aktiviteter med på kvensk.",  # noqa: E501
                             element_number=0,
                         ),
-                        AElement(
+                        AlignmentElement(
                             text="Motivere folk til å lære kvensk og vise dem at man får jobb med det, og at det er nok arbeid til alle.",  # noqa: E501
                             element_number=1,
                         ),
                     ],
                     1: [
-                        AElement(
+                        AlignmentElement(
                             text="Ko ihmiset oon käynheet institutin tahi universiteetin alkukurssin, niin heile tarjothaan maholisuuen saaja menttorin, jonka kans puhhuut ja tehhä assiita kvääniksi Motiveerata ihmissii siihen ette oppiit kväänin kieltä ja näyttäät heile ette sillä saapi työn ja ette työtä oon nokko kaikile.",  # noqa: E501
                             element_number=0,
                         )
@@ -340,13 +342,13 @@ def test_suggest2():
             AlignmentsEtc(
                 {
                     0: [
-                        AElement(
+                        AlignmentElement(
                             text="Forsøke selv å være gode forbilder.",
                             element_number=2,
                         )
                     ],
                     1: [
-                        AElement(
+                        AlignmentElement(
                             text="Freistata itte olla hyvät esikuvat.",
                             element_number=1,
                         )
@@ -401,13 +403,13 @@ def test_suggest3():
             AlignmentsEtc(
                 {
                     0: [
-                        AElement(
+                        AlignmentElement(
                             text="- regjeringen.no",
                             element_number=0,
                         )
                     ],
                     1: [
-                        AElement(
+                        AlignmentElement(
                             text="- regjeringen.no",
                             element_number=0,
                         )
@@ -417,7 +419,7 @@ def test_suggest3():
             AlignmentsEtc(
                 {
                     0: [
-                        AElement(
+                        AlignmentElement(
                             text="Ot.prp. nr. 25 (2006-2007)",
                             element_number=1,
                         )
@@ -427,13 +429,13 @@ def test_suggest3():
             AlignmentsEtc(
                 {
                     0: [
-                        AElement(
+                        AlignmentElement(
                             text="Om lov om reindrift (reindriftsloven)",
                             element_number=2,
                         )
                     ],
                     1: [
-                        AElement(
+                        AlignmentElement(
                             text="Boazodoallolága birra",
                             element_number=1,
                         )

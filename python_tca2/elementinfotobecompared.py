@@ -6,7 +6,7 @@ from python_tca2 import (
     match,
     similarity_utils,
 )
-from python_tca2.aelement import AElement
+from python_tca2.aelement import AlignmentElement
 from python_tca2.alignment_utils import count_words
 from python_tca2.anchorwordhit import AnchorWordHit
 from python_tca2.anchorwordlist import AnchorWordList
@@ -30,7 +30,7 @@ class ElementInfoToBeCompared:
         self,
         position: list[int],
         step: PathStep,
-        nodes: dict[int, list[AElement]],
+        nodes: dict[int, list[AlignmentElement]],
         anchor_word_list: AnchorWordList,
         elements_info: list[ElementsInfo],
     ) -> None:

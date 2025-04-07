@@ -1,12 +1,12 @@
 from collections import defaultdict
 from dataclasses import dataclass
 
-from python_tca2.aelement import AElement
+from python_tca2.aelement import AlignmentElement
 
 
 @dataclass
 class AlignmentsEtc:
-    elements: defaultdict[int, list[AElement]]
+    elements: defaultdict[int, list[AlignmentElement]]
 
     def to_tuple(self) -> tuple[str, ...]:
         """Convert the elements of the object into a tuple of strings.

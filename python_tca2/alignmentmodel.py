@@ -5,7 +5,7 @@ from copy import deepcopy
 from lxml import etree
 
 from python_tca2 import constants, steplist
-from python_tca2.aelement import AElement
+from python_tca2.aelement import AlignmentElement
 from python_tca2.aligned import Aligned
 from python_tca2.alignment_utils import print_frame
 from python_tca2.anchorwordlist import AnchorWordList
@@ -19,7 +19,7 @@ from python_tca2.path import Path
 from python_tca2.pathstep import PathStep
 from python_tca2.queue_entry import QueueEntry
 from python_tca2.queuelist import QueueList
-from python_tca2.textpair import TextPair
+from python_tca2.textpair import ParallelDocuments
 from python_tca2.toalign import ToAlign
 
 
@@ -31,19 +31,28 @@ class AlignmentModel:
     def __init__(self, tree_dict: dict):
         self.keys = list(tree_dict.keys())
         self.anchor_word_list = AnchorWordList()
-        self.textpair = TextPair(
+        self.parallel_documents = ParallelDocuments(
             elements=defaultdict(
-                list, {index: self.load_tree(tree) for index, tree in tree_dict.items()}
+                list,
+                {index: self.load_sentences(tree) for index, tree in tree_dict.items()},
             )
         )
 
-    def load_tree(self, tree: etree._ElementTree) -> list[AElement]:
+    def load_sentences(self, tree: etree._ElementTree) -> list[AlignmentElement]:
+        """Extracts and processes sentences from an XML tree.
+
+        Args:
+            tree: An XML tree containing sentence elements.
+
+        Returns:
+            A list of AlignmentElement objects, each representing a sentence.
+        """
         return [
-            AElement(
-                " ".join(
+            AlignmentElement(
+                element_number=index,
+                text=" ".join(
                     [text for text in "".join(node.itertext()).split() if text.strip()]
                 ),
-                index,
             )
             for index, node in enumerate(tree.iter("s"))
         ]
@@ -62,7 +71,8 @@ class AlignmentModel:
         run_count = 0
         aligned = Aligned([])
         compare = Compare(
-            anchor_word_list=self.anchor_word_list, nodes=self.textpair.elements
+            anchor_word_list=self.anchor_word_list,
+            nodes=self.parallel_documents.elements,
         )
 
         while True:
@@ -115,7 +125,7 @@ class AlignmentModel:
             number_of_steps = 0
             while number_of_steps < step_suggestion.increment[text_number]:
                 to_align.pickup(
-                    text_number, self.textpair.get_next_element(text_number)
+                    text_number, self.parallel_documents.get_next_element(text_number)
                 )
                 number_of_steps += 1
 
@@ -166,7 +176,7 @@ class AlignmentModel:
             A QueueList containing the final set of extended paths.
         """
         queue_list = QueueList([])
-        queue_list.add(QueueEntry(Path(self.textpair.start_position), 0))
+        queue_list.add(QueueEntry(Path(self.parallel_documents.start_position), 0))
         step_count = 0
         done_lengthening = False
         while not done_lengthening:

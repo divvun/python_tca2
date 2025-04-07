@@ -2,7 +2,7 @@ import json
 from typing import List
 
 from python_tca2 import constants
-from python_tca2.aelement import AElement
+from python_tca2.aelement import AlignmentElement
 from python_tca2.anchorwordlist import AnchorWordList
 from python_tca2.comparecells import CompareCell
 from python_tca2.elementinfotobecompared import ElementInfoToBeCompared
@@ -12,7 +12,7 @@ from python_tca2.pathstep import PathStep
 
 class Compare:
     def __init__(
-        self, anchor_word_list: AnchorWordList, nodes: dict[int, List[AElement]]
+        self, anchor_word_list: AnchorWordList, nodes: dict[int, List[AlignmentElement]]
     ) -> None:
         """Initialize the Compare class with anchor words and node elements.
 

@@ -1,11 +1,11 @@
 from collections import defaultdict
 from dataclasses import asdict, dataclass, field
 
-from python_tca2.aelement import AElement
+from python_tca2.aelement import AlignmentElement
 
 
 @dataclass
-class TextPair:
+class ParallelDocuments:
     """Represents a pair of texts with associated elements.
 
     Attributes:
@@ -17,12 +17,12 @@ class TextPair:
             Q: Why does the rest of the system expect it to start off by one?
     """
 
-    elements: defaultdict[int, list[AElement]] = field(
+    elements: defaultdict[int, list[AlignmentElement]] = field(
         default_factory=lambda: defaultdict(list)
     )
     start_position: list[int] = field(default_factory=lambda: [-1, -1])
 
-    def get_next_element(self, text_number: int) -> AElement:
+    def get_next_element(self, text_number: int) -> AlignmentElement:
         """Returns the next AElement object for the specified text number.
 
         Args:

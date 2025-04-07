@@ -1,7 +1,7 @@
 from collections import defaultdict
 from dataclasses import dataclass
 
-from python_tca2.aelement import AElement
+from python_tca2.aelement import AlignmentElement
 from python_tca2.alignments_etc import AlignmentsEtc
 
 
@@ -13,9 +13,9 @@ class ToAlign:
         elements: A defaultdict mapping text numbers to lists of elements.
     """
 
-    elements: defaultdict[int, list[AElement]]
+    elements: defaultdict[int, list[AlignmentElement]]
 
-    def pickup(self, text_number: int, element: AElement) -> None:
+    def pickup(self, text_number: int, element: AlignmentElement) -> None:
         """Adds an element to the specified text number's elements list.
 
         Args:

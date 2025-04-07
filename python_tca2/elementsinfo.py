@@ -1,7 +1,7 @@
 import json
 from typing import List
 
-from python_tca2.aelement import AElement
+from python_tca2.aelement import AlignmentElement
 from python_tca2.anchorwordlist import AnchorWordList
 from python_tca2.elementinfo import ElementInfo
 from python_tca2.exceptions import EndOfTextExceptionError
@@ -27,7 +27,7 @@ class ElementsInfo:
 
     def get_element_info(
         self,
-        nodes: dict[int, list[AElement]],
+        nodes: dict[int, list[AlignmentElement]],
         anchor_word_list: AnchorWordList,
         element_number: int,
         text_number: int,
@@ -52,7 +52,7 @@ class ElementsInfo:
 
     def set_first(
         self,
-        nodes: dict[int, list[AElement]],
+        nodes: dict[int, list[AlignmentElement]],
         anchor_word_list: AnchorWordList,
         new_first: int,
         text_number: int,
@@ -90,7 +90,7 @@ class ElementsInfo:
 
     def set_last(
         self,
-        nodes: dict[int, list[AElement]],
+        nodes: dict[int, list[AlignmentElement]],
         anchor_word_list: AnchorWordList,
         new_last: int,
         text_number: int,
