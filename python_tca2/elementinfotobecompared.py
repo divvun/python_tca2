@@ -48,9 +48,11 @@ class ElementInfoToBeCompared:
                 except EndOfTextExceptionError:
                     text_end_count += 1
                     break
+
         if text_end_count >= constants.NUM_FILES:
             raise EndOfAllTextsExceptionError()
-        elif text_end_count > 0:
+
+        if text_end_count > 0:
             raise EndOfTextExceptionError()
 
     def to_json(self):
