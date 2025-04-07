@@ -36,13 +36,13 @@ class ElementInfoToBeCompared:
     ) -> None:
         text_end_count = 0
         for text_number in nodes.keys():
-            for x in range(
+            for element_index in range(
                 position[text_number] + 1,
                 position[text_number] + step.increment[text_number] + 1,
             ):
                 try:
                     info = elements_info[text_number].get_element_info(
-                        nodes, anchor_word_list, x, text_number
+                        nodes, anchor_word_list, element_index, text_number
                     )
                     self.add(info, text_number)
                 except EndOfTextExceptionError:
