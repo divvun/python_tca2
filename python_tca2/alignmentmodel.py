@@ -17,8 +17,8 @@ from python_tca2.exceptions import (
 )
 from python_tca2.paralleldocuments import ParallelDocuments
 from python_tca2.pathstep import PathStep
+from python_tca2.queue_entries import QueueEntries
 from python_tca2.queue_entry import QueueEntry
-from python_tca2.queuelist import QueueList
 from python_tca2.tca2path import Tca2Path
 from python_tca2.toalign import ToAlign
 
@@ -95,18 +95,18 @@ class AlignmentModel:
         return aligned, compare
 
     def get_step_suggestion(self, compare: Compare) -> PathStep | None:
-        queue_list = self.lengthen_paths(compare=compare)
+        queue_entries = self.lengthen_paths(compare=compare)
 
         if (
-            len(queue_list.entries) < constants.NUM_FILES
-            and not queue_list.entries[0].path.steps
+            len(queue_entries.entries) < constants.NUM_FILES
+            and not queue_entries.entries[0].path.steps
         ):
             # When the length of the queue list is less than the number of files
             # and the first path in the queue list has no steps, then aligment
             # is done
             return None
 
-        return self.get_best_path(queue_list)
+        return self.get_best_path(queue_entries)
 
     def find_more_to_align_without_gui(self, step_suggestion: PathStep) -> ToAlign:
         """Aligns more text elements.
@@ -128,7 +128,7 @@ class AlignmentModel:
 
         return to_align
 
-    def get_best_path(self, queue_list: QueueList) -> PathStep | None:
+    def get_best_path(self, queue_entries: QueueEntries) -> PathStep | None:
         """Determines the best path step from a queue of candidates.
 
         Iterates through the entries in the provided queue list, calculates a
@@ -137,7 +137,7 @@ class AlignmentModel:
         valid step suggestion is found.
 
         Args:
-            queue_list: A list of candidate entries with associated paths
+            queue_entries: A list of candidate entries with associated paths
                         and scores.
 
         Returns:
@@ -147,7 +147,7 @@ class AlignmentModel:
         normalised_best_score = constants.BEST_PATH_SCORE_NOT_CALCULATED
 
         step_suggestion = None
-        for candidate_entry in queue_list.entries:
+        for candidate_entry in queue_entries.entries:
             normalised_candidate_score = (
                 candidate_entry.score / candidate_entry.path.get_length_in_sentences()
             )
@@ -160,7 +160,7 @@ class AlignmentModel:
 
         return step_suggestion
 
-    def lengthen_paths(self, compare: Compare) -> QueueList:
+    def lengthen_paths(self, compare: Compare) -> QueueEntries:
         """Lengthens paths in a text pair alignment process.
 
         This method iteratively extends paths in the alignment model until no
@@ -172,35 +172,35 @@ class AlignmentModel:
         Returns:
             A QueueList containing the final set of extended paths.
         """
-        queue_list = QueueList([])
-        queue_list.add(
+        queue_entries = QueueEntries([])
+        queue_entries.add(
             QueueEntry(
                 path=Tca2Path(initial_position=self.parallel_documents.start_position),
                 score=0,
             )
         )
         for _ in range(self.max_path_length):
-            next_queue_list = QueueList([])
-            for queue_entry in queue_list.entries:
+            next_queue_entries = QueueEntries([])
+            for queue_entry in queue_entries.entries:
                 if not queue_entry.removed and not queue_entry.end:
                     self.lengthen_current_path(
-                        queue_entry, queue_list, next_queue_list, compare=compare
+                        queue_entry, queue_entries, next_queue_entries, compare=compare
                     )
-            next_queue_list.remove_for_real()
-            if next_queue_list.empty():
+            next_queue_entries.remove_for_real()
+            if next_queue_entries.empty():
                 break
 
-            queue_list = next_queue_list
+            queue_entries = next_queue_entries
         else:
             print_frame("max_path_length exceeded")
 
-        return queue_list
+        return queue_entries
 
     def lengthen_current_path(
         self,
         queue_entry: QueueEntry,
-        queue_list: QueueList,
-        next_queue_list: QueueList,
+        queue_entries: QueueEntries,
+        next_queue_entries: QueueEntries,
         compare: Compare,
     ) -> None:
         """Extends the current path in the alignment process.
@@ -211,8 +211,8 @@ class AlignmentModel:
 
         Args:
             queue_entry: The current queue entry to be extended.
-            queue_list: The list of current queue entries.
-            next_queue_list: The list of queue entries for the next iteration.
+            queue_entries: The list of current queue entries.
+            next_queue_entries: The list of queue entries for the next iteration.
             compare: A comparison object used during path extension.
 
         Raises:
@@ -227,14 +227,14 @@ class AlignmentModel:
                 )
                 if new_queue_entry is not None and new_queue_entry.path is not None:
                     pos = new_queue_entry.path.position
-                    queue_list.remove(pos)
-                    next_queue_list.remove(pos)
-                    next_queue_list.add(new_queue_entry)
+                    queue_entries.remove(pos)
+                    next_queue_entries.remove(pos)
+                    next_queue_entries.add(new_queue_entry)
             except EndOfAllTextsExceptionError:
                 new_queue_entry = deepcopy(queue_entry)
                 new_queue_entry.end = True
-                if not next_queue_list.contains(new_queue_entry):
-                    next_queue_list.add(new_queue_entry)
+                if not next_queue_entries.contains(new_queue_entry):
+                    next_queue_entries.add(new_queue_entry)
             except EndOfTextExceptionError:
                 pass
             except BlockedExceptionError:

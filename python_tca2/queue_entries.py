@@ -4,8 +4,8 @@ from python_tca2.queue_entry import QueueEntry
 
 
 @dataclass
-class QueueList:
-    """QueueList is a container for managing a list of queue entries."""
+class QueueEntries:
+    """QueueEntries is a container for managing a list of queue entries."""
 
     entries: list[QueueEntry]
 
