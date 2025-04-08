@@ -148,7 +148,7 @@ class AlignmentModel:
         """
         score_step_list = [
             (
-                candidate_entry.score / candidate_entry.path.get_length_in_sentences(),
+                candidate_entry.normalized_score,
                 candidate_entry.path.steps[0],
             )
             for candidate_entry in queue_entries.entries

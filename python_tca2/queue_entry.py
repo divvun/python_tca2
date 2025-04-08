@@ -12,6 +12,10 @@ class QueueEntry:
         score: The score or priority of the queue entry.
         removed: Indicates if the entry has been removed.
         end: Indicates if the entry marks the end of the queue.
+
+    Properties:
+        normalized_score (float): The normalized score of the queue entry, calculated as
+            the score divided by the length of the path in sentences.
     """
 
     path: Tca2Path
@@ -21,6 +25,15 @@ class QueueEntry:
 
     def remove(self) -> None:
         self.removed = True
+
+    @property
+    def normalized_score(self) -> float:
+        """Calculates the normalized score of the queue entry.
+
+        Returns:
+            float: The normalized score.
+        """
+        return self.score / self.path.get_length_in_sentences()
 
     def has_hit(self, pos: list[int]) -> bool:
         """Determines if a given position is a hit in the queue.
