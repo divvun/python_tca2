@@ -74,20 +74,7 @@ class AlignmentModel:
         )
 
         for _ in range(constants.RUN_LIMIT):
-
-            queue_list = self.lengthen_paths(compare=compare)
-
-            if (
-                len(queue_list.entries) < constants.NUM_FILES
-                and not queue_list.entries[0].path.steps
-            ):
-                # When the length of the queue list is less than the number of files
-                # and the first path in the queue list has no steps, then aligment
-                # is done
-                break
-
-            step_suggestion = self.get_best_path(queue_list)
-
+            step_suggestion = self.get_step_suggestion(compare=compare)
             if step_suggestion is None:
                 break
 
@@ -106,6 +93,20 @@ class AlignmentModel:
         )
 
         return aligned, compare
+
+    def get_step_suggestion(self, compare: Compare) -> PathStep | None:
+        queue_list = self.lengthen_paths(compare=compare)
+
+        if (
+            len(queue_list.entries) < constants.NUM_FILES
+            and not queue_list.entries[0].path.steps
+        ):
+            # When the length of the queue list is less than the number of files
+            # and the first path in the queue list has no steps, then aligment
+            # is done
+            return None
+
+        return self.get_best_path(queue_list)
 
     def find_more_to_align_without_gui(self, step_suggestion: PathStep) -> ToAlign:
         """Aligns more text elements.
