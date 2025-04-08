@@ -67,15 +67,13 @@ class AlignmentModel:
         Returns:
             A tuple containing the aligned object and the comparison object.
         """
-        run_limit = constants.RUN_LIMIT
-        run_count = 0
         aligned = Aligned([])
         compare = Compare(
             anchor_word_list=self.anchor_word_list,
             nodes=self.parallel_documents.elements,
         )
 
-        while True:
+        for _ in range(constants.RUN_LIMIT):
 
             queue_list = self.lengthen_paths(compare=compare)
 
@@ -99,10 +97,8 @@ class AlignmentModel:
             aligned.pickup(to_align.flush())
             compare.reset_best_path_scores()
 
-            run_count += 1
-            if run_count >= run_limit:
-                print_frame("done_aligning run_limit exceeded")
-                break
+        else:
+            print_frame("run_limit exceeded")
 
         print(
             json.dumps(compare.to_json(), indent=0, ensure_ascii=False),
@@ -182,9 +178,7 @@ class AlignmentModel:
                 score=0,
             )
         )
-        step_count = 0
-        done_lengthening = False
-        while not done_lengthening:
+        for _ in range(self.max_path_length):
             next_queue_list = QueueList([])
             for queue_entry in queue_list.entries:
                 if not queue_entry.removed and not queue_entry.end:
@@ -196,8 +190,8 @@ class AlignmentModel:
                 break
 
             queue_list = next_queue_list
-            step_count += 1
-            done_lengthening = step_count >= self.max_path_length
+        else:
+            print_frame("max_path_length exceeded")
 
         return queue_list
 
