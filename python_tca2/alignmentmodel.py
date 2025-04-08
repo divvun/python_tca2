@@ -129,36 +129,32 @@ class AlignmentModel:
         return to_align
 
     def get_best_path(self, queue_entries: QueueEntries) -> PathStep | None:
-        """Determines the best path step from a queue of candidates.
+        """Selects the best path step based on normalized scores.
 
-        Iterates through the entries in the provided queue list, calculates a
-        normalized score for each candidate, and selects the step suggestion
-        from the path with the highest normalized score. Returns None if no
-        valid step suggestion is found.
+        This method evaluates each candidate entry in the provided queue list by
+        calculating a normalized score, which is the candidate's score divided
+        by the length of its path in sentences.
+
+        It then selects the first step suggestion from the path with the highest
+        normalized score.
 
         Args:
-            queue_entries: A list of candidate entries with associated paths
-                        and scores.
+            queue_entries : A collection of candidate entries, where each entry
+                         contains a path and an associated score.
 
         Returns:
-            The first step suggestion from the best path, or None if no
-            valid path exists.
+            The first step suggestion from the best path, or None if no entries
+            are found.
         """
-        normalised_best_score = constants.BEST_PATH_SCORE_NOT_CALCULATED
-
-        step_suggestion = None
-        for candidate_entry in queue_entries.entries:
-            normalised_candidate_score = (
-                candidate_entry.score / candidate_entry.path.get_length_in_sentences()
+        score_step_list = [
+            (
+                candidate_entry.score / candidate_entry.path.get_length_in_sentences(),
+                candidate_entry.path.steps[0],
             )
-            if int(normalised_candidate_score * 100000) > int(
-                normalised_best_score * 100000
-            ):
-                normalised_best_score = normalised_candidate_score
-                if candidate_entry.path is not None and candidate_entry.path.steps:
-                    step_suggestion = candidate_entry.path.steps[0]
+            for candidate_entry in queue_entries.entries
+        ]
 
-        return step_suggestion
+        return max(score_step_list, key=lambda x: x[0])[1] if score_step_list else None
 
     def lengthen_paths(self, compare: Compare) -> QueueEntries:
         """Lengthens paths in a text pair alignment process.
