@@ -77,10 +77,15 @@ class ElementInfoToBeCompared:
         return self.score
 
     def really_get_score(self) -> float:
-        self.score = 0.0
         if self.empty():
-            return self.score
+            return 0.0
+        if self.has_bad_similarity_score():
+            return constants.ELEMENTINFO_SCORE_HOPELESS
 
+        self.score = 0.0
+        return self.really_get_score2()
+
+    def has_bad_similarity_score(self) -> float:
         length = [0, 0]
         element_count = [0, 0]
 
@@ -88,19 +93,13 @@ class ElementInfoToBeCompared:
             length[text_number] = sum(info.length for info in self.info[text_number])
             element_count[text_number] = len(self.info[text_number])
 
-        if similarity_utils.bad_length_correlation(
+        return similarity_utils.bad_length_correlation(
             length[0],
             length[1],
             element_count[0],
             element_count[1],
             constants.DEFAULT_LENGTH_RATIO,
-        ):
-            self.score = constants.ELEMENTINFO_SCORE_HOPELESS
-            return self.score
-
-        self.score = self.really_get_score2()
-
-        return self.score
+        )
 
     def really_get_score2(self) -> float:
         self.find_anchor_word_matches()
