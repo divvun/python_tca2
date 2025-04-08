@@ -68,10 +68,7 @@ class AlignmentModel:
             A tuple containing the aligned object and the comparison object.
         """
         aligned = Aligned([])
-        compare = Compare(
-            anchor_word_list=self.anchor_word_list,
-            nodes=self.parallel_documents.elements,
-        )
+        compare = Compare()
 
         for _ in range(constants.RUN_LIMIT):
             step_suggestion = self.get_step_suggestion(compare=compare)
@@ -140,7 +137,7 @@ class AlignmentModel:
 
         Args:
             queue_entries : A collection of candidate entries, where each entry
-                         contains a path and an associated score.
+                            contains a path and an associated score.
 
         Returns:
             The first step suggestion from the best path, or None if no entries
@@ -236,8 +233,9 @@ class AlignmentModel:
             except BlockedExceptionError:
                 pass
 
-    @staticmethod
-    def get_step_score(position: list[int], step: PathStep, compare: Compare) -> float:
+    def get_step_score(
+        self, position: list[int], step: PathStep, compare: Compare
+    ) -> float:
         """Calculate the score for a given step at a specific position.
 
         Args:
@@ -248,7 +246,12 @@ class AlignmentModel:
         Returns:
             The score for the specified step.
         """
-        cell = compare.get_cell_values(position, step)
+        cell = compare.get_cell_values(
+            nodes=self.parallel_documents.elements,
+            anchor_word_list=self.anchor_word_list,
+            position=position,
+            step=step,
+        )
         return cell.get_score()
 
     def make_longer_path(

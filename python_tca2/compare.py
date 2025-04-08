@@ -11,24 +11,14 @@ from python_tca2.pathstep import PathStep
 
 
 class Compare:
-    def __init__(
-        self, anchor_word_list: AnchorWordList, nodes: dict[int, List[AlignmentElement]]
-    ) -> None:
+    def __init__(self) -> None:
         """Initialize the Compare class with anchor words and node elements.
 
-        Args:
-            anchor_word_list: The list of anchor words.
-            nodes: A dictionary mapping integers to lists of elements.
-
         Attributes:
-            anchor_word_list: Stores the provided anchor word list.
-            nodes: Stores the provided node elements.
             elements_info: A list of ElementsInfo objects for each file.
             matrix: A dictionary to store comparison cells.
             best_path_scores: A dictionary to store the best path scores.
         """
-        self.anchor_word_list = anchor_word_list
-        self.nodes = nodes
         self.elements_info: List[ElementsInfo] = [
             ElementsInfo() for _ in range(constants.NUM_FILES)
         ]
@@ -48,7 +38,13 @@ class Compare:
     def __str__(self) -> str:
         return json.dumps(self.to_json(), indent=0, ensure_ascii=False)
 
-    def get_cell_values(self, position: list[int], step: PathStep) -> CompareCell:
+    def get_cell_values(
+        self,
+        nodes: dict[int, List[AlignmentElement]],
+        anchor_word_list: AnchorWordList,
+        position: list[int],
+        step: PathStep,
+    ) -> CompareCell:
         """Retrieve or compute the CompareCell object for a given position and step.
 
         Args:
@@ -72,13 +68,17 @@ class Compare:
 
         if key not in self.comparison_matrix:
             self.comparison_matrix[key] = self.build_comparison_matrix_cell(
-                position, step
+                nodes, anchor_word_list, position, step
             )
 
         return self.comparison_matrix[key]
 
     def build_comparison_matrix_cell(
-        self, position: list[int], step: PathStep
+        self,
+        nodes: dict[int, List[AlignmentElement]],
+        anchor_word_list: AnchorWordList,
+        position: list[int],
+        step: PathStep,
     ) -> CompareCell:
         """
         Builds a comparison matrix cell for the given position and step.
@@ -94,8 +94,8 @@ class Compare:
         element_info_to_be_compared.build_elementstobecompared(
             position,
             step,
-            self.nodes,
-            self.anchor_word_list,
+            nodes,
+            anchor_word_list,
             self.elements_info,
         )
         best_path_score_key = ",".join(
