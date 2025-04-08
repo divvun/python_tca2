@@ -268,9 +268,11 @@ class AlignmentModel:
         Returns:
             The updated queue entry if the new score is better, otherwise None.
         """
-        new_score = ret_queue_entry.score + self.get_step_score(
+        position_step_score = self.get_step_score(
             ret_queue_entry.path.position, new_step, compare=compare
         )
+        new_score = ret_queue_entry.score + position_step_score
+
         ret_queue_entry.score = new_score
         ret_queue_entry.path.extend(new_step)
 
