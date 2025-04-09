@@ -72,18 +72,9 @@ class ElementInfoToBeCompared:
 
     def get_score(self) -> float:
         if self.score == constants.ELEMENTINFO_SCORE_NOT_CALCULATED:
-            self.score = self.really_get_score()
+            self.score = self.calculate_score()
 
         return self.score
-
-    def really_get_score(self) -> float:
-        if self.empty():
-            return 0.0
-        if self.has_bad_similarity_score():
-            return constants.ELEMENTINFO_SCORE_HOPELESS
-
-        self.score = 0.0
-        return self.really_get_score2()
 
     def has_bad_similarity_score(self) -> float:
         length = [0, 0]
@@ -131,9 +122,14 @@ class ElementInfoToBeCompared:
             constants.DEFAULT_LENGTH_RATIO,
         )
 
-    def really_get_score2(self) -> float:
-        self.score += self.calculate_clusters_score()
-        self.score = self.adjust_for_length_correlation(self.score)
+    def calculate_score(self) -> float:
+        if self.empty():
+            return 0.0
+        if self.has_bad_similarity_score():
+            return constants.ELEMENTINFO_SCORE_HOPELESS
+
+        cluster_score = self.calculate_clusters_score()
+        score = self.adjust_for_length_correlation(score=cluster_score)
 
         is11: bool = all(
             len(self.info[text_number]) == 1
@@ -141,9 +137,9 @@ class ElementInfoToBeCompared:
         )
 
         if not is11:
-            self.score -= 0.001
+            score -= 0.001
 
-        return self.score
+        return score
 
     def variables_for_dice_matches(self, text_number1: int, text_number2: int):
         for info1 in self.info[text_number1]:
