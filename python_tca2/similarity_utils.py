@@ -252,7 +252,6 @@ def adjust_for_length_correlation(  # noqa: PLR0913
     new_score = 0.0
     lower_limit = 0.4
     upper_limit = 1.0
-    kill_limit = 0.5
     length_correlation_factor = calculate_length_correlation_factor(
         length1, length2, ratio
     )
@@ -262,8 +261,6 @@ def adjust_for_length_correlation(  # noqa: PLR0913
             new_score = score + 2
         elif length_correlation_factor < lower_limit:
             new_score = score + 1
-        elif length_correlation_factor > kill_limit:
-            new_score = -99999.0  # or any other low score value
         else:
             new_score = score
     elif length_correlation_factor < lower_limit / 2:
