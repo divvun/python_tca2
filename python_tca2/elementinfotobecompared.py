@@ -101,7 +101,7 @@ class ElementInfoToBeCompared:
             constants.DEFAULT_LENGTH_RATIO,
         )
 
-    def really_get_score2(self) -> float:
+    def calculate_clusters_score(self) -> float:
         self.find_anchor_word_matches()
         for text_number1 in range(constants.NUM_FILES):
             for text_number2 in range(text_number1 + 1, constants.NUM_FILES):
@@ -110,9 +110,12 @@ class ElementInfoToBeCompared:
                 self.find_dice_matches(text_number1, text_number2)
                 self.find_special_character_matches(text_number1, text_number2)
 
-        self.score += self.common_clusters.get_score(
+        return self.common_clusters.get_score(
             constants.DEFAULT_LARGE_CLUSTER_SCORE_PERCENTAGE
         )
+
+    def really_get_score2(self) -> float:
+        self.score += self.calculate_clusters_score()
 
         length = [0, 0]
         element_count = [0, 0]
