@@ -114,9 +114,7 @@ class ElementInfoToBeCompared:
             constants.DEFAULT_LARGE_CLUSTER_SCORE_PERCENTAGE
         )
 
-    def really_get_score2(self) -> float:
-        self.score += self.calculate_clusters_score()
-
+    def adjust_for_length_correlation(self, score: float) -> float:
         length = [0, 0]
         element_count = [0, 0]
 
@@ -124,14 +122,18 @@ class ElementInfoToBeCompared:
             length[text_number] = sum(info.length for info in self.info[text_number])
             element_count[text_number] = len(self.info[text_number])
 
-        self.score = similarity_utils.adjust_for_length_correlation(
-            self.score,
+        return similarity_utils.adjust_for_length_correlation(
+            score,
             length[0],
             length[1],
             element_count[0],
             element_count[1],
             constants.DEFAULT_LENGTH_RATIO,
         )
+
+    def really_get_score2(self) -> float:
+        self.score += self.calculate_clusters_score()
+        self.score = self.adjust_for_length_correlation(self.score)
 
         is11: bool = all(
             len(self.info[text_number]) == 1
