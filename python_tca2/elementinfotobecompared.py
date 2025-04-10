@@ -25,6 +25,8 @@ class ElementInfoToBeCompared:
         self.common_clusters = Clusters()
         self.score = constants.ELEMENTINFO_SCORE_NOT_CALCULATED
         self.info: defaultdict[int, list[ElementInfo]] = defaultdict(list)
+        self.best_path_score: float | None = None
+        self.best_path_score_key: str | None = None
 
     def build_elementstobecompared(  # noqa: PLR0913
         self,
@@ -61,6 +63,8 @@ class ElementInfoToBeCompared:
             "score": self.get_score(),
             "common_clusters": self.common_clusters.to_json(),
             "info": [info.to_json() for infos in self.info.values() for info in infos],
+            "best_path_score": self.best_path_score,
+            "best_path_score_key": self.best_path_score_key,
         }
 
     def __str__(self):

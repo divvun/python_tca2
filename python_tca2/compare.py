@@ -4,7 +4,6 @@ from typing import List
 from python_tca2 import constants
 from python_tca2.aelement import AlignmentElement
 from python_tca2.anchorwordlist import AnchorWordList
-from python_tca2.comparecells import CompareCell
 from python_tca2.elementinfotobecompared import ElementInfoToBeCompared
 from python_tca2.elementsinfo import ElementsInfo
 from python_tca2.pathstep import PathStep
@@ -21,7 +20,7 @@ class Compare:
         self.elements_info: List[ElementsInfo] = [
             ElementsInfo() for _ in range(constants.NUM_FILES)
         ]
-        self.comparison_matrix: dict[str, CompareCell] = {}
+        self.comparison_matrix: dict[str, ElementInfoToBeCompared] = {}
 
     def to_json(self) -> dict:
         return {
@@ -42,16 +41,20 @@ class Compare:
         position: list[int],
         step: PathStep,
         best_path_scores: dict[str, float],
-    ) -> CompareCell:
-        """Retrieve or compute the CompareCell object for a given position and step.
+    ) -> ElementInfoToBeCompared:
+        """Get the values of a cell in the comparison matrix.
+
+        Retrieve or compute the ElementInfoToBeCompared object for a given
+        position and step.
 
         Args:
             position: A list representing the current position in the matrix.
             step: A PathStep object defining the step increments.
 
         Returns:
-            A CompareCell object containing comparison data for the given position
-            and step.
+
+            A ElementInfoToBeCompared object containing comparison data for the
+            given position and step.
         """
         key = ",".join(
             [
@@ -78,7 +81,7 @@ class Compare:
         position: list[int],
         step: PathStep,
         best_path_scores: dict[str, float],
-    ) -> CompareCell:
+    ) -> ElementInfoToBeCompared:
         """
         Builds a comparison matrix cell for the given position and step.
 
@@ -87,7 +90,8 @@ class Compare:
             step: The step to take from the current position.
 
         Returns:
-            A CompareCell object containing the comparison data and best path score.
+            A ElementInfoToBeCompared object containing the comparison data and best
+            path score.
         """
         element_info_to_be_compared = ElementInfoToBeCompared()
         element_info_to_be_compared.build_elementstobecompared(
@@ -97,6 +101,7 @@ class Compare:
             anchor_word_list,
             self.elements_info,
         )
+
         best_path_score_key = ",".join(
             [
                 str(position[text_number] + step.increment[text_number])
@@ -107,8 +112,8 @@ class Compare:
             best_path_scores[best_path_score_key] = (
                 constants.BEST_PATH_SCORE_NOT_CALCULATED
             )
-
-        return CompareCell(
-            element_info_to_be_compared=element_info_to_be_compared,
-            best_path_score=best_path_scores[best_path_score_key],
-        )
+        element_info_to_be_compared.best_path_score = best_path_scores[
+            best_path_score_key
+        ]
+        element_info_to_be_compared.best_path_score_key = best_path_score_key
+        return element_info_to_be_compared
