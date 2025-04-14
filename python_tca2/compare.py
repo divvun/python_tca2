@@ -129,10 +129,9 @@ class Compare:
             return constants.BEST_PATH_SCORE_BAD
 
         best_path_score_key = ",".join(str(pos) for pos in position)
-        if best_path_score_key not in best_path_scores:
-            return constants.BEST_PATH_SCORE_NOT_CALCULATED
-        else:
-            return best_path_scores[best_path_score_key]
+        return best_path_scores.get(
+            best_path_score_key, constants.BEST_PATH_SCORE_NOT_CALCULATED
+        )
 
     def set_score(
         self, position: list[int], score: float, best_path_scores: dict[str, float]
