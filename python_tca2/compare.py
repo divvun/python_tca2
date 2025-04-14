@@ -132,15 +132,3 @@ class Compare:
         return best_path_scores.get(
             best_path_score_key, constants.BEST_PATH_SCORE_NOT_CALCULATED
         )
-
-    def set_score(
-        self, position: list[int], score: float, best_path_scores: dict[str, float]
-    ) -> None:
-        """Sets the score for a specific position in the best path scores.
-
-        Args:
-            position: A list representing the position in the path.
-            score: The score to assign to the specified position.
-        """
-        best_path_score_key = ",".join(str(pos) for pos in position)
-        best_path_scores[best_path_score_key] = score

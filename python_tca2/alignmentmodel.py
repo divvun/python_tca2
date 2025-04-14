@@ -311,7 +311,7 @@ class AlignmentModel:
             )
             * 100000
         ):
-            compare.set_score(
+            set_best_path_score(
                 ret_queue_entry.path.position,
                 ret_queue_entry.score,
                 best_path_scores=best_path_scores,
@@ -319,3 +319,16 @@ class AlignmentModel:
             return ret_queue_entry
 
         return None
+
+
+def set_best_path_score(
+    position: list[int], score: float, best_path_scores: dict[str, float]
+) -> None:
+    """Sets the score for a specific position in the best path scores.
+
+    Args:
+        position: A list representing the position in the path.
+        score: The score to assign to the specified position.
+    """
+    best_path_score_key = ",".join(str(pos) for pos in position)
+    best_path_scores[best_path_score_key] = score
