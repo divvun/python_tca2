@@ -7,7 +7,7 @@ class CompareCell:
     def __init__(
         self,
         element_info_to_be_compared: ElementInfoToBeCompared,
-        best_path_score: float = -1.0,
+        best_path_score: float,
     ):
         self.element_info_to_be_compared = element_info_to_be_compared
         self.best_path_score = best_path_score

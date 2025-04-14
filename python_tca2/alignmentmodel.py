@@ -71,7 +71,10 @@ class AlignmentModel:
         compare = Compare()
 
         for _ in range(constants.RUN_LIMIT):
-            step_suggestion = self.get_step_suggestion(compare=compare)
+            best_path_scores: dict[str, float] = {}
+            step_suggestion = self.get_step_suggestion(
+                compare=compare, best_path_scores=best_path_scores
+            )
             if step_suggestion is None:
                 break
 
@@ -79,7 +82,8 @@ class AlignmentModel:
                 step_suggestion=step_suggestion
             )
             aligned.pickup(to_align.flush())
-            compare.reset_best_path_scores()
+            for key in best_path_scores.keys():
+                best_path_scores[key] = constants.BEST_PATH_SCORE_NOT_CALCULATED
 
         else:
             print_frame("run_limit exceeded")
@@ -91,8 +95,12 @@ class AlignmentModel:
 
         return aligned, compare
 
-    def get_step_suggestion(self, compare: Compare) -> PathStep | None:
-        queue_entries = self.lengthen_paths(compare=compare)
+    def get_step_suggestion(
+        self, compare: Compare, best_path_scores: dict[str, float]
+    ) -> PathStep | None:
+        queue_entries = self.lengthen_paths(
+            compare=compare, best_path_scores=best_path_scores
+        )
 
         if (
             len(queue_entries.entries) < constants.NUM_FILES
@@ -153,7 +161,9 @@ class AlignmentModel:
 
         return max(score_step_list, key=lambda x: x[0])[1] if score_step_list else None
 
-    def lengthen_paths(self, compare: Compare) -> QueueEntries:
+    def lengthen_paths(
+        self, compare: Compare, best_path_scores: dict[str, float]
+    ) -> QueueEntries:
         """Lengthens paths in a text pair alignment process.
 
         This method iteratively extends paths in the alignment model until no
@@ -177,7 +187,11 @@ class AlignmentModel:
             for queue_entry in queue_entries.entries:
                 if not queue_entry.removed and not queue_entry.end:
                     self.lengthen_current_path(
-                        queue_entry, queue_entries, next_queue_entries, compare=compare
+                        queue_entry,
+                        queue_entries,
+                        next_queue_entries,
+                        compare=compare,
+                        best_path_scores=best_path_scores,
                     )
             next_queue_entries.remove_for_real()
             if next_queue_entries.empty():
@@ -195,6 +209,7 @@ class AlignmentModel:
         queue_entries: QueueEntries,
         next_queue_entries: QueueEntries,
         compare: Compare,
+        best_path_scores: dict[str, float],
     ) -> None:
         """Extends the current path in the alignment process.
 
@@ -216,7 +231,10 @@ class AlignmentModel:
         for step in steplist.create_step_list(len(self.keys)):
             try:
                 new_queue_entry = self.make_longer_path(
-                    deepcopy(queue_entry), step, compare=compare
+                    deepcopy(queue_entry),
+                    step,
+                    compare=compare,
+                    best_path_scores=best_path_scores,
                 )
                 if new_queue_entry is not None and new_queue_entry.path is not None:
                     pos = new_queue_entry.path.position
@@ -234,7 +252,11 @@ class AlignmentModel:
                 pass
 
     def get_step_score(
-        self, position: list[int], step: PathStep, compare: Compare
+        self,
+        position: list[int],
+        step: PathStep,
+        compare: Compare,
+        best_path_scores: dict[str, float],
     ) -> float:
         """Calculate the score for a given step at a specific position.
 
@@ -251,11 +273,16 @@ class AlignmentModel:
             anchor_word_list=self.anchor_word_list,
             position=position,
             step=step,
+            best_path_scores=best_path_scores,
         )
         return cell.get_score()
 
     def make_longer_path(
-        self, ret_queue_entry: QueueEntry, new_step: PathStep, compare: Compare
+        self,
+        ret_queue_entry: QueueEntry,
+        new_step: PathStep,
+        compare: Compare,
+        best_path_scores: dict[str, float],
     ) -> QueueEntry | None:
         """Extend a path with a new step and update its score.
 
@@ -268,7 +295,10 @@ class AlignmentModel:
             The updated queue entry if the new score is better, otherwise None.
         """
         position_step_score = self.get_step_score(
-            ret_queue_entry.path.position, new_step, compare=compare
+            ret_queue_entry.path.position,
+            new_step,
+            compare=compare,
+            best_path_scores=best_path_scores,
         )
         new_score = ret_queue_entry.score + position_step_score
 
@@ -276,9 +306,16 @@ class AlignmentModel:
         ret_queue_entry.path.extend(new_step)
 
         if int(ret_queue_entry.score * 100000) > int(
-            compare.get_score(ret_queue_entry.path.position) * 100000
+            compare.get_score(
+                ret_queue_entry.path.position, best_path_scores=best_path_scores
+            )
+            * 100000
         ):
-            compare.set_score(ret_queue_entry.path.position, ret_queue_entry.score)
+            compare.set_score(
+                ret_queue_entry.path.position,
+                ret_queue_entry.score,
+                best_path_scores=best_path_scores,
+            )
             return ret_queue_entry
 
         return None

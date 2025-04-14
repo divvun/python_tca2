@@ -23,7 +23,6 @@ class Compare:
             ElementsInfo() for _ in range(constants.NUM_FILES)
         ]
         self.comparison_matrix: dict[str, CompareCell] = {}
-        self.best_path_scores: dict[str, float] = {}
 
     def to_json(self) -> dict:
         return {
@@ -32,7 +31,6 @@ class Compare:
                 key: self.comparison_matrix[key].to_json()
                 for key in sorted(self.comparison_matrix.keys())
             },
-            "best_path_scores": self.best_path_scores,
         }
 
     def __str__(self) -> str:
@@ -44,6 +42,7 @@ class Compare:
         anchor_word_list: AnchorWordList,
         position: list[int],
         step: PathStep,
+        best_path_scores: dict[str, float],
     ) -> CompareCell:
         """Retrieve or compute the CompareCell object for a given position and step.
 
@@ -68,7 +67,7 @@ class Compare:
 
         if key not in self.comparison_matrix:
             self.comparison_matrix[key] = self.build_comparison_matrix_cell(
-                nodes, anchor_word_list, position, step
+                nodes, anchor_word_list, position, step, best_path_scores
             )
 
         return self.comparison_matrix[key]
@@ -79,6 +78,7 @@ class Compare:
         anchor_word_list: AnchorWordList,
         position: list[int],
         step: PathStep,
+        best_path_scores: dict[str, float],
     ) -> CompareCell:
         """
         Builds a comparison matrix cell for the given position and step.
@@ -104,17 +104,19 @@ class Compare:
                 for text_number in range(constants.NUM_FILES)
             ]
         )
-        if self.best_path_scores.get(best_path_score_key) is None:
-            self.best_path_scores[best_path_score_key] = (
+        if best_path_scores.get(best_path_score_key) is None:
+            best_path_scores[best_path_score_key] = (
                 constants.BEST_PATH_SCORE_NOT_CALCULATED
             )
 
         return CompareCell(
             element_info_to_be_compared=element_info_to_be_compared,
-            best_path_score=self.best_path_scores[best_path_score_key],
+            best_path_score=best_path_scores[best_path_score_key],
         )
 
-    def get_score(self, position: list[int]) -> float:
+    def get_score(
+        self, position: list[int], best_path_scores: dict[str, float]
+    ) -> float:
         """Calculate and return the score for a given position.
 
         Args:
@@ -122,20 +124,19 @@ class Compare:
 
         Returns:
             The score as a float for the given position.
-
-        Raises:
-            SystemExit: If the position key is not found in best_path_scores.
         """
         if any(pos < 0 for pos in position):
             return constants.BEST_PATH_SCORE_BAD
 
         best_path_score_key = ",".join(str(pos) for pos in position)
-        if best_path_score_key not in self.best_path_scores:
-            raise SystemExit("best_path_score_key not in self.best_path_scores")
+        if best_path_score_key not in best_path_scores:
+            return constants.BEST_PATH_SCORE_NOT_CALCULATED
         else:
-            return self.best_path_scores[best_path_score_key]
+            return best_path_scores[best_path_score_key]
 
-    def set_score(self, position: list[int], score: float) -> None:
+    def set_score(
+        self, position: list[int], score: float, best_path_scores: dict[str, float]
+    ) -> None:
         """Sets the score for a specific position in the best path scores.
 
         Args:
@@ -143,13 +144,4 @@ class Compare:
             score: The score to assign to the specified position.
         """
         best_path_score_key = ",".join(str(pos) for pos in position)
-        self.best_path_scores[best_path_score_key] = score
-
-    def reset_best_path_scores(self) -> None:
-        """Reset all best path scores to the default uncalculated value.
-
-        This method iterates through the keys in the best_path_scores dictionary
-        and sets each value to the constant BEST_PATH_SCORE_NOT_CALCULATED.
-        """
-        for key in self.best_path_scores.keys():
-            self.best_path_scores[key] = constants.BEST_PATH_SCORE_NOT_CALCULATED
+        best_path_scores[best_path_score_key] = score
