@@ -17,7 +17,6 @@ class Compare:
         Attributes:
             elements_info: A list of ElementsInfo objects for each file.
             matrix: A dictionary to store comparison cells.
-            best_path_scores: A dictionary to store the best path scores.
         """
         self.elements_info: List[ElementsInfo] = [
             ElementsInfo() for _ in range(constants.NUM_FILES)
@@ -113,4 +112,3 @@ class Compare:
             element_info_to_be_compared=element_info_to_be_compared,
             best_path_score=best_path_scores[best_path_score_key],
         )
-
