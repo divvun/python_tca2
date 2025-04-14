@@ -114,21 +114,3 @@ class Compare:
             best_path_score=best_path_scores[best_path_score_key],
         )
 
-    def get_score(
-        self, position: list[int], best_path_scores: dict[str, float]
-    ) -> float:
-        """Calculate and return the score for a given position.
-
-        Args:
-            position: A list of integers representing the position.
-
-        Returns:
-            The score as a float for the given position.
-        """
-        if any(pos < 0 for pos in position):
-            return constants.BEST_PATH_SCORE_BAD
-
-        best_path_score_key = ",".join(str(pos) for pos in position)
-        return best_path_scores.get(
-            best_path_score_key, constants.BEST_PATH_SCORE_NOT_CALCULATED
-        )
