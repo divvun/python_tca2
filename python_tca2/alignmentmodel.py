@@ -70,18 +70,13 @@ class AlignmentModel:
         aligned = Aligned([])
         compare = Compare()
 
-        for _ in range(constants.RUN_LIMIT):
-            step_suggestion = self.get_step_suggestion(compare=compare)
-            if step_suggestion is None:
-                break
-
+        while (
+            step_suggestion := self.get_step_suggestion(compare=compare)
+        ) is not None:
             to_align = self.find_more_to_align_without_gui(
                 step_suggestion=step_suggestion
             )
             aligned.pickup(to_align.flush())
-
-        else:
-            print_frame("run_limit exceeded")
 
         print(
             json.dumps(compare.to_json(), indent=0, ensure_ascii=False),
