@@ -111,12 +111,10 @@ class AlignmentModel:
         """
         to_align = ToAlign(defaultdict(list))
         for text_number in self.keys:
-            number_of_steps = 0
-            while number_of_steps < step_suggestion.increment[text_number]:
+            for _ in range(step_suggestion.increment[text_number]):
                 to_align.pickup(
                     text_number, self.parallel_documents.get_next_element(text_number)
                 )
-                number_of_steps += 1
 
         return to_align
 
