@@ -74,7 +74,7 @@ class AlignmentModel:
             step_suggestion := self.get_step_suggestion(compare=compare)
         ) is not None:
             to_align = self.find_more_to_align_without_gui(
-                step_suggestion=step_suggestion
+                increment=step_suggestion.increment
             )
             aligned.pickup(to_align.flush())
 
@@ -100,7 +100,7 @@ class AlignmentModel:
 
         return self.get_best_path(queue_entries)
 
-    def find_more_to_align_without_gui(self, step_suggestion: PathStep) -> ToAlign:
+    def find_more_to_align_without_gui(self, increment: list[int]) -> ToAlign:
         """Aligns more text elements.
 
         Args:
@@ -111,7 +111,7 @@ class AlignmentModel:
         """
         to_align = ToAlign(defaultdict(list))
         for text_number in self.keys:
-            for _ in range(step_suggestion.increment[text_number]):
+            for _ in range(increment[text_number]):
                 to_align.pickup(
                     text_number, self.parallel_documents.get_next_element(text_number)
                 )
