@@ -303,7 +303,21 @@ class ElementInfoToBeCompared:
                 self.common_clusters.add_clusters(anchor_word_clusters)
 
     @staticmethod
+    def get_hit(
+        current_position: int,
+        smallest: int,
+        hits: list[list[AnchorWordHit]],
+        text_number: int,
+    ) -> AnchorWordHit | None:
+        try:
+            hit = hits[text_number][current_position]  # get the hit
+        except IndexError:
+            return None
+
+        return None if hit.index != smallest else hit
+
     def make_anchor_word_clusters(  # noqa: PLR0913
+        self,
         hits: list[list[AnchorWordHit]],
         current_position: int,
         smallest: int,
@@ -312,19 +326,13 @@ class ElementInfoToBeCompared:
         text_number: int,
     ):
         hit_counts = 0  # count of hits
-        while True:
-            if current_position >= len(hits[text_number]):  # if there are no more hits
-                return hit_counts  # return the count
-
-            hit = hits[text_number][current_position]  # get the hit
-            index = hit.index  # get the index
-            if index != smallest:  # if the index is not the smallest
-                return hit_counts  # return the count
-
+        while (
+            hit := self.get_hit(current_position, smallest, hits, text_number)
+        ) is not None:
             if present_in_all_texts:  # if the smallest index is present in all texts
                 anchor_word_clusters.add_ref(
                     Ref(
-                        match_type=index,
+                        match_type=hit.index,
                         weight=(
                             constants.DEFAULT_ANCHORPHRASE_MATCH_WEIGHT
                             if count_words(hit.word) > 1
@@ -339,6 +347,8 @@ class ElementInfoToBeCompared:
                 )
             hit_counts += 1  # increment the count
             current_position += 1  # increment the index
+
+        return hit_counts  # return the count
 
     def variables_for_propername_matches(self, text_number1: int, text_number2: int):
         for info1 in self.info[text_number1]:
