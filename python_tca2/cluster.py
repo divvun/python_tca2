@@ -48,7 +48,7 @@ class Cluster:
         for other_ref in other_cluster.refs:
             self.add_ref(other_ref)
 
-    def get_score(self, large_cluster_score_percentage: float) -> float:
+    def get_score(self) -> float:
         """Calculate the score for the cluster based on its characteristics.
 
         This method computes a score for the cluster by analyzing the number
@@ -56,9 +56,6 @@ class Cluster:
         and the weight of the cluster. The score is adjusted based on the
         smallest number of unique positions and a percentage factor for large
         clusters.
-
-        Args:
-            large_cluster_score_percentage: Percentage factor for large clusters.
 
         Returns:
             The calculated score for the cluster.
@@ -72,7 +69,7 @@ class Cluster:
         )
 
         return cluster_weight * (
-            1 + ((low - 1) * large_cluster_score_percentage / 100.0)
+            1 + ((low - 1) * constants.DEFAULT_LARGE_CLUSTER_SCORE_PERCENTAGE / 100.0)
         )
 
     def get_max_cluster_weight(self) -> float:

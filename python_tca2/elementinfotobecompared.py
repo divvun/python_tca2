@@ -105,9 +105,7 @@ class ElementInfoToBeCompared:
                 self.find_dice_matches(text_number1, text_number2)
                 self.find_special_character_matches(text_number1, text_number2)
 
-        return self.common_clusters.get_score(
-            constants.DEFAULT_LARGE_CLUSTER_SCORE_PERCENTAGE
-        )
+        return self.common_clusters.get_score()
 
     def adjust_for_length_correlation(self, score: float) -> float:
         length = [0, 0]
