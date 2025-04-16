@@ -296,11 +296,8 @@ class AlignmentModel:
         ret_queue_entry.score = new_score
         ret_queue_entry.path.extend(new_step)
 
-        if int(ret_queue_entry.score * 100000) > int(
-            get_best_path_score(
-                ret_queue_entry.path.position, best_path_scores=best_path_scores
-            )
-            * 100000
+        if ret_queue_entry.score > get_best_path_score(
+            ret_queue_entry.path.position, best_path_scores=best_path_scores
         ):
             set_best_path_score(
                 ret_queue_entry.path.position,
