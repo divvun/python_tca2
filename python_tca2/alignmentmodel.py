@@ -71,10 +71,7 @@ class AlignmentModel:
         compare = Compare()
 
         for _ in range(constants.RUN_LIMIT):
-            best_path_scores: dict[str, float] = {}
-            step_suggestion = self.get_step_suggestion(
-                compare=compare, best_path_scores=best_path_scores
-            )
+            step_suggestion = self.get_step_suggestion(compare=compare)
             if step_suggestion is None:
                 break
 
@@ -82,8 +79,6 @@ class AlignmentModel:
                 step_suggestion=step_suggestion
             )
             aligned.pickup(to_align.flush())
-            for key in best_path_scores.keys():
-                best_path_scores[key] = constants.BEST_PATH_SCORE_NOT_CALCULATED
 
         else:
             print_frame("run_limit exceeded")
@@ -95,12 +90,9 @@ class AlignmentModel:
 
         return aligned, compare
 
-    def get_step_suggestion(
-        self, compare: Compare, best_path_scores: dict[str, float]
-    ) -> PathStep | None:
-        queue_entries = self.lengthen_paths(
-            compare=compare, best_path_scores=best_path_scores
-        )
+    def get_step_suggestion(self, compare: Compare) -> PathStep | None:
+
+        queue_entries = self.lengthen_paths(compare=compare)
 
         if (
             len(queue_entries.entries) < constants.NUM_FILES
@@ -161,9 +153,7 @@ class AlignmentModel:
 
         return max(score_step_list, key=lambda x: x[0])[1] if score_step_list else None
 
-    def lengthen_paths(
-        self, compare: Compare, best_path_scores: dict[str, float]
-    ) -> QueueEntries:
+    def lengthen_paths(self, compare: Compare) -> QueueEntries:
         """Lengthens paths in a text pair alignment process.
 
         This method iteratively extends paths in the alignment model until no
@@ -175,6 +165,7 @@ class AlignmentModel:
         Returns:
             A QueueList containing the final set of extended paths.
         """
+        best_path_scores: dict[str, float] = {}
         queue_entries = QueueEntries([])
         queue_entries.add(
             QueueEntry(
