@@ -191,7 +191,7 @@ class ElementInfoToBeCompared:
                     1,
                     word2,
                 )
-                self.common_clusters.add(ref1, ref2)
+                self.common_clusters.create_and_add_cluster(ref1, ref2)
 
             if (
                 next_word1 != ""
@@ -226,7 +226,7 @@ class ElementInfoToBeCompared:
                     1,
                     word2,
                 )
-                self.common_clusters.add(ref1, ref2)
+                self.common_clusters.create_and_add_cluster(ref1, ref2)
 
             next_word2 = info2.words[y + 1] if y < len(info2.words) - 1 else ""
             if (
@@ -263,7 +263,7 @@ class ElementInfoToBeCompared:
                     show_phrase2,
                 )
 
-                self.common_clusters.add(ref1, ref2)
+                self.common_clusters.create_and_add_cluster(ref1, ref2)
 
     def find_anchor_word_matches(self):
         hits = [
@@ -380,7 +380,7 @@ class ElementInfoToBeCompared:
                 1,
                 word2,
             )
-            self.common_clusters.add(ref1=ref1, ref2=ref2)
+            self.common_clusters.create_and_add_cluster(ref1=ref1, ref2=ref2)
 
     def variables_for_number_matches(self, text_number1: int, text_number2: int):
         for info1 in self.info[text_number1]:
@@ -419,7 +419,7 @@ class ElementInfoToBeCompared:
                         1,
                         word2,
                     )
-                    self.common_clusters.add(ref1=ref1, ref2=ref2)
+                    self.common_clusters.create_and_add_cluster(ref1=ref1, ref2=ref2)
             except ValueError:
                 pass
 
@@ -457,7 +457,7 @@ class ElementInfoToBeCompared:
                 1,
                 char2,
             )
-            self.common_clusters.add(ref1=ref1, ref2=ref2)
+            self.common_clusters.create_and_add_cluster(ref1=ref1, ref2=ref2)
 
     def find_hits(self) -> list[list[AnchorWordHit]]:
         return [

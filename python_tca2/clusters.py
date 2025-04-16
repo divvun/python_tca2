@@ -15,7 +15,7 @@ class Clusters:
     def to_json(self) -> dict:
         return {"clusters": [cluster.to_json() for cluster in self.clusters]}
 
-    def add(
+    def create_and_add_cluster(
         self,
         ref1: Ref,
         ref2: Ref,
