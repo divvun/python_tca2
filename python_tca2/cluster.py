@@ -63,23 +63,32 @@ class Cluster:
         Returns:
             The calculated score for the cluster.
         """
-        high = 0
-        low = float("inf")
-        cluster_weight = 0.0
-        for text_number in range(constants.NUM_FILES):
-            count = 0
-            positions = []
-            for ref in self.refs:
-                if ref.is_in_text(text_number):
-                    if ref.pos not in positions:
-                        positions.append(ref.pos)
-                    cluster_weight = max(cluster_weight, ref.weight)
-                count = len(positions)
-            low = min(low, count)
-            high = max(high, count)
+        cluster_weight = self.get_max_cluster_weight()
+        low = min(
+            [
+                len({ref.pos for ref in self.refs if ref.is_in_text(text_number)})
+                for text_number in range(constants.NUM_FILES)
+            ]
+        )
+
         return cluster_weight * (
             1 + ((low - 1) * large_cluster_score_percentage / 100.0)
         )
+
+    def get_max_cluster_weight(self) -> float:
+        """Get the maximum weight of references in the cluster.
+
+        Returns:
+            The biggest weight among the refs.
+        """
+        weights = [
+            ref.weight
+            for text_number in range(constants.NUM_FILES)
+            for ref in self.refs
+            if ref.is_in_text(text_number)
+        ]
+
+        return max(weights) if weights else 0.0
 
     def count_anchor_word_entries(self) -> int:
         """Counts unique anchor word entry types in the references.
