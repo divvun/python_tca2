@@ -1,6 +1,35 @@
 import re
 
 
+def string_to_bigram(word: str) -> list[str]:
+    """Convert a string into a list of bigrams (two-character sequences).
+
+    Args:
+        word: The input string to convert.
+    Returns:
+        A list of bigrams extracted from the input string.
+    """
+    lower_case_word = word.lower()
+    return [lower_case_word[i : i + 2] for i in range(len(lower_case_word) - 1)]
+
+
+def unique_bigrams(bigrams: list[str]) -> set[str]:
+    return set(bigrams)
+
+
+def shared_bigrams(unique_bigrams1: set[str], unique_bigrams2: set[str]) -> set[str]:
+    """Calculate the shared bigrams between two sets of bigrams.
+
+    Args:
+        unique_bigrams1: The first set of bigrams.
+        unique_bigrams2: The second set of bigrams.
+
+    Returns:
+        A set containing the shared bigrams between the two lists.
+    """
+    return unique_bigrams1.intersection(unique_bigrams2)
+
+
 def dice_match1(word1: str, word2: str, dice_min_counting_score: float) -> bool:
     """Check if the Dice coefficient similarity score meets a given threshold.
 
@@ -18,26 +47,19 @@ def dice_match1(word1: str, word2: str, dice_min_counting_score: float) -> bool:
         True if the Dice coefficient score is greater than or equal to
         `dice_min_counting_score`, False otherwise.
     """
-    word1_lower_case = word1.lower()
-    word2_lower_case = word2.lower()
 
-    unique_bigrams1 = {
-        word1_lower_case[i : i + 2] for i in range(len(word1_lower_case) - 1)
-    }
-    unique_bigrams2 = {
-        word2_lower_case[i : i + 2] for i in range(len(word2_lower_case) - 1)
-    }
+    unique_bigrams1 = unique_bigrams(string_to_bigram(word1.lower()))
+    unique_bigrams2 = unique_bigrams(string_to_bigram(word2.lower()))
 
     count_bigrams1 = len(unique_bigrams1)
     count_bigrams2 = len(unique_bigrams2)
 
-    count_shared_bigrams = len(unique_bigrams1.intersection(unique_bigrams2))
+    if not count_bigrams1 or not count_bigrams2:
+        return False
 
-    dice_score = (
-        (2 * count_shared_bigrams) / (count_bigrams1 + count_bigrams2)
-        if count_bigrams1 != 0 and count_bigrams2 != 0
-        else 0
-    )
+    count_shared_bigrams = len(shared_bigrams(unique_bigrams1, unique_bigrams2))
+
+    dice_score = (2 * count_shared_bigrams) / (count_bigrams1 + count_bigrams2)
 
     return dice_score >= dice_min_counting_score
 
@@ -81,85 +103,35 @@ def dice_match2(
         # ### program error
         return False
 
-    word_lower_case = word.lower()
-    phrase_word1_lower_case = phrase_word1.lower()
-    phrase_word2_lower_case = phrase_word2.lower()
+    unique_word_bigrams = unique_bigrams(string_to_bigram(word.lower()))
+    unique_phrase1_bigrams = unique_bigrams(string_to_bigram(phrase_word1.lower()))
+    unique_phrase2_bigrams = unique_bigrams(string_to_bigram(phrase_word2.lower()))
 
-    count_bigrams_in_phrase_word1 = count_unique_bigrams(phrase_word1_lower_case)
-    count_bigrams_in_phrase_word2 = count_unique_bigrams(phrase_word2_lower_case)
+    count_bigrams_in_phrase_word1 = len(unique_phrase1_bigrams)
+    count_bigrams_in_phrase_word2 = len(unique_phrase2_bigrams)
 
-    count_shared_bigrams1 = count_shared_bigrams(
-        word_lower_case, phrase_word1_lower_case
+    count_shared_bigrams1 = len(
+        shared_bigrams(unique_word_bigrams, unique_phrase1_bigrams)
     )
-    count_shared_bigrams2 = count_shared_bigrams(
-        word_lower_case, phrase_word2_lower_case
+    count_shared_bigrams2 = len(
+        shared_bigrams(unique_word_bigrams, unique_phrase2_bigrams)
     )
 
-    dice_score1 = 0.0
-    if count_bigrams_in_phrase_word1 != 0:
-        dice_score1 = count_shared_bigrams1 / count_bigrams_in_phrase_word1
+    dice_score1 = (
+        count_shared_bigrams1 / count_bigrams_in_phrase_word1
+        if count_bigrams_in_phrase_word1
+        else 0.0
+    )
 
-    dice_score2 = 0.0
-    if count_bigrams_in_phrase_word2 != 0:
-        dice_score2 = count_shared_bigrams2 / count_bigrams_in_phrase_word2
+    dice_score2 = (
+        count_shared_bigrams2 / count_bigrams_in_phrase_word2
+        if count_bigrams_in_phrase_word2
+        else 0.0
+    )
 
     return (dice_score1 >= dice_min_counting_score) and (
         dice_score2 >= dice_min_counting_score
     )
-
-
-def count_unique_bigrams(word: str) -> int:
-    """Counts the number of unique bigrams in a word (pairs of consecutive characters).
-
-    A bigram is a sequence of two adjacent characters in a string. This function
-    iterates through the input word, extracts all bigrams, and determines the count of
-    unique bigrams.
-
-    Args:
-        word: The input string for which unique bigrams are to be counted.
-
-    Returns:
-        int: The number of unique bigrams in the input word.
-
-    Example:
-        >>> count_unique_bigrams("hello")
-        4
-        >>> count_unique_bigrams("aaaa")
-        1
-    """
-    unique_bigrams = {}
-    for i in range(len(word) - 1):
-        unique_bigrams[word[i : i + 2]] = 1
-    return len(unique_bigrams)
-
-
-def count_shared_bigrams(word: str, phrase_word: str) -> int:
-    """Calculate the number of shared bigrams between two input strings.
-
-    A bigram is a sequence of two consecutive characters in a string. This function
-    computes the set of unique bigrams for each input string and determines the
-    intersection of these sets to count the shared bigrams.
-
-    Args:
-        word: The first input string.
-        phrase_word: The second input string.
-
-    Returns:
-        int: The number of shared bigrams between the two input strings.
-
-    Example:
-        >>> count_shared_bigrams("hello", "yellow")
-        2
-    """
-    count_shared_bigrams = 0
-    unique_bigrams_in_word = {word[i : i + 2] for i in range(len(word) - 1)}
-    unique_bigrams_in_phrase_word = {
-        phrase_word[i : i + 2] for i in range(len(phrase_word) - 1)
-    }
-    count_shared_bigrams = len(
-        unique_bigrams_in_word.intersection(unique_bigrams_in_phrase_word)
-    )
-    return count_shared_bigrams
 
 
 def is_word_anchor_match(compiled_anchor_pattern: re.Pattern, word: str) -> bool:
