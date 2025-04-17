@@ -1,5 +1,6 @@
 import json
 from collections import Counter, defaultdict
+from typing import Iterator
 
 from python_tca2 import (
     constants,
@@ -97,7 +98,9 @@ class ElementInfoToBeCompared:
         )
 
     def calculate_clusters_score(self) -> float:
-        self.find_anchor_word_matches()
+        for anchor_word_clusters in self.find_anchor_word_matches():
+            self.common_clusters.add_clusters(anchor_word_clusters)
+
         for text_number1 in range(constants.NUM_FILES):
             for text_number2 in range(text_number1 + 1, constants.NUM_FILES):
                 self.find_number_matches(text_number1, text_number2)
@@ -272,7 +275,7 @@ class ElementInfoToBeCompared:
             if current[text_number] < len(hits[text_number])
         ]
 
-    def find_anchor_word_matches(self):
+    def find_anchor_word_matches(self) -> Iterator[Clusters]:
         hits = [
             sorted(lang_hits, key=lambda hit: (hit.index, hit.word))
             for lang_hits in self.find_hits()
@@ -291,7 +294,7 @@ class ElementInfoToBeCompared:
             )
 
             if anchor_word_clusters.clusters:
-                self.common_clusters.add_clusters(anchor_word_clusters)
+                yield anchor_word_clusters
 
     @staticmethod
     def get_hit(
