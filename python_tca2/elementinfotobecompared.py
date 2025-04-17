@@ -1,5 +1,5 @@
 import json
-from collections import defaultdict
+from collections import Counter, defaultdict
 
 from python_tca2 import (
     constants,
@@ -263,41 +263,32 @@ class ElementInfoToBeCompared:
 
                 self.common_clusters.create_and_add_cluster(ref1, ref2)
 
+    def get_these_hits(
+        self, hits: list[list[AnchorWordHit]], current: list[int]
+    ) -> list[AnchorWordHit]:
+        return [
+            hits[text_number][current[text_number]]
+            for text_number in range(constants.NUM_FILES)
+            if current[text_number] < len(hits[text_number])
+        ]
+
     def find_anchor_word_matches(self):
         hits = [
             sorted(lang_hits, key=lambda hit: (hit.index, hit.word))
             for lang_hits in self.find_hits()
         ]
         current = [0] * constants.NUM_FILES
-        done = False
-        while not done:
-            smallest = float("inf")
-            smallest_count = 0
-            for text_number in range(constants.NUM_FILES):
-                if current[text_number] < len(hits[text_number]):
-                    hit = hits[text_number][current[text_number]]
-                    if hit.index < smallest:
-                        smallest = hit.index
-                        smallest_count = 1
-                    elif hit.index == smallest:
-                        smallest_count += 1
+        while these_hits := self.get_these_hits(hits, current):
+            hit_counter = Counter(hit.index for hit in these_hits)
+            smallest_hit_index = min(hit_counter.keys())
 
-            present_in_all_texts = smallest_count == constants.NUM_FILES
-
-            if smallest == float("inf"):
-                break
-
-            anchor_word_clusters = Clusters()
-            for text_number in range(constants.NUM_FILES):
-                if current[text_number] < len(hits[text_number]):
-                    current[text_number] += self.make_anchor_word_clusters(
-                        hits,
-                        current_position=current[text_number],
-                        smallest=smallest,
-                        present_in_all_texts=present_in_all_texts,
-                        anchor_word_clusters=anchor_word_clusters,
-                        text_number=text_number,
-                    )
+            anchor_word_clusters = self.make_anchor_word_clusters(
+                hits,
+                current=current,
+                smallest=smallest_hit_index,
+                present_in_all_texts=hit_counter[smallest_hit_index]
+                == constants.NUM_FILES,
+            )
 
             if anchor_word_clusters.clusters:
                 self.common_clusters.add_clusters(anchor_word_clusters)
@@ -316,39 +307,41 @@ class ElementInfoToBeCompared:
 
         return None if hit.index != smallest else hit
 
-    def make_anchor_word_clusters(  # noqa: PLR0913
+    def make_anchor_word_clusters(
         self,
         hits: list[list[AnchorWordHit]],
-        current_position: int,
+        current: list[int],
         smallest: int,
         present_in_all_texts: bool,
-        anchor_word_clusters: Clusters,
-        text_number: int,
-    ):
-        hit_counts = 0  # count of hits
-        while (
-            hit := self.get_hit(current_position, smallest, hits, text_number)
-        ) is not None:
-            if present_in_all_texts:  # if the smallest index is present in all texts
-                anchor_word_clusters.add_ref(
-                    Ref(
-                        match_type=hit.index,
-                        weight=(
-                            constants.DEFAULT_ANCHORPHRASE_MATCH_WEIGHT
-                            if count_words(hit.word) > 1
-                            else constants.DEFAULT_ANCHOR_WORD_MATCH_WEIGHT
-                        ),
-                        text_number=text_number,
-                        element_number=hit.element_number,
-                        pos=hit.pos,
-                        length=count_words(hit.word),
-                        word=hit.word,
+    ) -> Clusters:
+        anchor_word_clusters = Clusters()
+        for text_number in range(constants.NUM_FILES):
+            if current[text_number] < len(hits[text_number]):
+                while (
+                    hit := self.get_hit(
+                        current[text_number], smallest, hits, text_number
                     )
-                )
-            hit_counts += 1  # increment the count
-            current_position += 1  # increment the index
-
-        return hit_counts  # return the count
+                ) is not None:
+                    if (
+                        present_in_all_texts
+                    ):  # if the smallest index is present in all texts
+                        anchor_word_clusters.add_ref(
+                            Ref(
+                                match_type=hit.index,
+                                weight=(
+                                    constants.DEFAULT_ANCHORPHRASE_MATCH_WEIGHT
+                                    if count_words(hit.word) > 1
+                                    else constants.DEFAULT_ANCHOR_WORD_MATCH_WEIGHT
+                                ),
+                                text_number=text_number,
+                                element_number=hit.element_number,
+                                pos=hit.pos,
+                                length=count_words(hit.word),
+                                word=hit.word,
+                            )
+                        )
+                    current[text_number] += 1  # increment the count
+        return anchor_word_clusters
 
     def variables_for_propername_matches(self, text_number1: int, text_number2: int):
         for info1 in self.info[text_number1]:
