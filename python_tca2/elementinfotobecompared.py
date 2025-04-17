@@ -103,10 +103,18 @@ class ElementInfoToBeCompared:
 
         for text_number1 in range(constants.NUM_FILES):
             for text_number2 in range(text_number1 + 1, constants.NUM_FILES):
-                self.find_number_matches(text_number1, text_number2)
-                self.find_propername_matches(text_number1, text_number2)
-                self.find_dice_matches(text_number1, text_number2)
-                self.find_special_character_matches(text_number1, text_number2)
+                for ref1, ref2 in self.find_number_matches(text_number1, text_number2):
+                    self.common_clusters.create_and_add_cluster(ref1=ref1, ref2=ref2)
+                for ref1, ref2 in self.find_propername_matches(
+                    text_number1, text_number2
+                ):
+                    self.common_clusters.create_and_add_cluster(ref1=ref1, ref2=ref2)
+                for ref1, ref2 in self.find_dice_matches(text_number1, text_number2):
+                    self.common_clusters.create_and_add_cluster(ref1=ref1, ref2=ref2)
+                for ref1, ref2 in self.find_special_character_matches(
+                    text_number1, text_number2
+                ):
+                    self.common_clusters.create_and_add_cluster(ref1=ref1, ref2=ref2)
 
         return self.common_clusters.get_score()
 
@@ -154,7 +162,9 @@ class ElementInfoToBeCompared:
                     for y, word2 in enumerate(info2.words):
                         yield info1, x, word1, next_word1, info2, y, word2
 
-    def find_dice_matches(self, text_number1: int, text_number2: int):
+    def find_dice_matches(
+        self, text_number1: int, text_number2: int
+    ) -> Iterator[tuple[Ref, Ref]]:
         for (
             info1,
             x,
@@ -174,7 +184,7 @@ class ElementInfoToBeCompared:
                     word1, word2, constants.DEFAULT_DICE_MIN_COUNTING_SCORE
                 )
             ):
-                ref1 = Ref(
+                yield Ref(
                     match_type,
                     weight,
                     text_number1,
@@ -182,8 +192,7 @@ class ElementInfoToBeCompared:
                     x,
                     1,
                     word1,
-                )
-                ref2 = Ref(
+                ), Ref(
                     match_type,
                     weight,
                     text_number2,
@@ -192,7 +201,6 @@ class ElementInfoToBeCompared:
                     1,
                     word2,
                 )
-                self.common_clusters.create_and_add_cluster(ref1, ref2)
 
             if (
                 next_word1 != ""
@@ -209,7 +217,7 @@ class ElementInfoToBeCompared:
                 )
             ):
                 show_phrase = word1 + " " + next_word1
-                ref1 = Ref(
+                yield Ref(
                     match_type,
                     weight,
                     text_number1,
@@ -217,8 +225,7 @@ class ElementInfoToBeCompared:
                     x,
                     2,
                     show_phrase,
-                )
-                ref2 = Ref(
+                ), Ref(
                     match_type,
                     weight,
                     text_number2,
@@ -227,7 +234,6 @@ class ElementInfoToBeCompared:
                     1,
                     word2,
                 )
-                self.common_clusters.create_and_add_cluster(ref1, ref2)
 
             next_word2 = info2.words[y + 1] if y < len(info2.words) - 1 else ""
             if (
@@ -245,7 +251,7 @@ class ElementInfoToBeCompared:
                 )
             ):
                 show_phrase2 = word2 + " " + next_word2
-                ref1 = Ref(
+                yield Ref(
                     match_type,
                     weight,
                     text_number1,
@@ -253,8 +259,7 @@ class ElementInfoToBeCompared:
                     x,
                     1,
                     word1,
-                )
-                ref2 = Ref(
+                ), Ref(
                     match_type,
                     weight,
                     text_number2,
@@ -263,8 +268,6 @@ class ElementInfoToBeCompared:
                     2,
                     show_phrase2,
                 )
-
-                self.common_clusters.create_and_add_cluster(ref1, ref2)
 
     def get_these_hits(
         self, hits: list[list[AnchorWordHit]], current: list[int]
@@ -359,13 +362,15 @@ class ElementInfoToBeCompared:
                             ):
                                 yield info1, x, word1, info2, y, word2
 
-    def find_propername_matches(self, text_number1, text_number2):
+    def find_propername_matches(
+        self, text_number1, text_number2
+    ) -> Iterator[tuple[Ref, Ref]]:
         for info1, x, word1, info2, y, word2 in self.variables_for_propername_matches(
             text_number1, text_number2
         ):
             match_type = match.PROPER
             weight = constants.DEFAULT_PROPERNAME_MATCH_WEIGHT
-            ref1 = Ref(
+            yield Ref(
                 match_type,
                 weight,
                 text_number1,
@@ -373,8 +378,7 @@ class ElementInfoToBeCompared:
                 x,
                 1,
                 word1,
-            )
-            ref2 = Ref(
+            ), Ref(
                 match_type,
                 weight,
                 text_number2,
@@ -383,7 +387,6 @@ class ElementInfoToBeCompared:
                 1,
                 word2,
             )
-            self.common_clusters.create_and_add_cluster(ref1=ref1, ref2=ref2)
 
     def variables_for_number_matches(self, text_number1: int, text_number2: int):
         for info1 in self.info[text_number1]:
@@ -392,7 +395,9 @@ class ElementInfoToBeCompared:
                     for y, word2 in enumerate(info2.words):
                         yield info1, x, word1, info2, y, word2
 
-    def find_number_matches(self, text_number1, text_number2):
+    def find_number_matches(
+        self, text_number1, text_number2
+    ) -> Iterator[tuple[Ref, Ref]]:
         for info1, x, word1, info2, y, word2 in self.variables_for_number_matches(
             text_number1, text_number2
         ):
@@ -404,7 +409,7 @@ class ElementInfoToBeCompared:
                     # add to cluster list
                     match_type = match.NUMBER
                     weight = constants.DEFAULT_NUMBER_MATCH_WEIGHT
-                    ref1 = Ref(
+                    yield Ref(
                         match_type,
                         weight,
                         text_number1,
@@ -412,8 +417,7 @@ class ElementInfoToBeCompared:
                         x,
                         1,
                         word1,
-                    )
-                    ref2 = Ref(
+                    ), Ref(
                         match_type,
                         weight,
                         text_number2,
@@ -422,7 +426,6 @@ class ElementInfoToBeCompared:
                         1,
                         word2,
                     )
-                    self.common_clusters.create_and_add_cluster(ref1=ref1, ref2=ref2)
             except ValueError:
                 pass
 
@@ -436,13 +439,15 @@ class ElementInfoToBeCompared:
                         if char1 == char2:
                             yield info1, info2, char1, char2
 
-    def find_special_character_matches(self, text_number1, text_number2):
+    def find_special_character_matches(
+        self, text_number1, text_number2
+    ) -> Iterator[tuple[Ref, Ref]]:
         for info1, info2, char1, char2 in self.variables_for_special_character_matches(
             text_number1, text_number2
         ):
             match_type = match.SCORING_CHARACTERS
             weight = constants.DEFAULT_SCORING_CHARACTER_MATCH_WEIGHT
-            ref1 = Ref(
+            yield Ref(
                 match_type,
                 weight,
                 text_number1,
@@ -450,8 +455,7 @@ class ElementInfoToBeCompared:
                 0,
                 1,
                 char1,
-            )
-            ref2 = Ref(
+            ), Ref(
                 match_type,
                 weight,
                 text_number2,
@@ -460,7 +464,6 @@ class ElementInfoToBeCompared:
                 1,
                 char2,
             )
-            self.common_clusters.create_and_add_cluster(ref1=ref1, ref2=ref2)
 
     def find_hits(self) -> list[list[AnchorWordHit]]:
         return [
