@@ -53,32 +53,6 @@ def test_find_dice_matches():
         "best_path_score": None,
         "best_path_score_key": None,
         "score": 4.0,
-        "common_clusters": {
-            "clusters": [
-                {
-                    "refs": [
-                        {
-                            "match_type": -2,
-                            "weight": 3.0,
-                            "text_number": 0,
-                            "element_number": 0,
-                            "pos": 0,
-                            "length": 1,
-                            "word": "Mobil",
-                        },
-                        {
-                            "match_type": -2,
-                            "weight": 3.0,
-                            "text_number": 1,
-                            "element_number": 0,
-                            "pos": 0,
-                            "length": 1,
-                            "word": "Mobiila",
-                        },
-                    ]
-                }
-            ]
-        },
         "info": [
             {
                 "element_number": 0,
@@ -660,7 +634,6 @@ def test_anchor1():
         "matrix": {
             "0,0,-1,0": {
                 "score": 0.0,
-                "common_clusters": {"clusters": []},
                 "info": [
                     {
                         "element_number": 0,
@@ -692,7 +665,6 @@ def test_anchor1():
             },
             "0,0,0,-1": {
                 "score": 0.0,
-                "common_clusters": {"clusters": []},
                 "info": [
                     {
                         "element_number": 0,
@@ -732,50 +704,6 @@ def test_anchor1():
             },
             "0,0,0,0": {
                 "score": 4.0,
-                "common_clusters": {
-                    "clusters": [
-                        {
-                            "refs": [
-                                {
-                                    "match_type": -3,
-                                    "weight": 3.0,
-                                    "text_number": 0,
-                                    "element_number": 0,
-                                    "pos": 0,
-                                    "length": 1,
-                                    "word": "1",
-                                },
-                                {
-                                    "match_type": -3,
-                                    "weight": 3.0,
-                                    "text_number": 1,
-                                    "element_number": 0,
-                                    "pos": 0,
-                                    "length": 1,
-                                    "word": "1",
-                                },
-                                {
-                                    "match_type": 0,
-                                    "weight": 1.0,
-                                    "text_number": 1,
-                                    "element_number": 0,
-                                    "pos": 0,
-                                    "length": 1,
-                                    "word": "1",
-                                },
-                                {
-                                    "match_type": 0,
-                                    "weight": 1.0,
-                                    "text_number": 0,
-                                    "element_number": 0,
-                                    "pos": 0,
-                                    "length": 1,
-                                    "word": "1",
-                                },
-                            ]
-                        }
-                    ]
-                },
                 "info": [
                     {
                         "element_number": 0,
@@ -839,50 +767,6 @@ def test_anchor1():
             },
             "0,0,0,1": {
                 "score": 4.999,
-                "common_clusters": {
-                    "clusters": [
-                        {
-                            "refs": [
-                                {
-                                    "match_type": -3,
-                                    "weight": 3.0,
-                                    "text_number": 0,
-                                    "element_number": 0,
-                                    "pos": 0,
-                                    "length": 1,
-                                    "word": "1",
-                                },
-                                {
-                                    "match_type": -3,
-                                    "weight": 3.0,
-                                    "text_number": 1,
-                                    "element_number": 0,
-                                    "pos": 0,
-                                    "length": 1,
-                                    "word": "1",
-                                },
-                                {
-                                    "match_type": 0,
-                                    "weight": 1.0,
-                                    "text_number": 1,
-                                    "element_number": 0,
-                                    "pos": 0,
-                                    "length": 1,
-                                    "word": "1",
-                                },
-                                {
-                                    "match_type": 0,
-                                    "weight": 1.0,
-                                    "text_number": 0,
-                                    "element_number": 0,
-                                    "pos": 0,
-                                    "length": 1,
-                                    "word": "1",
-                                },
-                            ]
-                        }
-                    ]
-                },
                 "info": [
                     {
                         "element_number": 0,
@@ -955,7 +839,6 @@ def test_anchor1():
             },
             "0,0,1,0": {
                 "score": -99999.0,
-                "common_clusters": {"clusters": []},
                 "info": [
                     {
                         "element_number": 0,
@@ -1028,7 +911,6 @@ def test_anchor1():
             },
             "0,1,-1,1": {
                 "score": 0.0,
-                "common_clusters": {"clusters": []},
                 "info": [
                     {
                         "element_number": 1,
@@ -1045,7 +927,6 @@ def test_anchor1():
             },
             "0,1,0,0": {
                 "score": 0.0,
-                "common_clusters": {"clusters": []},
                 "info": [
                     {
                         "element_number": 0,
@@ -1085,7 +966,6 @@ def test_anchor1():
             },
             "0,1,0,1": {
                 "score": 0.0,
-                "common_clusters": {"clusters": []},
                 "info": [
                     {
                         "element_number": 0,
@@ -1134,7 +1014,6 @@ def test_anchor1():
             },
             "0,1,0,2": {
                 "score": -99999.0,
-                "common_clusters": {"clusters": []},
                 "info": [
                     {
                         "element_number": 0,
@@ -1217,7 +1096,6 @@ def test_anchor1():
             },
             "0,1,1,1": {
                 "score": -99999.0,
-                "common_clusters": {"clusters": []},
                 "info": [
                     {
                         "element_number": 0,
@@ -1275,7 +1153,6 @@ def test_anchor1():
             },
             "0,2,-1,2": {
                 "score": 0.0,
-                "common_clusters": {"clusters": []},
                 "info": [
                     {
                         "element_number": 2,
@@ -1317,7 +1194,6 @@ def test_anchor1():
             },
             "0,2,0,1": {
                 "score": 0.0,
-                "common_clusters": {"clusters": []},
                 "info": [
                     {
                         "element_number": 0,
@@ -1357,50 +1233,6 @@ def test_anchor1():
             },
             "0,2,0,2": {
                 "score": 3.0,
-                "common_clusters": {
-                    "clusters": [
-                        {
-                            "refs": [
-                                {
-                                    "match_type": -3,
-                                    "weight": 3.0,
-                                    "text_number": 0,
-                                    "element_number": 0,
-                                    "pos": 0,
-                                    "length": 1,
-                                    "word": "1",
-                                },
-                                {
-                                    "match_type": -3,
-                                    "weight": 3.0,
-                                    "text_number": 1,
-                                    "element_number": 2,
-                                    "pos": 3,
-                                    "length": 1,
-                                    "word": "1",
-                                },
-                                {
-                                    "match_type": 0,
-                                    "weight": 1.0,
-                                    "text_number": 1,
-                                    "element_number": 2,
-                                    "pos": 3,
-                                    "length": 1,
-                                    "word": "1",
-                                },
-                                {
-                                    "match_type": 0,
-                                    "weight": 1.0,
-                                    "text_number": 0,
-                                    "element_number": 0,
-                                    "pos": 0,
-                                    "length": 1,
-                                    "word": "1",
-                                },
-                            ]
-                        }
-                    ]
-                },
                 "info": [
                     {
                         "element_number": 0,
@@ -1474,50 +1306,6 @@ def test_anchor1():
             },
             "0,2,1,2": {
                 "score": 4.999,
-                "common_clusters": {
-                    "clusters": [
-                        {
-                            "refs": [
-                                {
-                                    "match_type": -3,
-                                    "weight": 3.0,
-                                    "text_number": 0,
-                                    "element_number": 0,
-                                    "pos": 0,
-                                    "length": 1,
-                                    "word": "1",
-                                },
-                                {
-                                    "match_type": -3,
-                                    "weight": 3.0,
-                                    "text_number": 1,
-                                    "element_number": 2,
-                                    "pos": 3,
-                                    "length": 1,
-                                    "word": "1",
-                                },
-                                {
-                                    "match_type": 0,
-                                    "weight": 1.0,
-                                    "text_number": 1,
-                                    "element_number": 2,
-                                    "pos": 3,
-                                    "length": 1,
-                                    "word": "1",
-                                },
-                                {
-                                    "match_type": 0,
-                                    "weight": 1.0,
-                                    "text_number": 0,
-                                    "element_number": 0,
-                                    "pos": 0,
-                                    "length": 1,
-                                    "word": "1",
-                                },
-                            ]
-                        }
-                    ]
-                },
                 "info": [
                     {
                         "element_number": 0,
@@ -1600,7 +1388,6 @@ def test_anchor1():
             },
             "0,3,0,2": {
                 "score": 0.0,
-                "common_clusters": {"clusters": []},
                 "info": [
                     {
                         "element_number": 0,
@@ -1640,7 +1427,6 @@ def test_anchor1():
             },
             "1,0,0,0": {
                 "score": 0.0,
-                "common_clusters": {"clusters": []},
                 "info": [
                     {
                         "element_number": 0,
@@ -1672,7 +1458,6 @@ def test_anchor1():
             },
             "1,0,1,-1": {
                 "score": 0.0,
-                "common_clusters": {"clusters": []},
                 "info": [
                     {
                         "element_number": 1,
@@ -1689,7 +1474,6 @@ def test_anchor1():
             },
             "1,0,1,0": {
                 "score": 0.0,
-                "common_clusters": {"clusters": []},
                 "info": [
                     {
                         "element_number": 1,
@@ -1730,7 +1514,6 @@ def test_anchor1():
             },
             "1,0,1,1": {
                 "score": -99999.0,
-                "common_clusters": {"clusters": []},
                 "info": [
                     {
                         "element_number": 1,
@@ -1780,7 +1563,6 @@ def test_anchor1():
             },
             "1,0,2,0": {
                 "score": -99999.0,
-                "common_clusters": {"clusters": []},
                 "info": [
                     {
                         "element_number": 1,
@@ -1857,7 +1639,6 @@ def test_anchor1():
             },
             "1,1,0,1": {
                 "score": 0.0,
-                "common_clusters": {"clusters": []},
                 "info": [
                     {
                         "element_number": 1,
@@ -1874,7 +1655,6 @@ def test_anchor1():
             },
             "1,1,1,0": {
                 "score": 0.0,
-                "common_clusters": {"clusters": []},
                 "info": [
                     {
                         "element_number": 1,
@@ -1891,54 +1671,6 @@ def test_anchor1():
             },
             "1,1,1,1": {
                 "score": 7.0,
-                "common_clusters": {
-                    "clusters": [
-                        {
-                            "refs": [
-                                {
-                                    "match_type": -3,
-                                    "weight": 3.0,
-                                    "text_number": 0,
-                                    "element_number": 1,
-                                    "pos": 0,
-                                    "length": 1,
-                                    "word": "27",
-                                },
-                                {
-                                    "match_type": -3,
-                                    "weight": 3.0,
-                                    "text_number": 1,
-                                    "element_number": 1,
-                                    "pos": 0,
-                                    "length": 1,
-                                    "word": "27",
-                                },
-                            ]
-                        },
-                        {
-                            "refs": [
-                                {
-                                    "match_type": -3,
-                                    "weight": 3.0,
-                                    "text_number": 0,
-                                    "element_number": 1,
-                                    "pos": 2,
-                                    "length": 1,
-                                    "word": "2014",
-                                },
-                                {
-                                    "match_type": -3,
-                                    "weight": 3.0,
-                                    "text_number": 1,
-                                    "element_number": 1,
-                                    "pos": 2,
-                                    "length": 1,
-                                    "word": "2014",
-                                },
-                            ]
-                        },
-                    ]
-                },
                 "info": [
                     {
                         "element_number": 1,
@@ -1964,7 +1696,6 @@ def test_anchor1():
             },
             "1,1,1,2": {
                 "score": -99999.0,
-                "common_clusters": {"clusters": []},
                 "info": [
                     {
                         "element_number": 1,
@@ -2024,7 +1755,6 @@ def test_anchor1():
             },
             "1,1,2,1": {
                 "score": -99999.0,
-                "common_clusters": {"clusters": []},
                 "info": [
                     {
                         "element_number": 1,
@@ -2086,7 +1816,6 @@ def test_anchor1():
             },
             "1,2,0,2": {
                 "score": 0.0,
-                "common_clusters": {"clusters": []},
                 "info": [
                     {
                         "element_number": 2,
@@ -2128,7 +1857,6 @@ def test_anchor1():
             },
             "1,2,1,1": {
                 "score": 0.0,
-                "common_clusters": {"clusters": []},
                 "info": [
                     {
                         "element_number": 1,
@@ -2145,7 +1873,6 @@ def test_anchor1():
             },
             "1,2,1,2": {
                 "score": 0.0,
-                "common_clusters": {"clusters": []},
                 "info": [
                     {
                         "element_number": 1,
@@ -2196,50 +1923,6 @@ def test_anchor1():
             },
             "1,2,2,2": {
                 "score": 3.999,
-                "common_clusters": {
-                    "clusters": [
-                        {
-                            "refs": [
-                                {
-                                    "match_type": -3,
-                                    "weight": 3.0,
-                                    "text_number": 0,
-                                    "element_number": 2,
-                                    "pos": 3,
-                                    "length": 1,
-                                    "word": "1",
-                                },
-                                {
-                                    "match_type": -3,
-                                    "weight": 3.0,
-                                    "text_number": 1,
-                                    "element_number": 2,
-                                    "pos": 3,
-                                    "length": 1,
-                                    "word": "1",
-                                },
-                                {
-                                    "match_type": 0,
-                                    "weight": 1.0,
-                                    "text_number": 1,
-                                    "element_number": 2,
-                                    "pos": 3,
-                                    "length": 1,
-                                    "word": "1",
-                                },
-                                {
-                                    "match_type": 0,
-                                    "weight": 1.0,
-                                    "text_number": 0,
-                                    "element_number": 2,
-                                    "pos": 3,
-                                    "length": 1,
-                                    "word": "1",
-                                },
-                            ]
-                        }
-                    ]
-                },
                 "info": [
                     {
                         "element_number": 1,
@@ -2326,7 +2009,6 @@ def test_anchor1():
             },
             "1,3,1,2": {
                 "score": 0.0,
-                "common_clusters": {"clusters": []},
                 "info": [
                     {
                         "element_number": 1,
@@ -2343,7 +2025,6 @@ def test_anchor1():
             },
             "2,0,1,0": {
                 "score": 0.0,
-                "common_clusters": {"clusters": []},
                 "info": [
                     {
                         "element_number": 0,
@@ -2375,7 +2056,6 @@ def test_anchor1():
             },
             "2,0,2,-1": {
                 "score": 0.0,
-                "common_clusters": {"clusters": []},
                 "info": [
                     {
                         "element_number": 2,
@@ -2419,50 +2099,6 @@ def test_anchor1():
             },
             "2,0,2,0": {
                 "score": 3.0,
-                "common_clusters": {
-                    "clusters": [
-                        {
-                            "refs": [
-                                {
-                                    "match_type": -3,
-                                    "weight": 3.0,
-                                    "text_number": 0,
-                                    "element_number": 2,
-                                    "pos": 3,
-                                    "length": 1,
-                                    "word": "1",
-                                },
-                                {
-                                    "match_type": -3,
-                                    "weight": 3.0,
-                                    "text_number": 1,
-                                    "element_number": 0,
-                                    "pos": 0,
-                                    "length": 1,
-                                    "word": "1",
-                                },
-                                {
-                                    "match_type": 0,
-                                    "weight": 1.0,
-                                    "text_number": 1,
-                                    "element_number": 0,
-                                    "pos": 0,
-                                    "length": 1,
-                                    "word": "1",
-                                },
-                                {
-                                    "match_type": 0,
-                                    "weight": 1.0,
-                                    "text_number": 0,
-                                    "element_number": 2,
-                                    "pos": 3,
-                                    "length": 1,
-                                    "word": "1",
-                                },
-                            ]
-                        }
-                    ]
-                },
                 "info": [
                     {
                         "element_number": 2,
@@ -2530,50 +2166,6 @@ def test_anchor1():
             },
             "2,0,2,1": {
                 "score": 2.999,
-                "common_clusters": {
-                    "clusters": [
-                        {
-                            "refs": [
-                                {
-                                    "match_type": -3,
-                                    "weight": 3.0,
-                                    "text_number": 0,
-                                    "element_number": 2,
-                                    "pos": 3,
-                                    "length": 1,
-                                    "word": "1",
-                                },
-                                {
-                                    "match_type": -3,
-                                    "weight": 3.0,
-                                    "text_number": 1,
-                                    "element_number": 0,
-                                    "pos": 0,
-                                    "length": 1,
-                                    "word": "1",
-                                },
-                                {
-                                    "match_type": 0,
-                                    "weight": 1.0,
-                                    "text_number": 1,
-                                    "element_number": 0,
-                                    "pos": 0,
-                                    "length": 1,
-                                    "word": "1",
-                                },
-                                {
-                                    "match_type": 0,
-                                    "weight": 1.0,
-                                    "text_number": 0,
-                                    "element_number": 2,
-                                    "pos": 3,
-                                    "length": 1,
-                                    "word": "1",
-                                },
-                            ]
-                        }
-                    ]
-                },
                 "info": [
                     {
                         "element_number": 2,
@@ -2650,7 +2242,6 @@ def test_anchor1():
             },
             "2,1,1,1": {
                 "score": 0.0,
-                "common_clusters": {"clusters": []},
                 "info": [
                     {
                         "element_number": 1,
@@ -2667,7 +2258,6 @@ def test_anchor1():
             },
             "2,1,2,0": {
                 "score": 0.0,
-                "common_clusters": {"clusters": []},
                 "info": [
                     {
                         "element_number": 2,
@@ -2711,7 +2301,6 @@ def test_anchor1():
             },
             "2,1,2,1": {
                 "score": 0.0,
-                "common_clusters": {"clusters": []},
                 "info": [
                     {
                         "element_number": 2,
@@ -2764,50 +2353,6 @@ def test_anchor1():
             },
             "2,1,2,2": {
                 "score": 4.999,
-                "common_clusters": {
-                    "clusters": [
-                        {
-                            "refs": [
-                                {
-                                    "match_type": -3,
-                                    "weight": 3.0,
-                                    "text_number": 0,
-                                    "element_number": 2,
-                                    "pos": 3,
-                                    "length": 1,
-                                    "word": "1",
-                                },
-                                {
-                                    "match_type": -3,
-                                    "weight": 3.0,
-                                    "text_number": 1,
-                                    "element_number": 2,
-                                    "pos": 3,
-                                    "length": 1,
-                                    "word": "1",
-                                },
-                                {
-                                    "match_type": 0,
-                                    "weight": 1.0,
-                                    "text_number": 1,
-                                    "element_number": 2,
-                                    "pos": 3,
-                                    "length": 1,
-                                    "word": "1",
-                                },
-                                {
-                                    "match_type": 0,
-                                    "weight": 1.0,
-                                    "text_number": 0,
-                                    "element_number": 2,
-                                    "pos": 3,
-                                    "length": 1,
-                                    "word": "1",
-                                },
-                            ]
-                        }
-                    ]
-                },
                 "info": [
                     {
                         "element_number": 2,
@@ -2894,7 +2439,6 @@ def test_anchor1():
             },
             "2,2,1,2": {
                 "score": 0.0,
-                "common_clusters": {"clusters": []},
                 "info": [
                     {
                         "element_number": 2,
@@ -2936,7 +2480,6 @@ def test_anchor1():
             },
             "2,2,2,1": {
                 "score": 0.0,
-                "common_clusters": {"clusters": []},
                 "info": [
                     {
                         "element_number": 2,
@@ -2980,50 +2523,6 @@ def test_anchor1():
             },
             "2,2,2,2": {
                 "score": 5.0,
-                "common_clusters": {
-                    "clusters": [
-                        {
-                            "refs": [
-                                {
-                                    "match_type": -3,
-                                    "weight": 3.0,
-                                    "text_number": 0,
-                                    "element_number": 2,
-                                    "pos": 3,
-                                    "length": 1,
-                                    "word": "1",
-                                },
-                                {
-                                    "match_type": -3,
-                                    "weight": 3.0,
-                                    "text_number": 1,
-                                    "element_number": 2,
-                                    "pos": 3,
-                                    "length": 1,
-                                    "word": "1",
-                                },
-                                {
-                                    "match_type": 0,
-                                    "weight": 1.0,
-                                    "text_number": 1,
-                                    "element_number": 2,
-                                    "pos": 3,
-                                    "length": 1,
-                                    "word": "1",
-                                },
-                                {
-                                    "match_type": 0,
-                                    "weight": 1.0,
-                                    "text_number": 0,
-                                    "element_number": 2,
-                                    "pos": 3,
-                                    "length": 1,
-                                    "word": "1",
-                                },
-                            ]
-                        }
-                    ]
-                },
                 "info": [
                     {
                         "element_number": 2,
@@ -3101,7 +2600,6 @@ def test_anchor1():
             },
             "2,3,2,2": {
                 "score": 0.0,
-                "common_clusters": {"clusters": []},
                 "info": [
                     {
                         "element_number": 2,
@@ -3145,7 +2643,6 @@ def test_anchor1():
             },
             "3,0,2,0": {
                 "score": 0.0,
-                "common_clusters": {"clusters": []},
                 "info": [
                     {
                         "element_number": 0,
@@ -3177,7 +2674,6 @@ def test_anchor1():
             },
             "3,1,2,1": {
                 "score": 0.0,
-                "common_clusters": {"clusters": []},
                 "info": [
                     {
                         "element_number": 1,
@@ -3194,7 +2690,6 @@ def test_anchor1():
             },
             "3,2,2,2": {
                 "score": 0.0,
-                "common_clusters": {"clusters": []},
                 "info": [
                     {
                         "element_number": 2,

@@ -23,7 +23,6 @@ from python_tca2.ref import Ref
 # info becomes indexes into e.g. AlignmentModel.elements or whatever
 class ElementInfoToBeCompared:
     def __init__(self) -> None:
-        self.common_clusters = Clusters()
         self.score = constants.ELEMENTINFO_SCORE_NOT_CALCULATED
         self.info: defaultdict[int, list[ElementInfo]] = defaultdict(list)
         self.best_path_score: float | None = None
@@ -62,7 +61,6 @@ class ElementInfoToBeCompared:
     def to_json(self):
         return {
             "score": self.get_score(),
-            "common_clusters": self.common_clusters.to_json(),
             "info": [info.to_json() for infos in self.info.values() for info in infos],
             "best_path_score": self.best_path_score,
             "best_path_score_key": self.best_path_score_key,
@@ -98,25 +96,26 @@ class ElementInfoToBeCompared:
         )
 
     def calculate_clusters_score(self) -> float:
+        common_clusters = Clusters()
         for anchor_word_clusters in self.make_anchor_word_clusters():
-            self.common_clusters.add_clusters(anchor_word_clusters)
+            common_clusters.add_clusters(anchor_word_clusters)
 
         for text_number1 in range(constants.NUM_FILES):
             for text_number2 in range(text_number1 + 1, constants.NUM_FILES):
                 for ref1, ref2 in self.find_number_matches(text_number1, text_number2):
-                    self.common_clusters.create_and_add_cluster(ref1=ref1, ref2=ref2)
+                    common_clusters.create_and_add_cluster(ref1=ref1, ref2=ref2)
                 for ref1, ref2 in self.find_propername_matches(
                     text_number1, text_number2
                 ):
-                    self.common_clusters.create_and_add_cluster(ref1=ref1, ref2=ref2)
+                    common_clusters.create_and_add_cluster(ref1=ref1, ref2=ref2)
                 for ref1, ref2 in self.find_dice_matches(text_number1, text_number2):
-                    self.common_clusters.create_and_add_cluster(ref1=ref1, ref2=ref2)
+                    common_clusters.create_and_add_cluster(ref1=ref1, ref2=ref2)
                 for ref1, ref2 in self.find_special_character_matches(
                     text_number1, text_number2
                 ):
-                    self.common_clusters.create_and_add_cluster(ref1=ref1, ref2=ref2)
+                    common_clusters.create_and_add_cluster(ref1=ref1, ref2=ref2)
 
-        return self.common_clusters.get_score()
+        return common_clusters.get_score()
 
     def adjust_for_length_correlation(self, score: float) -> float:
         length = [0, 0]
