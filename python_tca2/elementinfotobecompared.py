@@ -23,7 +23,7 @@ from python_tca2.ref import Ref
 # info becomes indexes into e.g. AlignmentModel.elements or whatever
 class ElementInfoToBeCompared:
     def __init__(self) -> None:
-        self.score = constants.ELEMENTINFO_SCORE_NOT_CALCULATED
+        self.score: float | None = None
         self.info: defaultdict[int, list[ElementInfo]] = defaultdict(list)
         self.best_path_score: float | None = None
         self.best_path_score_key: str | None = None
@@ -74,7 +74,7 @@ class ElementInfoToBeCompared:
         return len(self.info) < constants.NUM_FILES
 
     def get_score(self) -> float:
-        if self.score == constants.ELEMENTINFO_SCORE_NOT_CALCULATED:
+        if self.score is None:
             self.score = self.calculate_score()
 
         return self.score
