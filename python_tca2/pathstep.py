@@ -4,7 +4,7 @@ from dataclasses import dataclass
 
 @dataclass
 class PathStep:
-    increment: list[int]
+    increment: tuple[int, ...]
 
     def is11(self):
         return all(i == 1 for i in self.increment)
