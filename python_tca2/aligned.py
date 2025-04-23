@@ -18,7 +18,7 @@ class Aligned:
         if value_got is not None:
             self.alignments.append(value_got)
 
-    def valid_pairs(self) -> list[tuple[str, str]]:
+    def valid_pairs(self) -> list[tuple[str, ...]]:
         """Return a list of valid tuple of elements from the alignments.
 
         A valid tuple is a tuple of elements from the alignments that have element
