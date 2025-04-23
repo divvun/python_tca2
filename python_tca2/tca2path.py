@@ -56,8 +56,8 @@ class Tca2Path:
         Returns:
             The total count of sentences.
         """
-        count = 0
-        for step in self.steps:
-            for text_number in range(constants.NUM_FILES):
-                count += step.increment[text_number]
-        return count
+        return sum(
+            step.increment[text_number]
+            for step in self.steps
+            for text_number in range(constants.NUM_FILES)
+        )
