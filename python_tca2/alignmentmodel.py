@@ -1,5 +1,4 @@
 import json
-from collections import defaultdict
 from copy import deepcopy
 
 from lxml import etree
@@ -28,14 +27,10 @@ class AlignmentModel:
     scoring_characters = constants.DEFAULT_SCORING_CHARACTERS
     max_path_length = constants.MAX_PATH_LENGTH
 
-    def __init__(self, tree_dict: dict):
-        self.keys = list(tree_dict.keys())
+    def __init__(self, tree_tuple: tuple[etree._ElementTree, ...]) -> None:
         self.anchor_word_list = AnchorWordList()
         self.parallel_documents = ParallelDocuments(
-            elements=defaultdict(
-                list,
-                {index: self.load_sentences(tree) for index, tree in tree_dict.items()},
-            )
+            elements=tuple(self.load_sentences(tree) for tree in tree_tuple)
         )
 
     def load_sentences(self, tree: etree._ElementTree) -> list[AlignmentElement]:
@@ -117,7 +112,7 @@ class AlignmentModel:
                     self.parallel_documents.get_next_element(text_number)
                     for _ in range(increment[text_number])
                 ]
-                for text_number in self.keys
+                for text_number in range(len(self.parallel_documents.elements))
             )
         )
 
@@ -215,7 +210,7 @@ class AlignmentModel:
             EndOfTextExceptionError: Indicates the end of a single text.
             BlockedExceptionError: Indicates a path is blocked.
         """
-        for step in steplist.create_step_list(len(self.keys)):
+        for step in steplist.create_step_list(len(self.parallel_documents.elements)):
             try:
                 new_queue_entry = self.make_longer_path(
                     deepcopy(queue_entry),

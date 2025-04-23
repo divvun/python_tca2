@@ -27,7 +27,7 @@ class ElementsInfo:
 
     def get_element_info(
         self,
-        nodes: dict[int, list[AlignmentElement]],
+        nodes: tuple[list[AlignmentElement], ...],
         anchor_word_list: AnchorWordList,
         element_number: int,
         text_number: int,
@@ -52,7 +52,7 @@ class ElementsInfo:
 
     def set_first(
         self,
-        nodes: dict[int, list[AlignmentElement]],
+        nodes: tuple[list[AlignmentElement], ...],
         anchor_word_list: AnchorWordList,
         new_first: int,
         text_number: int,
@@ -90,7 +90,7 @@ class ElementsInfo:
 
     def set_last(
         self,
-        nodes: dict[int, list[AlignmentElement]],
+        nodes: tuple[list[AlignmentElement], ...],
         anchor_word_list: AnchorWordList,
         new_last: int,
         text_number: int,

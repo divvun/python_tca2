@@ -98,8 +98,8 @@ def test_toalign_pickup():
     )
 
     textpair = ParallelDocuments(
-        elements={
-            0: [
+        elements=(
+            [
                 AlignmentElement(
                     " ".join(
                         [
@@ -112,8 +112,7 @@ def test_toalign_pickup():
                 )
                 for index, node in enumerate(tree.iter("s"))
             ],
-            1: [],
-        }
+        )
     )
 
     to_align = ([], [])
@@ -221,7 +220,7 @@ def test_suggest1():
         ),
     ]
 
-    model = alignmentmodel.AlignmentModel(dict(enumerate(trees)))
+    model = alignmentmodel.AlignmentModel(tuple(trees))
     model.anchor_word_list = load_anchor_words()
     aligned, _ = model.suggest_without_gui()
 
@@ -285,7 +284,7 @@ def test_suggest2():
         ),
     ]
 
-    model = alignmentmodel.AlignmentModel(dict(enumerate(trees)))
+    model = alignmentmodel.AlignmentModel(tuple(trees))
     model.anchor_word_list = load_anchor_words()
     aligned, _ = model.suggest_without_gui()
 
@@ -366,7 +365,7 @@ def test_suggest3():
         ),
     ]
 
-    model = alignmentmodel.AlignmentModel(dict(enumerate(trees)))
+    model = alignmentmodel.AlignmentModel(tuple(trees))
     model.anchor_word_list = load_anchor_words()
     aligned, _ = model.suggest_without_gui()
 
@@ -437,7 +436,7 @@ def test_anchorword_hits():
         ),
     ]
 
-    model = alignmentmodel.AlignmentModel(dict(enumerate(trees)))
+    model = alignmentmodel.AlignmentModel(tuple(trees))
     model.anchor_word_list = load_anchor_words()
     _, compare = model.suggest_without_gui()
     interesting = compare.comparison_matrix["0,0,0,0"]
@@ -477,7 +476,7 @@ def test_anchor1():
         ),
     ]
 
-    model = alignmentmodel.AlignmentModel(dict(enumerate(trees)))
+    model = alignmentmodel.AlignmentModel(tuple(trees))
     model.anchor_word_list = load_anchor_words()
     _, compare = model.suggest_without_gui()
 

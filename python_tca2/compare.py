@@ -36,7 +36,7 @@ class Compare:
 
     def get_cell_values(
         self,
-        nodes: dict[int, List[AlignmentElement]],
+        nodes: tuple[List[AlignmentElement], ...],
         anchor_word_list: AnchorWordList,
         position: list[int],
         step: PathStep,
@@ -76,7 +76,7 @@ class Compare:
 
     def build_comparison_matrix_cell(
         self,
-        nodes: dict[int, List[AlignmentElement]],
+        nodes: tuple[List[AlignmentElement], ...],
         anchor_word_list: AnchorWordList,
         position: list[int],
         step: PathStep,

@@ -32,12 +32,12 @@ class ElementInfoToBeCompared:
         self,
         position: list[int],
         step: PathStep,
-        nodes: dict[int, list[AlignmentElement]],
+        nodes: tuple[list[AlignmentElement], ...],
         anchor_word_list: AnchorWordList,
         elements_info: list[ElementsInfo],
     ) -> None:
         text_end_count = 0
-        for text_number in nodes.keys():
+        for text_number in range(len(nodes)):
             for element_index in range(
                 position[text_number] + 1,
                 position[text_number] + step.increment[text_number] + 1,
