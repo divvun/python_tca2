@@ -1,5 +1,5 @@
 import json
-from collections import Counter, defaultdict
+from collections import Counter
 from typing import Iterator
 
 from python_tca2 import (
@@ -24,7 +24,9 @@ from python_tca2.ref import Ref
 class ElementInfoToBeCompared:
     def __init__(self) -> None:
         self.score: float | None = None
-        self.info: defaultdict[int, list[ElementInfo]] = defaultdict(list)
+        self.info: tuple[list[ElementInfo], ...] = tuple(
+            [[] for _ in range(constants.NUM_FILES)]
+        )
         self.best_path_score: float | None = None
         self.best_path_score_key: str | None = None
 
@@ -61,7 +63,7 @@ class ElementInfoToBeCompared:
     def to_json(self):
         return {
             "score": self.get_score(),
-            "info": [info.to_json() for infos in self.info.values() for info in infos],
+            "info": [info.to_json() for infos in self.info for info in infos],
             "best_path_score": self.best_path_score,
             "best_path_score_key": self.best_path_score_key,
         }
@@ -467,5 +469,5 @@ class ElementInfoToBeCompared:
     def find_hits(self) -> list[list[AnchorWordHit]]:
         return [
             [hit for info in info_list for hit in info.anchor_word_hits.hits]
-            for info_list in self.info.values()
+            for info_list in self.info
         ]

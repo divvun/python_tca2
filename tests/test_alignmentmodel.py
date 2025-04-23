@@ -630,7 +630,7 @@ def test_anchor1():
         ],
         "matrix": {
             "0,0,-1,0": {
-                "score": 0.0,
+                "score": -0.001,
                 "info": [
                     {
                         "element_number": 0,
@@ -661,7 +661,7 @@ def test_anchor1():
                 "best_path_score_key": "-1,0",
             },
             "0,0,0,-1": {
-                "score": 0.0,
+                "score": -0.001,
                 "info": [
                     {
                         "element_number": 0,
@@ -907,7 +907,7 @@ def test_anchor1():
                 "best_path_score_key": "1,0",
             },
             "0,1,-1,1": {
-                "score": 0.0,
+                "score": -0.001,
                 "info": [
                     {
                         "element_number": 1,
@@ -923,7 +923,7 @@ def test_anchor1():
                 "best_path_score_key": "-1,1",
             },
             "0,1,0,0": {
-                "score": 0.0,
+                "score": -0.001,
                 "info": [
                     {
                         "element_number": 0,
@@ -1149,7 +1149,7 @@ def test_anchor1():
                 "best_path_score_key": "1,1",
             },
             "0,2,-1,2": {
-                "score": 0.0,
+                "score": -0.001,
                 "info": [
                     {
                         "element_number": 2,
@@ -1190,7 +1190,7 @@ def test_anchor1():
                 "best_path_score_key": "-1,2",
             },
             "0,2,0,1": {
-                "score": 0.0,
+                "score": -0.001,
                 "info": [
                     {
                         "element_number": 0,
@@ -1298,7 +1298,7 @@ def test_anchor1():
                         "proper_names": ["Sámediggeráđđi"],
                     },
                 ],
-                "best_path_score": 4.999,
+                "best_path_score": 4.997999999999999,
                 "best_path_score_key": "0,2",
             },
             "0,2,1,2": {
@@ -1384,7 +1384,7 @@ def test_anchor1():
                 "best_path_score_key": "1,2",
             },
             "0,3,0,2": {
-                "score": 0.0,
+                "score": -0.001,
                 "info": [
                     {
                         "element_number": 0,
@@ -1419,11 +1419,11 @@ def test_anchor1():
                         "proper_names": [],
                     }
                 ],
-                "best_path_score": 4.999,
+                "best_path_score": 4.997999999999999,
                 "best_path_score_key": "0,2",
             },
             "1,0,0,0": {
-                "score": 0.0,
+                "score": -0.001,
                 "info": [
                     {
                         "element_number": 0,
@@ -1454,7 +1454,7 @@ def test_anchor1():
                 "best_path_score_key": "0,0",
             },
             "1,0,1,-1": {
-                "score": 0.0,
+                "score": -0.001,
                 "info": [
                     {
                         "element_number": 1,
@@ -1635,7 +1635,7 @@ def test_anchor1():
                 "best_path_score_key": "2,0",
             },
             "1,1,0,1": {
-                "score": 0.0,
+                "score": -0.001,
                 "info": [
                     {
                         "element_number": 1,
@@ -1651,7 +1651,7 @@ def test_anchor1():
                 "best_path_score_key": "0,1",
             },
             "1,1,1,0": {
-                "score": 0.0,
+                "score": -0.001,
                 "info": [
                     {
                         "element_number": 1,
@@ -1663,7 +1663,7 @@ def test_anchor1():
                         "proper_names": [],
                     }
                 ],
-                "best_path_score": 0.0,
+                "best_path_score": -0.001,
                 "best_path_score_key": "1,0",
             },
             "1,1,1,1": {
@@ -1812,7 +1812,7 @@ def test_anchor1():
                 "best_path_score_key": "2,1",
             },
             "1,2,0,2": {
-                "score": 0.0,
+                "score": -0.001,
                 "info": [
                     {
                         "element_number": 2,
@@ -1853,7 +1853,7 @@ def test_anchor1():
                 "best_path_score_key": "0,2",
             },
             "1,2,1,1": {
-                "score": 0.0,
+                "score": -0.001,
                 "info": [
                     {
                         "element_number": 1,
@@ -2005,7 +2005,7 @@ def test_anchor1():
                 "best_path_score_key": "2,2",
             },
             "1,3,1,2": {
-                "score": 0.0,
+                "score": -0.001,
                 "info": [
                     {
                         "element_number": 1,
@@ -2017,11 +2017,11 @@ def test_anchor1():
                         "proper_names": [],
                     }
                 ],
-                "best_path_score": 11.0,
+                "best_path_score": 10.999,
                 "best_path_score_key": "1,2",
             },
             "2,0,1,0": {
-                "score": 0.0,
+                "score": -0.001,
                 "info": [
                     {
                         "element_number": 0,
@@ -2048,11 +2048,11 @@ def test_anchor1():
                         "proper_names": [],
                     }
                 ],
-                "best_path_score": 4.0,
+                "best_path_score": 3.999,
                 "best_path_score_key": "1,0",
             },
             "2,0,2,-1": {
-                "score": 0.0,
+                "score": -0.001,
                 "info": [
                     {
                         "element_number": 2,
@@ -2238,7 +2238,7 @@ def test_anchor1():
                 "best_path_score_key": "2,1",
             },
             "2,1,1,1": {
-                "score": 0.0,
+                "score": -0.001,
                 "info": [
                     {
                         "element_number": 1,
@@ -2254,7 +2254,7 @@ def test_anchor1():
                 "best_path_score_key": "1,1",
             },
             "2,1,2,0": {
-                "score": 0.0,
+                "score": -0.001,
                 "info": [
                     {
                         "element_number": 2,
@@ -2293,7 +2293,7 @@ def test_anchor1():
                         "proper_names": ["Sametingsrådet", "Arktisk"],
                     }
                 ],
-                "best_path_score": 3.0,
+                "best_path_score": 2.998,
                 "best_path_score_key": "2,0",
             },
             "2,1,2,1": {
@@ -2345,7 +2345,7 @@ def test_anchor1():
                         "proper_names": ["Geassemánnu"],
                     },
                 ],
-                "best_path_score": 2.999,
+                "best_path_score": 2.9970000000000003,
                 "best_path_score_key": "2,1",
             },
             "2,1,2,2": {
@@ -2435,7 +2435,7 @@ def test_anchor1():
                 "best_path_score_key": "2,2",
             },
             "2,2,1,2": {
-                "score": 0.0,
+                "score": -0.001,
                 "info": [
                     {
                         "element_number": 2,
@@ -2476,7 +2476,7 @@ def test_anchor1():
                 "best_path_score_key": "1,2",
             },
             "2,2,2,1": {
-                "score": 0.0,
+                "score": -0.001,
                 "info": [
                     {
                         "element_number": 2,
@@ -2515,7 +2515,7 @@ def test_anchor1():
                         "proper_names": ["Sametingsrådet", "Arktisk"],
                     }
                 ],
-                "best_path_score": 4.0,
+                "best_path_score": 3.999,
                 "best_path_score_key": "2,1",
             },
             "2,2,2,2": {
@@ -2592,11 +2592,11 @@ def test_anchor1():
                         "proper_names": ["Sámediggeráđđi"],
                     },
                 ],
-                "best_path_score": 8.998999999999999,
+                "best_path_score": 8.998,
                 "best_path_score_key": "2,2",
             },
             "2,3,2,2": {
-                "score": 0.0,
+                "score": -0.001,
                 "info": [
                     {
                         "element_number": 2,
@@ -2639,7 +2639,7 @@ def test_anchor1():
                 "best_path_score_key": "2,2",
             },
             "3,0,2,0": {
-                "score": 0.0,
+                "score": -0.001,
                 "info": [
                     {
                         "element_number": 0,
@@ -2666,11 +2666,11 @@ def test_anchor1():
                         "proper_names": [],
                     }
                 ],
-                "best_path_score": 4.0,
+                "best_path_score": 3.998,
                 "best_path_score_key": "2,0",
             },
             "3,1,2,1": {
-                "score": 0.0,
+                "score": -0.001,
                 "info": [
                     {
                         "element_number": 1,
@@ -2682,11 +2682,11 @@ def test_anchor1():
                         "proper_names": ["Geassemánnu"],
                     }
                 ],
-                "best_path_score": 11.0,
+                "best_path_score": 10.999,
                 "best_path_score_key": "2,1",
             },
             "3,2,2,2": {
-                "score": 0.0,
+                "score": -0.001,
                 "info": [
                     {
                         "element_number": 2,
