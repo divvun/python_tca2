@@ -1,4 +1,3 @@
-from collections import defaultdict
 from dataclasses import asdict
 
 from lxml import etree
@@ -6,7 +5,7 @@ from lxml import etree
 from python_tca2 import alignmentmodel
 from python_tca2.aelement import AlignmentElement
 from python_tca2.aligned import Aligned
-from python_tca2.alignments_etc import AlignmentsEtc
+from python_tca2.aligned_sentence_elements import AlignedSentenceElements
 from python_tca2.anchorwordlist import AnchorWordList
 from python_tca2.anchorwordlistentry import AnchorWordListEntry
 from python_tca2.elementinfo import ElementInfo
@@ -25,17 +24,17 @@ def test_get_score():
 
 
 def test_alignment_etcs():
-    alignment_etc = AlignmentsEtc(
-        {
-            0: [AlignmentElement("element0", 0), AlignmentElement("element1", 1)],
-            1: [
+    aligned_sentence_elements = AlignedSentenceElements(
+        (
+            [AlignmentElement("element0", 0), AlignmentElement("element1", 1)],
+            [
                 AlignmentElement("element2", 0),
                 AlignmentElement("element3", 1),
                 AlignmentElement("element4", 2),
             ],
-        }
+        )
     )
-    assert alignment_etc.to_tuple() == (
+    assert aligned_sentence_elements.to_tuple() == (
         "element0 element1",
         "element2 element3 element4",
     )
@@ -146,50 +145,49 @@ def test_toalign_pickup():
         ]
     }
 
-    assert to_align == ToAlign(
-        {
-            0: [
-                AlignmentElement(
-                    text="Kanskje en innkjøpsordning for kvenskspråklig litteratur.",
-                    element_number=0,
-                ),
-                AlignmentElement(
-                    text="Utvikling av undervisnings- og lærematerialer.",
-                    element_number=1,
-                ),
-            ]
-        }
+    assert to_align == (
+        [
+            AlignmentElement(
+                text="Kanskje en innkjøpsordning for kvenskspråklig litteratur.",
+                element_number=0,
+            ),
+            AlignmentElement(
+                text="Utvikling av undervisnings- og lærematerialer.",
+                element_number=1,
+            ),
+        ],
+        [],
     )
 
 
 def test_aligned_to_text_file():
     aligned = Aligned([])
-    a1 = AlignmentsEtc(
-        {
-            0: [],
-            1: [
+    a1 = AlignedSentenceElements(
+        (
+            [],
+            [
                 AlignmentElement(
                     "Oslon tjïelte ( Oslon geažus -n ea genetiivageažus) .", 13
                 ),
             ],
-        }
+        )
     )
-    a2 = AlignmentsEtc(
-        {
-            0: [
+    a2 = AlignedSentenceElements(
+        (
+            [
                 AlignmentElement(
                     "Aldri noensinne har språkuka og samiske språk fått så mye oppmerksomhet i samfunnet.",  # noqa: E501
                     5,
                 )
             ],
-            1: [
+            [
                 AlignmentElement("Sámi giellavahkku", 14),
                 AlignmentElement(
                     "Ii goassege leat Giellavahkku ja sámegielat ná bures fuomášuvvon servodagas.",  # noqa: E501
                     15,
                 ),
             ],
-        }
+        )
     )
     aligned.alignments = [
         a1,
@@ -230,7 +228,7 @@ def test_suggest1():
 
     assert aligned == Aligned(
         [
-            AlignmentsEtc(
+            AlignedSentenceElements(
                 {
                     0: [
                         AlignmentElement(
@@ -246,7 +244,7 @@ def test_suggest1():
                     ],
                 }
             ),
-            AlignmentsEtc(
+            AlignedSentenceElements(
                 {
                     0: [
                         AlignmentElement(
@@ -294,7 +292,7 @@ def test_suggest2():
 
     assert aligned == Aligned(
         [
-            AlignmentsEtc(
+            AlignedSentenceElements(
                 {
                     0: [
                         AlignmentElement(
@@ -314,7 +312,7 @@ def test_suggest2():
                     ],
                 }
             ),
-            AlignmentsEtc(
+            AlignedSentenceElements(
                 {
                     0: [
                         AlignmentElement(
@@ -375,7 +373,7 @@ def test_suggest3():
 
     assert aligned == Aligned(
         [
-            AlignmentsEtc(
+            AlignedSentenceElements(
                 {
                     0: [
                         AlignmentElement(
@@ -391,7 +389,7 @@ def test_suggest3():
                     ],
                 }
             ),
-            AlignmentsEtc(
+            AlignedSentenceElements(
                 {
                     0: [
                         AlignmentElement(
@@ -401,7 +399,7 @@ def test_suggest3():
                     ]
                 }
             ),
-            AlignmentsEtc(
+            AlignedSentenceElements(
                 {
                     0: [
                         AlignmentElement(

@@ -1,14 +1,14 @@
 from dataclasses import dataclass
 
-from python_tca2.alignments_etc import AlignmentsEtc
+from python_tca2.aligned_sentence_elements import AlignedSentenceElements
 from python_tca2.constants import NUM_FILES
 
 
 @dataclass
 class Aligned:
-    alignments: list[AlignmentsEtc]
+    alignments: list[AlignedSentenceElements]
 
-    def pickup(self, value_got: AlignmentsEtc | None) -> None:
+    def pickup(self, value_got: AlignedSentenceElements | None) -> None:
         """Adds a given alignment or related value to the alignments list.
 
         Args:
@@ -30,7 +30,7 @@ class Aligned:
         return [
             alignment_etc.to_tuple()
             for alignment_etc in self.alignments
-            if all(aelements for aelements in alignment_etc.elements.values())
+            if all(aelements for aelements in alignment_etc.elements)
         ]
 
     def save_plain(self) -> None:

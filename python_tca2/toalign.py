@@ -2,7 +2,7 @@ from collections import defaultdict
 from dataclasses import dataclass
 
 from python_tca2.aelement import AlignmentElement
-from python_tca2.alignments_etc import AlignmentsEtc
+from python_tca2.aligned_sentence_elements import AlignedSentenceElements
 
 
 @dataclass
@@ -25,7 +25,7 @@ class ToAlign:
         if element is not None:
             self.elements[text_number].append(element)
 
-    def flush(self) -> AlignmentsEtc | None:
+    def flush(self) -> AlignedSentenceElements | None:
         """Flushes and returns accumulated elements if any exist.
 
         If there are elements in the internal storage, creates an AlignmentsEtc
@@ -36,7 +36,7 @@ class ToAlign:
             An AlignmentsEtc object if elements exist, otherwise None.
         """
         if any(elements for elements in self.elements.values()):
-            return_value = AlignmentsEtc(self.elements)
+            return_value = AlignedSentenceElements(self.elements)
             self.elements = defaultdict(list)
 
             return return_value
