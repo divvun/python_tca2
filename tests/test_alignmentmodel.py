@@ -11,7 +11,6 @@ from python_tca2.anchorwordlistentry import AnchorWordListEntry
 from python_tca2.elementinfo import ElementInfo
 from python_tca2.elementinfotobecompared import ElementInfoToBeCompared
 from python_tca2.paralleldocuments import ParallelDocuments
-from python_tca2.toalign import ToAlign
 
 
 def test_get_score():
@@ -117,9 +116,9 @@ def test_toalign_pickup():
         }
     )
 
-    to_align = ToAlign(defaultdict(list))
+    to_align = ([], [])
     for element in textpair.elements[0]:
-        to_align.pickup(0, element)
+        to_align[0].append(element)
 
     elements = []
     for index, node in enumerate(tree.iter("s")):
@@ -229,36 +228,36 @@ def test_suggest1():
     assert aligned == Aligned(
         [
             AlignedSentenceElements(
-                {
-                    0: [
+                (
+                    [
                         AlignmentElement(
                             text="Kanskje en innkjøpsordning for kvenskspråklig litteratur.",  # noqa: E501
                             element_number=0,
                         )
                     ],
-                    1: [
+                    [
                         AlignmentElement(
                             text="Kvääninkielinen litteratuuri osto-oorninkhiin piian.",
                             element_number=0,
                         )
                     ],
-                }
+                )
             ),
             AlignedSentenceElements(
-                {
-                    0: [
+                (
+                    [
                         AlignmentElement(
                             text="Utvikling av undervisnings- og lærematerialer.",
                             element_number=1,
                         )
                     ],
-                    1: [
+                    [
                         AlignmentElement(
                             text="Opetus- ja oppimateriaaliitten kehittäminen.",
                             element_number=1,
                         )
                     ],
-                }
+                )
             ),
         ]
     )
@@ -293,8 +292,8 @@ def test_suggest2():
     assert aligned == Aligned(
         [
             AlignedSentenceElements(
-                {
-                    0: [
+                (
+                    [
                         AlignmentElement(
                             text="Når folk har gått på nybegynnerkursene hos enten instituttet eller universitetet, kan man tilby dem muligheten å få en mentor som de kan snakke kvensk med og gjøre aktiviteter med på kvensk.",  # noqa: E501
                             element_number=0,
@@ -304,29 +303,29 @@ def test_suggest2():
                             element_number=1,
                         ),
                     ],
-                    1: [
+                    [
                         AlignmentElement(
                             text="Ko ihmiset oon käynheet institutin tahi universiteetin alkukurssin, niin heile tarjothaan maholisuuen saaja menttorin, jonka kans puhhuut ja tehhä assiita kvääniksi Motiveerata ihmissii siihen ette oppiit kväänin kieltä ja näyttäät heile ette sillä saapi työn ja ette työtä oon nokko kaikile.",  # noqa: E501
                             element_number=0,
                         )
                     ],
-                }
+                )
             ),
             AlignedSentenceElements(
-                {
-                    0: [
+                (
+                    [
                         AlignmentElement(
                             text="Forsøke selv å være gode forbilder.",
                             element_number=2,
                         )
                     ],
-                    1: [
+                    [
                         AlignmentElement(
                             text="Freistata itte olla hyvät esikuvat.",
                             element_number=1,
                         )
                     ],
-                }
+                )
             ),
         ]
     )
@@ -374,46 +373,47 @@ def test_suggest3():
     assert aligned == Aligned(
         [
             AlignedSentenceElements(
-                {
-                    0: [
+                (
+                    [
                         AlignmentElement(
                             text="- regjeringen.no",
                             element_number=0,
                         )
                     ],
-                    1: [
+                    [
                         AlignmentElement(
                             text="- regjeringen.no",
                             element_number=0,
                         )
                     ],
-                }
+                )
             ),
             AlignedSentenceElements(
-                {
-                    0: [
+                (
+                    [
                         AlignmentElement(
                             text="Ot.prp. nr. 25 (2006-2007)",
                             element_number=1,
                         )
-                    ]
-                }
+                    ],
+                    [],
+                )
             ),
             AlignedSentenceElements(
-                {
-                    0: [
+                (
+                    [
                         AlignmentElement(
                             text="Om lov om reindrift (reindriftsloven)",
                             element_number=2,
                         )
                     ],
-                    1: [
+                    [
                         AlignmentElement(
                             text="Boazodoallolága birra",
                             element_number=1,
                         )
                     ],
-                }
+                )
             ),
         ]
     )

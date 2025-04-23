@@ -7,6 +7,7 @@ from lxml import etree
 from python_tca2 import constants, steplist
 from python_tca2.aelement import AlignmentElement
 from python_tca2.aligned import Aligned
+from python_tca2.aligned_sentence_elements import AlignedSentenceElements
 from python_tca2.alignment_utils import print_frame
 from python_tca2.anchorwordlist import AnchorWordList
 from python_tca2.compare import Compare
@@ -20,7 +21,6 @@ from python_tca2.pathstep import PathStep
 from python_tca2.queue_entries import QueueEntries
 from python_tca2.queue_entry import QueueEntry
 from python_tca2.tca2path import Tca2Path
-from python_tca2.toalign import ToAlign
 
 
 class AlignmentModel:
@@ -73,10 +73,9 @@ class AlignmentModel:
         while (
             step_suggestion := self.get_step_suggestion(compare=compare)
         ) is not None:
-            to_align = self.find_more_to_align_without_gui(
-                increment=step_suggestion.increment
+            aligned.pickup(
+                self.find_more_to_align_without_gui(increment=step_suggestion.increment)
             )
-            aligned.pickup(to_align.flush())
 
         print(
             json.dumps(compare.to_json(), indent=0, ensure_ascii=False),
@@ -100,23 +99,27 @@ class AlignmentModel:
 
         return self.get_best_path(queue_entries)
 
-    def find_more_to_align_without_gui(self, increment: list[int]) -> ToAlign:
+    def find_more_to_align_without_gui(
+        self, increment: tuple[int, ...]
+    ) -> AlignedSentenceElements:
         """Aligns more text elements.
 
         Args:
             step_suggestion: Contains the increment steps for alignment.
 
         Returns:
-            A ToAlign object with the aligned text elements.
+            A tuple containing the aligned text elements.
         """
-        to_align = ToAlign(defaultdict(list))
-        for text_number in self.keys:
-            for _ in range(increment[text_number]):
-                to_align.pickup(
-                    text_number, self.parallel_documents.get_next_element(text_number)
-                )
 
-        return to_align
+        return AlignedSentenceElements(
+            elements=tuple(
+                [
+                    self.parallel_documents.get_next_element(text_number)
+                    for _ in range(increment[text_number])
+                ]
+                for text_number in self.keys
+            )
+        )
 
     def get_best_path(self, queue_entries: QueueEntries) -> PathStep | None:
         """Selects the best path step based on normalized scores.

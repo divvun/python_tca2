@@ -8,15 +8,15 @@ from python_tca2.constants import NUM_FILES
 class Aligned:
     alignments: list[AlignedSentenceElements]
 
-    def pickup(self, value_got: AlignedSentenceElements | None) -> None:
-        """Adds a given alignment or related value to the alignments list.
+    def pickup(self, aligned_sentence_elements: AlignedSentenceElements | None) -> None:
+        """Adds aligned sentence elements to the alignments list.
 
         Args:
-            value_got: The alignment or related value to be added. If None,
-                       no action is taken.
+            aligned_sentence_elements: The alignment or related value to be added. If
+                                        None, no action is taken.
         """
-        if value_got is not None:
-            self.alignments.append(value_got)
+        if aligned_sentence_elements is not None:
+            self.alignments.append(aligned_sentence_elements)
 
     def valid_pairs(self) -> list[tuple[str, ...]]:
         """Return a list of valid tuple of elements from the alignments.
