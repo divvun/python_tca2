@@ -2,14 +2,17 @@ import click
 from lxml import etree
 
 from python_tca2 import alignmentmodel
+from python_tca2.anchorwordlist import AnchorWordList
 
 
 def parallelize(anchor_file, files: list[str]):
+    anchor_word_list = AnchorWordList()
+    anchor_word_list.load_from_file(anchor_file)
     model = alignmentmodel.AlignmentModel(
-        tree_tuple=tuple(etree.parse(filename) for filename in files)
+        tree_tuple=tuple(etree.parse(filename) for filename in files),
+        anchor_word_list=anchor_word_list,
     )
 
-    model.anchor_word_list.load_from_file(anchor_file)
     aligned, _ = model.suggest_without_gui()
     aligned.save_plain()
 

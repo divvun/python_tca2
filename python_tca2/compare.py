@@ -37,7 +37,6 @@ class Compare:
     def get_cell_values(
         self,
         nodes: tuple[List[AlignmentElement], ...],
-        anchor_word_list: AnchorWordList,
         position: list[int],
         step: PathStep,
         best_path_scores: dict[str, float],
@@ -69,7 +68,7 @@ class Compare:
 
         if key not in self.comparison_matrix:
             self.comparison_matrix[key] = self.build_comparison_matrix_cell(
-                nodes, anchor_word_list, position, step, best_path_scores
+                nodes, position, step, best_path_scores
             )
 
         return self.comparison_matrix[key]
@@ -77,7 +76,6 @@ class Compare:
     def build_comparison_matrix_cell(
         self,
         nodes: tuple[List[AlignmentElement], ...],
-        anchor_word_list: AnchorWordList,
         position: list[int],
         step: PathStep,
         best_path_scores: dict[str, float],
@@ -98,7 +96,6 @@ class Compare:
             position,
             step,
             nodes,
-            anchor_word_list,
             self.elements_info,
         )
 

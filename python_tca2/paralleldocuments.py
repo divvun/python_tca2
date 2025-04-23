@@ -1,4 +1,4 @@
-from dataclasses import asdict, dataclass, field
+from dataclasses import dataclass, field
 
 from python_tca2 import constants
 from python_tca2.aelement import AlignmentElement
@@ -45,6 +45,6 @@ class ParallelDocuments:
         """
         return {
             "elements": [
-                asdict(element) for elements in self.elements for element in elements
+                element.to_json() for elements in self.elements for element in elements
             ]
         }

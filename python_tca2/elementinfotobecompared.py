@@ -10,9 +10,7 @@ from python_tca2 import (
 from python_tca2.aelement import AlignmentElement
 from python_tca2.alignment_utils import count_words
 from python_tca2.anchorwordhit import AnchorWordHit
-from python_tca2.anchorwordlist import AnchorWordList
 from python_tca2.clusters import Clusters
-from python_tca2.elementinfo import ElementInfo
 from python_tca2.elementsinfo import ElementsInfo
 from python_tca2.exceptions import EndOfAllTextsExceptionError, EndOfTextExceptionError
 from python_tca2.pathstep import PathStep
@@ -24,7 +22,7 @@ from python_tca2.ref import Ref
 class ElementInfoToBeCompared:
     def __init__(self) -> None:
         self.score: float | None = None
-        self.info: tuple[list[ElementInfo], ...] = tuple(
+        self.info: tuple[list[AlignmentElement], ...] = tuple(
             [[] for _ in range(constants.NUM_FILES)]
         )
         self.best_path_score: float | None = None
@@ -35,7 +33,6 @@ class ElementInfoToBeCompared:
         position: list[int],
         step: PathStep,
         nodes: tuple[list[AlignmentElement], ...],
-        anchor_word_list: AnchorWordList,
         elements_info: list[ElementsInfo],
     ) -> None:
         text_end_count = 0
@@ -47,7 +44,7 @@ class ElementInfoToBeCompared:
                 try:
                     self.info[text_number].append(
                         elements_info[text_number].get_element_info(
-                            nodes, anchor_word_list, element_index, text_number
+                            nodes, element_index, text_number
                         )
                     )
                 except EndOfTextExceptionError:

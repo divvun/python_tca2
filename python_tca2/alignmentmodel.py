@@ -27,13 +27,22 @@ class AlignmentModel:
     scoring_characters = constants.DEFAULT_SCORING_CHARACTERS
     max_path_length = constants.MAX_PATH_LENGTH
 
-    def __init__(self, tree_tuple: tuple[etree._ElementTree, ...]) -> None:
-        self.anchor_word_list = AnchorWordList()
+    def __init__(
+        self,
+        tree_tuple: tuple[etree._ElementTree, ...],
+        anchor_word_list: AnchorWordList,
+    ) -> None:
+        self.anchor_word_list = anchor_word_list
         self.parallel_documents = ParallelDocuments(
-            elements=tuple(self.load_sentences(tree) for tree in tree_tuple)
+            elements=tuple(
+                self.load_sentences(text_number=text_number, tree=tree)
+                for text_number, tree in enumerate(tree_tuple)
+            )
         )
 
-    def load_sentences(self, tree: etree._ElementTree) -> list[AlignmentElement]:
+    def load_sentences(
+        self, text_number: int, tree: etree._ElementTree
+    ) -> list[AlignmentElement]:
         """Extracts and processes sentences from an XML tree.
 
         Args:
@@ -44,10 +53,12 @@ class AlignmentModel:
         """
         return [
             AlignmentElement(
-                element_number=index,
+                anchor_word_list=self.anchor_word_list,
                 text=" ".join(
                     [text for text in "".join(node.itertext()).split() if text.strip()]
                 ),
+                text_number=text_number,
+                element_number=index,
             )
             for index, node in enumerate(tree.iter("s"))
         ]
@@ -252,7 +263,6 @@ class AlignmentModel:
         """
         cell = compare.get_cell_values(
             nodes=self.parallel_documents.elements,
-            anchor_word_list=self.anchor_word_list,
             position=position,
             step=step,
             best_path_scores=best_path_scores,
