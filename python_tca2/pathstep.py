@@ -6,8 +6,5 @@ from dataclasses import dataclass
 class PathStep:
     increment: tuple[int, ...]
 
-    def is11(self):
-        return all(i == 1 for i in self.increment)
-
     def clone(self):
         return deepcopy(self)
