@@ -20,11 +20,7 @@ class QueueEntry:
 
     path: Tca2Path
     score: float
-    removed: bool = False
     end: bool = False
-
-    def mark_for_removal(self) -> None:
-        self.removed = True
 
     @property
     def normalized_score(self) -> float:

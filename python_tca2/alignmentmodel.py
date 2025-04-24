@@ -178,7 +178,7 @@ class AlignmentModel:
         for _ in range(self.max_path_length):
             next_queue_entries = QueueEntries([])
             for queue_entry in queue_entries.entries:
-                if not queue_entry.removed and not queue_entry.end:
+                if not queue_entry.end:
                     self.lengthen_current_path(
                         queue_entry,
                         queue_entries,
