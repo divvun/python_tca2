@@ -73,7 +73,7 @@ class ElementInfoToBeCompared:
 
     def empty(self) -> bool:
         """Both branches of self.info must have elements to be non-empty."""
-        return len(self.info) < constants.NUM_FILES
+        return not all(self.info)
 
     def get_score(self) -> float:
         if self.score is None:
