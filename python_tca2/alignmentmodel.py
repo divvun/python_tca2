@@ -121,9 +121,9 @@ class AlignmentModel:
             elements=tuple(
                 [
                     self.parallel_documents.get_next_element(text_number)
-                    for _ in range(increment[text_number])
+                    for _ in range(increment_number)
                 ]
-                for text_number in range(len(self.parallel_documents.elements))
+                for text_number, increment_number in enumerate(increment)
             )
         )
 
