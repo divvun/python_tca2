@@ -1,4 +1,3 @@
-from copy import deepcopy
 from typing import List
 
 from python_tca2 import constants
@@ -43,9 +42,6 @@ class Tca2Path:
             + f"{self.position[0]},{self.position[1]}"
             + "}"
         )
-
-    def clone(self):
-        return deepcopy(self)
 
     def get_length_in_sentences(self):
         """Calculate the total number of sentences across all steps.
