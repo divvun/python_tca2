@@ -52,8 +52,8 @@ class QueueEntry:
         for step in reversed(self.path.steps):
             # hvorfor trekkes step.increment fra current?
             # treffer den noe som helst med det?
-            current[0] -= step.increment[0]
-            current[1] -= step.increment[1]
+            current[0] -= step[0]
+            current[1] -= step[1]
             if current == pos:
                 return True
 

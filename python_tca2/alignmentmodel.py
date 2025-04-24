@@ -80,7 +80,7 @@ class AlignmentModel:
             step_suggestion := self.get_step_suggestion(compare=compare)
         ) is not None:
             aligned.pickup(
-                self.find_more_to_align_without_gui(increment=step_suggestion.increment)
+                self.find_more_to_align_without_gui(increment=step_suggestion)
             )
 
         print(

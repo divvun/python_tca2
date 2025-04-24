@@ -32,7 +32,7 @@ def create_step_list(num_files: int) -> list[PathStep]:
         A list of PathStep objects.
     """
     return [
-        PathStep(increment=increment_combination)
+        PathStep(increment_combination)
         for increment_combination in product(
             range(MIN_NUM_TRY, MAX_NUM_TRY + 1), repeat=num_files
         )

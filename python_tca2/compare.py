@@ -3,7 +3,6 @@ from typing import List
 
 from python_tca2 import constants
 from python_tca2.aelement import AlignmentElement
-from python_tca2.anchorwordlist import AnchorWordList
 from python_tca2.elementinfotobecompared import ElementInfoToBeCompared
 from python_tca2.elementsinfo import ElementsInfo
 from python_tca2.pathstep import PathStep
@@ -61,7 +60,7 @@ class Compare:
                 for text_number in range(constants.NUM_FILES)
             ]
             + [
-                str(position[text_number] + step.increment[text_number])
+                str(position[text_number] + step[text_number])
                 for text_number in range(constants.NUM_FILES)
             ]
         )
@@ -101,7 +100,7 @@ class Compare:
 
         best_path_score_key = ",".join(
             [
-                str(position[text_number] + step.increment[text_number])
+                str(position[text_number] + step[text_number])
                 for text_number in range(constants.NUM_FILES)
             ]
         )

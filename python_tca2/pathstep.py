@@ -1,6 +1,1 @@
-from dataclasses import dataclass
-
-
-@dataclass
-class PathStep:
-    increment: tuple[int, ...]
+PathStep = tuple[int, ...]

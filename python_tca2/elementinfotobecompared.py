@@ -39,7 +39,7 @@ class ElementInfoToBeCompared:
         for text_number in range(len(nodes)):
             for element_index in range(
                 position[text_number] + 1,
-                position[text_number] + step.increment[text_number] + 1,
+                position[text_number] + step[text_number] + 1,
             ):
                 try:
                     self.info[text_number].append(

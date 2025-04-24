@@ -34,7 +34,7 @@ class Tca2Path:
         """
         self.steps.append(step)
         for text_number in range(constants.NUM_FILES):
-            self.position[text_number] += step.increment[text_number]
+            self.position[text_number] += step[text_number]
 
     def __str__(self):
         return (
@@ -56,8 +56,4 @@ class Tca2Path:
         Returns:
             The total count of sentences.
         """
-        return sum(
-            increment_number
-            for step in self.steps
-            for increment_number in step.increment
-        )
+        return sum(increment_number for step in self.steps for increment_number in step)

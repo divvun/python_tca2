@@ -7,9 +7,9 @@ def test_is_hit():
     path = Tca2Path(initial_position=[0, 0])
     path.steps.extend(
         [
-            PathStep(increment=[1, 0]),
-            PathStep(increment=[0, 1]),
-            PathStep(increment=[0, 0]),
+            PathStep([1, 0]),
+            PathStep([0, 1]),
+            PathStep([0, 0]),
         ]
     )
     queue_entry = QueueEntry(
