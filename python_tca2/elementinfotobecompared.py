@@ -133,24 +133,21 @@ class ElementInfoToBeCompared:
             constants.DEFAULT_LENGTH_RATIO,
         )
 
+    def is11(self) -> bool:
+        """Check if all elements in self.info have a length of 1."""
+        return all(len(info) == 1 for info in self.info)
+
     def calculate_score(self) -> float:
         if self.empty():
             return 0.0
+
         if self.has_bad_similarity_score():
             return constants.ELEMENTINFO_SCORE_HOPELESS
 
         cluster_score = self.calculate_clusters_score()
         score = self.adjust_for_length_correlation(score=cluster_score)
 
-        is11: bool = all(
-            len(self.info[text_number]) == 1
-            for text_number in range(constants.NUM_FILES)
-        )
-
-        if not is11:
-            score -= 0.001
-
-        return score
+        return score if self.is11() else score - 0.001
 
     def variables_for_dice_matches(self, text_number1: int, text_number2: int):
         for info1 in self.info[text_number1]:
