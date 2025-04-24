@@ -3,7 +3,7 @@ from copy import deepcopy
 
 from lxml import etree
 
-from python_tca2 import constants, steplist
+from python_tca2 import constants, pathstep
 from python_tca2.aelement import AlignmentElement
 from python_tca2.aligned import Aligned
 from python_tca2.aligned_sentence_elements import AlignedSentenceElements
@@ -221,7 +221,7 @@ class AlignmentModel:
             EndOfTextExceptionError: Indicates the end of a single text.
             BlockedExceptionError: Indicates a path is blocked.
         """
-        for step in steplist.create_step_list(len(self.parallel_documents.elements)):
+        for step in pathstep.create_step_list(len(self.parallel_documents.elements)):
             try:
                 new_queue_entry = self.make_longer_path(
                     deepcopy(queue_entry),

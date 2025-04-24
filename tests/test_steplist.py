@@ -1,5 +1,4 @@
-from python_tca2.pathstep import PathStep
-from python_tca2.steplist import create_step_list
+from python_tca2.pathstep import PathStep, create_step_list
 
 
 def test_create_step_list():
