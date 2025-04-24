@@ -23,10 +23,10 @@ class QueueEntries:
     def contains(self, queue_entry: QueueEntry) -> bool:
         return queue_entry in self.entries
 
-    def remove(self, pos: list[int]) -> None:
+    def mark_for_removal(self, pos: list[int]) -> None:
         for queue_entry in self.entries:
             if queue_entry.has_hit(pos):
-                queue_entry.remove()
+                queue_entry.mark_for_removal()
 
     def remove_for_real(self) -> None:
         """Removes entries marked as removed from the queue.

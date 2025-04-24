@@ -23,7 +23,7 @@ class QueueEntry:
     removed: bool = False
     end: bool = False
 
-    def remove(self) -> None:
+    def mark_for_removal(self) -> None:
         self.removed = True
 
     @property

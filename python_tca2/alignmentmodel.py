@@ -229,10 +229,10 @@ class AlignmentModel:
                     compare=compare,
                     best_path_scores=best_path_scores,
                 )
-                if new_queue_entry is not None and new_queue_entry.path is not None:
+                if new_queue_entry is not None:
                     pos = new_queue_entry.path.position
-                    queue_entries.remove(pos)
-                    next_queue_entries.remove(pos)
+                    queue_entries.mark_for_removal(pos)
+                    next_queue_entries.mark_for_removal(pos)
                     next_queue_entries.add(new_queue_entry)
             except EndOfAllTextsExceptionError:
                 new_queue_entry = deepcopy(queue_entry)
