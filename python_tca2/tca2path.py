@@ -32,7 +32,7 @@ class Tca2Path:
         Args:
             step: The path step to be added and used for position updates.
         """
-        self.steps.append(step.clone())
+        self.steps.append(step)
         for text_number in range(constants.NUM_FILES):
             self.position[text_number] += step.increment[text_number]
 
