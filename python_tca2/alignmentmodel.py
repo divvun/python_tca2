@@ -169,7 +169,7 @@ class AlignmentModel:
         """
         best_path_scores: dict[str, float] = {}
         queue_entries = QueueEntries([])
-        queue_entries.add(
+        queue_entries.entries.append(
             QueueEntry(
                 path=Tca2Path(initial_position=self.parallel_documents.start_position),
                 score=0,
@@ -186,8 +186,7 @@ class AlignmentModel:
                         compare=compare,
                         best_path_scores=best_path_scores,
                     )
-            next_queue_entries.remove_for_real()
-            if next_queue_entries.empty():
+            if not next_queue_entries.entries:
                 break
 
             queue_entries = next_queue_entries
@@ -231,14 +230,22 @@ class AlignmentModel:
                 )
                 if new_queue_entry is not None:
                     pos = new_queue_entry.path.position
-                    queue_entries.mark_for_removal(pos)
-                    next_queue_entries.mark_for_removal(pos)
-                    next_queue_entries.add(new_queue_entry)
+                    queue_entries.entries = [
+                        queue_entry
+                        for queue_entry in queue_entries.entries
+                        if not queue_entry.has_hit(pos)
+                    ]
+                    next_queue_entries.entries = [
+                        queue_entry
+                        for queue_entry in next_queue_entries.entries
+                        if not queue_entry.has_hit(pos)
+                    ]
+                    next_queue_entries.entries.append(new_queue_entry)
             except EndOfAllTextsExceptionError:
                 new_queue_entry = deepcopy(queue_entry)
                 new_queue_entry.end = True
-                if not next_queue_entries.contains(new_queue_entry):
-                    next_queue_entries.add(new_queue_entry)
+                if new_queue_entry not in next_queue_entries.entries:
+                    next_queue_entries.entries.append(new_queue_entry)
             except EndOfTextExceptionError:
                 pass
             except BlockedExceptionError:
