@@ -297,6 +297,9 @@ class AlignmentModel:
         except EndOfTextExceptionError:
             return None
 
+        if position_step_score == constants.ELEMENTINFO_SCORE_HOPELESS:
+            return None
+
         new_position = [
             old_position[text_number] + alignment_suggestions[-1][text_number]
             for text_number in range(constants.NUM_FILES)
