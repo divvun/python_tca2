@@ -5,7 +5,10 @@ from lxml import etree
 from python_tca2 import alignmentmodel
 from python_tca2.aelement import AlignmentElement
 from python_tca2.aligned import Aligned
-from python_tca2.aligned_sentence_elements import AlignedSentenceElements
+from python_tca2.aligned_sentence_elements import (
+    AlignedSentenceElements,
+    to_string_tuple,
+)
 from python_tca2.anchorwordlist import AnchorWordList
 from python_tca2.anchorwordlistentry import AnchorWordListEntry
 from python_tca2.elementinfotobecompared import ElementInfoToBeCompared
@@ -73,7 +76,7 @@ def test_alignment_etcs():
             ],
         )
     )
-    assert aligned_sentence_elements.to_tuple() == (
+    assert to_string_tuple(aligned_sentence_elements) == (
         "element0 element1",
         "element2 element3 element4",
     )

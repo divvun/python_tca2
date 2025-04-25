@@ -1,6 +1,9 @@
 from dataclasses import dataclass
 
-from python_tca2.aligned_sentence_elements import AlignedSentenceElements
+from python_tca2.aligned_sentence_elements import (
+    AlignedSentenceElements,
+    to_string_tuple,
+)
 from python_tca2.constants import NUM_FILES
 
 
@@ -28,9 +31,9 @@ class Aligned:
             A list of tuples containing valid pairs of strings.
         """
         return [
-            alignment_etc.to_tuple()
+            to_string_tuple(alignment_etc)
             for alignment_etc in self.alignments
-            if all(aelements for aelements in alignment_etc.elements)
+            if all(aelements for aelements in alignment_etc)
         ]
 
     def save_plain(self) -> None:
@@ -48,7 +51,7 @@ class Aligned:
                             " ".join(
                                 [
                                     element.text
-                                    for element in alignments_etc.elements[text_number]
+                                    for element in alignments_etc[text_number]
                                 ]
                             )
                             for alignments_etc in self.alignments

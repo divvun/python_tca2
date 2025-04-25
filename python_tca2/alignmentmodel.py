@@ -122,7 +122,7 @@ class AlignmentModel:
         """
 
         return AlignedSentenceElements(
-            elements=tuple(
+            tuple(
                 [
                     self.parallel_documents.get_next_element(text_number)
                     for _ in range(increment_number)
