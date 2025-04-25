@@ -13,8 +13,8 @@ def to_string_tuple(
 ) -> tuple[str, ...]:
     """Convert the AlignmentElements into a tuple of strings.
 
-    Iterates over the values of the `elements` attribute, joining the text
-    of each sub-element with a space, and returns the result as a tuple.
+    Iterates over the values, joining the text of each sub-element with a space, and
+    returns the result as a tuple.
     """
     return tuple(
         " ".join([aelement.text for aelement in aelements])
