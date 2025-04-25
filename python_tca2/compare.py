@@ -3,9 +3,9 @@ from typing import List
 
 from python_tca2 import constants
 from python_tca2.aelement import AlignmentElement
+from python_tca2.alignment_suggestion import AlignmentSuggestion
 from python_tca2.elementinfotobecompared import ElementInfoToBeCompared
 from python_tca2.elementsinfo import ElementsInfo
-from python_tca2.alignment_suggestion import AlignmentSuggestion
 
 
 class Compare:
@@ -37,7 +37,7 @@ class Compare:
         self,
         nodes: tuple[List[AlignmentElement], ...],
         position: list[int],
-        step: AlignmentSuggestion,
+        alignment_suggestion: AlignmentSuggestion,
     ) -> ElementInfoToBeCompared:
         """Get the values of a cell in the comparison matrix.
 
@@ -46,12 +46,12 @@ class Compare:
 
         Args:
             position: A list representing the current position in the matrix.
-            step: A PathStep object defining the step increments.
+            alignment_suggestion: An AlignmentSuggestion defining the suggestions
+                increments.
 
         Returns:
-
             A ElementInfoToBeCompared object containing comparison data for the
-            given position and step.
+            given position and alignment_suggestion.
         """
         key = ",".join(
             [
@@ -59,14 +59,14 @@ class Compare:
                 for text_number in range(constants.NUM_FILES)
             ]
             + [
-                str(position[text_number] + step[text_number])
+                str(position[text_number] + alignment_suggestion[text_number])
                 for text_number in range(constants.NUM_FILES)
             ]
         )
 
         if key not in self.comparison_matrix:
             self.comparison_matrix[key] = self.build_comparison_matrix_cell(
-                nodes, position, step
+                nodes, position, alignment_suggestion
             )
 
         return self.comparison_matrix[key]
@@ -75,14 +75,15 @@ class Compare:
         self,
         nodes: tuple[List[AlignmentElement], ...],
         position: list[int],
-        step: AlignmentSuggestion,
+        alignment_suggestion: AlignmentSuggestion,
     ) -> ElementInfoToBeCompared:
         """
         Builds a comparison matrix cell for the given position and step.
 
         Args:
             position: A list representing the current position in the matrix.
-            step: The step to take from the current position.
+            alignment_suggestion: An AlignmentSuggestion to consider from the current
+                position.
 
         Returns:
             A ElementInfoToBeCompared object containing the comparison data and best
@@ -91,7 +92,7 @@ class Compare:
         element_info_to_be_compared = ElementInfoToBeCompared()
         element_info_to_be_compared.build_elementstobecompared(
             position,
-            step,
+            alignment_suggestion,
             nodes,
             self.elements_info,
         )

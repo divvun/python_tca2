@@ -4,7 +4,7 @@ from python_tca2.alignment_suggestion import (
 )
 
 
-def test_create_step_list():
+def test_generate_alignment_suggestions():
     assert generate_alignment_suggestions(num_files=2) == [
         AlignmentSuggestion((0, 1)),
         AlignmentSuggestion((1, 0)),

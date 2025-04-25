@@ -7,6 +7,7 @@ from python_tca2 import alignment_suggestion, constants
 from python_tca2.aelement import AlignmentElement
 from python_tca2.aligned import Aligned
 from python_tca2.aligned_sentence_elements import AlignedSentenceElements
+from python_tca2.alignment_suggestion import AlignmentSuggestion
 from python_tca2.alignment_utils import print_frame
 from python_tca2.anchorwordlist import AnchorWordList
 from python_tca2.compare import Compare
@@ -16,7 +17,6 @@ from python_tca2.exceptions import (
     EndOfTextExceptionError,
 )
 from python_tca2.paralleldocuments import ParallelDocuments
-from python_tca2.alignment_suggestion import AlignmentSuggestion
 from python_tca2.queue_entries import QueueEntries
 from python_tca2.queue_entry import QueueEntry
 from python_tca2.tca2path import Tca2Path
@@ -77,10 +77,12 @@ class AlignmentModel:
         compare = Compare()
 
         while (
-            step_suggestion := self.get_step_suggestion(compare=compare)
+            alignment_suggestion := self.retrieve_alignment_suggestion(compare=compare)
         ) is not None:
             aligned.pickup(
-                self.find_more_to_align_without_gui(increment=step_suggestion)
+                self.find_more_to_align_without_gui(
+                    alignment_suggestion=alignment_suggestion
+                )
             )
 
         print(
@@ -90,13 +92,15 @@ class AlignmentModel:
 
         return aligned, compare
 
-    def get_step_suggestion(self, compare: Compare) -> AlignmentSuggestion | None:
+    def retrieve_alignment_suggestion(
+        self, compare: Compare
+    ) -> AlignmentSuggestion | None:
 
         queue_entries = self.lengthen_paths(compare=compare)
 
         if (
             len(queue_entries.entries) < constants.NUM_FILES
-            and not queue_entries.entries[0].path.steps
+            and not queue_entries.entries[0].path.alignment_suggestions
         ):
             # When the length of the queue list is less than the number of files
             # and the first path in the queue list has no steps, then aligment
@@ -106,7 +110,7 @@ class AlignmentModel:
         return self.get_best_path(queue_entries)
 
     def find_more_to_align_without_gui(
-        self, increment: tuple[int, ...]
+        self, alignment_suggestion: tuple[int, ...]
     ) -> AlignedSentenceElements:
         """Aligns more text elements.
 
@@ -123,7 +127,7 @@ class AlignmentModel:
                     self.parallel_documents.get_next_element(text_number)
                     for _ in range(increment_number)
                 ]
-                for text_number, increment_number in enumerate(increment)
+                for text_number, increment_number in enumerate(alignment_suggestion)
             )
         )
 
@@ -148,7 +152,7 @@ class AlignmentModel:
         score_step_list = [
             (
                 candidate_entry.normalized_score,
-                candidate_entry.path.steps[0],
+                candidate_entry.path.alignment_suggestions[0],
             )
             for candidate_entry in queue_entries.entries
         ]
@@ -256,7 +260,7 @@ class AlignmentModel:
     def get_step_score(
         self,
         position: list[int],
-        step: AlignmentSuggestion,
+        alignment_suggestion: AlignmentSuggestion,
         compare: Compare,
     ) -> float:
         """Calculate the score for a given step at a specific position.
@@ -272,14 +276,14 @@ class AlignmentModel:
         cell = compare.get_cell_values(
             nodes=self.parallel_documents.elements,
             position=position,
-            step=step,
+            alignment_suggestion=alignment_suggestion,
         )
         return cell.get_score()
 
     def make_longer_path(
         self,
         ret_queue_entry: QueueEntry,
-        new_step: AlignmentSuggestion,
+        alignment_suggestion: AlignmentSuggestion,
         compare: Compare,
         best_path_scores: dict[str, float],
     ) -> QueueEntry | None:
@@ -287,7 +291,7 @@ class AlignmentModel:
 
         Args:
             ret_queue_entry: The current queue entry containing the path and score.
-            new_step: The new step to add to the path.
+            alignment_suggestion: The new alignement suggestion to add to the path.
             compare: An object used to compare and update scores.
 
         Returns:
@@ -295,13 +299,13 @@ class AlignmentModel:
         """
         position_step_score = self.get_step_score(
             ret_queue_entry.path.position,
-            new_step,
+            alignment_suggestion,
             compare=compare,
         )
         new_score = ret_queue_entry.score + position_step_score
 
         ret_queue_entry.score = new_score
-        ret_queue_entry.path.extend(new_step)
+        ret_queue_entry.path.extend(alignment_suggestion)
 
         best_path_score = get_best_path_score(
             ret_queue_entry.path.position, best_path_scores=best_path_scores

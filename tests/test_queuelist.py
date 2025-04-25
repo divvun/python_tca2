@@ -5,7 +5,7 @@ from python_tca2.tca2path import Tca2Path
 
 def test_is_hit():
     path = Tca2Path(initial_position=[0, 0])
-    path.steps.extend(
+    path.alignment_suggestions.extend(
         [
             AlignmentSuggestion([1, 0]),
             AlignmentSuggestion([0, 1]),

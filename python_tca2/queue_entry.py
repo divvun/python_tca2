@@ -45,7 +45,7 @@ class QueueEntry:
         if current == pos:
             return True
 
-        for step in reversed(self.path.steps):
+        for step in reversed(self.path.alignment_suggestions):
             # hvorfor trekkes step.increment fra current?
             # treffer den noe som helst med det?
             current[0] -= step[0]
