@@ -19,7 +19,6 @@ from python_tca2.exceptions import (
 from python_tca2.paralleldocuments import ParallelDocuments
 from python_tca2.queue_entries import QueueEntries
 from python_tca2.queue_entry import QueueEntry
-from python_tca2.tca2path import Tca2Path
 
 
 class AlignmentModel:
@@ -100,7 +99,7 @@ class AlignmentModel:
 
         if (
             len(queue_entries.entries) < constants.NUM_FILES
-            and not queue_entries.entries[0].path.alignment_suggestions
+            and not queue_entries.entries[0].alignment_suggestions
         ):
             # When the length of the queue list is less than the number of files
             # and the first path in the queue list has no steps, then aligment
@@ -155,7 +154,7 @@ class AlignmentModel:
         score_step_list = [
             (
                 candidate_entry.normalized_score,
-                candidate_entry.path.alignment_suggestions[0],
+                candidate_entry.alignment_suggestions[0],
             )
             for candidate_entry in queue_entries.entries
         ]
@@ -175,12 +174,8 @@ class AlignmentModel:
             A QueueList containing the final set of extended paths.
         """
         best_path_scores: dict[str, float] = {}
-        queue_entries = QueueEntries([])
-        queue_entries.entries.append(
-            QueueEntry(
-                path=Tca2Path(initial_position=self.parallel_documents.start_position),
-                score=0,
-            )
+        queue_entries = QueueEntries(
+            [QueueEntry(position=self.parallel_documents.start_position)]
         )
         for _ in range(self.max_path_length):
             next_queue_entries = QueueEntries([])
@@ -232,13 +227,14 @@ class AlignmentModel:
         ):
             try:
                 new_queue_entry = self.make_longer_path(
-                    deepcopy(queue_entry),
-                    step,
+                    old_position=queue_entry.position,
+                    old_score=queue_entry.score,
+                    alignment_suggestions=queue_entry.alignment_suggestions + [step],
                     compare=compare,
                     best_path_scores=best_path_scores,
                 )
                 if new_queue_entry is not None:
-                    pos = new_queue_entry.path.position
+                    pos = new_queue_entry.position
                     queue_entries.entries = [
                         queue_entry
                         for queue_entry in queue_entries.entries
@@ -285,8 +281,9 @@ class AlignmentModel:
 
     def make_longer_path(
         self,
-        ret_queue_entry: QueueEntry,
-        alignment_suggestion: AlignmentSuggestion,
+        old_position: list[int],
+        old_score: float,
+        alignment_suggestions: list[AlignmentSuggestion],
         compare: Compare,
         best_path_scores: dict[str, float],
     ) -> QueueEntry | None:
@@ -301,25 +298,31 @@ class AlignmentModel:
             The updated queue entry if the new score is better, otherwise None.
         """
         position_step_score = self.get_step_score(
-            ret_queue_entry.path.position,
-            alignment_suggestion,
+            old_position,
+            alignment_suggestions[-1],
             compare=compare,
         )
-        new_score = ret_queue_entry.score + position_step_score
-
-        ret_queue_entry.score = new_score
-        ret_queue_entry.path.extend(alignment_suggestion)
+        new_position = [
+            old_position[text_number] + alignment_suggestions[-1][text_number]
+            for text_number in range(constants.NUM_FILES)
+        ]
+        new_score = old_score + position_step_score
 
         best_path_score = get_best_path_score(
-            ret_queue_entry.path.position, best_path_scores=best_path_scores
+            new_position, best_path_scores=best_path_scores
         )
-        if best_path_score is None or ret_queue_entry.score > best_path_score:
+        if best_path_score is None or new_score > best_path_score:
             set_best_path_score(
-                ret_queue_entry.path.position,
-                ret_queue_entry.score,
+                new_position,
+                new_score,
                 best_path_scores=best_path_scores,
             )
-            return ret_queue_entry
+
+            return QueueEntry(
+                position=new_position,
+                score=new_score,
+                alignment_suggestions=alignment_suggestions,
+            )
 
         return None
 
