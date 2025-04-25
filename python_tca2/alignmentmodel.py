@@ -107,18 +107,19 @@ class AlignmentModel:
             # is done
             return None
 
-        return self.get_best_path(queue_entries)
+        return self.select_best_alignment_suggestion(queue_entries)
 
     def find_more_to_align_without_gui(
         self, alignment_suggestion: tuple[int, ...]
     ) -> AlignedSentenceElements:
-        """Aligns more text elements.
+        """Extract a tuple of aligned sentences.
 
         Args:
-            step_suggestion: Contains the increment steps for alignment.
+            alignment_suggestion: Tells how many sentences should be extracted from the
+                parallel documents.
 
         Returns:
-            A tuple containing the aligned text elements.
+            A tuple containing the text elements.
         """
 
         return AlignedSentenceElements(
@@ -131,8 +132,10 @@ class AlignmentModel:
             )
         )
 
-    def get_best_path(self, queue_entries: QueueEntries) -> AlignmentSuggestion | None:
-        """Selects the best path step based on normalized scores.
+    def select_best_alignment_suggestion(
+        self, queue_entries: QueueEntries
+    ) -> AlignmentSuggestion | None:
+        """Selects the best alignment suggestion based on normalized scores.
 
         This method evaluates each candidate entry in the provided queue list by
         calculating a normalized score, which is the candidate's score divided
