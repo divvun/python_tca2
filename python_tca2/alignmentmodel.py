@@ -1,5 +1,5 @@
 import json
-from copy import deepcopy
+from typing import Iterator
 
 from lxml import etree
 
@@ -8,7 +8,6 @@ from python_tca2.aelement import AlignmentElement
 from python_tca2.aligned import Aligned
 from python_tca2.aligned_sentence_elements import AlignedSentenceElements
 from python_tca2.alignment_suggestion import AlignmentSuggestion
-from python_tca2.alignment_utils import print_frame
 from python_tca2.anchorwordlist import AnchorWordList
 from python_tca2.compare import Compare
 from python_tca2.exceptions import (
@@ -181,30 +180,39 @@ class AlignmentModel:
             next_queue_entries = QueueEntries([])
             for queue_entry in queue_entries.entries:
                 if not queue_entry.end:
-                    self.lengthen_current_path(
+                    for new_queue_entry in self.lengthen_current_path(
                         queue_entry,
-                        queue_entries,
-                        next_queue_entries,
                         compare=compare,
                         best_path_scores=best_path_scores,
-                    )
+                    ):
+                        if new_queue_entry is not None:
+                            pos = new_queue_entry.position
+                            queue_entries.entries = [
+                                queue_entry
+                                for queue_entry in queue_entries.entries
+                                if not queue_entry.has_hit(pos)
+                            ]
+                            next_queue_entries.entries = [
+                                queue_entry
+                                for queue_entry in next_queue_entries.entries
+                                if not queue_entry.has_hit(pos)
+                            ]
+                            if new_queue_entry not in next_queue_entries.entries:
+                                next_queue_entries.entries.append(new_queue_entry)
+
             if not next_queue_entries.entries:
-                break
+                return queue_entries
 
             queue_entries = next_queue_entries
-        else:
-            print_frame("max_path_length exceeded")
 
         return queue_entries
 
     def lengthen_current_path(
         self,
         queue_entry: QueueEntry,
-        queue_entries: QueueEntries,
-        next_queue_entries: QueueEntries,
         compare: Compare,
         best_path_scores: dict[str, float],
-    ) -> None:
+    ) -> Iterator[QueueEntry | None]:
         """Extends the current path in the alignment process.
 
         This method iterates through a list of steps to attempt extending the
@@ -217,44 +225,20 @@ class AlignmentModel:
             next_queue_entries: The list of queue entries for the next iteration.
             compare: A comparison object used during path extension.
 
-        Raises:
-            EndOfAllTextsExceptionError: Indicates all texts have been processed.
-            EndOfTextExceptionError: Indicates the end of a single text.
-            BlockedExceptionError: Indicates a path is blocked.
+        Yields:
+            QueueEntry: A new queue entry representing the extended path or None if
+                the path cannot be extended further.
         """
         for step in alignment_suggestion.generate_alignment_suggestions(
             len(self.parallel_documents.elements)
         ):
-            try:
-                new_queue_entry = self.make_longer_path(
-                    old_position=queue_entry.position,
-                    old_score=queue_entry.score,
-                    alignment_suggestions=queue_entry.alignment_suggestions + [step],
-                    compare=compare,
-                    best_path_scores=best_path_scores,
-                )
-                if new_queue_entry is not None:
-                    pos = new_queue_entry.position
-                    queue_entries.entries = [
-                        queue_entry
-                        for queue_entry in queue_entries.entries
-                        if not queue_entry.has_hit(pos)
-                    ]
-                    next_queue_entries.entries = [
-                        queue_entry
-                        for queue_entry in next_queue_entries.entries
-                        if not queue_entry.has_hit(pos)
-                    ]
-                    next_queue_entries.entries.append(new_queue_entry)
-            except EndOfAllTextsExceptionError:
-                new_queue_entry = deepcopy(queue_entry)
-                new_queue_entry.end = True
-                if new_queue_entry not in next_queue_entries.entries:
-                    next_queue_entries.entries.append(new_queue_entry)
-            except EndOfTextExceptionError:
-                pass
-            except BlockedExceptionError:
-                pass
+            yield self.make_longer_path(
+                old_position=queue_entry.position,
+                old_score=queue_entry.score,
+                alignment_suggestions=queue_entry.alignment_suggestions + [step],
+                compare=compare,
+                best_path_scores=best_path_scores,
+            )
 
     def get_step_score(
         self,
@@ -297,11 +281,23 @@ class AlignmentModel:
         Returns:
             The updated queue entry if the new score is better, otherwise None.
         """
-        position_step_score = self.get_step_score(
-            old_position,
-            alignment_suggestions[-1],
-            compare=compare,
-        )
+        try:
+            position_step_score = self.get_step_score(
+                old_position,
+                alignment_suggestions[-1],
+                compare=compare,
+            )
+        except EndOfAllTextsExceptionError:
+            return QueueEntry(
+                position=old_position,
+                score=old_score,
+                alignment_suggestions=alignment_suggestions[:-1],
+                end=True,
+            )
+
+        except (EndOfTextExceptionError, BlockedExceptionError):
+            return None
+
         new_position = [
             old_position[text_number] + alignment_suggestions[-1][text_number]
             for text_number in range(constants.NUM_FILES)
@@ -311,20 +307,21 @@ class AlignmentModel:
         best_path_score = get_best_path_score(
             new_position, best_path_scores=best_path_scores
         )
-        if best_path_score is None or new_score > best_path_score:
-            set_best_path_score(
-                new_position,
-                new_score,
-                best_path_scores=best_path_scores,
-            )
 
-            return QueueEntry(
-                position=new_position,
-                score=new_score,
-                alignment_suggestions=alignment_suggestions,
-            )
+        if best_path_score is not None and new_score <= best_path_score:
+            return None
 
-        return None
+        set_best_path_score(
+            new_position,
+            new_score,
+            best_path_scores=best_path_scores,
+        )
+
+        return QueueEntry(
+            position=new_position,
+            score=new_score,
+            alignment_suggestions=alignment_suggestions,
+        )
 
 
 def set_best_path_score(
