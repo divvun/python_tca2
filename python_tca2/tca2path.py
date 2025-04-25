@@ -1,7 +1,7 @@
 from typing import List
 
 from python_tca2 import constants
-from python_tca2.pathstep import PathStep
+from python_tca2.alignment_suggestion import AlignmentSuggestion
 
 
 class Tca2Path:
@@ -13,7 +13,7 @@ class Tca2Path:
     """
 
     def __init__(self, initial_position: list[int]) -> None:
-        self.steps: List[PathStep] = []
+        self.steps: List[AlignmentSuggestion] = []
         self.position = initial_position
 
     def to_json(self):
@@ -25,7 +25,7 @@ class Tca2Path:
     def __eq__(self, path):
         return str(self) == str(path)
 
-    def extend(self, step: PathStep) -> None:
+    def extend(self, step: AlignmentSuggestion) -> None:
         """Extend the current path with a cloned step and update positions.
 
         Args:

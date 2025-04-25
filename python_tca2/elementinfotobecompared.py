@@ -13,7 +13,7 @@ from python_tca2.anchorwordhit import AnchorWordHit
 from python_tca2.clusters import Clusters
 from python_tca2.elementsinfo import ElementsInfo
 from python_tca2.exceptions import EndOfAllTextsExceptionError, EndOfTextExceptionError
-from python_tca2.pathstep import PathStep
+from python_tca2.alignment_suggestion import AlignmentSuggestion
 from python_tca2.ref import Ref
 
 
@@ -29,7 +29,7 @@ class ElementInfoToBeCompared:
     def build_elementstobecompared(  # noqa: PLR0913
         self,
         position: list[int],
-        step: PathStep,
+        step: AlignmentSuggestion,
         nodes: tuple[list[AlignmentElement], ...],
         elements_info: list[ElementsInfo],
     ) -> None:

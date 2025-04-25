@@ -1,4 +1,4 @@
-from python_tca2.pathstep import PathStep
+from python_tca2.alignment_suggestion import AlignmentSuggestion
 from python_tca2.queue_entry import QueueEntry
 from python_tca2.tca2path import Tca2Path
 
@@ -7,9 +7,9 @@ def test_is_hit():
     path = Tca2Path(initial_position=[0, 0])
     path.steps.extend(
         [
-            PathStep([1, 0]),
-            PathStep([0, 1]),
-            PathStep([0, 0]),
+            AlignmentSuggestion([1, 0]),
+            AlignmentSuggestion([0, 1]),
+            AlignmentSuggestion([0, 0]),
         ]
     )
     queue_entry = QueueEntry(

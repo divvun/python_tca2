@@ -3,7 +3,7 @@ from copy import deepcopy
 
 from lxml import etree
 
-from python_tca2 import constants, pathstep
+from python_tca2 import alignment_suggestion, constants
 from python_tca2.aelement import AlignmentElement
 from python_tca2.aligned import Aligned
 from python_tca2.aligned_sentence_elements import AlignedSentenceElements
@@ -16,7 +16,7 @@ from python_tca2.exceptions import (
     EndOfTextExceptionError,
 )
 from python_tca2.paralleldocuments import ParallelDocuments
-from python_tca2.pathstep import PathStep
+from python_tca2.alignment_suggestion import AlignmentSuggestion
 from python_tca2.queue_entries import QueueEntries
 from python_tca2.queue_entry import QueueEntry
 from python_tca2.tca2path import Tca2Path
@@ -90,7 +90,7 @@ class AlignmentModel:
 
         return aligned, compare
 
-    def get_step_suggestion(self, compare: Compare) -> PathStep | None:
+    def get_step_suggestion(self, compare: Compare) -> AlignmentSuggestion | None:
 
         queue_entries = self.lengthen_paths(compare=compare)
 
@@ -127,7 +127,7 @@ class AlignmentModel:
             )
         )
 
-    def get_best_path(self, queue_entries: QueueEntries) -> PathStep | None:
+    def get_best_path(self, queue_entries: QueueEntries) -> AlignmentSuggestion | None:
         """Selects the best path step based on normalized scores.
 
         This method evaluates each candidate entry in the provided queue list by
@@ -220,7 +220,9 @@ class AlignmentModel:
             EndOfTextExceptionError: Indicates the end of a single text.
             BlockedExceptionError: Indicates a path is blocked.
         """
-        for step in pathstep.create_step_list(len(self.parallel_documents.elements)):
+        for step in alignment_suggestion.generate_alignment_suggestions(
+            len(self.parallel_documents.elements)
+        ):
             try:
                 new_queue_entry = self.make_longer_path(
                     deepcopy(queue_entry),
@@ -254,7 +256,7 @@ class AlignmentModel:
     def get_step_score(
         self,
         position: list[int],
-        step: PathStep,
+        step: AlignmentSuggestion,
         compare: Compare,
     ) -> float:
         """Calculate the score for a given step at a specific position.
@@ -277,7 +279,7 @@ class AlignmentModel:
     def make_longer_path(
         self,
         ret_queue_entry: QueueEntry,
-        new_step: PathStep,
+        new_step: AlignmentSuggestion,
         compare: Compare,
         best_path_scores: dict[str, float],
     ) -> QueueEntry | None:

@@ -5,7 +5,7 @@ from python_tca2 import constants
 from python_tca2.aelement import AlignmentElement
 from python_tca2.elementinfotobecompared import ElementInfoToBeCompared
 from python_tca2.elementsinfo import ElementsInfo
-from python_tca2.pathstep import PathStep
+from python_tca2.alignment_suggestion import AlignmentSuggestion
 
 
 class Compare:
@@ -37,7 +37,7 @@ class Compare:
         self,
         nodes: tuple[List[AlignmentElement], ...],
         position: list[int],
-        step: PathStep,
+        step: AlignmentSuggestion,
     ) -> ElementInfoToBeCompared:
         """Get the values of a cell in the comparison matrix.
 
@@ -75,7 +75,7 @@ class Compare:
         self,
         nodes: tuple[List[AlignmentElement], ...],
         position: list[int],
-        step: PathStep,
+        step: AlignmentSuggestion,
     ) -> ElementInfoToBeCompared:
         """
         Builds a comparison matrix cell for the given position and step.
