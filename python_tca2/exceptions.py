@@ -4,7 +4,3 @@ class EndOfAllTextsExceptionError(Exception):
 
 class EndOfTextExceptionError(Exception):
     pass
-
-
-class BlockedExceptionError(Exception):
-    pass

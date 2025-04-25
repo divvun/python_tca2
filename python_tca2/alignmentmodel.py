@@ -11,7 +11,6 @@ from python_tca2.alignment_suggestion import AlignmentSuggestion
 from python_tca2.anchorwordlist import AnchorWordList
 from python_tca2.compare import Compare
 from python_tca2.exceptions import (
-    BlockedExceptionError,
     EndOfAllTextsExceptionError,
     EndOfTextExceptionError,
 )
@@ -295,7 +294,7 @@ class AlignmentModel:
                 end=True,
             )
 
-        except (EndOfTextExceptionError, BlockedExceptionError):
+        except EndOfTextExceptionError:
             return None
 
         new_position = [
