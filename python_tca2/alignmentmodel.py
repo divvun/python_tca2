@@ -256,7 +256,6 @@ class AlignmentModel:
         position: list[int],
         step: PathStep,
         compare: Compare,
-        best_path_scores: dict[str, float],
     ) -> float:
         """Calculate the score for a given step at a specific position.
 
@@ -272,7 +271,6 @@ class AlignmentModel:
             nodes=self.parallel_documents.elements,
             position=position,
             step=step,
-            best_path_scores=best_path_scores,
         )
         return cell.get_score()
 
@@ -297,7 +295,6 @@ class AlignmentModel:
             ret_queue_entry.path.position,
             new_step,
             compare=compare,
-            best_path_scores=best_path_scores,
         )
         new_score = ret_queue_entry.score + position_step_score
 

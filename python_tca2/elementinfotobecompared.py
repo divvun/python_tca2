@@ -25,8 +25,6 @@ class ElementInfoToBeCompared:
         self.info: tuple[list[AlignmentElement], ...] = tuple(
             [[] for _ in range(constants.NUM_FILES)]
         )
-        self.best_path_score: float | None = None
-        self.best_path_score_key: str | None = None
 
     def build_elementstobecompared(  # noqa: PLR0913
         self,
@@ -61,8 +59,6 @@ class ElementInfoToBeCompared:
         return {
             "score": self.get_score(),
             "info": [info.to_json() for infos in self.info for info in infos],
-            "best_path_score": self.best_path_score,
-            "best_path_score_key": self.best_path_score_key,
         }
 
     def __str__(self):

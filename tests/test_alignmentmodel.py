@@ -102,8 +102,6 @@ def test_find_dice_matches():
     eitbc.find_dice_matches(0, 1)
 
     assert eitbc.to_json() == {
-        "best_path_score": None,
-        "best_path_score_key": None,
         "score": 4.0,
         "info": [
             {
@@ -597,8 +595,6 @@ def test_anchor1():
         ],
         "matrix": {
             "0,0,-1,0": {
-                "best_path_score": -1.0,
-                "best_path_score_key": "-1,0",
                 "info": [
                     {
                         "anchor_word_hits": {
@@ -630,8 +626,6 @@ def test_anchor1():
                 "score": 0.0,
             },
             "0,0,0,-1": {
-                "best_path_score": -1.0,
-                "best_path_score_key": "0,-1",
                 "info": [
                     {
                         "anchor_word_hits": {
@@ -671,8 +665,6 @@ def test_anchor1():
                 "score": 0.0,
             },
             "0,0,0,0": {
-                "best_path_score": -1.0,
-                "best_path_score_key": "0,0",
                 "info": [
                     {
                         "anchor_word_hits": {
@@ -738,8 +730,6 @@ def test_anchor1():
                 "score": 4.0,
             },
             "0,0,0,1": {
-                "best_path_score": -1.0,
-                "best_path_score_key": "0,1",
                 "info": [
                     {
                         "anchor_word_hits": {
@@ -824,8 +814,6 @@ def test_anchor1():
                 "score": 4.999,
             },
             "0,0,1,0": {
-                "best_path_score": -1.0,
-                "best_path_score_key": "1,0",
                 "info": [
                     {
                         "anchor_word_hits": {
@@ -908,8 +896,6 @@ def test_anchor1():
                 "score": -99999.0,
             },
             "0,1,-1,1": {
-                "best_path_score": -1.0,
-                "best_path_score_key": "-1,1",
                 "info": [
                     {
                         "anchor_word_hits": {
@@ -934,8 +920,6 @@ def test_anchor1():
                 "score": 0.0,
             },
             "0,1,0,0": {
-                "best_path_score": 4.0,
-                "best_path_score_key": "0,0",
                 "info": [
                     {
                         "anchor_word_hits": {
@@ -975,8 +959,6 @@ def test_anchor1():
                 "score": 0.0,
             },
             "0,1,0,1": {
-                "best_path_score": 4.999,
-                "best_path_score_key": "0,1",
                 "info": [
                     {
                         "anchor_word_hits": {
@@ -1035,8 +1017,6 @@ def test_anchor1():
                 "score": 0.0,
             },
             "0,1,0,2": {
-                "best_path_score": -1.0,
-                "best_path_score_key": "0,2",
                 "info": [
                     {
                         "anchor_word_hits": {
@@ -1134,8 +1114,6 @@ def test_anchor1():
                 "score": -99999.0,
             },
             "0,1,1,1": {
-                "best_path_score": -1.0,
-                "best_path_score_key": "1,1",
                 "info": [
                     {
                         "anchor_word_hits": {
@@ -1211,8 +1189,6 @@ def test_anchor1():
                 "score": -99999.0,
             },
             "0,2,-1,2": {
-                "best_path_score": -1.0,
-                "best_path_score_key": "-1,2",
                 "info": [
                     {
                         "anchor_word_hits": {
@@ -1257,8 +1233,6 @@ def test_anchor1():
                 "score": 0.0,
             },
             "0,2,0,1": {
-                "best_path_score": 4.999,
-                "best_path_score_key": "0,1",
                 "info": [
                     {
                         "anchor_word_hits": {
@@ -1298,8 +1272,6 @@ def test_anchor1():
                 "score": 0.0,
             },
             "0,2,0,2": {
-                "best_path_score": 4.999,
-                "best_path_score_key": "0,2",
                 "info": [
                     {
                         "anchor_word_hits": {
@@ -1378,8 +1350,6 @@ def test_anchor1():
                 "score": 3.0,
             },
             "0,2,1,2": {
-                "best_path_score": 4.999,
-                "best_path_score_key": "1,2",
                 "info": [
                     {
                         "anchor_word_hits": {
@@ -1475,8 +1445,6 @@ def test_anchor1():
                 "score": 4.999,
             },
             "0,3,0,2": {
-                "best_path_score": 4.999,
-                "best_path_score_key": "0,2",
                 "info": [
                     {
                         "anchor_word_hits": {
@@ -1516,8 +1484,6 @@ def test_anchor1():
                 "score": 0.0,
             },
             "1,0,0,0": {
-                "best_path_score": 4.0,
-                "best_path_score_key": "0,0",
                 "info": [
                     {
                         "anchor_word_hits": {
@@ -1549,8 +1515,6 @@ def test_anchor1():
                 "score": 0.0,
             },
             "1,0,1,-1": {
-                "best_path_score": -1.0,
-                "best_path_score_key": "1,-1",
                 "info": [
                     {
                         "anchor_word_hits": {
@@ -1573,8 +1537,6 @@ def test_anchor1():
                 "score": 0.0,
             },
             "1,0,1,0": {
-                "best_path_score": -1.0,
-                "best_path_score_key": "1,0",
                 "info": [
                     {
                         "anchor_word_hits": {
@@ -1623,8 +1585,6 @@ def test_anchor1():
                 "score": 0.0,
             },
             "1,0,1,1": {
-                "best_path_score": -1.0,
-                "best_path_score_key": "1,1",
                 "info": [
                     {
                         "anchor_word_hits": {
@@ -1692,8 +1652,6 @@ def test_anchor1():
                 "score": -99999.0,
             },
             "1,0,2,0": {
-                "best_path_score": -1.0,
-                "best_path_score_key": "2,0",
                 "info": [
                     {
                         "anchor_word_hits": {
@@ -1784,8 +1742,6 @@ def test_anchor1():
                 "score": -99999.0,
             },
             "1,1,0,1": {
-                "best_path_score": 4.999,
-                "best_path_score_key": "0,1",
                 "info": [
                     {
                         "anchor_word_hits": {
@@ -1810,8 +1766,6 @@ def test_anchor1():
                 "score": 0.0,
             },
             "1,1,1,0": {
-                "best_path_score": 0.0,
-                "best_path_score_key": "1,0",
                 "info": [
                     {
                         "anchor_word_hits": {
@@ -1834,8 +1788,6 @@ def test_anchor1():
                 "score": 0.0,
             },
             "1,1,1,1": {
-                "best_path_score": -1.0,
-                "best_path_score_key": "1,1",
                 "info": [
                     {
                         "anchor_word_hits": {
@@ -1877,8 +1829,6 @@ def test_anchor1():
                 "score": 7.0,
             },
             "1,1,1,2": {
-                "best_path_score": -1.0,
-                "best_path_score_key": "1,2",
                 "info": [
                     {
                         "anchor_word_hits": {
@@ -1959,8 +1909,6 @@ def test_anchor1():
                 "score": -99999.0,
             },
             "1,1,2,1": {
-                "best_path_score": -1.0,
-                "best_path_score_key": "2,1",
                 "info": [
                     {
                         "anchor_word_hits": {
@@ -2044,8 +1992,6 @@ def test_anchor1():
                 "score": -99999.0,
             },
             "1,2,0,2": {
-                "best_path_score": -1.0,
-                "best_path_score_key": "0,2",
                 "info": [
                     {
                         "anchor_word_hits": {
@@ -2090,8 +2036,6 @@ def test_anchor1():
                 "score": 0.0,
             },
             "1,2,1,1": {
-                "best_path_score": 11.0,
-                "best_path_score_key": "1,1",
                 "info": [
                     {
                         "anchor_word_hits": {
@@ -2114,8 +2058,6 @@ def test_anchor1():
                 "score": 0.0,
             },
             "1,2,1,2": {
-                "best_path_score": -1.0,
-                "best_path_score_key": "1,2",
                 "info": [
                     {
                         "anchor_word_hits": {
@@ -2177,8 +2119,6 @@ def test_anchor1():
                 "score": 0.0,
             },
             "1,2,2,2": {
-                "best_path_score": -1.0,
-                "best_path_score_key": "2,2",
                 "info": [
                     {
                         "anchor_word_hits": {
@@ -2282,8 +2222,6 @@ def test_anchor1():
                 "score": 3.999,
             },
             "1,3,1,2": {
-                "best_path_score": 11.0,
-                "best_path_score_key": "1,2",
                 "info": [
                     {
                         "anchor_word_hits": {
@@ -2306,8 +2244,6 @@ def test_anchor1():
                 "score": 0.0,
             },
             "2,0,1,0": {
-                "best_path_score": 4.0,
-                "best_path_score_key": "1,0",
                 "info": [
                     {
                         "anchor_word_hits": {
@@ -2339,8 +2275,6 @@ def test_anchor1():
                 "score": 0.0,
             },
             "2,0,2,-1": {
-                "best_path_score": -1.0,
-                "best_path_score_key": "2,-1",
                 "info": [
                     {
                         "anchor_word_hits": {
@@ -2388,8 +2322,6 @@ def test_anchor1():
                 "score": 0.0,
             },
             "2,0,2,0": {
-                "best_path_score": -1.0,
-                "best_path_score_key": "2,0",
                 "info": [
                     {
                         "anchor_word_hits": {
@@ -2463,8 +2395,6 @@ def test_anchor1():
                 "score": 3.0,
             },
             "2,0,2,1": {
-                "best_path_score": -1.0,
-                "best_path_score_key": "2,1",
                 "info": [
                     {
                         "anchor_word_hits": {
@@ -2557,8 +2487,6 @@ def test_anchor1():
                 "score": 2.999,
             },
             "2,1,1,1": {
-                "best_path_score": 11.0,
-                "best_path_score_key": "1,1",
                 "info": [
                     {
                         "anchor_word_hits": {
@@ -2583,8 +2511,6 @@ def test_anchor1():
                 "score": 0.0,
             },
             "2,1,2,0": {
-                "best_path_score": 3.0,
-                "best_path_score_key": "2,0",
                 "info": [
                     {
                         "anchor_word_hits": {
@@ -2632,8 +2558,6 @@ def test_anchor1():
                 "score": 0.0,
             },
             "2,1,2,1": {
-                "best_path_score": 2.999,
-                "best_path_score_key": "2,1",
                 "info": [
                     {
                         "anchor_word_hits": {
@@ -2700,8 +2624,6 @@ def test_anchor1():
                 "score": 0.0,
             },
             "2,1,2,2": {
-                "best_path_score": 8.998,
-                "best_path_score_key": "2,2",
                 "info": [
                     {
                         "anchor_word_hits": {
@@ -2807,8 +2729,6 @@ def test_anchor1():
                 "score": 4.999,
             },
             "2,2,1,2": {
-                "best_path_score": 4.999,
-                "best_path_score_key": "1,2",
                 "info": [
                     {
                         "anchor_word_hits": {
@@ -2853,8 +2773,6 @@ def test_anchor1():
                 "score": 0.0,
             },
             "2,2,2,1": {
-                "best_path_score": 4.0,
-                "best_path_score_key": "2,1",
                 "info": [
                     {
                         "anchor_word_hits": {
@@ -2902,8 +2820,6 @@ def test_anchor1():
                 "score": 0.0,
             },
             "2,2,2,2": {
-                "best_path_score": 8.998999999999999,
-                "best_path_score_key": "2,2",
                 "info": [
                     {
                         "anchor_word_hits": {
@@ -2990,8 +2906,6 @@ def test_anchor1():
                 "score": 5.0,
             },
             "2,3,2,2": {
-                "best_path_score": 16.0,
-                "best_path_score_key": "2,2",
                 "info": [
                     {
                         "anchor_word_hits": {
@@ -3039,8 +2953,6 @@ def test_anchor1():
                 "score": 0.0,
             },
             "3,0,2,0": {
-                "best_path_score": 4.0,
-                "best_path_score_key": "2,0",
                 "info": [
                     {
                         "anchor_word_hits": {
@@ -3072,8 +2984,6 @@ def test_anchor1():
                 "score": 0.0,
             },
             "3,1,2,1": {
-                "best_path_score": 11.0,
-                "best_path_score_key": "2,1",
                 "info": [
                     {
                         "anchor_word_hits": {
@@ -3098,8 +3008,6 @@ def test_anchor1():
                 "score": 0.0,
             },
             "3,2,2,2": {
-                "best_path_score": 16.0,
-                "best_path_score_key": "2,2",
                 "info": [
                     {
                         "anchor_word_hits": {

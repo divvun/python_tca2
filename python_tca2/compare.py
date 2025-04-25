@@ -38,7 +38,6 @@ class Compare:
         nodes: tuple[List[AlignmentElement], ...],
         position: list[int],
         step: PathStep,
-        best_path_scores: dict[str, float],
     ) -> ElementInfoToBeCompared:
         """Get the values of a cell in the comparison matrix.
 
@@ -67,7 +66,7 @@ class Compare:
 
         if key not in self.comparison_matrix:
             self.comparison_matrix[key] = self.build_comparison_matrix_cell(
-                nodes, position, step, best_path_scores
+                nodes, position, step
             )
 
         return self.comparison_matrix[key]
@@ -77,7 +76,6 @@ class Compare:
         nodes: tuple[List[AlignmentElement], ...],
         position: list[int],
         step: PathStep,
-        best_path_scores: dict[str, float],
     ) -> ElementInfoToBeCompared:
         """
         Builds a comparison matrix cell for the given position and step.
@@ -98,18 +96,4 @@ class Compare:
             self.elements_info,
         )
 
-        best_path_score_key = ",".join(
-            [
-                str(position[text_number] + step[text_number])
-                for text_number in range(constants.NUM_FILES)
-            ]
-        )
-        if best_path_scores.get(best_path_score_key) is None:
-            best_path_scores[best_path_score_key] = (
-                constants.BEST_PATH_SCORE_NOT_CALCULATED
-            )
-        element_info_to_be_compared.best_path_score = best_path_scores[
-            best_path_score_key
-        ]
-        element_info_to_be_compared.best_path_score_key = best_path_score_key
         return element_info_to_be_compared
