@@ -167,15 +167,16 @@ def bad_length_correlation(
         True if the correlation is above the kill limit and the element counts
         differ; otherwise, False.
     """
+    if element_count1 < 1 or element_count2 < 1 or element_count1 == element_count2:
+        return False
+
     kill_limit = 0.5
     # less tolerant limit for 1-2 and 2-1,
     # above which such alignments score lethally low
     length_correlation_factor = calculate_length_correlation_factor(
         length1, length2, ratio
     )
-    return (
-        element_count1 > 0 and element_count2 > 0 and element_count1 != element_count2
-    ) and (length_correlation_factor > kill_limit)
+    return length_correlation_factor > kill_limit
 
 
 def calculate_length_correlation_factor(
