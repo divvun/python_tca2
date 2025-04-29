@@ -51,15 +51,12 @@ def dice_match1(word1: str, word2: str, dice_min_counting_score: float) -> bool:
     unique_bigrams1 = unique_bigrams(string_to_bigram(word1.lower()))
     unique_bigrams2 = unique_bigrams(string_to_bigram(word2.lower()))
 
-    count_bigrams1 = len(unique_bigrams1)
-    count_bigrams2 = len(unique_bigrams2)
-
-    if not count_bigrams1 or not count_bigrams2:
+    if not unique_bigrams1 or not unique_bigrams2:
         return False
 
-    count_shared_bigrams = len(shared_bigrams(unique_bigrams1, unique_bigrams2))
-
-    dice_score = (2 * count_shared_bigrams) / (count_bigrams1 + count_bigrams2)
+    dice_score = (2 * len(shared_bigrams(unique_bigrams1, unique_bigrams2))) / (
+        len(unique_bigrams1) + len(unique_bigrams2)
+    )
 
     return dice_score >= dice_min_counting_score
 
