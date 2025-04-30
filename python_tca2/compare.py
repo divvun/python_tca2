@@ -84,8 +84,7 @@ class Compare:
             A ElementInfoToBeCompared object containing the comparison data and best
             path score.
         """
-        element_info_to_be_compared = ElementInfoToBeCompared()
-        element_info_to_be_compared.build_elementstobecompared(
+        element_info_to_be_compared = ElementInfoToBeCompared(
             position,
             alignment_suggestion,
             nodes,

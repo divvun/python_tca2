@@ -27,11 +27,10 @@ def mock_nodes():
 
 
 def test_build_elementstobecompared_success_first_element(mock_nodes):
-    element_info = ElementInfoToBeCompared()
     position = (-1, -1)
     alignment_suggestion = AlignmentSuggestion((1, 2))
+    element_info = ElementInfoToBeCompared(position, alignment_suggestion, mock_nodes)
 
-    element_info.build_elementstobecompared(position, alignment_suggestion, mock_nodes)
     assert len(element_info.info[0]) == alignment_suggestion[0]
     assert len(element_info.info[1]) == alignment_suggestion[1]
 
@@ -40,11 +39,10 @@ def test_build_elementstobecompared_success_first_element(mock_nodes):
 
 
 def test_build_elementstobecompared_success(mock_nodes):
-    element_info = ElementInfoToBeCompared()
     position = (2, 2)
     alignment_suggestion = AlignmentSuggestion((1, 2))
+    element_info = ElementInfoToBeCompared(position, alignment_suggestion, mock_nodes)
 
-    element_info.build_elementstobecompared(position, alignment_suggestion, mock_nodes)
     assert len(element_info.info[0]) == alignment_suggestion[0]
     assert len(element_info.info[1]) == alignment_suggestion[1]
 
@@ -53,22 +51,20 @@ def test_build_elementstobecompared_success(mock_nodes):
 
 
 def test_build_elementstobecompared_end_of_text_exception(mock_nodes):
-    element_info = ElementInfoToBeCompared()
     position = (3, 3)
     alignment_suggestion = AlignmentSuggestion((1, 2))
 
-    element_info.build_elementstobecompared(position, alignment_suggestion, mock_nodes)
+    element_info = ElementInfoToBeCompared(position, alignment_suggestion, mock_nodes)
 
     assert len(element_info.info[0]) == 1
     assert len(element_info.info[1]) == 1
 
 
 def test_build_elementstobecompared_end_of_all_texts_exception(mock_nodes):
-    element_info = ElementInfoToBeCompared()
     position = (4, 3)
     alignment_suggestion = AlignmentSuggestion((1, 2))
 
-    element_info.build_elementstobecompared(position, alignment_suggestion, mock_nodes)
+    element_info = ElementInfoToBeCompared(position, alignment_suggestion, mock_nodes)
 
     assert len(element_info.info[0]) == 0
     assert len(element_info.info[1]) == 1

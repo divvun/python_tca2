@@ -16,22 +16,27 @@ from python_tca2.elementinfotobecompared import ElementInfoToBeCompared
 
 def test_get_score():
     """Test that the first if in find_dice_matches works as expected"""
-    eitbc = ElementInfoToBeCompared()
-    eitbc.info[0].append(
-        AlignmentElement(
-            anchor_word_list=AnchorWordList(),
-            text="Mobil",
-            text_number=0,
-            element_number=0,
-        )
-    )
-    eitbc.info[1].append(
-        AlignmentElement(
-            anchor_word_list=AnchorWordList(),
-            text="Mobiila",
-            text_number=0,
-            element_number=0,
-        )
+    eitbc = ElementInfoToBeCompared(
+        (-1, -1),
+        (1, 1),
+        (
+            [
+                AlignmentElement(
+                    anchor_word_list=AnchorWordList(),
+                    text="Mobil",
+                    text_number=0,
+                    element_number=0,
+                )
+            ],
+            [
+                AlignmentElement(
+                    anchor_word_list=AnchorWordList(),
+                    text="Mobiila",
+                    text_number=0,
+                    element_number=0,
+                )
+            ],
+        ),
     )
 
     assert eitbc.get_score() == 4.0
@@ -84,22 +89,27 @@ def test_alignment_etcs():
 
 def test_find_dice_matches():
     """Test that the first if in find_dice_matches works as expected"""
-    eitbc = ElementInfoToBeCompared()
-    eitbc.info[0].append(
-        AlignmentElement(
-            anchor_word_list=AnchorWordList(),
-            text="Mobil",
-            text_number=0,
-            element_number=0,
-        )
-    )
-    eitbc.info[1].append(
-        AlignmentElement(
-            anchor_word_list=AnchorWordList(),
-            text="Mobiila",
-            text_number=0,
-            element_number=0,
-        )
+    eitbc = ElementInfoToBeCompared(
+        (-1, -1),
+        (1, 1),
+        (
+            [
+                AlignmentElement(
+                    anchor_word_list=AnchorWordList(),
+                    text="Mobil",
+                    text_number=0,
+                    element_number=0,
+                )
+            ],
+            [
+                AlignmentElement(
+                    anchor_word_list=AnchorWordList(),
+                    text="Mobiila",
+                    text_number=0,
+                    element_number=0,
+                )
+            ],
+        ),
     )
 
     eitbc.find_dice_matches(0, 1)

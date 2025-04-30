@@ -16,13 +16,7 @@ from python_tca2.ref import Ref
 
 
 class ElementInfoToBeCompared:
-    def __init__(self) -> None:
-        self.score: float | None = None
-        self.info: tuple[list[AlignmentElement], ...] = tuple(
-            [[] for _ in range(constants.NUM_FILES)]
-        )
-
-    def build_elementstobecompared(
+    def __init__(
         self,
         position: tuple[int, ...],
         alignment_suggestion: AlignmentSuggestion,
@@ -32,6 +26,7 @@ class ElementInfoToBeCompared:
             n[p + 1 :] if p + a + 1 > len(n) else n[p + 1 : p + 1 + a]
             for p, a, n in zip(position, alignment_suggestion, nodes, strict=True)
         )
+        self.score: float | None = None
 
     def to_json(self):
         return {
