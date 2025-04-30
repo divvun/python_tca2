@@ -405,10 +405,6 @@ def test_anchor1():
     _, compare = model.suggest_without_gui()
 
     assert compare.to_json() == {
-        "elements_info": [
-            {"element_info": [], "first": 0, "last": -1},
-            {"element_info": [], "first": 0, "last": -1},
-        ],
         "matrix": {
             "0,0,-1,0": {
                 "info": [

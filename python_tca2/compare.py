@@ -5,7 +5,6 @@ from python_tca2 import constants
 from python_tca2.aelement import AlignmentElement
 from python_tca2.alignment_suggestion import AlignmentSuggestion
 from python_tca2.elementinfotobecompared import ElementInfoToBeCompared
-from python_tca2.elementsinfo import ElementsInfo
 
 
 class Compare:
@@ -16,14 +15,10 @@ class Compare:
             elements_info: A list of ElementsInfo objects for each file.
             matrix: A dictionary to store comparison cells.
         """
-        self.elements_info: List[ElementsInfo] = [
-            ElementsInfo() for _ in range(constants.NUM_FILES)
-        ]
         self.comparison_matrix: dict[str, ElementInfoToBeCompared] = {}
 
     def to_json(self) -> dict:
         return {
-            "elements_info": [ei.to_json() for ei in self.elements_info],
             "matrix": {
                 key: self.comparison_matrix[key].to_json()
                 for key in sorted(self.comparison_matrix.keys())
@@ -94,7 +89,6 @@ class Compare:
             position,
             alignment_suggestion,
             nodes,
-            self.elements_info,
         )
 
         return element_info_to_be_compared
