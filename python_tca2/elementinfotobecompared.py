@@ -16,8 +16,6 @@ from python_tca2.exceptions import EndOfAllTextsExceptionError, EndOfTextExcepti
 from python_tca2.ref import Ref
 
 
-# TODO: If ElementInfo and AElement are merged, then as a first step,
-# info becomes indexes into e.g. AlignmentModel.elements or whatever
 class ElementInfoToBeCompared:
     def __init__(self) -> None:
         self.score: float | None = None
@@ -25,7 +23,7 @@ class ElementInfoToBeCompared:
             [[] for _ in range(constants.NUM_FILES)]
         )
 
-    def build_elementstobecompared(  # noqa: PLR0913
+    def build_elementstobecompared(
         self,
         position: tuple[int, ...],
         alignment_suggestion: AlignmentSuggestion,
