@@ -50,21 +50,10 @@ class ElementInfoToBeCompared:
             )
             raise EndOfTextExceptionError()
 
-        text_end_count = 0
-        for text_number in range(len(nodes)):
-            for element_index in range(
-                position[text_number] + 1,
-                position[text_number] + alignment_suggestion[text_number] + 1,
-            ):
-                try:
-                    self.info[text_number].append(
-                        elements_info[text_number].get_element_info(
-                            nodes, element_index, text_number
-                        )
-                    )
-                except EndOfTextExceptionError:
-                    text_end_count += 1
-                    break
+        self.info = tuple(
+            n[p + 1 : p + 1 + a]
+            for p, a, n in zip(position, alignment_suggestion, nodes, strict=True)
+        )
 
     def to_json(self):
         return {
