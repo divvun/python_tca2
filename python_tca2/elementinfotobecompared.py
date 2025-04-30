@@ -33,6 +33,13 @@ class ElementInfoToBeCompared:
         nodes: tuple[list[AlignmentElement], ...],
         elements_info: list[ElementsInfo],
     ) -> None:
+        if all(
+            p + a + 1 > len(n)
+            for p, a, n in zip(position, alignment_suggestion, nodes, strict=True)
+        ):
+            self.info = tuple(n[p + 1 :] for p, n in zip(position, nodes, strict=True))
+            raise EndOfAllTextsExceptionError()
+
         text_end_count = 0
         for text_number in range(len(nodes)):
             for element_index in range(
@@ -48,9 +55,6 @@ class ElementInfoToBeCompared:
                 except EndOfTextExceptionError:
                     text_end_count += 1
                     break
-
-        if text_end_count >= constants.NUM_FILES:
-            raise EndOfAllTextsExceptionError()
 
         if text_end_count > 0:
             raise EndOfTextExceptionError()
