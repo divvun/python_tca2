@@ -25,7 +25,7 @@ class ElementInfoToBeCompared:
     ) -> None:
         self.info = AlignedSentenceElements(
             tuple(
-                n[p + 1 :] if p + a + 1 > len(n) else n[p + 1 : p + 1 + a]
+                n[p + 1 : p + 1 + a]
                 for p, a, n in zip(position, alignment_suggestion, nodes, strict=True)
             )
         )
