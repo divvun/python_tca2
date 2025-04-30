@@ -40,6 +40,16 @@ class ElementInfoToBeCompared:
             self.info = tuple(n[p + 1 :] for p, n in zip(position, nodes, strict=True))
             raise EndOfAllTextsExceptionError()
 
+        if any(
+            p + a + 1 > len(n)
+            for p, a, n in zip(position, alignment_suggestion, nodes, strict=True)
+        ):
+            self.info = tuple(
+                n[p + 1 :] if p + a + 1 > len(n) else n[p + 1 : p + 1 + a]
+                for p, a, n in zip(position, alignment_suggestion, nodes, strict=True)
+            )
+            raise EndOfTextExceptionError()
+
         text_end_count = 0
         for text_number in range(len(nodes)):
             for element_index in range(
@@ -55,9 +65,6 @@ class ElementInfoToBeCompared:
                 except EndOfTextExceptionError:
                     text_end_count += 1
                     break
-
-        if text_end_count > 0:
-            raise EndOfTextExceptionError()
 
     def to_json(self):
         return {
