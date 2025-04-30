@@ -31,11 +31,14 @@ def test_build_elementstobecompared_success_first_element(mock_nodes):
     alignment_suggestion = AlignmentSuggestion((1, 2))
     element_info = ElementInfoToBeCompared(position, alignment_suggestion, mock_nodes)
 
-    assert len(element_info.info[0]) == alignment_suggestion[0]
-    assert len(element_info.info[1]) == alignment_suggestion[1]
+    assert len(element_info.aligned_sentence_elements[0]) == alignment_suggestion[0]
+    assert len(element_info.aligned_sentence_elements[1]) == alignment_suggestion[1]
 
-    assert [i.element_number for i in element_info.info[0]] == [0]
-    assert [i.element_number for i in element_info.info[1]] == [0, 1]
+    assert [i.element_number for i in element_info.aligned_sentence_elements[0]] == [0]
+    assert [i.element_number for i in element_info.aligned_sentence_elements[1]] == [
+        0,
+        1,
+    ]
 
 
 def test_build_elementstobecompared_success(mock_nodes):
@@ -43,11 +46,14 @@ def test_build_elementstobecompared_success(mock_nodes):
     alignment_suggestion = AlignmentSuggestion((1, 2))
     element_info = ElementInfoToBeCompared(position, alignment_suggestion, mock_nodes)
 
-    assert len(element_info.info[0]) == alignment_suggestion[0]
-    assert len(element_info.info[1]) == alignment_suggestion[1]
+    assert len(element_info.aligned_sentence_elements[0]) == alignment_suggestion[0]
+    assert len(element_info.aligned_sentence_elements[1]) == alignment_suggestion[1]
 
-    assert [i.element_number for i in element_info.info[0]] == [3]
-    assert [i.element_number for i in element_info.info[1]] == [3, 4]
+    assert [i.element_number for i in element_info.aligned_sentence_elements[0]] == [3]
+    assert [i.element_number for i in element_info.aligned_sentence_elements[1]] == [
+        3,
+        4,
+    ]
 
 
 def test_build_elementstobecompared_end_of_text_exception(mock_nodes):
@@ -56,8 +62,8 @@ def test_build_elementstobecompared_end_of_text_exception(mock_nodes):
 
     element_info = ElementInfoToBeCompared(position, alignment_suggestion, mock_nodes)
 
-    assert len(element_info.info[0]) == 1
-    assert len(element_info.info[1]) == 1
+    assert len(element_info.aligned_sentence_elements[0]) == 1
+    assert len(element_info.aligned_sentence_elements[1]) == 1
 
 
 def test_build_elementstobecompared_end_of_all_texts_exception(mock_nodes):
@@ -66,5 +72,5 @@ def test_build_elementstobecompared_end_of_all_texts_exception(mock_nodes):
 
     element_info = ElementInfoToBeCompared(position, alignment_suggestion, mock_nodes)
 
-    assert len(element_info.info[0]) == 0
-    assert len(element_info.info[1]) == 1
+    assert len(element_info.aligned_sentence_elements[0]) == 0
+    assert len(element_info.aligned_sentence_elements[1]) == 1

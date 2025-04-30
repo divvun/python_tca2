@@ -23,7 +23,7 @@ class ElementInfoToBeCompared:
         alignment_suggestion: AlignmentSuggestion,
         nodes: tuple[list[AlignmentElement], ...],
     ) -> None:
-        self.info = AlignedSentenceElements(
+        self.aligned_sentence_elements = AlignedSentenceElements(
             tuple(
                 n[p + 1 : p + 1 + a]
                 for p, a, n in zip(position, alignment_suggestion, nodes, strict=True)
@@ -34,7 +34,11 @@ class ElementInfoToBeCompared:
     def to_json(self):
         return {
             "score": self.get_score(),
-            "info": [info.to_json() for infos in self.info for info in infos],
+            "info": [
+                info.to_json()
+                for infos in self.aligned_sentence_elements
+                for info in infos
+            ],
         }
 
     def __str__(self):
@@ -42,7 +46,7 @@ class ElementInfoToBeCompared:
 
     def empty(self) -> bool:
         """Both branches of self.info must have elements to be non-empty."""
-        return not all(self.info)
+        return not all(self.aligned_sentence_elements)
 
     def get_score(self) -> float:
         if self.score is None:
@@ -55,8 +59,12 @@ class ElementInfoToBeCompared:
         element_count = [0, 0]
 
         for text_number in range(constants.NUM_FILES):
-            length[text_number] = sum(info.length for info in self.info[text_number])
-            element_count[text_number] = len(self.info[text_number])
+            length[text_number] = sum(
+                info.length for info in self.aligned_sentence_elements[text_number]
+            )
+            element_count[text_number] = len(
+                self.aligned_sentence_elements[text_number]
+            )
 
         return similarity_utils.bad_length_correlation(
             length[0],
@@ -93,8 +101,12 @@ class ElementInfoToBeCompared:
         element_count = [0, 0]
 
         for text_number in range(constants.NUM_FILES):
-            length[text_number] = sum(info.length for info in self.info[text_number])
-            element_count[text_number] = len(self.info[text_number])
+            length[text_number] = sum(
+                info.length for info in self.aligned_sentence_elements[text_number]
+            )
+            element_count[text_number] = len(
+                self.aligned_sentence_elements[text_number]
+            )
 
         return similarity_utils.adjust_for_length_correlation(
             score,
@@ -107,7 +119,7 @@ class ElementInfoToBeCompared:
 
     def is11(self) -> bool:
         """Check if all elements in self.info have a length of 1."""
-        return all(len(info) == 1 for info in self.info)
+        return all(len(info) == 1 for info in self.aligned_sentence_elements)
 
     def calculate_score(self) -> float:
         if self.empty():
@@ -122,10 +134,10 @@ class ElementInfoToBeCompared:
         return score if self.is11() else score - 0.001
 
     def variables_for_dice_matches(self, text_number1: int, text_number2: int):
-        for info1 in self.info[text_number1]:
+        for info1 in self.aligned_sentence_elements[text_number1]:
             for x, word1 in enumerate(info1.words):
                 next_word1 = info1.words[x + 1] if x < len(info1.words) - 1 else ""
-                for info2 in self.info[text_number2]:
+                for info2 in self.aligned_sentence_elements[text_number2]:
                     for y, word2 in enumerate(info2.words):
                         yield info1, x, word1, next_word1, info2, y, word2
 
@@ -316,10 +328,10 @@ class ElementInfoToBeCompared:
                     current[text_number] += 1  # increment the count
 
     def variables_for_propername_matches(self, text_number1: int, text_number2: int):
-        for info1 in self.info[text_number1]:
+        for info1 in self.aligned_sentence_elements[text_number1]:
             for x, word1 in enumerate(info1.words):
                 if word1:
-                    for info2 in self.info[text_number2]:
+                    for info2 in self.aligned_sentence_elements[text_number2]:
                         for y, word2 in enumerate(info2.words):
                             if (
                                 word2
@@ -356,9 +368,9 @@ class ElementInfoToBeCompared:
             )
 
     def variables_for_number_matches(self, text_number1: int, text_number2: int):
-        for info1 in self.info[text_number1]:
+        for info1 in self.aligned_sentence_elements[text_number1]:
             for x, word1 in enumerate(info1.words):
-                for info2 in self.info[text_number2]:
+                for info2 in self.aligned_sentence_elements[text_number2]:
                     for y, word2 in enumerate(info2.words):
                         yield info1, x, word1, info2, y, word2
 
@@ -399,8 +411,8 @@ class ElementInfoToBeCompared:
     def variables_for_special_character_matches(
         self, text_number1: int, text_number2: int
     ):
-        for info1 in self.info[text_number1]:
-            for info2 in self.info[text_number2]:
+        for info1 in self.aligned_sentence_elements[text_number1]:
+            for info2 in self.aligned_sentence_elements[text_number2]:
                 for char1 in info1.scoring_characters:
                     for char2 in info2.scoring_characters:
                         if char1 == char2:
@@ -435,5 +447,5 @@ class ElementInfoToBeCompared:
     def find_hits(self) -> list[list[AnchorWordHit]]:
         return [
             [hit for info in info_list for hit in info.anchor_word_hits.hits]
-            for info_list in self.info
+            for info_list in self.aligned_sentence_elements
         ]
