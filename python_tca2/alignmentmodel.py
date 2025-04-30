@@ -9,10 +9,6 @@ from python_tca2.aligned import Aligned
 from python_tca2.alignment_suggestion import AlignmentSuggestion
 from python_tca2.anchorwordlist import AnchorWordList
 from python_tca2.compare import Compare
-from python_tca2.exceptions import (
-    EndOfAllTextsExceptionError,
-    EndOfTextExceptionError,
-)
 from python_tca2.paralleldocuments import ParallelDocuments
 from python_tca2.queue_entries import QueueEntries
 from python_tca2.queue_entry import QueueEntry
@@ -257,13 +253,15 @@ class AlignmentModel:
         Returns:
             The updated queue entry if the new score is better, otherwise None.
         """
-        try:
-            position_step_score = self.get_step_score(
+        if all(
+            p + a + 1 > len(n)
+            for p, a, n in zip(
                 old_position,
                 alignment_suggestions[-1],
-                compare=compare,
+                self.parallel_documents.elements,
+                strict=True,
             )
-        except EndOfAllTextsExceptionError:
+        ):
             return QueueEntry(
                 position=old_position,
                 score=old_score,
@@ -271,8 +269,22 @@ class AlignmentModel:
                 end=True,
             )
 
-        except EndOfTextExceptionError:
+        if any(
+            p + a + 1 > len(n)
+            for p, a, n in zip(
+                old_position,
+                alignment_suggestions[-1],
+                self.parallel_documents.elements,
+                strict=True,
+            )
+        ):
             return None
+
+        position_step_score = self.get_step_score(
+            old_position,
+            alignment_suggestions[-1],
+            compare=compare,
+        )
 
         if position_step_score == constants.ELEMENTINFO_SCORE_HOPELESS:
             return None

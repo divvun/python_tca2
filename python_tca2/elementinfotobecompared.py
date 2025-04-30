@@ -12,7 +12,6 @@ from python_tca2.alignment_suggestion import AlignmentSuggestion
 from python_tca2.alignment_utils import count_words
 from python_tca2.anchorwordhit import AnchorWordHit
 from python_tca2.clusters import Clusters
-from python_tca2.exceptions import EndOfAllTextsExceptionError, EndOfTextExceptionError
 from python_tca2.ref import Ref
 
 
@@ -33,18 +32,6 @@ class ElementInfoToBeCompared:
             n[p + 1 :] if p + a + 1 > len(n) else n[p + 1 : p + 1 + a]
             for p, a, n in zip(position, alignment_suggestion, nodes, strict=True)
         )
-
-        if all(
-            p + a + 1 > len(n)
-            for p, a, n in zip(position, alignment_suggestion, nodes, strict=True)
-        ):
-            raise EndOfAllTextsExceptionError()
-
-        if any(
-            p + a + 1 > len(n)
-            for p, a, n in zip(position, alignment_suggestion, nodes, strict=True)
-        ):
-            raise EndOfTextExceptionError()
 
     def to_json(self):
         return {
