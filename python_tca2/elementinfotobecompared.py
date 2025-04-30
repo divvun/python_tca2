@@ -35,9 +35,9 @@ class ElementInfoToBeCompared:
         return {
             "score": self.get_score(),
             "info": [
-                info.to_json()
-                for infos in self.aligned_sentence_elements
-                for info in infos
+                alignment_element.to_json()
+                for alignment_elements in self.aligned_sentence_elements
+                for alignment_element in alignment_elements
             ],
         }
 
@@ -60,7 +60,8 @@ class ElementInfoToBeCompared:
 
         for text_number in range(constants.NUM_FILES):
             length[text_number] = sum(
-                info.length for info in self.aligned_sentence_elements[text_number]
+                alignment_elements.length
+                for alignment_elements in self.aligned_sentence_elements[text_number]
             )
             element_count[text_number] = len(
                 self.aligned_sentence_elements[text_number]
@@ -119,7 +120,10 @@ class ElementInfoToBeCompared:
 
     def is11(self) -> bool:
         """Check if all elements in self.info have a length of 1."""
-        return all(len(info) == 1 for info in self.aligned_sentence_elements)
+        return all(
+            len(alignment_elements) == 1
+            for alignment_elements in self.aligned_sentence_elements
+        )
 
     def calculate_score(self) -> float:
         if self.empty():
@@ -134,12 +138,16 @@ class ElementInfoToBeCompared:
         return score if self.is11() else score - 0.001
 
     def variables_for_dice_matches(self, text_number1: int, text_number2: int):
-        for info1 in self.aligned_sentence_elements[text_number1]:
-            for x, word1 in enumerate(info1.words):
-                next_word1 = info1.words[x + 1] if x < len(info1.words) - 1 else ""
-                for info2 in self.aligned_sentence_elements[text_number2]:
-                    for y, word2 in enumerate(info2.words):
-                        yield info1, x, word1, next_word1, info2, y, word2
+        for alignment_elements1 in self.aligned_sentence_elements[text_number1]:
+            for x, word1 in enumerate(alignment_elements1.words):
+                next_word1 = (
+                    alignment_elements1.words[x + 1]
+                    if x < len(alignment_elements1.words) - 1
+                    else ""
+                )
+                for alignment_elements2 in self.aligned_sentence_elements[text_number2]:
+                    for y, word2 in enumerate(alignment_elements2.words):
+                        yield alignment_elements1, x, word1, next_word1, alignment_elements2, y, word2
 
     def find_dice_matches(
         self, text_number1: int, text_number2: int
@@ -328,18 +336,20 @@ class ElementInfoToBeCompared:
                     current[text_number] += 1  # increment the count
 
     def variables_for_propername_matches(self, text_number1: int, text_number2: int):
-        for info1 in self.aligned_sentence_elements[text_number1]:
-            for x, word1 in enumerate(info1.words):
+        for alignment_elements1 in self.aligned_sentence_elements[text_number1]:
+            for x, word1 in enumerate(alignment_elements1.words):
                 if word1:
-                    for info2 in self.aligned_sentence_elements[text_number2]:
-                        for y, word2 in enumerate(info2.words):
+                    for alignment_elements2 in self.aligned_sentence_elements[
+                        text_number2
+                    ]:
+                        for y, word2 in enumerate(alignment_elements2.words):
                             if (
                                 word2
                                 and word1[0].isupper()
                                 and word2[0].isupper()
                                 and word1 == word2
                             ):
-                                yield info1, x, word1, info2, y, word2
+                                yield alignment_elements1, x, word1, alignment_elements2, y, word2
 
     def find_propername_matches(
         self, text_number1, text_number2
@@ -368,11 +378,11 @@ class ElementInfoToBeCompared:
             )
 
     def variables_for_number_matches(self, text_number1: int, text_number2: int):
-        for info1 in self.aligned_sentence_elements[text_number1]:
-            for x, word1 in enumerate(info1.words):
-                for info2 in self.aligned_sentence_elements[text_number2]:
-                    for y, word2 in enumerate(info2.words):
-                        yield info1, x, word1, info2, y, word2
+        for alignment_elements1 in self.aligned_sentence_elements[text_number1]:
+            for x, word1 in enumerate(alignment_elements1.words):
+                for alignment_elements2 in self.aligned_sentence_elements[text_number2]:
+                    for y, word2 in enumerate(alignment_elements2.words):
+                        yield alignment_elements1, x, word1, alignment_elements2, y, word2
 
     def find_number_matches(
         self, text_number1, text_number2
@@ -411,12 +421,12 @@ class ElementInfoToBeCompared:
     def variables_for_special_character_matches(
         self, text_number1: int, text_number2: int
     ):
-        for info1 in self.aligned_sentence_elements[text_number1]:
-            for info2 in self.aligned_sentence_elements[text_number2]:
-                for char1 in info1.scoring_characters:
-                    for char2 in info2.scoring_characters:
+        for alignment_elements1 in self.aligned_sentence_elements[text_number1]:
+            for aligment_elements2 in self.aligned_sentence_elements[text_number2]:
+                for char1 in alignment_elements1.scoring_characters:
+                    for char2 in aligment_elements2.scoring_characters:
                         if char1 == char2:
-                            yield info1, info2, char1, char2
+                            yield alignment_elements1, aligment_elements2, char1, char2
 
     def find_special_character_matches(
         self, text_number1, text_number2
@@ -446,6 +456,10 @@ class ElementInfoToBeCompared:
 
     def find_hits(self) -> list[list[AnchorWordHit]]:
         return [
-            [hit for info in info_list for hit in info.anchor_word_hits.hits]
-            for info_list in self.aligned_sentence_elements
+            [
+                hit
+                for alignment_element in alignment_elements
+                for hit in alignment_element.anchor_word_hits.hits
+            ]
+            for alignment_elements in self.aligned_sentence_elements
         ]
