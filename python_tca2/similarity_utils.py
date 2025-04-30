@@ -145,7 +145,7 @@ def is_word_anchor_match(compiled_anchor_pattern: re.Pattern, word: str) -> bool
 
 
 def bad_length_correlation(
-    length1: int, length2: int, element_count1: int, element_count2: int, ratio: float
+    lengths: list[int], element_counts: list[int], ratio: float
 ) -> bool:
     """Determine if the length correlation between two sequences is unacceptable.
 
@@ -164,21 +164,21 @@ def bad_length_correlation(
         True if the correlation is above the kill limit and the element counts
         differ; otherwise, False.
     """
-    if element_count1 < 1 or element_count2 < 1 or element_count1 == element_count2:
+    if (
+        element_counts[0] < 1
+        or element_counts[1] < 1
+        or element_counts[0] == element_counts[1]
+    ):
         return False
 
     kill_limit = 0.5
     # less tolerant limit for 1-2 and 2-1,
     # above which such alignments score lethally low
-    length_correlation_factor = calculate_length_correlation_factor(
-        length1, length2, ratio
-    )
+    length_correlation_factor = calculate_length_correlation_factor(lengths, ratio)
     return length_correlation_factor > kill_limit
 
 
-def calculate_length_correlation_factor(
-    length1: int, length2: int, ratio: float
-) -> float:
+def calculate_length_correlation_factor(lengths: list[int], ratio: float) -> float:
     """Calculate the length correlation factor between two lengths using a given ratio.
 
     Args:
@@ -189,15 +189,17 @@ def calculate_length_correlation_factor(
     Returns:
         The length correlation factor as a float.
     """
-    return 2 * abs(0.0 + ratio * length1 - length2) / (ratio * length1 + length2)
+    return (
+        2
+        * abs(0.0 + ratio * lengths[0] - lengths[1])
+        / (ratio * lengths[0] + lengths[1])
+    )
 
 
 def adjust_for_length_correlation(  # noqa: PLR0913
     score: float,
-    length1: int,
-    length2: int,
-    element_count1: int,
-    element_count2: int,
+    lengths: list[int],
+    element_counts: list[int],
     ratio: float,
 ) -> float:
     """
@@ -221,9 +223,7 @@ def adjust_for_length_correlation(  # noqa: PLR0913
     """
     lower_limit = 0.4
     upper_limit = 1.0
-    length_correlation_factor = calculate_length_correlation_factor(
-        length1, length2, ratio
-    )
+    length_correlation_factor = calculate_length_correlation_factor(lengths, ratio)
 
     if length_correlation_factor < lower_limit / 2:
         return score + 2
@@ -232,7 +232,7 @@ def adjust_for_length_correlation(  # noqa: PLR0913
         return score + 1
 
     if length_correlation_factor > upper_limit and not (
-        element_count1 > 0 and element_count2 > 0 and element_count1 != element_count2
+        all(element_counts) and element_counts[0] != element_counts[1]
     ):
         return score / 3
 

@@ -55,23 +55,18 @@ class ElementInfoToBeCompared:
         return self.score
 
     def has_bad_similarity_score(self) -> float:
-        length = [0, 0]
-        element_count = [0, 0]
-
-        for text_number in range(constants.NUM_FILES):
-            length[text_number] = sum(
-                alignment_elements.length
-                for alignment_elements in self.aligned_sentence_elements[text_number]
-            )
-            element_count[text_number] = len(
-                self.aligned_sentence_elements[text_number]
-            )
+        lengths = [
+            sum(alignment_element.length for alignment_element in alignment_elements)
+            for alignment_elements in self.aligned_sentence_elements
+        ]
+        element_counts = [
+            len(alignment_elements)
+            for alignment_elements in self.aligned_sentence_elements
+        ]
 
         return similarity_utils.bad_length_correlation(
-            length[0],
-            length[1],
-            element_count[0],
-            element_count[1],
+            lengths,
+            element_counts,
             constants.DEFAULT_LENGTH_RATIO,
         )
 
@@ -98,24 +93,20 @@ class ElementInfoToBeCompared:
         return common_clusters.get_score()
 
     def adjust_for_length_correlation(self, score: float) -> float:
-        length = [0, 0]
-        element_count = [0, 0]
-
-        for text_number in range(constants.NUM_FILES):
-            length[text_number] = sum(
-                info.length for info in self.aligned_sentence_elements[text_number]
-            )
-            element_count[text_number] = len(
-                self.aligned_sentence_elements[text_number]
-            )
+        lengths = [
+            sum(alignment_element.length for alignment_element in alignment_elements)
+            for alignment_elements in self.aligned_sentence_elements
+        ]
+        element_counts = [
+            len(alignment_elements)
+            for alignment_elements in self.aligned_sentence_elements
+        ]
 
         return similarity_utils.adjust_for_length_correlation(
             score,
-            length[0],
-            length[1],
-            element_count[0],
-            element_count[1],
-            constants.DEFAULT_LENGTH_RATIO,
+            lengths,
+            element_counts,
+            ratio=constants.DEFAULT_LENGTH_RATIO,
         )
 
     def is11(self) -> bool:
