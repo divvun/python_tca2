@@ -1,7 +1,8 @@
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 
-from python_tca2 import constants
 from python_tca2.aelement import AlignmentElement
+from python_tca2.aligned_sentence_elements import AlignedSentenceElements
+from python_tca2.alignment_suggestion import AlignmentSuggestion
 
 
 @dataclass
@@ -20,22 +21,40 @@ class ParallelDocuments:
     """
 
     elements: tuple[list[AlignmentElement], ...]
-    start_position: list[int] = field(
-        default_factory=lambda: [-1] * constants.NUM_FILES
-    )
+    start_position: tuple[int, ...]
 
-    def get_next_element(self, text_number: int) -> AlignmentElement:
+    def get_aligned_sentence_elements(
+        self, alignment_suggestion: AlignmentSuggestion
+    ) -> AlignedSentenceElements:
         """Returns the next AlignmentElement object for the specified text number.
 
+
         Args:
-            text_number (int): The number of the text for which to retrieve the next
-                element.
+            alignment_suggestion: How man elements to move in each text.
 
         Returns:
-            The next AlignmentElement object for the specified text number.
+            A tuple of AlignmentElement objects for each text.
         """
-        self.start_position[text_number] += 1
-        return self.elements[text_number][self.start_position[text_number]]
+        # TODO: fix the -1 issue
+        return_tuple = tuple(
+            alignment_elements[
+                current_position
+                + 1 : current_position
+                + 1
+                + number_of_elements  # + 1 here because first element starts at -1 …
+            ]
+            for (current_position, number_of_elements, alignment_elements) in zip(
+                self.start_position, alignment_suggestion, self.elements, strict=True
+            )
+        )
+        self.start_position = tuple(
+            current_position + number_of_elements
+            for (current_position, number_of_elements) in zip(
+                self.start_position, alignment_suggestion, strict=True
+            )
+        )
+
+        return AlignedSentenceElements(return_tuple)
 
     def to_json(self):
         """Converts the TextPair object to a JSON-compatible dictionary.

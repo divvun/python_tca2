@@ -6,7 +6,6 @@ from lxml import etree
 from python_tca2 import alignment_suggestion, constants
 from python_tca2.aelement import AlignmentElement
 from python_tca2.aligned import Aligned
-from python_tca2.aligned_sentence_elements import AlignedSentenceElements
 from python_tca2.alignment_suggestion import AlignmentSuggestion
 from python_tca2.anchorwordlist import AnchorWordList
 from python_tca2.compare import Compare
@@ -31,10 +30,11 @@ class AlignmentModel:
     ) -> None:
         self.anchor_word_list = anchor_word_list
         self.parallel_documents = ParallelDocuments(
+            start_position=tuple([-1] * len(tree_tuple)),
             elements=tuple(
                 self.load_sentences(text_number=text_number, tree=tree)
                 for text_number, tree in enumerate(tree_tuple)
-            )
+            ),
         )
 
     def load_sentences(
@@ -77,7 +77,7 @@ class AlignmentModel:
             alignment_suggestion := self.retrieve_alignment_suggestion(compare=compare)
         ) is not None:
             aligned.pickup(
-                self.find_more_to_align_without_gui(
+                self.parallel_documents.get_aligned_sentence_elements(
                     alignment_suggestion=alignment_suggestion
                 )
             )
@@ -105,29 +105,6 @@ class AlignmentModel:
             return None
 
         return self.select_best_alignment_suggestion(queue_entries)
-
-    def find_more_to_align_without_gui(
-        self, alignment_suggestion: tuple[int, ...]
-    ) -> AlignedSentenceElements:
-        """Extract a tuple of aligned sentences.
-
-        Args:
-            alignment_suggestion: Tells how many sentences should be extracted from the
-                parallel documents.
-
-        Returns:
-            A tuple containing the text elements.
-        """
-
-        return AlignedSentenceElements(
-            tuple(
-                [
-                    self.parallel_documents.get_next_element(text_number)
-                    for _ in range(increment_number)
-                ]
-                for text_number, increment_number in enumerate(alignment_suggestion)
-            )
-        )
 
     def select_best_alignment_suggestion(
         self, queue_entries: QueueEntries
