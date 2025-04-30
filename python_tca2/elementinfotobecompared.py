@@ -8,6 +8,7 @@ from python_tca2 import (
     similarity_utils,
 )
 from python_tca2.aelement import AlignmentElement
+from python_tca2.aligned_sentence_elements import AlignedSentenceElements
 from python_tca2.alignment_suggestion import AlignmentSuggestion
 from python_tca2.alignment_utils import count_words
 from python_tca2.anchorwordhit import AnchorWordHit
@@ -22,9 +23,11 @@ class ElementInfoToBeCompared:
         alignment_suggestion: AlignmentSuggestion,
         nodes: tuple[list[AlignmentElement], ...],
     ) -> None:
-        self.info = tuple(
-            n[p + 1 :] if p + a + 1 > len(n) else n[p + 1 : p + 1 + a]
-            for p, a, n in zip(position, alignment_suggestion, nodes, strict=True)
+        self.info = AlignedSentenceElements(
+            tuple(
+                n[p + 1 :] if p + a + 1 > len(n) else n[p + 1 : p + 1 + a]
+                for p, a, n in zip(position, alignment_suggestion, nodes, strict=True)
+            )
         )
         self.score: float | None = None
 
