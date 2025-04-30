@@ -31,27 +31,22 @@ class ElementInfoToBeCompared:
         alignment_suggestion: AlignmentSuggestion,
         nodes: tuple[list[AlignmentElement], ...],
     ) -> None:
+        self.info = tuple(
+            n[p + 1 :] if p + a + 1 > len(n) else n[p + 1 : p + 1 + a]
+            for p, a, n in zip(position, alignment_suggestion, nodes, strict=True)
+        )
+
         if all(
             p + a + 1 > len(n)
             for p, a, n in zip(position, alignment_suggestion, nodes, strict=True)
         ):
-            self.info = tuple(n[p + 1 :] for p, n in zip(position, nodes, strict=True))
             raise EndOfAllTextsExceptionError()
 
         if any(
             p + a + 1 > len(n)
             for p, a, n in zip(position, alignment_suggestion, nodes, strict=True)
         ):
-            self.info = tuple(
-                n[p + 1 :] if p + a + 1 > len(n) else n[p + 1 : p + 1 + a]
-                for p, a, n in zip(position, alignment_suggestion, nodes, strict=True)
-            )
             raise EndOfTextExceptionError()
-
-        self.info = tuple(
-            n[p + 1 : p + 1 + a]
-            for p, a, n in zip(position, alignment_suggestion, nodes, strict=True)
-        )
 
     def to_json(self):
         return {
