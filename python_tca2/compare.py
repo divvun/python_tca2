@@ -36,7 +36,7 @@ class Compare:
     def get_cell_values(
         self,
         nodes: tuple[List[AlignmentElement], ...],
-        position: list[int],
+        position: tuple[int, ...],
         alignment_suggestion: AlignmentSuggestion,
     ) -> ElementInfoToBeCompared:
         """Get the values of a cell in the comparison matrix.
@@ -74,7 +74,7 @@ class Compare:
     def build_comparison_matrix_cell(
         self,
         nodes: tuple[List[AlignmentElement], ...],
-        position: list[int],
+        position: tuple[int, ...],
         alignment_suggestion: AlignmentSuggestion,
     ) -> ElementInfoToBeCompared:
         """

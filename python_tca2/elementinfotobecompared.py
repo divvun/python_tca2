@@ -28,7 +28,7 @@ class ElementInfoToBeCompared:
 
     def build_elementstobecompared(  # noqa: PLR0913
         self,
-        position: list[int],
+        position: tuple[int, ...],
         alignment_suggestion: AlignmentSuggestion,
         nodes: tuple[list[AlignmentElement], ...],
         elements_info: list[ElementsInfo],

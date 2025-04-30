@@ -218,7 +218,7 @@ class AlignmentModel:
 
     def get_step_score(
         self,
-        position: list[int],
+        position: tuple[int, ...],
         alignment_suggestion: AlignmentSuggestion,
         compare: Compare,
     ) -> float:
@@ -241,7 +241,7 @@ class AlignmentModel:
 
     def make_longer_path(
         self,
-        old_position: list[int],
+        old_position: tuple[int, ...],
         old_score: float,
         alignment_suggestions: list[AlignmentSuggestion],
         compare: Compare,
@@ -277,10 +277,10 @@ class AlignmentModel:
         if position_step_score == constants.ELEMENTINFO_SCORE_HOPELESS:
             return None
 
-        new_position = [
+        new_position = tuple(
             old_position[text_number] + alignment_suggestions[-1][text_number]
             for text_number in range(constants.NUM_FILES)
-        ]
+        )
         new_score = old_score + position_step_score
 
         best_path_score = get_best_path_score(
@@ -304,7 +304,7 @@ class AlignmentModel:
 
 
 def set_best_path_score(
-    position: list[int], score: float, best_path_scores: dict[str, float]
+    position: tuple[int, ...], score: float, best_path_scores: dict[str, float]
 ) -> None:
     """Sets the score for a specific position in the best path scores.
 
@@ -317,7 +317,7 @@ def set_best_path_score(
 
 
 def get_best_path_score(
-    position: list[int], best_path_scores: dict[str, float]
+    position: tuple[int, ...], best_path_scores: dict[str, float]
 ) -> float | None:
     """Calculate and return the score for a given position.
 

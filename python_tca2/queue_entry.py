@@ -18,7 +18,7 @@ class QueueEntry:
             the score divided by the length of the path in sentences.
     """
 
-    position: list[int]
+    position: tuple[int, ...] = field(default_factory=tuple)
     score: float = 0.0
     alignment_suggestions: list[AlignmentSuggestion] = field(default_factory=list)
     end: bool = False
@@ -32,7 +32,7 @@ class QueueEntry:
         """
         return self.score / self.get_length_in_sentences()
 
-    def has_hit(self, pos: list[int]) -> bool:
+    def has_hit(self, pos: tuple[int, ...]) -> bool:
         """Determines if a given position is a hit in the queue.
 
         Args:
