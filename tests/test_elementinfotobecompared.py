@@ -10,9 +10,6 @@ from python_tca2.elementinfotobecompared import ElementInfoToBeCompared
 @pytest.fixture
 def mock_nodes():
     anchor_word_list = MagicMock()
-    anchor_word_list.get_anchor_word_hits.return_value = (
-        []
-    )  # Mock the method to return an empty list or appropriate value
     text = "mock_text"  # Replace with a mock or appropriate value
     return [
         [

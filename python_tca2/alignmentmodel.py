@@ -15,7 +15,6 @@ from python_tca2.queue_entry import QueueEntry
 
 
 class AlignmentModel:
-    special_characters = constants.DEFAULT_SPECIAL_CHARACTERS
     scoring_characters = constants.DEFAULT_SCORING_CHARACTERS
     max_path_length = constants.MAX_PATH_LENGTH
 

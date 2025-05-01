@@ -55,6 +55,3 @@ class Ref:
             True if the instance's text number matches, False otherwise.
         """
         return self.text_number == text_number
-
-    def type_anchor_word(self) -> bool:
-        return self.match_type >= 0
