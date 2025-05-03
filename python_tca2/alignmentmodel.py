@@ -9,7 +9,7 @@ from python_tca2.aligned import Aligned
 from python_tca2.aligned_sentence_elements import AlignedSentenceElements
 from python_tca2.alignment_suggestion import AlignmentSuggestion
 from python_tca2.anchorwordlist import AnchorWordList
-from python_tca2.compare import Compare
+from python_tca2.elementinfotobecompared import ElementInfoToBeCompared
 from python_tca2.queue_entries import QueueEntries
 from python_tca2.queue_entry import QueueEntry
 
@@ -81,7 +81,7 @@ class AlignmentModel:
             for index, node in enumerate(tree.iter("s"))
         ]
 
-    def suggest_without_gui(self) -> tuple[Aligned, Compare]:
+    def suggest_without_gui(self) -> tuple[Aligned, dict[str, ElementInfoToBeCompared]]:
         """Suggest alignments.
 
         This method performs text alignment by iteratively processing paths
@@ -92,12 +92,12 @@ class AlignmentModel:
             A tuple containing the aligned object and the comparison object.
         """
         aligned = Aligned([])
-        compare = Compare()
+        comparison_matrix: dict[str, ElementInfoToBeCompared] = {}
 
         start_position: tuple[int, ...] = (-1, -1)
         while (
             alignment_suggestion := self.retrieve_alignment_suggestion(
-                compare=compare, start_position=start_position
+                compare=comparison_matrix, start_position=start_position
             )
         ) is not None:
             aligned.pickup(
@@ -111,14 +111,25 @@ class AlignmentModel:
             )
 
         print(
-            json.dumps(compare.to_json(), indent=0, ensure_ascii=False),
+            json.dumps(
+                {
+                    "matrix": {
+                        key: comparison_matrix[key].to_json()
+                        for key in sorted(comparison_matrix.keys())
+                    },
+                },
+                indent=0,
+                ensure_ascii=False,
+            ),
             file=open("compare.json", "w"),
         )
 
-        return aligned, compare
+        return aligned, comparison_matrix
 
     def retrieve_alignment_suggestion(
-        self, compare: Compare, start_position: tuple[int, ...]
+        self,
+        compare: dict[str, ElementInfoToBeCompared],
+        start_position: tuple[int, ...],
     ) -> AlignmentSuggestion | None:
 
         queue_entries = self.lengthen_paths(
@@ -167,7 +178,9 @@ class AlignmentModel:
         return max(score_step_list, key=lambda x: x[0])[1] if score_step_list else None
 
     def lengthen_paths(
-        self, compare: Compare, start_position: tuple[int, ...]
+        self,
+        compare: dict[str, ElementInfoToBeCompared],
+        start_position: tuple[int, ...],
     ) -> QueueEntries:
         """Lengthens paths in a text pair alignment process.
 
@@ -216,7 +229,7 @@ class AlignmentModel:
     def lengthen_current_path(
         self,
         queue_entry: QueueEntry,
-        compare: Compare,
+        compare: dict[str, ElementInfoToBeCompared],
         best_path_scores: dict[str, float],
     ) -> Iterator[QueueEntry | None]:
         """Extends the current path in the alignment process.
@@ -250,7 +263,7 @@ class AlignmentModel:
         self,
         position: tuple[int, ...],
         alignment_suggestion: AlignmentSuggestion,
-        compare: Compare,
+        compare: dict[str, ElementInfoToBeCompared],
     ) -> float:
         """Calculate the score for a given step at a specific position.
 
@@ -262,19 +275,33 @@ class AlignmentModel:
         Returns:
             The score for the specified step.
         """
-        cell = compare.get_cell_values(
-            nodes=self.parallel_documents,
-            position=position,
-            alignment_suggestion=alignment_suggestion,
+        key = ",".join(
+            [
+                str(position[text_number] + 1)
+                for text_number in range(constants.NUM_FILES)
+            ]
+            + [
+                str(position[text_number] + alignment_suggestion[text_number])
+                for text_number in range(constants.NUM_FILES)
+            ]
         )
-        return cell.get_score()
+
+        if key not in compare:
+            compare[key] = ElementInfoToBeCompared(
+                aligned_sentence_elements=self.get_aligned_sentence_elements(
+                    start_position=position,
+                    alignment_suggestion=alignment_suggestion,
+                ),
+            )
+
+        return compare[key].get_score()
 
     def make_longer_path(
         self,
         old_position: tuple[int, ...],
         old_score: float,
         alignment_suggestions: list[AlignmentSuggestion],
-        compare: Compare,
+        compare: dict[str, ElementInfoToBeCompared],
         best_path_scores: dict[str, float],
     ) -> QueueEntry | None:
         """Extend a path with a new step and update its score.

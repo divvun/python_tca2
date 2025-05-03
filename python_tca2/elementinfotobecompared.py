@@ -7,9 +7,7 @@ from python_tca2 import (
     match,
     similarity_utils,
 )
-from python_tca2.aelement import AlignmentElement
 from python_tca2.aligned_sentence_elements import AlignedSentenceElements
-from python_tca2.alignment_suggestion import AlignmentSuggestion
 from python_tca2.alignment_utils import count_words
 from python_tca2.anchorwordhit import AnchorWordHit
 from python_tca2.clusters import Clusters
@@ -19,16 +17,9 @@ from python_tca2.ref import Ref
 class ElementInfoToBeCompared:
     def __init__(
         self,
-        position: tuple[int, ...],
-        alignment_suggestion: AlignmentSuggestion,
-        nodes: tuple[list[AlignmentElement], ...],
+        aligned_sentence_elements: AlignedSentenceElements,
     ) -> None:
-        self.aligned_sentence_elements = AlignedSentenceElements(
-            tuple(
-                n[p + 1 : p + 1 + a]
-                for p, a, n in zip(position, alignment_suggestion, nodes, strict=True)
-            )
-        )
+        self.aligned_sentence_elements = aligned_sentence_elements
         self.score: float | None = None
 
     def to_json(self):

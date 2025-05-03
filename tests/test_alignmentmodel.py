@@ -17,8 +17,6 @@ from python_tca2.elementinfotobecompared import ElementInfoToBeCompared
 def test_get_score():
     """Test that the first if in find_dice_matches works as expected"""
     eitbc = ElementInfoToBeCompared(
-        (-1, -1),
-        (1, 1),
         (
             [
                 AlignmentElement(
@@ -36,7 +34,7 @@ def test_get_score():
                     element_number=0,
                 )
             ],
-        ),
+        )
     )
 
     assert eitbc.get_score() == 4.0
@@ -90,8 +88,6 @@ def test_alignment_etcs():
 def test_find_dice_matches():
     """Test that the first if in find_dice_matches works as expected"""
     eitbc = ElementInfoToBeCompared(
-        (-1, -1),
-        (1, 1),
         (
             [
                 AlignmentElement(
@@ -109,7 +105,7 @@ def test_find_dice_matches():
                     element_number=0,
                 )
             ],
-        ),
+        )
     )
 
     eitbc.find_dice_matches(0, 1)
@@ -371,8 +367,8 @@ def test_anchorword_hits():
     model = alignmentmodel.AlignmentModel(
         tree_tuple=tuple(trees), anchor_word_list=load_anchor_words()
     )
-    _, compare = model.suggest_without_gui()
-    interesting = compare.comparison_matrix["0,0,0,0"]
+    _, comparison_matrix = model.suggest_without_gui()
+    interesting = comparison_matrix["0,0,0,0"]
 
     found_hits = [
         [asdict(hit) for hit in lang_hits] for lang_hits in interesting.find_hits()
@@ -412,9 +408,14 @@ def test_anchor1():
     model = alignmentmodel.AlignmentModel(
         tree_tuple=tuple(trees), anchor_word_list=load_anchor_words()
     )
-    _, compare = model.suggest_without_gui()
+    _, comparison_matrix = model.suggest_without_gui()
 
-    assert compare.to_json() == {
+    assert {
+        "matrix": {
+            key: comparison_matrix[key].to_json()
+            for key in sorted(comparison_matrix.keys())
+        },
+    } == {
         "matrix": {
             "0,0,-1,0": {
                 "info": [
