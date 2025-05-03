@@ -66,7 +66,7 @@ class ElementInfoToBeCompared:
         for anchor_word_clusters in self.make_anchor_word_clusters():
             common_clusters.add_clusters(anchor_word_clusters)
 
-        for text_number1 in range(constants.NUM_FILES):
+        for text_number1 in range(constants.NUM_FILES - 1):
             for text_number2 in range(text_number1 + 1, constants.NUM_FILES):
                 for ref1, ref2 in self.find_number_matches(text_number1, text_number2):
                     common_clusters.create_and_add_cluster(ref1=ref1, ref2=ref2)
