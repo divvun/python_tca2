@@ -380,26 +380,22 @@ class ElementInfoToBeCompared:
             text_number1, text_number2
         ):
             if self.are_words_numbers_and_equal(word1, word2):
-                # same number
-                # add to cluster list
-                match_type = match.NUMBER
-                weight = constants.DEFAULT_NUMBER_MATCH_WEIGHT
                 yield Ref(
-                    match_type,
-                    weight,
-                    text_number1,
-                    info1.element_number,
-                    x,
-                    1,
-                    word1,
+                    match_type=match.NUMBER,
+                    weight=constants.DEFAULT_NUMBER_MATCH_WEIGHT,
+                    text_number=text_number1,
+                    element_number=info1.element_number,
+                    pos=x,
+                    length=1,
+                    word=word1,
                 ), Ref(
-                    match_type,
-                    weight,
-                    text_number2,
-                    info2.element_number,
-                    y,
-                    1,
-                    word2,
+                    match_type=match.NUMBER,
+                    weight=constants.DEFAULT_NUMBER_MATCH_WEIGHT,
+                    text_number=text_number2,
+                    element_number=info2.element_number,
+                    pos=y,
+                    length=1,
+                    word=word2,
                 )
 
     def variables_for_special_character_matches(
