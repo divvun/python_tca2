@@ -25,7 +25,6 @@ class AlignmentModel:
     ) -> None:
         self.anchor_word_list = anchor_word_list
         self.parallel_documents = ParallelDocuments(
-            start_position=tuple([-1] * len(tree_tuple)),
             elements=tuple(
                 self.load_sentences(text_number=text_number, tree=tree)
                 for text_number, tree in enumerate(tree_tuple)
@@ -68,13 +67,20 @@ class AlignmentModel:
         aligned = Aligned([])
         compare = Compare()
 
+        start_position: tuple[int, ...] = (-1, -1)
         while (
-            alignment_suggestion := self.retrieve_alignment_suggestion(compare=compare)
+            alignment_suggestion := self.retrieve_alignment_suggestion(
+                compare=compare, start_position=start_position
+            )
         ) is not None:
             aligned.pickup(
                 self.parallel_documents.get_aligned_sentence_elements(
-                    alignment_suggestion=alignment_suggestion
+                    start_position=start_position,
+                    alignment_suggestion=alignment_suggestion,
                 )
+            )
+            start_position = tuple(
+                p + a for p, a in zip(start_position, alignment_suggestion, strict=True)
             )
 
         print(
@@ -85,10 +91,12 @@ class AlignmentModel:
         return aligned, compare
 
     def retrieve_alignment_suggestion(
-        self, compare: Compare
+        self, compare: Compare, start_position: tuple[int, ...]
     ) -> AlignmentSuggestion | None:
 
-        queue_entries = self.lengthen_paths(compare=compare)
+        queue_entries = self.lengthen_paths(
+            compare=compare, start_position=start_position
+        )
 
         if (
             len(queue_entries.entries) < constants.NUM_FILES
@@ -131,7 +139,9 @@ class AlignmentModel:
 
         return max(score_step_list, key=lambda x: x[0])[1] if score_step_list else None
 
-    def lengthen_paths(self, compare: Compare) -> QueueEntries:
+    def lengthen_paths(
+        self, compare: Compare, start_position: tuple[int, ...]
+    ) -> QueueEntries:
         """Lengthens paths in a text pair alignment process.
 
         This method iteratively extends paths in the alignment model until no
@@ -144,9 +154,7 @@ class AlignmentModel:
             A QueueList containing the final set of extended paths.
         """
         best_path_scores: dict[str, float] = {}
-        queue_entries = QueueEntries(
-            [QueueEntry(position=self.parallel_documents.start_position)]
-        )
+        queue_entries = QueueEntries([QueueEntry(position=start_position)])
         for _ in range(self.max_path_length):
             next_queue_entries = QueueEntries([])
             for queue_entry in queue_entries.entries:

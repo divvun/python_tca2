@@ -21,13 +21,11 @@ class ParallelDocuments:
     """
 
     elements: tuple[list[AlignmentElement], ...]
-    start_position: tuple[int, ...]
 
     def get_aligned_sentence_elements(
-        self, alignment_suggestion: AlignmentSuggestion
+        self, start_position: tuple[int, ...], alignment_suggestion: AlignmentSuggestion
     ) -> AlignedSentenceElements:
         """Returns the next AlignmentElement object for the specified text number.
-
 
         Args:
             alignment_suggestion: How man elements to move in each text.
@@ -44,13 +42,7 @@ class ParallelDocuments:
                 + number_of_elements  # + 1 here because first element starts at -1 …
             ]
             for (current_position, number_of_elements, alignment_elements) in zip(
-                self.start_position, alignment_suggestion, self.elements, strict=True
-            )
-        )
-        self.start_position = tuple(
-            current_position + number_of_elements
-            for (current_position, number_of_elements) in zip(
-                self.start_position, alignment_suggestion, strict=True
+                start_position, alignment_suggestion, self.elements, strict=True
             )
         )
 
