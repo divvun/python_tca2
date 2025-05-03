@@ -47,15 +47,3 @@ class ParallelDocuments:
         )
 
         return AlignedSentenceElements(return_tuple)
-
-    def to_json(self):
-        """Converts the TextPair object to a JSON-compatible dictionary.
-
-        Returns:
-            dict: A dictionary representation of the TextPair object.
-        """
-        return {
-            "elements": [
-                element.to_json() for elements in self.elements for element in elements
-            ]
-        }
