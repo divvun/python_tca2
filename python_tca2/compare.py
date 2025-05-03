@@ -60,34 +60,10 @@ class Compare:
         )
 
         if key not in self.comparison_matrix:
-            self.comparison_matrix[key] = self.build_comparison_matrix_cell(
-                nodes, position, alignment_suggestion
+            self.comparison_matrix[key] = ElementInfoToBeCompared(
+                position,
+                alignment_suggestion,
+                nodes,
             )
 
         return self.comparison_matrix[key]
-
-    def build_comparison_matrix_cell(
-        self,
-        nodes: tuple[List[AlignmentElement], ...],
-        position: tuple[int, ...],
-        alignment_suggestion: AlignmentSuggestion,
-    ) -> ElementInfoToBeCompared:
-        """
-        Builds a comparison matrix cell for the given position and step.
-
-        Args:
-            position: A list representing the current position in the matrix.
-            alignment_suggestion: An AlignmentSuggestion to consider from the current
-                position.
-
-        Returns:
-            A ElementInfoToBeCompared object containing the comparison data and best
-            path score.
-        """
-        element_info_to_be_compared = ElementInfoToBeCompared(
-            position,
-            alignment_suggestion,
-            nodes,
-        )
-
-        return element_info_to_be_compared
