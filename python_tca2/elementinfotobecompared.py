@@ -366,39 +366,41 @@ class ElementInfoToBeCompared:
                     for y, word2 in enumerate(alignment_elements2.words):
                         yield alignment_elements1, x, word1, alignment_elements2, y, word2
 
+    def are_words_numbers_and_equal(self, word1: str, word2: str) -> bool:
+        """Check if both words are numbers."""
+        try:
+            return float(word1) == float(word2)
+        except ValueError:
+            return False
+
     def find_number_matches(
         self, text_number1, text_number2
     ) -> Iterator[tuple[Ref, Ref]]:
         for info1, x, word1, info2, y, word2 in self.variables_for_number_matches(
             text_number1, text_number2
         ):
-            try:
-                num1 = float(word1)
-                num2 = float(word2)
-                if num1 == num2:
-                    # same number
-                    # add to cluster list
-                    match_type = match.NUMBER
-                    weight = constants.DEFAULT_NUMBER_MATCH_WEIGHT
-                    yield Ref(
-                        match_type,
-                        weight,
-                        text_number1,
-                        info1.element_number,
-                        x,
-                        1,
-                        word1,
-                    ), Ref(
-                        match_type,
-                        weight,
-                        text_number2,
-                        info2.element_number,
-                        y,
-                        1,
-                        word2,
-                    )
-            except ValueError:
-                pass
+            if self.are_words_numbers_and_equal(word1, word2):
+                # same number
+                # add to cluster list
+                match_type = match.NUMBER
+                weight = constants.DEFAULT_NUMBER_MATCH_WEIGHT
+                yield Ref(
+                    match_type,
+                    weight,
+                    text_number1,
+                    info1.element_number,
+                    x,
+                    1,
+                    word1,
+                ), Ref(
+                    match_type,
+                    weight,
+                    text_number2,
+                    info2.element_number,
+                    y,
+                    1,
+                    word2,
+                )
 
     def variables_for_special_character_matches(
         self, text_number1: int, text_number2: int
