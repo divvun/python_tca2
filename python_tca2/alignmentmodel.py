@@ -6,10 +6,10 @@ from lxml import etree
 from python_tca2 import alignment_suggestion, constants
 from python_tca2.aelement import AlignmentElement
 from python_tca2.aligned import Aligned
+from python_tca2.aligned_sentence_elements import AlignedSentenceElements
 from python_tca2.alignment_suggestion import AlignmentSuggestion
 from python_tca2.anchorwordlist import AnchorWordList
 from python_tca2.compare import Compare
-from python_tca2.paralleldocuments import ParallelDocuments
 from python_tca2.queue_entries import QueueEntries
 from python_tca2.queue_entry import QueueEntry
 
@@ -24,12 +24,39 @@ class AlignmentModel:
         anchor_word_list: AnchorWordList,
     ) -> None:
         self.anchor_word_list = anchor_word_list
-        self.parallel_documents = ParallelDocuments(
-            elements=tuple(
-                self.load_sentences(text_number=text_number, tree=tree)
-                for text_number, tree in enumerate(tree_tuple)
-            ),
+        self.parallel_documents = tuple(
+            self.load_sentences(text_number=text_number, tree=tree)
+            for text_number, tree in enumerate(tree_tuple)
         )
+
+    def get_aligned_sentence_elements(
+        self, start_position: tuple[int, ...], alignment_suggestion: AlignmentSuggestion
+    ) -> AlignedSentenceElements:
+        """Returns the next AlignmentElement object for the specified text number.
+
+        Args:
+            alignment_suggestion: How man elements to move in each text.
+
+        Returns:
+            A tuple of AlignmentElement objects for each text.
+        """
+        # TODO: fix the -1 issue
+        return_tuple = tuple(
+            alignment_elements[
+                current_position
+                + 1 : current_position
+                + 1
+                + number_of_elements  # + 1 here because first element starts at -1 …
+            ]
+            for (current_position, number_of_elements, alignment_elements) in zip(
+                start_position,
+                alignment_suggestion,
+                self.parallel_documents,
+                strict=True,
+            )
+        )
+
+        return AlignedSentenceElements(return_tuple)
 
     def load_sentences(
         self, text_number: int, tree: etree._ElementTree
@@ -74,7 +101,7 @@ class AlignmentModel:
             )
         ) is not None:
             aligned.pickup(
-                self.parallel_documents.get_aligned_sentence_elements(
+                self.get_aligned_sentence_elements(
                     start_position=start_position,
                     alignment_suggestion=alignment_suggestion,
                 )
@@ -209,7 +236,7 @@ class AlignmentModel:
                 the path cannot be extended further.
         """
         for step in alignment_suggestion.generate_alignment_suggestions(
-            len(self.parallel_documents.elements)
+            len(self.parallel_documents)
         ):
             yield self.make_longer_path(
                 old_position=queue_entry.position,
@@ -236,7 +263,7 @@ class AlignmentModel:
             The score for the specified step.
         """
         cell = compare.get_cell_values(
-            nodes=self.parallel_documents.elements,
+            nodes=self.parallel_documents,
             position=position,
             alignment_suggestion=alignment_suggestion,
         )
@@ -265,7 +292,7 @@ class AlignmentModel:
             for p, a, n in zip(
                 old_position,
                 alignment_suggestions[-1],
-                self.parallel_documents.elements,
+                self.parallel_documents,
                 strict=True,
             )
         ):
@@ -281,7 +308,7 @@ class AlignmentModel:
             for p, a, n in zip(
                 old_position,
                 alignment_suggestions[-1],
-                self.parallel_documents.elements,
+                self.parallel_documents,
                 strict=True,
             )
         ):
