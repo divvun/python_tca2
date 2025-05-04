@@ -108,7 +108,7 @@ def test_find_dice_matches():
         )
     )
 
-    eitbc.find_dice_matches(0, 1)
+    eitbc.find_dice_matches()
 
     assert eitbc.to_json() == {
         "score": 4.0,

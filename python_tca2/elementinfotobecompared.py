@@ -1,5 +1,6 @@
 import json
 from collections import Counter
+from itertools import product
 from typing import Iterator
 
 from python_tca2 import (
@@ -66,20 +67,14 @@ class ElementInfoToBeCompared:
         for anchor_word_clusters in self.make_anchor_word_clusters():
             common_clusters.add_clusters(anchor_word_clusters)
 
-        for text_number1 in range(constants.NUM_FILES - 1):
-            for text_number2 in range(text_number1 + 1, constants.NUM_FILES):
-                for ref1, ref2 in self.find_number_matches(text_number1, text_number2):
-                    common_clusters.create_and_add_cluster(ref1=ref1, ref2=ref2)
-                for ref1, ref2 in self.find_propername_matches(
-                    text_number1, text_number2
-                ):
-                    common_clusters.create_and_add_cluster(ref1=ref1, ref2=ref2)
-                for ref1, ref2 in self.find_dice_matches(text_number1, text_number2):
-                    common_clusters.create_and_add_cluster(ref1=ref1, ref2=ref2)
-                for ref1, ref2 in self.find_special_character_matches(
-                    text_number1, text_number2
-                ):
-                    common_clusters.create_and_add_cluster(ref1=ref1, ref2=ref2)
+        for ref1, ref2 in self.find_number_matches():
+            common_clusters.create_and_add_cluster(ref1=ref1, ref2=ref2)
+        for ref1, ref2 in self.find_propername_matches():
+            common_clusters.create_and_add_cluster(ref1=ref1, ref2=ref2)
+        for ref1, ref2 in self.find_dice_matches():
+            common_clusters.create_and_add_cluster(ref1=ref1, ref2=ref2)
+        for ref1, ref2 in self.find_special_character_matches():
+            common_clusters.create_and_add_cluster(ref1=ref1, ref2=ref2)
 
         return common_clusters.get_score()
 
@@ -119,124 +114,98 @@ class ElementInfoToBeCompared:
 
         return score if self.is11() else score - 0.001
 
-    def variables_for_dice_matches(self, text_number1: int, text_number2: int):
-        for alignment_elements1 in self.aligned_sentence_elements[text_number1]:
-            for x, word1 in enumerate(alignment_elements1.words):
-                next_word1 = (
-                    alignment_elements1.words[x + 1]
-                    if x < len(alignment_elements1.words) - 1
-                    else ""
-                )
-                for alignment_elements2 in self.aligned_sentence_elements[text_number2]:
-                    for y, word2 in enumerate(alignment_elements2.words):
-                        yield alignment_elements1, x, word1, next_word1, alignment_elements2, y, word2
+    def find_dice_matches(self) -> Iterator[tuple[Ref, Ref]]:
+        half_refs = [
+            [
+                (alignment_element, position)
+                for alignment_element in alignment_elements
+                for position, _ in enumerate(alignment_element.words)
+            ]
+            for alignment_elements in self.aligned_sentence_elements
+        ]
 
-    def find_dice_matches(
-        self, text_number1: int, text_number2: int
-    ) -> Iterator[tuple[Ref, Ref]]:
-        for (
-            info1,
-            x,
-            word1,
-            next_word1,
-            info2,
-            y,
-            word2,
-        ) in self.variables_for_dice_matches(text_number1, text_number2):
-            match_type = match.DICE
-            weight = constants.DEFAULT_DICEPHRASE_MATCH_WEIGHT
-
+        for (info1, x), (info2, y) in product(*half_refs):
             if (
-                len(word1) >= constants.DEFAULT_DICE_MIN_WORD_LENGTH
-                and len(word2) >= constants.DEFAULT_DICE_MIN_WORD_LENGTH
-                and similarity_utils.dice_match1(
-                    word1, word2, constants.DEFAULT_DICE_MIN_COUNTING_SCORE
-                )
+                len(info1.words[x]) >= constants.DEFAULT_DICE_MIN_WORD_LENGTH
+                and len(info2.words[y]) >= constants.DEFAULT_DICE_MIN_WORD_LENGTH
             ):
-                yield Ref(
-                    match_type,
-                    weight,
-                    text_number1,
-                    info1.element_number,
-                    x,
-                    1,
-                    word1,
-                ), Ref(
-                    match_type,
-                    weight,
-                    text_number2,
-                    info2.element_number,
-                    y,
-                    1,
-                    word2,
-                )
-
-            if (
-                next_word1 != ""
-                and all(
-                    len(word) >= constants.DEFAULT_DICE_MIN_WORD_LENGTH
-                    for word in [word2, next_word1, word1]
-                )
-                and similarity_utils.dice_match2(
-                    word1,
+                if similarity_utils.dice_match1(
+                    info1.words[x],
+                    info2.words[y],
+                    constants.DEFAULT_DICE_MIN_COUNTING_SCORE,
+                ):
+                    yield Ref(
+                        match_type=match.DICE,
+                        weight=constants.DEFAULT_DICEPHRASE_MATCH_WEIGHT,
+                        text_number=info1.text_number,
+                        element_number=info1.element_number,
+                        pos=x,
+                        length=1,
+                        word=info1.words[x],
+                    ), Ref(
+                        match_type=match.DICE,
+                        weight=constants.DEFAULT_DICEPHRASE_MATCH_WEIGHT,
+                        text_number=info2.text_number,
+                        element_number=info2.element_number,
+                        pos=y,
+                        length=1,
+                        word=info2.words[y],
+                    )
+                next_word1 = info1.words[x + 1] if x < len(info1.words) - 1 else ""
+                if len(
+                    next_word1
+                ) >= constants.DEFAULT_DICE_MIN_WORD_LENGTH and similarity_utils.dice_match2(
+                    info1.words[x],
                     next_word1,
-                    word2,
+                    info2.words[y],
                     "2-1",
                     constants.DEFAULT_DICE_MIN_COUNTING_SCORE,
-                )
-            ):
-                show_phrase = word1 + " " + next_word1
-                yield Ref(
-                    match_type,
-                    weight,
-                    text_number1,
-                    info1.element_number,
-                    x,
-                    2,
-                    show_phrase,
-                ), Ref(
-                    match_type,
-                    weight,
-                    text_number2,
-                    info2.element_number,
-                    y,
-                    1,
-                    word2,
-                )
+                ):
+                    yield Ref(
+                        match_type=match.DICE,
+                        weight=constants.DEFAULT_DICEPHRASE_MATCH_WEIGHT,
+                        text_number=info1.text_number,
+                        element_number=info1.element_number,
+                        pos=x,
+                        length=2,
+                        word=" ".join(info1.words[x : x + 2]),
+                    ), Ref(
+                        match_type=match.DICE,
+                        weight=constants.DEFAULT_DICEPHRASE_MATCH_WEIGHT,
+                        text_number=info2.text_number,
+                        element_number=info2.element_number,
+                        pos=y,
+                        length=1,
+                        word=info2.words[y],
+                    )
 
-            next_word2 = info2.words[y + 1] if y < len(info2.words) - 1 else ""
-            if (
-                next_word2 != ""
-                and all(
-                    len(word) >= constants.DEFAULT_DICE_MIN_WORD_LENGTH
-                    for word in [word1, next_word2, word2]
-                )
-                and similarity_utils.dice_match2(
-                    word1,
-                    word2,
+                next_word2 = info2.words[y + 1] if y < len(info2.words) - 1 else ""
+                if len(
+                    next_word2
+                ) >= constants.DEFAULT_DICE_MIN_WORD_LENGTH and similarity_utils.dice_match2(
+                    info1.words[x],
+                    info2.words[y],
                     next_word2,
                     "1-2",
                     constants.DEFAULT_DICE_MIN_COUNTING_SCORE,
-                )
-            ):
-                show_phrase2 = word2 + " " + next_word2
-                yield Ref(
-                    match_type,
-                    weight,
-                    text_number1,
-                    info1.element_number,
-                    x,
-                    1,
-                    word1,
-                ), Ref(
-                    match_type,
-                    weight,
-                    text_number2,
-                    info2.element_number,
-                    y,
-                    2,
-                    show_phrase2,
-                )
+                ):
+                    yield Ref(
+                        match_type=match.DICE,
+                        weight=constants.DEFAULT_DICEPHRASE_MATCH_WEIGHT,
+                        text_number=info1.text_number,
+                        element_number=info1.element_number,
+                        pos=x,
+                        length=1,
+                        word=info1.words[x],
+                    ), Ref(
+                        match_type=match.DICE,
+                        weight=constants.DEFAULT_DICEPHRASE_MATCH_WEIGHT,
+                        text_number=info2.text_number,
+                        element_number=info2.element_number,
+                        pos=y,
+                        length=2,
+                        word=" ".join(info2.words[y : y + 2]),
+                    )
 
     def get_these_hits(
         self, hits: list[list[AnchorWordHit]], current: list[int]
@@ -317,54 +286,34 @@ class ElementInfoToBeCompared:
 
                     current[text_number] += 1  # increment the count
 
-    def variables_for_propername_matches(self, text_number1: int, text_number2: int):
-        for alignment_elements1 in self.aligned_sentence_elements[text_number1]:
-            for x, word1 in enumerate(alignment_elements1.words):
-                if word1:
-                    for alignment_elements2 in self.aligned_sentence_elements[
-                        text_number2
-                    ]:
-                        for y, word2 in enumerate(alignment_elements2.words):
-                            if (
-                                word2
-                                and word1[0].isupper()
-                                and word2[0].isupper()
-                                and word1 == word2
-                            ):
-                                yield alignment_elements1, x, word1, alignment_elements2, y, word2
-
-    def find_propername_matches(
-        self, text_number1, text_number2
-    ) -> Iterator[tuple[Ref, Ref]]:
-        for info1, x, word1, info2, y, word2 in self.variables_for_propername_matches(
-            text_number1, text_number2
-        ):
-            match_type = match.PROPER
-            weight = constants.DEFAULT_PROPERNAME_MATCH_WEIGHT
-            yield Ref(
-                match_type,
-                weight,
-                text_number1,
-                info1.element_number,
-                x,
-                1,
-                word1,
-            ), Ref(
-                match_type,
-                weight,
-                text_number2,
-                info2.element_number,
-                y,
-                1,
-                word2,
+    def find_propername_matches(self) -> Iterator[tuple[Ref, Ref]]:
+        pairs = [
+            [
+                Ref(
+                    match_type=match.PROPER,
+                    weight=constants.DEFAULT_PROPERNAME_MATCH_WEIGHT,
+                    text_number=text_number,
+                    element_number=alignment_element.element_number,
+                    pos=position,
+                    length=1,
+                    word=word,
+                )
+                for alignment_element in alignment_elements
+                for position, word in enumerate(alignment_element.words)
+            ]
+            for text_number, alignment_elements in enumerate(
+                self.aligned_sentence_elements
             )
+        ]
 
-    def variables_for_number_matches(self, text_number1: int, text_number2: int):
-        for alignment_elements1 in self.aligned_sentence_elements[text_number1]:
-            for x, word1 in enumerate(alignment_elements1.words):
-                for alignment_elements2 in self.aligned_sentence_elements[text_number2]:
-                    for y, word2 in enumerate(alignment_elements2.words):
-                        yield alignment_elements1, x, word1, alignment_elements2, y, word2
+        for ref1, ref2 in product(*pairs):
+            if (
+                ref2.word
+                and ref1.word[0].isupper()
+                and ref2.word[0].isupper()
+                and ref1.word == ref2.word
+            ):
+                yield ref1, ref2
 
     def are_words_numbers_and_equal(self, word1: str, word2: str) -> bool:
         """Check if both words are numbers."""
@@ -373,66 +322,53 @@ class ElementInfoToBeCompared:
         except ValueError:
             return False
 
-    def find_number_matches(
-        self, text_number1, text_number2
-    ) -> Iterator[tuple[Ref, Ref]]:
-        for info1, x, word1, info2, y, word2 in self.variables_for_number_matches(
-            text_number1, text_number2
-        ):
-            if self.are_words_numbers_and_equal(word1, word2):
-                yield Ref(
+    def find_number_matches(self) -> Iterator[tuple[Ref, Ref]]:
+        pairs = [
+            [
+                Ref(
                     match_type=match.NUMBER,
                     weight=constants.DEFAULT_NUMBER_MATCH_WEIGHT,
-                    text_number=text_number1,
-                    element_number=info1.element_number,
-                    pos=x,
+                    text_number=text_number,
+                    element_number=alignment_element.element_number,
+                    pos=position,
                     length=1,
-                    word=word1,
-                ), Ref(
-                    match_type=match.NUMBER,
-                    weight=constants.DEFAULT_NUMBER_MATCH_WEIGHT,
-                    text_number=text_number2,
-                    element_number=info2.element_number,
-                    pos=y,
-                    length=1,
-                    word=word2,
+                    word=word,
                 )
-
-    def variables_for_special_character_matches(
-        self, text_number1: int, text_number2: int
-    ):
-        for alignment_elements1 in self.aligned_sentence_elements[text_number1]:
-            for aligment_elements2 in self.aligned_sentence_elements[text_number2]:
-                for char1 in alignment_elements1.scoring_characters:
-                    for char2 in aligment_elements2.scoring_characters:
-                        if char1 == char2:
-                            yield alignment_elements1, aligment_elements2, char1, char2
-
-    def find_special_character_matches(
-        self, text_number1, text_number2
-    ) -> Iterator[tuple[Ref, Ref]]:
-        for info1, info2, char1, char2 in self.variables_for_special_character_matches(
-            text_number1, text_number2
-        ):
-            match_type = match.SCORING_CHARACTERS
-            weight = constants.DEFAULT_SCORING_CHARACTER_MATCH_WEIGHT
-            yield Ref(
-                match_type,
-                weight,
-                text_number1,
-                info1.element_number,
-                0,
-                1,
-                char1,
-            ), Ref(
-                match_type,
-                weight,
-                text_number2,
-                info2.element_number,
-                0,
-                1,
-                char2,
+                for alignment_element in alignment_elements
+                for position, word in enumerate(alignment_element.words)
+            ]
+            for text_number, alignment_elements in enumerate(
+                self.aligned_sentence_elements
             )
+        ]
+
+        for ref1, ref2 in product(*pairs):
+            if self.are_words_numbers_and_equal(ref1.word, ref2.word):
+                yield ref1, ref2
+
+    def find_special_character_matches(self) -> Iterator[tuple[Ref, Ref]]:
+        pairs = [
+            [
+                Ref(
+                    match_type=match.SCORING_CHARACTERS,
+                    weight=constants.DEFAULT_SCORING_CHARACTER_MATCH_WEIGHT,
+                    text_number=text_number,
+                    element_number=alignment_element.element_number,
+                    pos=0,
+                    length=1,
+                    word=char,
+                )
+                for alignment_element in alignment_elements
+                for char in alignment_element.scoring_characters
+            ]
+            for text_number, alignment_elements in enumerate(
+                self.aligned_sentence_elements
+            )
+        ]
+
+        for ref1, ref2 in product(*pairs):
+            if ref1.word == ref2.word:
+                yield ref1, ref2
 
     def find_hits(self) -> list[list[AnchorWordHit]]:
         return [
