@@ -292,7 +292,7 @@ class ElementInfoToBeCompared:
                 Ref(
                     match_type=match.PROPER,
                     weight=constants.DEFAULT_PROPERNAME_MATCH_WEIGHT,
-                    text_number=text_number,
+                    text_number=alignment_element.text_number,
                     element_number=alignment_element.element_number,
                     pos=position,
                     length=1,
@@ -301,9 +301,7 @@ class ElementInfoToBeCompared:
                 for alignment_element in alignment_elements
                 for position, word in enumerate(alignment_element.words)
             ]
-            for text_number, alignment_elements in enumerate(
-                self.aligned_sentence_elements
-            )
+            for alignment_elements in self.aligned_sentence_elements
         ]
 
         for ref1, ref2 in product(*pairs):
@@ -328,7 +326,7 @@ class ElementInfoToBeCompared:
                 Ref(
                     match_type=match.NUMBER,
                     weight=constants.DEFAULT_NUMBER_MATCH_WEIGHT,
-                    text_number=text_number,
+                    text_number=alignment_element.text_number,
                     element_number=alignment_element.element_number,
                     pos=position,
                     length=1,
@@ -337,9 +335,7 @@ class ElementInfoToBeCompared:
                 for alignment_element in alignment_elements
                 for position, word in enumerate(alignment_element.words)
             ]
-            for text_number, alignment_elements in enumerate(
-                self.aligned_sentence_elements
-            )
+            for alignment_elements in self.aligned_sentence_elements
         ]
 
         for ref1, ref2 in product(*pairs):
@@ -352,7 +348,7 @@ class ElementInfoToBeCompared:
                 Ref(
                     match_type=match.SCORING_CHARACTERS,
                     weight=constants.DEFAULT_SCORING_CHARACTER_MATCH_WEIGHT,
-                    text_number=text_number,
+                    text_number=alignment_element.text_number,
                     element_number=alignment_element.element_number,
                     pos=0,
                     length=1,
@@ -361,9 +357,7 @@ class ElementInfoToBeCompared:
                 for alignment_element in alignment_elements
                 for char in alignment_element.scoring_characters
             ]
-            for text_number, alignment_elements in enumerate(
-                self.aligned_sentence_elements
-            )
+            for alignment_elements in self.aligned_sentence_elements
         ]
 
         for ref1, ref2 in product(*pairs):
