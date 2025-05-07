@@ -76,44 +76,16 @@ def test_bad_length_correlation():
 
 
 def test_dice_match2():
-    # Matching words with type "2-1" and dice scores above the threshold
-    assert dice_match2("hello", "hola", "world", "2-1", 0.5) is False
-
-    # Matching words with type "2-1" and dice scores below the threshold
-    assert dice_match2("hello", "hola", "world", "2-1", 0.8) is False
-
-    # Matching words with type "2-1" and empty strings
-    assert dice_match2("", "", "", "2-1", 0.5) is False
-
-    # Matching words with type "2-1" and one empty string
-    assert dice_match2("hello", "", "world", "2-1", 0.5) is False
-
-    # Matching words with type "2-1" and special characters
-    assert dice_match2("hello!", "hello?", "world", "2-1", 0.5) is False
-
-    # Matching words with type "2-1" and different letter cases
-    assert dice_match2("Hello", "hello", "world", "2-1", 0.5) is False
-
-    # Matching words with type "2-1" and no shared bigrams
-    assert dice_match2("apple", "banana", "world", "2-1", 0.5) is False
-
-    # Matching words with type "1-2" and dice scores above the threshold
-    assert dice_match2("world", "hello", "hola", "1-2", 0.5) is False
-
-    # Matching words with type "1-2" and dice scores below the threshold
-    assert dice_match2("world", "hello", "hola", "1-2", 0.8) is False
-
-    # Matching words with type "1-2" and empty strings
-    assert dice_match2("", "", "", "1-2", 0.5) is False
-
-    # Matching words with type "1-2" and one empty string
-    assert dice_match2("", "hello", "world", "1-2", 0.5) is False
-
-    # Matching words with type "1-2" and special characters
-    assert dice_match2("world", "hello!", "hello?", "1-2", 0.5) is False
-
-    # Matching words with type "1-2" and different letter cases
-    assert dice_match2("world", "Hello", "hello", "1-2", 0.5) is False
-
-    # Matching words with type "1-2" and no shared bigrams
-    assert dice_match2("world", "apple", "banana", "1-2", 0.5) is False
+    assert dice_match2(phrase_word1="", phrase_word2="", word="") is False
+    assert (
+        dice_match2(phrase_word1="apple", phrase_word2="banana", word="world") is False
+    )
+    assert (
+        dice_match2(phrase_word1="hello!", phrase_word2="hello?", word="world") is False
+    )
+    assert dice_match2(phrase_word1="hello", phrase_word2="", word="world") is False
+    assert (
+        dice_match2(phrase_word1="Hello", phrase_word2="hello", word="world") is False
+    )
+    assert dice_match2(phrase_word1="hello", phrase_word2="hola", word="world") is False
+    assert dice_match2(phrase_word1="hello", phrase_word2="world", word="") is False
