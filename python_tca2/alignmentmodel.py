@@ -107,7 +107,10 @@ class AlignmentModel:
                 )
             )
             start_position = tuple(
-                p + a for p, a in zip(start_position, alignment_suggestion, strict=True)
+                current_position + alignment_increment
+                for current_position, alignment_increment in zip(
+                    start_position, alignment_suggestion, strict=True
+                )
             )
 
         print(
@@ -296,6 +299,45 @@ class AlignmentModel:
 
         return compare[key].get_score()
 
+    def will_reach_both_ends(self, position: tuple[int, ...]) -> bool:
+        """Check if the current position will reach the end of the texts.
+
+        Args:
+            position: The current position in the alignment.
+
+        Returns:
+            True if the end of the texts are reached, False otherwise.
+        """
+        return all(
+            current_position + 1 > len(n)
+            for current_position, n in zip(
+                position,
+                self.parallel_documents,
+                strict=True,
+            )
+        )
+
+    def will_reach_one_end(
+        self,
+        position: tuple[int, ...],
+    ) -> bool:
+        """Check if the current position will reach the end of a text.
+
+        Args:
+            position: The current position in the alignment.
+
+        Returns:
+            True if at least the end of one of the texts is reached, False otherwise.
+        """
+        return any(
+            current_position + 1 > len(n)
+            for current_position, n in zip(
+                position,
+                self.parallel_documents,
+                strict=True,
+            )
+        )
+
     def make_longer_path(
         self,
         old_position: tuple[int, ...],
@@ -314,15 +356,16 @@ class AlignmentModel:
         Returns:
             The updated queue entry if the new score is better, otherwise None.
         """
-        if all(
-            p + a + 1 > len(n)
-            for p, a, n in zip(
+        new_position = tuple(
+            position + alignment_step
+            for position, alignment_step in zip(
                 old_position,
                 alignment_suggestions[-1],
-                self.parallel_documents,
                 strict=True,
             )
-        ):
+        )
+
+        if self.will_reach_both_ends(new_position):
             return QueueEntry(
                 position=old_position,
                 score=old_score,
@@ -330,15 +373,7 @@ class AlignmentModel:
                 end=True,
             )
 
-        if any(
-            p + a + 1 > len(n)
-            for p, a, n in zip(
-                old_position,
-                alignment_suggestions[-1],
-                self.parallel_documents,
-                strict=True,
-            )
-        ):
+        if self.will_reach_one_end(new_position):
             return None
 
         position_step_score = self.get_step_score(
@@ -350,10 +385,6 @@ class AlignmentModel:
         if position_step_score == constants.ELEMENTINFO_SCORE_HOPELESS:
             return None
 
-        new_position = tuple(
-            old_position[text_number] + alignment_suggestions[-1][text_number]
-            for text_number in range(constants.NUM_FILES)
-        )
         new_score = old_score + position_step_score
 
         best_path_score = get_best_path_score(
