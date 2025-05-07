@@ -154,12 +154,9 @@ class ElementInfoToBeCompared:
                 next_word1 = info1.words[x + 1] if x < len(info1.words) - 1 else ""
                 if len(
                     next_word1
-                ) >= constants.DEFAULT_DICE_MIN_WORD_LENGTH and similarity_utils.dice_match2(
-                    info1.words[x],
-                    next_word1,
-                    info2.words[y],
-                    "2-1",
-                    constants.DEFAULT_DICE_MIN_COUNTING_SCORE,
+                ) >= constants.DEFAULT_DICE_MIN_WORD_LENGTH and similarity_utils.dice_match_word_with_phrase(
+                    phrase=(info1.words[x], next_word1),
+                    word=info2.words[y],
                 ):
                     yield Ref(
                         match_type=match.DICE,
@@ -182,12 +179,9 @@ class ElementInfoToBeCompared:
                 next_word2 = info2.words[y + 1] if y < len(info2.words) - 1 else ""
                 if len(
                     next_word2
-                ) >= constants.DEFAULT_DICE_MIN_WORD_LENGTH and similarity_utils.dice_match2(
-                    info1.words[x],
-                    info2.words[y],
-                    next_word2,
-                    "1-2",
-                    constants.DEFAULT_DICE_MIN_COUNTING_SCORE,
+                ) >= constants.DEFAULT_DICE_MIN_WORD_LENGTH and similarity_utils.dice_match_word_with_phrase(
+                    word=info1.words[x],
+                    phrase=(info2.words[y], next_word2),
                 ):
                     yield Ref(
                         match_type=match.DICE,

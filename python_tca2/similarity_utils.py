@@ -1,5 +1,7 @@
 import re
 
+from python_tca2 import constants
+
 
 def string_to_bigram(word: str) -> list[str]:
     """Convert a string into a list of bigrams (two-character sequences).
@@ -61,73 +63,39 @@ def dice_match1(word1: str, word2: str, dice_min_counting_score: float) -> bool:
     return dice_score >= dice_min_counting_score
 
 
-def dice_match2(
-    word_a: str, word_b: str, word_c: str, type_: str, dice_min_counting_score: float
-) -> bool:
+def dice_match_word_with_phrase(word: str, phrase: tuple[str, str]) -> bool:
     """Determines whether a word matches a phrase based on the Dice coefficient.
 
     This function calculates the Dice coefficient for bigrams shared between
-    a given word and two other words (forming a phrase). The match is considered
-    valid if the Dice coefficient for both comparisons meets or exceeds the
-    specified minimum score.
+    a given word and the words in a phrase. The match is considered valid if the Dice
+    coefficient for both comparisons meets or exceeds the specified minimum score.
 
     Args:
-        word_a: The first word in the comparison.
-        word_b: The second word in the comparison.
-        word_c: The third word in the comparison.
-        type_: Specifies the type of comparison.
-               - "2-1": `word_a` and `word_b` form the phrase, compared to `word_c`.
-               - "1-2": `word_b` and `word_c` form the phrase, compared to `word_a`.
-        dice_min_counting_score: The minimum Dice coefficient score required
-                                 for a match to be considered valid.
+        word: The word in the comparison.
+        phrase: The phrase in the comparison.
 
     Returns:
         bool: True if both Dice coefficients meet or exceed the minimum score,
               False otherwise.
     """
-    phrase_word1, phrase_word2 = "", ""
-    word = ""
+    word_bigrams = unique_bigrams(string_to_bigram(word.lower()))
 
-    if type_ == "2-1":
-        phrase_word1 = word_a
-        phrase_word2 = word_b
-        word = word_c
-    elif type_ == "1-2":
-        word = word_a
-        phrase_word1 = word_b
-        phrase_word2 = word_c
-    else:
-        # ### program error
-        return False
-
-    unique_word_bigrams = unique_bigrams(string_to_bigram(word.lower()))
-    unique_phrase1_bigrams = unique_bigrams(string_to_bigram(phrase_word1.lower()))
-    unique_phrase2_bigrams = unique_bigrams(string_to_bigram(phrase_word2.lower()))
-
-    count_bigrams_in_phrase_word1 = len(unique_phrase1_bigrams)
-    count_bigrams_in_phrase_word2 = len(unique_phrase2_bigrams)
-
-    count_shared_bigrams1 = len(
-        shared_bigrams(unique_word_bigrams, unique_phrase1_bigrams)
-    )
-    count_shared_bigrams2 = len(
-        shared_bigrams(unique_word_bigrams, unique_phrase2_bigrams)
+    phrase_bigrams = (
+        unique_bigrams(string_to_bigram(phrase_word.lower())) for phrase_word in phrase
     )
 
-    dice_score1 = (
-        count_shared_bigrams1 / count_bigrams_in_phrase_word1
-        if count_bigrams_in_phrase_word1
-        else 0.0
+    dice_scores = (
+        (
+            len(shared_bigrams(word_bigrams, phrase_bigram)) / len(phrase_bigram)
+            if phrase_bigram
+            else 0.0
+        )
+        for phrase_bigram in phrase_bigrams
     )
 
-    dice_score2 = (
-        count_shared_bigrams2 / count_bigrams_in_phrase_word2
-        if count_bigrams_in_phrase_word2
-        else 0.0
-    )
-
-    return (dice_score1 >= dice_min_counting_score) and (
-        dice_score2 >= dice_min_counting_score
+    return all(
+        dice_score >= constants.DEFAULT_DICE_MIN_COUNTING_SCORE
+        for dice_score in dice_scores
     )
 
 

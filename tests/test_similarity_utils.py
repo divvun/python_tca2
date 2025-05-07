@@ -2,7 +2,7 @@ from python_tca2.similarity_utils import (
     adjust_for_length_correlation,
     bad_length_correlation,
     dice_match1,
-    dice_match2,
+    dice_match_word_with_phrase,
 )
 
 
@@ -76,16 +76,14 @@ def test_bad_length_correlation():
 
 
 def test_dice_match2():
-    assert dice_match2(phrase_word1="", phrase_word2="", word="") is False
+    assert dice_match_word_with_phrase(phrase=("", ""), word="") is False
     assert (
-        dice_match2(phrase_word1="apple", phrase_word2="banana", word="world") is False
+        dice_match_word_with_phrase(phrase=("apple", "banana"), word="world") is False
     )
     assert (
-        dice_match2(phrase_word1="hello!", phrase_word2="hello?", word="world") is False
+        dice_match_word_with_phrase(phrase=("hello!", "hello?"), word="world") is False
     )
-    assert dice_match2(phrase_word1="hello", phrase_word2="", word="world") is False
-    assert (
-        dice_match2(phrase_word1="Hello", phrase_word2="hello", word="world") is False
-    )
-    assert dice_match2(phrase_word1="hello", phrase_word2="hola", word="world") is False
-    assert dice_match2(phrase_word1="hello", phrase_word2="world", word="") is False
+    assert dice_match_word_with_phrase(phrase=("hello", ""), word="world") is False
+    assert dice_match_word_with_phrase(phrase=("Hello", "hello"), word="world") is False
+    assert dice_match_word_with_phrase(phrase=("hello", "hola"), word="world") is False
+    assert dice_match_word_with_phrase(phrase=("hello", "world"), word="") is False
