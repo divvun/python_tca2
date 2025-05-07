@@ -56,7 +56,7 @@ class Cluster:
         Returns:
             The calculated score for the cluster.
         """
-        cluster_weight = self.get_max_cluster_weight()
+        max_cluster_weight = self.get_max_cluster_weight()
         low = min(
             [
                 len({ref.pos for ref in self.refs if ref.is_in_text(text_number)})
@@ -64,7 +64,7 @@ class Cluster:
             ]
         )
 
-        return cluster_weight * (
+        return max_cluster_weight * (
             1 + ((low - 1) * constants.DEFAULT_LARGE_CLUSTER_SCORE_PERCENTAGE / 100.0)
         )
 
