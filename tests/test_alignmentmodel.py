@@ -287,10 +287,10 @@ def test_suggest3():
         """- regjeringen.no
 Ot.prp. nr. 25 (2006-2007)
 Om lov om reindrift (reindriftsloven)
-""",  # noqa: E501
+""",
         """- regjeringen.no
 Boazodoallolága birra
-""",  # noqa: E501
+""",
     ]
 
     model = alignmentmodel.AlignmentModel(
