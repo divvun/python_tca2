@@ -14,6 +14,7 @@ from python_tca2.elementinfotobecompared import ElementInfoToBeCompared
 
 def test_get_score():
     """Test that the first if in find_dice_matches works as expected"""
+    expected_score = 4.0
     eitbc = ElementInfoToBeCompared(
         (
             [
@@ -35,7 +36,7 @@ def test_get_score():
         )
     )
 
-    assert eitbc.get_score() == 4.0
+    assert eitbc.get_score() == expected_score
 
 
 def test_alignment_etcs():
