@@ -32,7 +32,9 @@ def shared_bigrams(unique_bigrams1: set[str], unique_bigrams2: set[str]) -> set[
     return unique_bigrams1.intersection(unique_bigrams2)
 
 
-def dice_match1(word1: str, word2: str, dice_min_counting_score: float) -> bool:
+def dice_match_word_pair(
+    word1: str, word2: str, dice_min_counting_score: float
+) -> bool:
     """Check if the Dice coefficient similarity score meets a given threshold.
 
     The Dice coefficient is calculated based on the number of shared bigrams

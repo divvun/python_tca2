@@ -1,32 +1,32 @@
 from python_tca2.similarity_utils import (
     adjust_for_length_correlation,
     bad_length_correlation,
-    dice_match1,
+    dice_match_word_pair,
     dice_match_word_with_phrase,
 )
 
 
 def test_dice_match1():
     # Test case 1: Matching words with a dice score above the threshold
-    assert dice_match1("hello", "hola", 0.5) is False
+    assert dice_match_word_pair("hello", "hola", 0.5) is False
 
     # Test case 2: Matching words with a dice score below the threshold
-    assert dice_match1("hello", "world", 0.8) is False
+    assert dice_match_word_pair("hello", "world", 0.8) is False
 
     # Test case 3: Matching words with an empty string
-    assert dice_match1("", "", 0.5) is False
+    assert dice_match_word_pair("", "", 0.5) is False
 
     # Test case 4: Matching words with one empty string
-    assert dice_match1("hello", "", 0.5) is False
+    assert dice_match_word_pair("hello", "", 0.5) is False
 
     # Test case 5: Matching words with special characters
-    assert dice_match1("hello!", "hello?", 0.5) is True
+    assert dice_match_word_pair("hello!", "hello?", 0.5) is True
 
     # Test case 6: Matching words with different letter cases
-    assert dice_match1("Hello", "hello", 0.5) is True
+    assert dice_match_word_pair("Hello", "hello", 0.5) is True
 
     # Test case 7: Matching words with no shared bigrams
-    assert dice_match1("apple", "banana", 0.5) is False
+    assert dice_match_word_pair("apple", "banana", 0.5) is False
 
 
 def test_adjust_for_length_correlation():
