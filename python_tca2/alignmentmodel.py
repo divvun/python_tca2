@@ -1,8 +1,6 @@
 import json
 from typing import Iterator
 
-from lxml import etree
-
 from python_tca2 import alignment_suggestion, constants
 from python_tca2.aelement import AlignmentElement
 from python_tca2.aligned import Aligned
@@ -20,13 +18,16 @@ class AlignmentModel:
 
     def __init__(
         self,
-        tree_tuple: tuple[etree._ElementTree, ...],
+        text_pair: tuple[str, str],
         anchor_word_list: AnchorWordList,
     ) -> None:
         self.anchor_word_list = anchor_word_list
         self.parallel_documents = tuple(
-            self.load_sentences(text_number=text_number, tree=tree)
-            for text_number, tree in enumerate(tree_tuple)
+            self.load_sentences(
+                text_number=text_number,
+                sentences=text.splitlines(),
+            )
+            for text_number, text in enumerate(text_pair)
         )
 
     def get_aligned_sentence_elements(
@@ -59,7 +60,7 @@ class AlignmentModel:
         return AlignedSentenceElements(return_tuple)
 
     def load_sentences(
-        self, text_number: int, tree: etree._ElementTree
+        self, text_number: int, sentences: list[str]
     ) -> list[AlignmentElement]:
         """Extracts and processes sentences from an XML tree.
 
@@ -72,13 +73,11 @@ class AlignmentModel:
         return [
             AlignmentElement(
                 anchor_word_list=self.anchor_word_list,
-                text=" ".join(
-                    [text for text in "".join(node.itertext()).split() if text.strip()]
-                ),
+                text=sentence,
                 text_number=text_number,
                 element_number=index,
             )
-            for index, node in enumerate(tree.iter("s"))
+            for index, sentence in enumerate(sentences)
         ]
 
     def suggest_without_gui(self) -> tuple[Aligned, dict[str, ElementInfoToBeCompared]]:

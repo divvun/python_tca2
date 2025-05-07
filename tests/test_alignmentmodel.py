@@ -1,7 +1,5 @@
 from dataclasses import asdict
 
-from lxml import etree
-
 from python_tca2 import alignmentmodel
 from python_tca2.aelement import AlignmentElement
 from python_tca2.aligned import Aligned
@@ -139,14 +137,11 @@ def test_find_dice_matches():
 
 def test_aelement_text():
     """Check that space is normalised in aelement.element"""
-    node = etree.fromstring(
-        '<s id="4">9 Økonomiske, administrative&#13; og miljømessige  konsekvenser</s>'
-    )
+    sentence = "9 Økonomiske, administrative og miljømessige konsekvenser"
+
     aelement = AlignmentElement(
         anchor_word_list=AnchorWordList(),
-        text=" ".join(
-            [text for text in "".join(node.itertext()).split() if text.strip()]
-        ),
+        text=sentence,
         text_number=0,
         element_number=0,
     )
@@ -209,27 +204,17 @@ def test_aligned_to_text_file():
 
 # A simple test of the alignment model
 def test_suggest1():
-    trees = [
-        etree.fromstring(
-            """
-    <document>
-      <s id="1">Kanskje en innkjøpsordning for kvenskspråklig litteratur.</s>
-      <s id="2">Utvikling av undervisnings- og lærematerialer.</s>
-    </document>
-    """
-        ),
-        etree.fromstring(
-            """
-    <document>
-      <s id="1">Kvääninkielinen litteratuuri osto-oorninkhiin piian.</s>
-      <s id="2">Opetus- ja oppimateriaaliitten kehittäminen.</s>
-    </document>
-    """
-        ),
+    strings = [
+        """Kanskje en innkjøpsordning for kvenskspråklig litteratur.
+Utvikling av undervisnings- og lærematerialer.
+""",
+        """Kvääninkielinen litteratuuri osto-oorninkhiin piian.
+Opetus- ja oppimateriaaliitten kehittäminen.
+""",
     ]
 
     model = alignmentmodel.AlignmentModel(
-        tree_tuple=tuple(trees), anchor_word_list=load_anchor_words()
+        text_pair=(strings[0], strings[1]), anchor_word_list=load_anchor_words()
     )
     aligned, _ = model.suggest_without_gui()
 
@@ -247,28 +232,18 @@ def test_suggest1():
 
 # A test of the alignment model, with different number of sentences
 def test_suggest2():
-    trees = [
-        etree.fromstring(
-            """
-<document>
-  <s id="74">Når folk har gått på nybegynnerkursene hos enten instituttet eller universitetet, kan man tilby dem muligheten å få en mentor som de kan snakke kvensk med og gjøre aktiviteter med på kvensk.</s>
-  <s id="75">Motivere folk til å lære kvensk og vise dem at man får jobb med det, og at det er nok arbeid til alle.</s>
-  <s id="77">Forsøke selv å være gode forbilder.</s>
-</document>
-"""  # noqa: E501
-        ),
-        etree.fromstring(
-            """
-<document>
-  <s id="78">Ko ihmiset oon käynheet institutin tahi universiteetin alkukurssin, niin heile tarjothaan maholisuuen saaja menttorin, jonka kans puhhuut ja tehhä assiita kvääniksi  Motiveerata ihmissii siihen ette oppiit kväänin kieltä ja näyttäät heile ette sillä saapi työn ja ette työtä oon nokko kaikile.</s>
-  <s id="80">Freistata itte olla hyvät esikuvat.</s>
-</document>
-"""  # noqa: E501
-        ),
+    strings = [
+        """Når folk har gått på nybegynnerkursene hos enten instituttet eller universitetet, kan man tilby dem muligheten å få en mentor som de kan snakke kvensk med og gjøre aktiviteter med på kvensk.
+Motivere folk til å lære kvensk og vise dem at man får jobb med det, og at det er nok arbeid til alle.
+Forsøke selv å være gode forbilder.
+""",  # noqa: E501
+        """Ko ihmiset oon käynheet institutin tahi universiteetin alkukurssin, niin heile tarjothaan maholisuuen saaja menttorin, jonka kans puhhuut ja tehhä assiita kvääniksi Motiveerata ihmissii siihen ette oppiit kväänin kieltä ja näyttäät heile ette sillä saapi työn ja ette työtä oon nokko kaikile.
+Freistata itte olla hyvät esikuvat.
+""",  # noqa: E501
     ]
 
     model = alignmentmodel.AlignmentModel(
-        tree_tuple=tuple(trees), anchor_word_list=load_anchor_words()
+        text_pair=(strings[0], strings[1]), anchor_word_list=load_anchor_words()
     )
     aligned, _ = model.suggest_without_gui()
 
@@ -307,28 +282,18 @@ om / birra
 
 
 def test_suggest3():
-    trees = [
-        etree.fromstring(
-            """
-    <document>
-        <s id="1">- regjeringen.no</s>
-        <s id="2">Ot.prp. nr. 25 (2006-2007)</s>
-        <s id="3">Om lov om reindrift (reindriftsloven)</s>
-    </document>
-    """  # noqa: E501
-        ),
-        etree.fromstring(
-            """
-    <document>
-        <s id="1">- regjeringen.no</s>
-        <s id="2">Boazodoallolága birra</s>
-    </document>
-    """  # noqa: E501
-        ),
+    strings = [
+        """- regjeringen.no
+Ot.prp. nr. 25 (2006-2007)
+Om lov om reindrift (reindriftsloven)
+""",  # noqa: E501
+        """- regjeringen.no
+Boazodoallolága birra
+""",  # noqa: E501
     ]
 
     model = alignmentmodel.AlignmentModel(
-        tree_tuple=tuple(trees), anchor_word_list=load_anchor_words()
+        text_pair=(strings[0], strings[1]), anchor_word_list=load_anchor_words()
     )
     aligned, _ = model.suggest_without_gui()
 
@@ -345,25 +310,13 @@ def test_suggest3():
 
 
 def test_anchorword_hits():
-    trees = [
-        etree.fromstring(
-            """
-    <document>
-        <s id="1">1 million kroner til landbruket i arktisk</s>
-    </document>
-    """  # noqa: E501
-        ),
-        etree.fromstring(
-            """
-    <document>
-        <s id="1">1 miljon ruvnno árktalaš eanadollui</s>
-    </document>
-    """  # noqa: E501
-        ),
+    strings = [
+        "1 million kroner til landbruket i arktisk",
+        "1 miljon ruvnno árktalaš eanadollui",
     ]
 
     model = alignmentmodel.AlignmentModel(
-        tree_tuple=tuple(trees), anchor_word_list=load_anchor_words()
+        text_pair=(strings[0], strings[1]), anchor_word_list=load_anchor_words()
     )
     _, comparison_matrix = model.suggest_without_gui()
     interesting = comparison_matrix["0,0,0,0"]
@@ -382,29 +335,19 @@ def test_anchorword_hits():
 
 # Set a bench for alignments using anchor words
 def test_anchor1():
-    trees = [
-        etree.fromstring(
-            """
-    <document>
-        <s id="1">1 million kroner til landbruket i arktisk</s>
-        <s id="2">27. juni 2014</s>
-        <s id="3">Sametingsrådet har bevilget 1 millioner kroner til Arktisk landbruk i nord.</s>
-    </document>
-    """  # noqa: E501
-        ),
-        etree.fromstring(
-            """
-    <document>
-        <s id="1">1 miljon ruvnno árktalaš eanadollui</s>
-        <s id="2">27. Geassemánnu 2014</s>
-        <s id="3">Sámediggeráđđi lea juolludan 1 miljon ruvnno árktalaš eanadollui davvin.</s>
-    </document>
-    """  # noqa: E501
-        ),
+    strings = [
+        """1 million kroner til landbruket i arktisk
+27. juni 2014
+Sametingsrådet har bevilget 1 millioner kroner til Arktisk landbruk i nord.
+""",
+        """1 miljon ruvnno árktalaš eanadollui
+27. Geassemánnu 2014
+Sámediggeráđđi lea juolludan 1 miljon ruvnno árktalaš eanadollui davvin.
+""",
     ]
 
     model = alignmentmodel.AlignmentModel(
-        tree_tuple=tuple(trees), anchor_word_list=load_anchor_words()
+        text_pair=(strings[0], strings[1]), anchor_word_list=load_anchor_words()
     )
     _, comparison_matrix = model.suggest_without_gui()
 

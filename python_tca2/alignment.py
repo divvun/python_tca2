@@ -1,15 +1,16 @@
+from pathlib import Path
+
 import click
-from lxml import etree
 
 from python_tca2 import alignmentmodel
 from python_tca2.anchorwordlist import AnchorWordList
 
 
-def parallelize(anchor_file, files: list[str]):
+def parallelize(anchor_file, files: tuple[str, str]):
     anchor_word_list = AnchorWordList()
     anchor_word_list.load_from_file(anchor_file)
     model = alignmentmodel.AlignmentModel(
-        tree_tuple=tuple(etree.parse(filename) for filename in files),
+        text_pair=(Path(files[0]).read_text(), Path(files[1]).read_text()),
         anchor_word_list=anchor_word_list,
     )
 
@@ -22,4 +23,4 @@ def parallelize(anchor_file, files: list[str]):
 @click.argument("text_file1")
 @click.argument("text_file2")
 def main(anchor_file, text_file1, text_file2):
-    parallelize(anchor_file, files=[text_file1, text_file2])
+    parallelize(anchor_file, files=(text_file1, text_file2))
