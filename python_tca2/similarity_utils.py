@@ -122,10 +122,7 @@ def bad_length_correlation(lengths: list[int], ratio: float) -> bool:
     predefined kill limit and if the element counts of the sequences differ.
 
     Args:
-        length1: The length of the first sequence.
-        length2: The length of the second sequence.
-        element_count1: The number of elements in the first sequence.
-        element_count2: The number of elements in the second sequence.
+        lengths: The lengths of the entities.
         ratio: The ratio used to calculate the correlation.
 
     Returns:
@@ -157,7 +154,7 @@ def calculate_length_correlation_factor(lengths: list[int], ratio: float) -> flo
     )
 
 
-def adjust_for_length_correlation(  # noqa: PLR0913
+def adjust_for_length_correlation(
     score: float,
     lengths: list[int],
     element_counts: list[int],
@@ -173,10 +170,8 @@ def adjust_for_length_correlation(  # noqa: PLR0913
 
     Args:
         score: The initial similarity score to be adjusted.
-        length1: The length of the first entity.
-        length2: The length of the second entity.
-        element_count1: The number of elements in the first entity.
-        element_count2: The number of elements in the second entity.
+        lengths: The lengths of the entities.
+        element_counts: The number of elements in the entities.
         ratio: A ratio used to scale the lengths for correlation calculation.
 
     Returns:
