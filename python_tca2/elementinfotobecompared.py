@@ -72,14 +72,14 @@ class ElementInfoToBeCompared:
         for anchor_word_clusters in self.make_anchor_word_clusters():
             common_clusters.add_clusters(anchor_word_clusters)
 
-        for ref1, ref2 in self.find_number_matches():
-            common_clusters.create_and_add_cluster(ref1=ref1, ref2=ref2)
-        for ref1, ref2 in self.find_propername_matches():
-            common_clusters.create_and_add_cluster(ref1=ref1, ref2=ref2)
-        for ref1, ref2 in self.find_dice_matches():
-            common_clusters.create_and_add_cluster(ref1=ref1, ref2=ref2)
-        for ref1, ref2 in self.find_special_character_matches():
-            common_clusters.create_and_add_cluster(ref1=ref1, ref2=ref2)
+        for score_function in [
+            self.find_number_matches,
+            self.find_propername_matches,
+            self.find_dice_matches,
+            self.find_special_character_matches,
+        ]:
+            for ref1, ref2 in score_function():
+                common_clusters.create_and_add_cluster(ref1=ref1, ref2=ref2)
 
         return common_clusters.get_score()
 
