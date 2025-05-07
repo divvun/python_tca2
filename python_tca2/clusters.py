@@ -80,10 +80,7 @@ class Clusters:
         Returns:
             True if any reference in other_cluster matches the cluster, else False.
         """
-        for ref in other_cluster.refs:
-            if cluster.matches(ref):
-                return True
-        return False
+        return any(cluster.matches(ref) for ref in other_cluster.refs)
 
     def add_cluster(self, other_cluster: Cluster) -> None:
         """Add a cluster to the current collection of clusters.
@@ -116,8 +113,4 @@ class Clusters:
         Returns:
             The total score as a float.
         """
-        score = 0.0
-        for cluster in self.clusters:
-            score += cluster.get_score()
-
-        return score
+        return sum(cluster.get_score() for cluster in self.clusters)
