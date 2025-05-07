@@ -30,7 +30,7 @@ def test_get_score():
                 AlignmentElement(
                     anchor_word_list=AnchorWordList(),
                     text="Mobiila",
-                    text_number=0,
+                    text_number=1,
                     element_number=0,
                 )
             ],
@@ -101,7 +101,7 @@ def test_find_dice_matches():
                 AlignmentElement(
                     anchor_word_list=AnchorWordList(),
                     text="Mobiila",
-                    text_number=0,
+                    text_number=1,
                     element_number=0,
                 )
             ],
@@ -129,7 +129,7 @@ def test_find_dice_matches():
                 "length": 7,
                 "num_words": 1,
                 "text": "Mobiila",
-                "text_number": 0,
+                "text_number": 1,
                 "words": ["Mobiila"],
                 "anchor_word_hits": {"hits": []},
                 "scoring_characters": "",
