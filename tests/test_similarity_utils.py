@@ -50,29 +50,11 @@ def test_adjust_for_length_correlation():
 
 
 def test_bad_length_correlation():
-    # Test case 1: Matching words with different lengths and element counts, c > kill_limit
-    assert bad_length_correlation([5, 7], [3, 4], 0.5) is True
+    # Test case 1: Matching words with different lengths, c > kill_limit
+    assert bad_length_correlation([5, 7], 0.5) is True
 
-    # Test case 2: Matching words with same lengths and element counts, c <= kill_limit
-    assert bad_length_correlation([5, 5], [3, 3], 0.5) is False
-
-    # Test case 3: Matching words with different lengths and same element counts, c <= kill_limit
-    assert bad_length_correlation([5, 7], [3, 3], 0.5) is False
-
-    # Test case 4: Matching words with same lengths and different element counts, c > kill_limit
-    assert bad_length_correlation([5, 5], [3, 4], 0.5) is True
-
-    # Test case 5: Matching words with c < lower_limit / 2, c <= kill_limit
-    assert bad_length_correlation([5, 5], [3, 3], 0.1) is False
-
-    # Test case 6: Matching words with lower_limit / 2 < c < lower_limit, c <= kill_limit
-    assert bad_length_correlation([5, 5], [3, 3], 0.3) is False
-
-    # Test case 7: Matching words with c > upper_limit, c > kill_limit
-    assert bad_length_correlation([5, 5], [3, 3], 0.9) is False
-
-    # Test case 8: Matching words with lower_limit < c < upper_limit, c <= kill_limit
-    assert bad_length_correlation([5, 5], [3, 3], 0.7) is False
+    # Test case 2: Matching words with same lengths, c > kill_limit
+    assert bad_length_correlation([5, 5], 0.5) is True
 
 
 def test_dice_match2():

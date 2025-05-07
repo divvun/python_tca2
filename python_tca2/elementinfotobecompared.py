@@ -47,18 +47,23 @@ class ElementInfoToBeCompared:
         return self.score
 
     def has_bad_similarity_score(self) -> float:
-        lengths = [
-            sum(alignment_element.length for alignment_element in alignment_elements)
-            for alignment_elements in self.aligned_sentence_elements
-        ]
         element_counts = [
             len(alignment_elements)
             for alignment_elements in self.aligned_sentence_elements
         ]
 
+        # if the number of elements in both branches is equal, we don't need to check
+        # for bad length correlation
+        if element_counts[0] == element_counts[1]:
+            return False
+
+        lengths = [
+            sum(alignment_element.length for alignment_element in alignment_elements)
+            for alignment_elements in self.aligned_sentence_elements
+        ]
+
         return similarity_utils.bad_length_correlation(
             lengths,
-            element_counts,
             constants.DEFAULT_LENGTH_RATIO,
         )
 

@@ -114,9 +114,7 @@ def is_word_anchor_match(compiled_anchor_pattern: re.Pattern, word: str) -> bool
     return bool(compiled_anchor_pattern.match(word))
 
 
-def bad_length_correlation(
-    lengths: list[int], element_counts: list[int], ratio: float
-) -> bool:
+def bad_length_correlation(lengths: list[int], ratio: float) -> bool:
     """Determine if the length correlation between two sequences is unacceptable.
 
     This function calculates a correlation value based on the lengths of two
@@ -134,13 +132,6 @@ def bad_length_correlation(
         True if the correlation is above the kill limit and the element counts
         differ; otherwise, False.
     """
-    if (
-        element_counts[0] < 1
-        or element_counts[1] < 1
-        or element_counts[0] == element_counts[1]
-    ):
-        return False
-
     kill_limit = 0.5
     # less tolerant limit for 1-2 and 2-1,
     # above which such alignments score lethally low
