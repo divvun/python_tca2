@@ -45,18 +45,6 @@ def get_scoring_characters(text: str) -> str:
     return ret
 
 
-def get_upper_case_words(words: list[str]) -> list[str]:
-    """Filters a list of words to include only those starting with an uppercase letter.
-
-    Args:
-        words: A list of words to filter.
-
-    Returns:
-        A list of words that start with an uppercase letter.
-    """
-    return [word for word in words if len(word) > 0 and word[0].isupper()]
-
-
 class AlignmentElement:
     """A class representing a sentence in a document.
 
@@ -92,7 +80,6 @@ class AlignmentElement:
         self.anchor_word_hits: AnchorWordHits = anchor_word_list.get_anchor_word_hits(
             self.words, text_number, element_number
         )
-        self.upper_case_words = get_upper_case_words(self.words)
         self.scoring_characters = get_scoring_characters(text)
 
     def __str__(self):
@@ -107,6 +94,5 @@ class AlignmentElement:
             "num_words": self.num_words,
             "words": self.words,
             "anchor_word_hits": asdict(self.anchor_word_hits),
-            "proper_names": self.upper_case_words,
             "scoring_characters": self.scoring_characters,
         }
