@@ -195,7 +195,7 @@ def test_aligned_to_text_file():
         a1,
         a2,
     ]
-    assert aligned.valid_pairs() == [
+    assert aligned.non_empty_pairs() == [
         (
             "Aldri noensinne har språkuka og samiske språk fått så mye oppmerksomhet i samfunnet.",  # noqa: E501
             "Sámi giellavahkku Ii goassege leat Giellavahkku ja sámegielat ná bures fuomášuvvon servodagas.",  # noqa: E501
@@ -219,7 +219,7 @@ Opetus- ja oppimateriaaliitten kehittäminen.
     )
     aligned, _ = model.suggest_without_gui()
 
-    assert aligned.valid_pairs() == [
+    assert aligned.non_empty_pairs() == [
         (
             "Kanskje en innkjøpsordning for kvenskspråklig litteratur.",
             "Kvääninkielinen litteratuuri osto-oorninkhiin piian.",
@@ -248,7 +248,7 @@ Freistata itte olla hyvät esikuvat.
     )
     aligned, _ = model.suggest_without_gui()
 
-    assert aligned.valid_pairs() == [
+    assert aligned.non_empty_pairs() == [
         (
             "Når folk har gått på nybegynnerkursene hos enten instituttet eller "
             "universitetet, kan man tilby dem muligheten å få en mentor som de kan "
@@ -298,7 +298,7 @@ Boazodoallolága birra
     )
     aligned, _ = model.suggest_without_gui()
 
-    assert aligned.valid_pairs() == [
+    assert aligned.non_empty_pairs() == [
         (
             "- regjeringen.no",
             "- regjeringen.no",

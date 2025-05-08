@@ -21,19 +21,16 @@ class Aligned:
         if aligned_sentence_elements is not None:
             self.alignments.append(aligned_sentence_elements)
 
-    def valid_pairs(self) -> list[tuple[str, ...]]:
-        """Return a list of valid tuple of elements from the alignments.
-
-        A valid tuple is a tuple of elements from the alignments that have element
-        numbers for all files.
+    def non_empty_pairs(self) -> list[tuple[str, str]]:
+        """Create translation pairs containing non-empty strings.
 
         Returns:
             A list of tuples containing valid pairs of strings.
         """
         return [
-            to_string_tuple(alignment_etc)
-            for alignment_etc in self.alignments
-            if all(aelements for aelements in alignment_etc)
+            to_string_tuple(aligned_sentence_elements)
+            for aligned_sentence_elements in self.alignments
+            if all(aelements for aelements in aligned_sentence_elements)
         ]
 
     def save_plain(self) -> None:
