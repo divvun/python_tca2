@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "python-tca2"
-version = "0.1.0"
+version = "0.9.0"
 description = ""
 authors = ["Børre Gaup <albbas@gmail.com>"]
 readme = "README.md"
