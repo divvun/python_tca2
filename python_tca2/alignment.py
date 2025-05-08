@@ -38,7 +38,6 @@ def main(  # noqa: PLR0913
     )
 
     aligned, _ = model.suggest_without_gui()
-    aligned.save_plain()
 
     tmx = make_tmx(
         file1_name=Path(text_file1).stem,
