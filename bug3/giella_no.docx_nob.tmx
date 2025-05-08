@@ -1,0 +1,104 @@
+<?xml version='1.0' encoding='utf-8'?>
+<tmx>
+  <header segtype="sentence" o-tmf="OmegaT TMX" adminlang="en-US" srclang="nob" datatype="plaintext">
+    <prop type="x-filename">giella_no.docx_nob</prop>
+  </header>
+  <body>
+    <tu>
+      <tuv xml:lang="nob">
+        <seg>Møte med Tana kommune</seg>
+      </tuv>
+      <tuv xml:lang="sme">
+        <seg>Čoahkkin Deanu gielddain</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="nob">
+        <seg>Sametinget avholdt et digitalt møte med Tana kommune 5.november 2021.</seg>
+      </tuv>
+      <tuv xml:lang="sme">
+        <seg>Sámediggi doalai digitála čoahkkima Deanu gielddain skábmamánu 5. beaivvi 2021.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="nob">
+        <seg>Møte var om at Tana kommune har behov for et mye større tospråklighetstilskudd enn det de bevilges av Sametinget.</seg>
+      </tuv>
+      <tuv xml:lang="sme">
+        <seg>Čoahkkin lei Deanu gieldda guovttegielatvuođadoarjaga dárbbuid birra mat leat olu eambbo go doarjja maid Sámediggi juolluda.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="nob">
+        <seg>Sametingsrådene Mikkel Eskil Mikkelsen og Runar Myrnes Balto var med på møtet.</seg>
+      </tuv>
+      <tuv xml:lang="sme">
+        <seg>Sámediggeráđit Mikkel Eskil Mikkelsen ja Runar Myrnes Balto searvvaiga čoahkkimii.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="nob">
+        <seg>Samisk språkuke</seg>
+      </tuv>
+      <tuv xml:lang="sme">
+        <seg>Sámi báikenammanevvohat</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="nob">
+        <seg>Aldri noensinne har språkuka og samiske språk fått så mye oppmerksomhet i samfunnet.</seg>
+      </tuv>
+      <tuv xml:lang="sme">
+        <seg>Sámi giellavahkku Ii goassege leat Giellavahkku ja sámegielat ná bures fuomášuvvon servodagas.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="nob">
+        <seg>Sametinget så i fjor i forbindelse med pandemien at vi rekker ut til folk med filmer.</seg>
+      </tuv>
+      <tuv xml:lang="sme">
+        <seg>Sámediggi oinnii diibmá pandemiija oktavuođas ahte olahit olbmuide filmmaiguin.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="nob">
+        <seg>Derfor bestilte Sametinget 11 filmer til språkuka.</seg>
+      </tuv>
+      <tuv xml:lang="sme">
+        <seg>Dan dihte diŋgui Sámediggi 11 filmma Giellavahkkui.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="nob">
+        <seg>Sametinget har brukt mye ressurser på å synliggjøre språkuka via sosiale media.</seg>
+      </tuv>
+      <tuv xml:lang="sme">
+        <seg>Sámediggi lea atnán ollu resurssaid čalmmustahttit Giellavahku sosiála mediaid bokte.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="nob">
+        <seg>Vi ser at det er med en bredere synliggjøring av språkuka.</seg>
+      </tuv>
+      <tuv xml:lang="sme">
+        <seg>Mii oaidnit ahte dat lea mielde čalmmustahttime Giellavahku viidát.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="nob">
+        <seg>Helhetlig ser Sametinget at det Norske samfunnet er klare til å gjøre mer i forbindelse med språkuka så lenge Sametinget har ressurser til å veilede og hjelpe.</seg>
+      </tuv>
+      <tuv xml:lang="sme">
+        <seg>Ollislaččat oaidná Sámediggi ahte Norgga servodat lea gearggus dahkat eanet Giellavahku oktavuođas nu guhká go Sámedikkis leat resurssat sin láidestit ja veahkehit.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="nob">
+        <seg>Sametinget har også muligheter til å samarbeide med større aktører, hvis de begynner å planlegge i god tid.</seg>
+      </tuv>
+      <tuv xml:lang="sme">
+        <seg>Sámedikkis lea maid vejolašvuohta oažžut ovttasbarggu stuorit aktevrraiguin, jus buori áiggis oččodišgoahtit ovttasbarggu.</seg>
+      </tuv>
+    </tu>
+  </body>
+</tmx>

@@ -1,0 +1,88 @@
+<?xml version='1.0' encoding='utf-8'?>
+<tmx>
+  <header segtype="sentence" o-tmf="OmegaT TMX" adminlang="en-US" srclang="nob" datatype="plaintext">
+    <prop type="x-filename">samediggi-article-42.html_nob</prop>
+  </header>
+  <body>
+    <tu>
+      <tuv xml:lang="nob">
+        <seg>Fremmedspråk og norsk sidemål skriftlig – ikke obligatorisk</seg>
+      </tuv>
+      <tuv xml:lang="sme">
+        <seg>Vierisgiella ja dárogiella siidogiella ii leat bákkolaš</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="nob">
+        <seg>Elever som har samisk som første- eller andrespråk, er fritatt i norsk sidemål skriftlig og i faget fremmedspråk.</seg>
+      </tuv>
+      <tuv xml:lang="sme">
+        <seg>Oahppit geain lea sámegiella vuosttaš- dahje nubbingiellan, leat luvvejuvvon čálalaš dárogiella siidogielas ja vierisgiellafágas.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="nob">
+        <seg>Elever med samisk som førstespråk eller andrespråk, er fritatt for opplæring og vurdering i norsk sidemål både på grunnskole og videregående opplæring, jf.Opplæringslova § 1-11.</seg>
+      </tuv>
+      <tuv xml:lang="sme">
+        <seg>Oahppit geain lea fága sámegiella vuosttašgiellan dahje sámegiella nubbingiellan, leat luvvejuvvon dárogiella siidogiella oahpahusas ja árvvoštallamis, gč. Oahpahusláhka § 1-11.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="nob">
+        <seg>Fremmedspråk (eller språkfordypning eller arbeidslivsfag) er obligatorisk fag for alle unntatt for elever som har samisk som første- eller andrespråk på skolen.</seg>
+      </tuv>
+      <tuv xml:lang="sme">
+        <seg>Vierisgiella (dahje giellačiekŋudeapmi dahje bargoeallinfága) lea bákkolaš fága buohkaide earret ohppiide geain lea sámegiella vuosttaš- dahje nubbingiellan skuvllas.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="nob">
+        <seg>Disse har tre språkfag;</seg>
+      </tuv>
+      <tuv xml:lang="sme">
+        <seg>Sis leat golbma giellafága;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="nob">
+        <seg>samisk, norsk og engelsk, og de er fritatt fra dette både på grunnskolen og videregående opplæring, men de har likevel rett til å ha fremmedspråk dersom de ønsker det, jf. Forskrift til opplæringslova § 1-9 og 1-10.</seg>
+      </tuv>
+      <tuv xml:lang="sme">
+        <seg>sámegiella, dárogiella ja eŋgelasgiella, ja sii leat luvvejuvvon vierisgiellaoahpahusas sihke vuođđoskuvllas ja joatkkaoahpahusas, muhto sis lea vuoigatvuohta oažžut oahpu vierisgielas jus háliidit, gč. Oahpahuslága láhkaásahus §1-9 ja 1-10.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="nob">
+        <seg>For å unngå mye ekstratimer for disse elevene, er det en bestemmelse for grunnskolen om at elever som velger fremmedspråk i tillegg til samisk, kan ha lavere minstetimetall i fremmedspråk på grunnskolen enn det som er det ordinære kravet for faget.</seg>
+      </tuv>
+      <tuv xml:lang="sme">
+        <seg>Garvin dihte ahte dát oahppit šaddet váldit ollu liigediimmuid, de lea vuođđoskuvllas sierra njuolggadus ahte sáhttá leat unnit diibmolohku vierisgielas go dat dábálaš gáibádus fágas.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="nob">
+        <seg>Dersom en elev ønsker å ha fremmedspråk som fag på videregående, uten å ha hatt faget i grunnskolen, blir det godkjent at de fullfører nivå 1 på bare ett fremmedspråk på videregående opplæring. Elever uten samisk, skal fullføre nivå 1 og 2 i ett fremmedspråk, eller fullføre nivå 1 i to ulike fremmedspråk</seg>
+      </tuv>
+      <tuv xml:lang="sme">
+        <seg>Jus oahppit geain lea sámegiella vuosttaš- dahje nubbingiellan, háliidit vierisgiela fágan joatkkaoahpahusas, vaikko ii leat leamašan dát fága vuođđoskuvllas, de dohkkehuvvo ahte sii čađahit ovtta vierisgielas dási 1. Oahppit geain ii leat sámegiella, galget čađahit ovtta gielas dásiid 1 ja 2 dahje guovtti gielas dási 1.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="nob">
+        <seg>Mere opplysninger om organisering og timetall finner du på Utdanningsdirektoratets nettsider i Rundskriv om fag- og timefordeling.</seg>
+      </tuv>
+      <tuv xml:lang="sme">
+        <seg>Eanet dieđuid organiserema ja diibmologuid birra gávnnat Utdanningsdirektoráhta neahttabáikkis čállosis: Rundskriv om fag- og timefordeling.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="nob">
+        <seg>Denne fornyes hvert år.</seg>
+      </tuv>
+      <tuv xml:lang="sme">
+        <seg>Mearkkaš ahte dat ođastuvvo juohke jagi.</seg>
+      </tuv>
+    </tu>
+  </body>
+</tmx>

@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='utf-8'?>
+<tmx>
+  <header segtype="sentence" o-tmf="OmegaT TMX" adminlang="en-US" srclang="nob" datatype="plaintext">
+    <prop type="x-filename">19_id_326047.html_nob</prop>
+  </header>
+  <body>
+    <tu>
+      <tuv xml:lang="nob">
+        <seg>St.meld. nr. 55 (2000-2001)</seg>
+      </tuv>
+      <tuv xml:lang="sme">
+        <seg>St.dieđ. nr. 55 (2000-2001)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="nob">
+        <seg>Om samepolitikken</seg>
+      </tuv>
+      <tuv xml:lang="sme">
+        <seg>Sámepolitihka birra</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="nob">
+        <seg>Tilråding</seg>
+      </tuv>
+      <tuv xml:lang="sme">
+        <seg>Ráva</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="nob">
+        <seg>Kommunal- og regionaldepartementet</seg>
+      </tuv>
+      <tuv xml:lang="sme">
+        <seg>Gielda- ja guovlodepartemeanta</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="nob">
+        <seg>tilrår:</seg>
+      </tuv>
+      <tuv xml:lang="sme">
+        <seg>ráđđe:</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="nob">
+        <seg>Tilråding fra Kommunal- og regionaldepartementet av 31. august 2001 om samepolitikken blir sendt Stortinget.</seg>
+      </tuv>
+      <tuv xml:lang="sme">
+        <seg>Gielda- ja guovlodepartemeantta neavva addojuvvon borgemánu 31. 2001 sámepolitihka birra sáddejuvvo Stuorradiggái.</seg>
+      </tuv>
+    </tu>
+  </body>
+</tmx>
