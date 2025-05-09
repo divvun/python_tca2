@@ -32,7 +32,10 @@ def main(  # noqa: PLR0913
         anchor_word_list.load_from_file(anchor_file)
 
     aligner = alignmentmodel.AlignmentModel(
-        text_pair=(Path(text_file1).read_text(), Path(text_file2).read_text()),
+        sentences_tuple=(
+            Path(text_file1).read_text().splitlines(),
+            Path(text_file2).read_text().splitlines(),
+        ),
         anchor_word_list=anchor_word_list,
     )
 
