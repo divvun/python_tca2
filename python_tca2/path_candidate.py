@@ -4,7 +4,7 @@ from python_tca2.alignment_suggestion import AlignmentSuggestion
 
 
 @dataclass
-class QueueEntry:
+class PathCandidate:
     """Represents an entry in a processing queue.
 
     Attributes:

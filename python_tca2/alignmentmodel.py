@@ -8,8 +8,8 @@ from python_tca2.aligned_sentence_elements import AlignedSentenceElements
 from python_tca2.alignment_suggestion import AlignmentSuggestion
 from python_tca2.anchorwordlist import AnchorWordList
 from python_tca2.elementinfotobecompared import ElementInfoToBeCompared
-from python_tca2.queue_entries import QueueEntries
-from python_tca2.queue_entry import QueueEntry
+from python_tca2.path_candidate import PathCandidate
+from python_tca2.path_candidates import PathCandidates
 
 
 class AlignmentModel:
@@ -141,23 +141,23 @@ class AlignmentModel:
         start_position: tuple[int, int],
     ) -> AlignmentSuggestion | None:
 
-        queue_entries = self.lengthen_paths(
+        path_candidates = self.extend_alignment_paths(
             compare=compare, start_position=start_position
         )
 
         if (
-            len(queue_entries.entries) < constants.NUM_FILES
-            and not queue_entries.entries[0].alignment_suggestions
+            len(path_candidates.entries) < constants.NUM_FILES
+            and not path_candidates.entries[0].alignment_suggestions
         ):
             # When the length of the queue list is less than the number of files
             # and the first path in the queue list has no steps, then aligment
             # is done
             return None
 
-        return self.select_best_alignment_suggestion(queue_entries)
+        return self.select_best_alignment_suggestion(path_candidates)
 
     def select_best_alignment_suggestion(
-        self, queue_entries: QueueEntries
+        self, path_candidates: PathCandidates
     ) -> AlignmentSuggestion | None:
         """Selects the best alignment suggestion based on normalized scores.
 
@@ -169,7 +169,7 @@ class AlignmentModel:
         normalized score.
 
         Args:
-            queue_entries : A collection of candidate entries, where each entry
+            path_candidates : A collection of candidate entries, where each entry
                             contains a path and an associated score.
 
         Returns:
@@ -181,16 +181,16 @@ class AlignmentModel:
                 candidate_entry.normalized_score,
                 candidate_entry.alignment_suggestions[0],
             )
-            for candidate_entry in queue_entries.entries
+            for candidate_entry in path_candidates.entries
         ]
 
         return max(score_step_list, key=lambda x: x[0])[1] if score_step_list else None
 
-    def lengthen_paths(
+    def extend_alignment_paths(
         self,
         compare: dict[str, ElementInfoToBeCompared],
         start_position: tuple[int, int],
-    ) -> QueueEntries:
+    ) -> PathCandidates:
         """Lengthens paths in a text pair alignment process.
 
         This method iteratively extends paths in the alignment model until no
@@ -203,44 +203,44 @@ class AlignmentModel:
             A QueueList containing the final set of extended paths.
         """
         best_path_scores: dict[str, float] = {}
-        queue_entries = QueueEntries([QueueEntry(position=start_position)])
+        path_candidates = PathCandidates([PathCandidate(position=start_position)])
         for _ in range(self.max_path_length):
-            next_queue_entries = QueueEntries([])
-            for queue_entry in queue_entries.entries:
-                if not queue_entry.end:
-                    for new_queue_entry in self.lengthen_current_path(
-                        queue_entry,
+            next_path_candidates = PathCandidates([])
+            for path_candidate in path_candidates.entries:
+                if not path_candidate.end:
+                    for new_path_candidate in self.extend_current_path(
+                        path_candidate,
                         compare=compare,
                         best_path_scores=best_path_scores,
                     ):
-                        if new_queue_entry is not None:
-                            pos = new_queue_entry.position
-                            queue_entries.entries = [
-                                queue_entry
-                                for queue_entry in queue_entries.entries
-                                if not queue_entry.has_hit(pos)
+                        if new_path_candidate is not None:
+                            pos = new_path_candidate.position
+                            path_candidates.entries = [
+                                path_candidate
+                                for path_candidate in path_candidates.entries
+                                if not path_candidate.has_hit(pos)
                             ]
-                            next_queue_entries.entries = [
-                                queue_entry
-                                for queue_entry in next_queue_entries.entries
-                                if not queue_entry.has_hit(pos)
+                            next_path_candidates.entries = [
+                                path_candidate
+                                for path_candidate in next_path_candidates.entries
+                                if not path_candidate.has_hit(pos)
                             ]
-                            if new_queue_entry not in next_queue_entries.entries:
-                                next_queue_entries.entries.append(new_queue_entry)
+                            if new_path_candidate not in next_path_candidates.entries:
+                                next_path_candidates.entries.append(new_path_candidate)
 
-            if not next_queue_entries.entries:
-                return queue_entries
+            if not next_path_candidates.entries:
+                return path_candidates
 
-            queue_entries = next_queue_entries
+            path_candidates = next_path_candidates
 
-        return queue_entries
+        return path_candidates
 
-    def lengthen_current_path(
+    def extend_current_path(
         self,
-        queue_entry: QueueEntry,
+        path_candidate: PathCandidate,
         compare: dict[str, ElementInfoToBeCompared],
         best_path_scores: dict[str, float],
-    ) -> Iterator[QueueEntry | None]:
+    ) -> Iterator[PathCandidate | None]:
         """Extends the current path in the alignment process.
 
         This method iterates through a list of steps to attempt extending the
@@ -248,9 +248,9 @@ class AlignmentModel:
         exceptions to manage the end of texts or blocked paths.
 
         Args:
-            queue_entry: The current queue entry to be extended.
-            queue_entries: The list of current queue entries.
-            next_queue_entries: The list of queue entries for the next iteration.
+            path_candidate: The current queue entry to be extended.
+            path_candidates: The list of current queue entries.
+            next_path_candidates: The list of queue entries for the next iteration.
             compare: A comparison object used during path extension.
 
         Yields:
@@ -260,10 +260,10 @@ class AlignmentModel:
         for step in alignment_suggestion.generate_alignment_suggestions(
             len(self.parallel_documents)
         ):
-            yield self.make_longer_path(
-                old_position=queue_entry.position,
-                old_score=queue_entry.score,
-                alignment_suggestions=queue_entry.alignment_suggestions + [step],
+            yield self.extend_path_with_step(
+                old_position=path_candidate.position,
+                old_score=path_candidate.score,
+                alignment_suggestions=path_candidate.alignment_suggestions + [step],
                 compare=compare,
                 best_path_scores=best_path_scores,
             )
@@ -344,18 +344,18 @@ class AlignmentModel:
             )
         )
 
-    def make_longer_path(
+    def extend_path_with_step(
         self,
         old_position: tuple[int, int],
         old_score: float,
         alignment_suggestions: list[AlignmentSuggestion],
         compare: dict[str, ElementInfoToBeCompared],
         best_path_scores: dict[str, float],
-    ) -> QueueEntry | None:
+    ) -> PathCandidate | None:
         """Extend a path with a new step and update its score.
 
         Args:
-            ret_queue_entry: The current queue entry containing the path and score.
+            ret_path_candidate: The current queue entry containing the path and score.
             alignment_suggestion: The new alignement suggestion to add to the path.
             compare: An object used to compare and update scores.
 
@@ -369,7 +369,7 @@ class AlignmentModel:
         )
 
         if self.will_reach_both_ends(new_position):
-            return QueueEntry(
+            return PathCandidate(
                 position=old_position,
                 score=old_score,
                 alignment_suggestions=alignment_suggestions[:-1],
@@ -403,7 +403,7 @@ class AlignmentModel:
             best_path_scores=best_path_scores,
         )
 
-        return QueueEntry(
+        return PathCandidate(
             position=new_position,
             score=new_score,
             alignment_suggestions=alignment_suggestions,
