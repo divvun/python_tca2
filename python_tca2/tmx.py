@@ -52,7 +52,7 @@ def make_tu(tuv_infos: tuple[tuple[str, str], ...]) -> etree._Element:
 def make_tmx(
     file1_name: str,
     language_pair: tuple[str, str],
-    non_empty_sentence_pairs: list[tuple[str, str]],
+    aligned_text_pairs: list[tuple[str, str]],
 ) -> etree._Element:
     """Make tmx file based on the output of the aligner."""
     tmx = etree.Element("tmx")
@@ -63,7 +63,7 @@ def make_tmx(
     tmx.append(header)
 
     body = etree.SubElement(tmx, "body")
-    for sentence_pair in non_empty_sentence_pairs:
+    for sentence_pair in aligned_text_pairs:
         transl_unit = make_tu(
             tuple(
                 (sentence, language)
@@ -99,14 +99,14 @@ def write_tmx_result(
         make_tmx(
             file1_name=file1_path.stem,
             language_pair=language_pair,
-            non_empty_sentence_pairs=non_empty_sentence_pairs,
+            aligned_text_pairs=non_empty_sentence_pairs,
         )
         if output_format == "tmx"
         else make_html(
             make_tmx(
                 file1_name=file1_path.stem,
                 language_pair=language_pair,
-                non_empty_sentence_pairs=non_empty_sentence_pairs,
+                aligned_text_pairs=non_empty_sentence_pairs,
             )
         )
     )
