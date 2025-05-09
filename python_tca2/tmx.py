@@ -1,3 +1,5 @@
+from pathlib import Path
+
 from lxml import etree
 
 
@@ -73,3 +75,49 @@ def make_tmx(
         body.append(transl_unit)
 
     return tmx
+
+
+def make_html(
+    tmx: etree._Element,
+) -> etree._XSLTResultTree:
+    """Make tmx file based on the output of the aligner."""
+    html2tmx_transformer = etree.XSLT(
+        etree.parse(Path(__file__).parent / "xslt/tmx2html.xsl")
+    )
+    return html2tmx_transformer(tmx)
+
+
+def write_tmx_result(
+    file1_path: Path,
+    language_pair: tuple[str, str],
+    non_empty_sentence_pairs: list[tuple[str, str]],
+    output_format: str = "tmx",
+) -> None:
+    """Write the tmx file to disk."""
+
+    tmx_result = (
+        make_tmx(
+            file1_name=file1_path.stem,
+            language_pair=language_pair,
+            non_empty_sentence_pairs=non_empty_sentence_pairs,
+        )
+        if output_format == "tmx"
+        else make_html(
+            make_tmx(
+                file1_name=file1_path.stem,
+                language_pair=language_pair,
+                non_empty_sentence_pairs=non_empty_sentence_pairs,
+            )
+        )
+    )
+
+    output_path = file1_path.with_suffix(f".{output_format}")
+    output_path.write_bytes(
+        etree.tostring(
+            tmx_result,
+            pretty_print=True,
+            encoding="utf-8",
+            xml_declaration=True,
+        )
+    )
+    print(f"Wrote {output_path}")
