@@ -215,7 +215,7 @@ Opetus- ja oppimateriaaliitten kehittäminen.
     ]
 
     model = alignmentmodel.AlignmentModel(
-        text_pair=(strings[0], strings[1]), anchor_word_list=load_anchor_words()
+        sentences_tuple=(strings[0], strings[1]), anchor_word_list=load_anchor_words()
     )
     aligned, _ = model.suggest_without_gui()
 
@@ -244,7 +244,7 @@ Freistata itte olla hyvät esikuvat.
     ]
 
     model = alignmentmodel.AlignmentModel(
-        text_pair=(strings[0], strings[1]), anchor_word_list=load_anchor_words()
+        sentences_tuple=(strings[0], strings[1]), anchor_word_list=load_anchor_words()
     )
     aligned, _ = model.suggest_without_gui()
 
@@ -294,7 +294,7 @@ Boazodoallolága birra
     ]
 
     model = alignmentmodel.AlignmentModel(
-        text_pair=(strings[0], strings[1]), anchor_word_list=load_anchor_words()
+        sentences_tuple=(strings[0], strings[1]), anchor_word_list=load_anchor_words()
     )
     aligned, _ = model.suggest_without_gui()
 
@@ -317,7 +317,7 @@ def test_anchorword_hits():
     ]
 
     model = alignmentmodel.AlignmentModel(
-        text_pair=(strings[0], strings[1]), anchor_word_list=load_anchor_words()
+        sentences_tuple=(strings[0], strings[1]), anchor_word_list=load_anchor_words()
     )
     _, comparison_matrix = model.suggest_without_gui()
     interesting = comparison_matrix["0,0,0,0"]
@@ -348,7 +348,7 @@ Sámediggeráđđi lea juolludan 1 miljon ruvnno árktalaš eanadollui davvin.
     ]
 
     model = alignmentmodel.AlignmentModel(
-        text_pair=(strings[0], strings[1]), anchor_word_list=load_anchor_words()
+        sentences_tuple=(strings[0], strings[1]), anchor_word_list=load_anchor_words()
     )
     _, comparison_matrix = model.suggest_without_gui()
 

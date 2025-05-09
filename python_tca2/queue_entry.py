@@ -18,7 +18,7 @@ class QueueEntry:
             the score divided by the length of the path in sentences.
     """
 
-    position: tuple[int, ...] = field(default_factory=tuple)
+    position: tuple[int, int]
     score: float = 0.0
     alignment_suggestions: list[AlignmentSuggestion] = field(default_factory=list)
     end: bool = False

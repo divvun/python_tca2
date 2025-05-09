@@ -18,20 +18,20 @@ class AlignmentModel:
 
     def __init__(
         self,
-        text_pair: tuple[str, str],
+        sentences_tuple: tuple[list[str], list[str]],
         anchor_word_list: AnchorWordList,
     ) -> None:
         self.anchor_word_list = anchor_word_list
         self.parallel_documents = tuple(
             self.load_sentences(
                 text_number=text_number,
-                sentences=text.splitlines(),
+                sentences=sentences,
             )
-            for text_number, text in enumerate(text_pair)
+            for text_number, sentences in enumerate(sentences_tuple)
         )
 
     def get_aligned_sentence_elements(
-        self, start_position: tuple[int, ...], alignment_suggestion: AlignmentSuggestion
+        self, start_position: tuple[int, int], alignment_suggestion: AlignmentSuggestion
     ) -> AlignedSentenceElements:
         """Returns the next AlignmentElement object for the specified text number.
 
@@ -41,23 +41,32 @@ class AlignmentModel:
         Returns:
             A tuple of AlignmentElement objects for each text.
         """
-        # TODO: fix the -1 issue
-        return_tuple = tuple(
-            alignment_elements[
-                current_position
-                + 1 : current_position
-                + 1
-                + number_of_elements  # + 1 here because first element starts at -1 …
-            ]
-            for (current_position, number_of_elements, alignment_elements) in zip(
-                start_position,
-                alignment_suggestion,
-                self.parallel_documents,
-                strict=True,
-            )
+        return (
+            self.get_sentence_elements(
+                start_position[0],
+                alignment_suggestion[0],
+                alignment_elements=self.parallel_documents[0],
+            ),
+            self.get_sentence_elements(
+                start_position[1],
+                alignment_suggestion[1],
+                alignment_elements=self.parallel_documents[1],
+            ),
         )
 
-        return AlignedSentenceElements(return_tuple)
+    def get_sentence_elements(
+        self,
+        current_position: int,
+        number_of_elements: int,
+        alignment_elements: list[AlignmentElement],
+    ) -> list[AlignmentElement]:
+        # TODO: fix the -1 issue
+        return alignment_elements[
+            current_position
+            + 1 : current_position
+            + 1
+            + number_of_elements  # + 1 here because first element starts at -1 …
+        ]
 
     def load_sentences(
         self, text_number: int, sentences: list[str]
@@ -93,7 +102,7 @@ class AlignmentModel:
         aligned = Aligned([])
         comparison_matrix: dict[str, ElementInfoToBeCompared] = {}
 
-        start_position: tuple[int, ...] = (-1, -1)
+        start_position = (-1, -1)
         while (
             alignment_suggestion := self.retrieve_alignment_suggestion(
                 compare=comparison_matrix, start_position=start_position
@@ -105,11 +114,9 @@ class AlignmentModel:
                     alignment_suggestion=alignment_suggestion,
                 )
             )
-            start_position = tuple(
-                current_position + alignment_increment
-                for current_position, alignment_increment in zip(
-                    start_position, alignment_suggestion, strict=True
-                )
+            start_position = (
+                start_position[0] + alignment_suggestion[0],
+                start_position[1] + alignment_suggestion[1],
             )
 
         print(
@@ -131,7 +138,7 @@ class AlignmentModel:
     def retrieve_alignment_suggestion(
         self,
         compare: dict[str, ElementInfoToBeCompared],
-        start_position: tuple[int, ...],
+        start_position: tuple[int, int],
     ) -> AlignmentSuggestion | None:
 
         queue_entries = self.lengthen_paths(
@@ -182,7 +189,7 @@ class AlignmentModel:
     def lengthen_paths(
         self,
         compare: dict[str, ElementInfoToBeCompared],
-        start_position: tuple[int, ...],
+        start_position: tuple[int, int],
     ) -> QueueEntries:
         """Lengthens paths in a text pair alignment process.
 
@@ -263,7 +270,7 @@ class AlignmentModel:
 
     def get_step_score(
         self,
-        position: tuple[int, ...],
+        position: tuple[int, int],
         alignment_suggestion: AlignmentSuggestion,
         compare: dict[str, ElementInfoToBeCompared],
     ) -> float:
@@ -339,7 +346,7 @@ class AlignmentModel:
 
     def make_longer_path(
         self,
-        old_position: tuple[int, ...],
+        old_position: tuple[int, int],
         old_score: float,
         alignment_suggestions: list[AlignmentSuggestion],
         compare: dict[str, ElementInfoToBeCompared],
@@ -355,13 +362,10 @@ class AlignmentModel:
         Returns:
             The updated queue entry if the new score is better, otherwise None.
         """
-        new_position = tuple(
-            position + alignment_step
-            for position, alignment_step in zip(
-                old_position,
-                alignment_suggestions[-1],
-                strict=True,
-            )
+        current_alignment_step = alignment_suggestions[-1]
+        new_position = (
+            old_position[0] + current_alignment_step[0],
+            old_position[1] + current_alignment_step[1],
         )
 
         if self.will_reach_both_ends(new_position):
