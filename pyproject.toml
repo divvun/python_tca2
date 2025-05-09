@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "python-tca2"
-version = "0.9.0"
+version = "0.10.0"
 description = "Align plain text files using the TCA2 algorithm"
 authors = ["Børre Gaup <albbas@gmail.com>"]
 readme = "README.md"
