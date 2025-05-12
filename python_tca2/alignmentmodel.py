@@ -41,32 +41,20 @@ class AlignmentModel:
         Returns:
             A tuple of AlignmentElement objects for each text.
         """
-        return (
-            self.get_sentence_elements(
-                start_position[0],
-                alignment_suggestion[0],
-                alignment_elements=self.parallel_documents[0],
-            ),
-            self.get_sentence_elements(
-                start_position[1],
-                alignment_suggestion[1],
-                alignment_elements=self.parallel_documents[1],
-            ),
-        )
-
-    def get_sentence_elements(
-        self,
-        current_position: int,
-        number_of_elements: int,
-        alignment_elements: list[AlignmentElement],
-    ) -> list[AlignmentElement]:
         # TODO: fix the -1 issue
-        return alignment_elements[
-            current_position
-            + 1 : current_position
-            + 1
-            + number_of_elements  # + 1 here because first element starts at -1 …
-        ]
+        # + 1 here because first element starts at -1 …
+        slice1 = slice(
+            start_position[0] + 1,
+            start_position[0] + 1 + alignment_suggestion[0],
+        )
+        slice2 = slice(
+            start_position[1] + 1,
+            start_position[1] + 1 + alignment_suggestion[1],
+        )
+        return (
+            self.parallel_documents[0][slice1],
+            self.parallel_documents[1][slice2],
+        )
 
     def load_sentences(
         self, text_number: int, sentences: list[str]
