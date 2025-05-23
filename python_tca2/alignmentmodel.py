@@ -31,7 +31,7 @@ class AlignmentModel:
         )
 
     def get_aligned_sentence_elements(
-        self, start_position: tuple[int, int], alignment_suggestion: AlignmentSuggestion
+        self, slices: tuple[slice, slice]
     ) -> AlignedSentenceElements:
         """Returns the next AlignmentElement object for the specified text number.
 
@@ -41,17 +41,9 @@ class AlignmentModel:
         Returns:
             A tuple of AlignmentElement objects for each text.
         """
-        slice1 = slice(
-            start_position[0],
-            start_position[0] + alignment_suggestion[0],
-        )
-        slice2 = slice(
-            start_position[1],
-            start_position[1] + alignment_suggestion[1],
-        )
         return (
-            self.parallel_documents[0][slice1],
-            self.parallel_documents[1][slice2],
+            self.parallel_documents[0][slices[0]],
+            self.parallel_documents[1][slices[1]],
         )
 
     def load_sentences(
@@ -95,8 +87,16 @@ class AlignmentModel:
         ) is not None:
             aligned.pickup(
                 self.get_aligned_sentence_elements(
-                    start_position=start_position,
-                    alignment_suggestion=alignment_suggestion,
+                    slices=(
+                        slice(
+                            start_position[0],
+                            start_position[0] + alignment_suggestion[0],
+                        ),
+                        slice(
+                            start_position[1],
+                            start_position[1] + alignment_suggestion[1],
+                        ),
+                    )
                 )
             )
             start_position = (
@@ -234,8 +234,7 @@ class AlignmentModel:
     @cache
     def get_step_score(
         self,
-        position: tuple[int, int],
-        alignment_suggestion: AlignmentSuggestion,
+        slices: tuple[slice, slice],
     ) -> float:
         """Calculate the score for a given step at a specific position.
 
@@ -248,9 +247,8 @@ class AlignmentModel:
         """
         eitbc = ElementInfoToBeCompared(
             aligned_sentence_elements=self.get_aligned_sentence_elements(
-                start_position=position,
-                alignment_suggestion=alignment_suggestion,
-            ),
+                slices=slices,
+            )
         )
 
         return eitbc.get_score()
@@ -329,8 +327,10 @@ class AlignmentModel:
             return None
 
         position_step_score = self.get_step_score(
-            old_position,
-            alignment_suggestions[-1],
+            slices=(
+                slice(old_position[0], new_position[0]),
+                slice(old_position[1], new_position[1]),
+            )
         )
 
         if position_step_score == constants.ELEMENTINFO_SCORE_HOPELESS:

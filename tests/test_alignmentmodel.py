@@ -325,8 +325,10 @@ def test_anchorword_hits():
     )
     interesting = ElementInfoToBeCompared(
         aligned_sentence_elements=model.get_aligned_sentence_elements(
-            start_position=(0, 0),
-            alignment_suggestion=(1, 1),
+            slices=(
+                slice(0, 1),
+                slice(0, 1),
+            ),
         )
     )
 
