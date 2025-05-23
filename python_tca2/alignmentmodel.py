@@ -271,12 +271,9 @@ class AlignmentModel:
             The score for the specified step.
         """
         key = ",".join(
-            [
-                str(position[text_number] + 1)
-                for text_number in range(constants.NUM_FILES)
-            ]
+            [str(position[text_number]) for text_number in range(constants.NUM_FILES)]
             + [
-                str(position[text_number] + alignment_suggestion[text_number])
+                str(position[text_number] - 1 + alignment_suggestion[text_number])
                 for text_number in range(constants.NUM_FILES)
             ]
         )
