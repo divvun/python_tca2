@@ -41,15 +41,13 @@ class AlignmentModel:
         Returns:
             A tuple of AlignmentElement objects for each text.
         """
-        # TODO: fix the -1 issue
-        # + 1 here because first element starts at -1 …
         slice1 = slice(
-            start_position[0] + 1,
-            start_position[0] + 1 + alignment_suggestion[0],
+            start_position[0],
+            start_position[0] + alignment_suggestion[0],
         )
         slice2 = slice(
-            start_position[1] + 1,
-            start_position[1] + 1 + alignment_suggestion[1],
+            start_position[1],
+            start_position[1] + alignment_suggestion[1],
         )
         return (
             self.parallel_documents[0][slice1],
@@ -90,7 +88,7 @@ class AlignmentModel:
         aligned = Aligned([])
         comparison_matrix: dict[str, ElementInfoToBeCompared] = {}
 
-        start_position = (-1, -1)
+        start_position = (0, 0)
         while (
             alignment_suggestion := self.retrieve_alignment_suggestion(
                 compare=comparison_matrix, start_position=start_position
@@ -303,7 +301,7 @@ class AlignmentModel:
             True if the end of the texts are reached, False otherwise.
         """
         return all(
-            current_position + 1 > len(n)
+            current_position > len(n)
             for current_position, n in zip(
                 position,
                 self.parallel_documents,
@@ -324,7 +322,7 @@ class AlignmentModel:
             True if at least the end of one of the texts is reached, False otherwise.
         """
         return any(
-            current_position + 1 > len(n)
+            current_position > len(n)
             for current_position, n in zip(
                 position,
                 self.parallel_documents,
