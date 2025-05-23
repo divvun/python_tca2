@@ -1,4 +1,4 @@
-import json
+from functools import cache
 from typing import Iterator
 
 from python_tca2 import alignment_suggestion, constants
@@ -75,7 +75,7 @@ class AlignmentModel:
             for index, sentence in enumerate(sentences)
         ]
 
-    def suggest_without_gui(self) -> tuple[Aligned, dict[str, ElementInfoToBeCompared]]:
+    def suggest_without_gui(self) -> Aligned:
         """Suggest alignments.
 
         This method performs text alignment by iteratively processing paths
@@ -86,12 +86,11 @@ class AlignmentModel:
             A tuple containing the aligned object and the comparison object.
         """
         aligned = Aligned([])
-        comparison_matrix: dict[str, ElementInfoToBeCompared] = {}
 
         start_position = (0, 0)
         while (
             alignment_suggestion := self.retrieve_alignment_suggestion(
-                compare=comparison_matrix, start_position=start_position
+                start_position=start_position
             )
         ) is not None:
             aligned.pickup(
@@ -105,31 +104,14 @@ class AlignmentModel:
                 start_position[1] + alignment_suggestion[1],
             )
 
-        print(
-            json.dumps(
-                {
-                    "matrix": {
-                        key: comparison_matrix[key].to_json()
-                        for key in sorted(comparison_matrix.keys())
-                    },
-                },
-                indent=0,
-                ensure_ascii=False,
-            ),
-            file=open("compare.json", "w"),
-        )
-
-        return aligned, comparison_matrix
+        return aligned
 
     def retrieve_alignment_suggestion(
         self,
-        compare: dict[str, ElementInfoToBeCompared],
         start_position: tuple[int, int],
     ) -> AlignmentSuggestion | None:
 
-        path_candidates = self.extend_alignment_paths(
-            compare=compare, start_position=start_position
-        )
+        path_candidates = self.extend_alignment_paths(start_position=start_position)
 
         if (
             len(path_candidates.entries) < constants.NUM_FILES
@@ -174,7 +156,6 @@ class AlignmentModel:
 
     def extend_alignment_paths(
         self,
-        compare: dict[str, ElementInfoToBeCompared],
         start_position: tuple[int, int],
     ) -> PathCandidates:
         """Lengthens paths in a text pair alignment process.
@@ -183,7 +164,7 @@ class AlignmentModel:
         further extensions are possible or a maximum path length is reached.
 
         Args:
-            compare: A comparison object used to evaluate path extensions.
+            start_position: The starting position in the alignment.
 
         Returns:
             A QueueList containing the final set of extended paths.
@@ -196,7 +177,6 @@ class AlignmentModel:
                 if not path_candidate.end:
                     for new_path_candidate in self.extend_current_path(
                         path_candidate,
-                        compare=compare,
                         best_path_scores=best_path_scores,
                     ):
                         if new_path_candidate is not None:
@@ -224,7 +204,6 @@ class AlignmentModel:
     def extend_current_path(
         self,
         path_candidate: PathCandidate,
-        compare: dict[str, ElementInfoToBeCompared],
         best_path_scores: dict[str, float],
     ) -> Iterator[PathCandidate | None]:
         """Extends the current path in the alignment process.
@@ -237,8 +216,7 @@ class AlignmentModel:
             path_candidate: The current queue entry to be extended.
             path_candidates: The list of current queue entries.
             next_path_candidates: The list of queue entries for the next iteration.
-            compare: A comparison object used during path extension.
-
+            best_path_scores: A dictionary to store the best path scores.
         Yields:
             QueueEntry: A new queue entry representing the extended path or None if
                 the path cannot be extended further.
@@ -250,43 +228,32 @@ class AlignmentModel:
                 old_position=path_candidate.position,
                 old_score=path_candidate.score,
                 alignment_suggestions=path_candidate.alignment_suggestions + [step],
-                compare=compare,
                 best_path_scores=best_path_scores,
             )
 
+    @cache
     def get_step_score(
         self,
         position: tuple[int, int],
         alignment_suggestion: AlignmentSuggestion,
-        compare: dict[str, ElementInfoToBeCompared],
     ) -> float:
         """Calculate the score for a given step at a specific position.
 
         Args:
             position: The current position in the alignment.
             step: The step to evaluate.
-            compare: The comparison object providing cell values.
 
         Returns:
             The score for the specified step.
         """
-        key = ",".join(
-            [str(position[text_number]) for text_number in range(constants.NUM_FILES)]
-            + [
-                str(position[text_number] - 1 + alignment_suggestion[text_number])
-                for text_number in range(constants.NUM_FILES)
-            ]
+        eitbc = ElementInfoToBeCompared(
+            aligned_sentence_elements=self.get_aligned_sentence_elements(
+                start_position=position,
+                alignment_suggestion=alignment_suggestion,
+            ),
         )
 
-        if key not in compare:
-            compare[key] = ElementInfoToBeCompared(
-                aligned_sentence_elements=self.get_aligned_sentence_elements(
-                    start_position=position,
-                    alignment_suggestion=alignment_suggestion,
-                ),
-            )
-
-        return compare[key].get_score()
+        return eitbc.get_score()
 
     def will_reach_both_ends(self, position: tuple[int, ...]) -> bool:
         """Check if the current position will reach the end of the texts.
@@ -332,7 +299,6 @@ class AlignmentModel:
         old_position: tuple[int, int],
         old_score: float,
         alignment_suggestions: list[AlignmentSuggestion],
-        compare: dict[str, ElementInfoToBeCompared],
         best_path_scores: dict[str, float],
     ) -> PathCandidate | None:
         """Extend a path with a new step and update its score.
@@ -340,7 +306,7 @@ class AlignmentModel:
         Args:
             ret_path_candidate: The current queue entry containing the path and score.
             alignment_suggestion: The new alignement suggestion to add to the path.
-            compare: An object used to compare and update scores.
+            best_path_scores: A dictionary to store the best path scores.
 
         Returns:
             The updated queue entry if the new score is better, otherwise None.
@@ -365,7 +331,6 @@ class AlignmentModel:
         position_step_score = self.get_step_score(
             old_position,
             alignment_suggestions[-1],
-            compare=compare,
         )
 
         if position_step_score == constants.ELEMENTINFO_SCORE_HOPELESS:
