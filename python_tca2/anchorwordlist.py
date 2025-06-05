@@ -1,3 +1,5 @@
+import re
+import sys
 from re import Pattern
 
 from python_tca2 import similarity_utils
@@ -19,7 +21,14 @@ class AnchorWordList:
         AnchorWordListEntry objects from the lines in the file.
         """
         with open(from_file, "r") as file:
-            self.entries = [AnchorWordListEntry(line.strip()) for line in file]
+            for line in file:
+                try:
+                    self.entries.append(AnchorWordListEntry(line.strip()))
+                except re.error as error:
+                    print(
+                        f"Error processing line '{line.strip()}': {error}",
+                        file=sys.stderr,
+                    )
 
     def get_synonyms(self, text_number: int) -> list[tuple[int, list[Pattern[str]]]]:
         """Retrieve synonyms for a given text number from the entries.
