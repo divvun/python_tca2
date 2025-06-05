@@ -21,7 +21,7 @@ class AnchorWordList:
         with open(from_file, "r") as file:
             self.entries = [AnchorWordListEntry(line.strip()) for line in file]
 
-    def get_synonyms(self, text_number: int) -> list[tuple[int, list[Pattern]]]:
+    def get_synonyms(self, text_number: int) -> list[tuple[int, list[Pattern[str]]]]:
         """Retrieve synonyms for a given text number from the entries.
 
         Args:
@@ -71,7 +71,7 @@ class AnchorWordList:
 
     @staticmethod
     def found_success(
-        words: list[str], anchor_phrase: list[Pattern], w: int
+        words: list[str], anchor_phrase: list[Pattern[str]], w: int
     ) -> tuple[bool, list[str]]:
         """Checks if a sequence of words matches an anchor phrase pattern.
 
@@ -84,7 +84,7 @@ class AnchorWordList:
             A tuple containing a boolean indicating success and the matching phrase.
         """
         success = True
-        matching_phrase = []  # the actual phrase occurring in the text
+        matching_phrase: list[str] = []  # the actual phrase occurring in the text
         for w2 in range(len(anchor_phrase)):
             word = words[w + w2]
             if not similarity_utils.is_word_anchor_match(

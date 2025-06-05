@@ -6,7 +6,7 @@ from python_tca2 import constants
 
 class AnchorWordListEntry:
     def __init__(self, anchor_word_list_entry_text: str):
-        self.language: defaultdict[int, list[list[re.Pattern]]] = defaultdict(list)
+        self.language: defaultdict[int, list[list[re.Pattern[str]]]] = defaultdict(list)
 
         if anchor_word_list_entry_text:
             pairs = anchor_word_list_entry_text.split("/")
@@ -29,7 +29,7 @@ class AnchorWordListEntry:
                 }
             )
 
-    def make_phrases(self, pairs: list[str]) -> list[list[re.Pattern]]:
+    def make_phrases(self, pairs: list[str]) -> list[list[re.Pattern[str]]]:
         """Generate a list of phrase patterns from input pairs.
 
         Args:
@@ -46,7 +46,7 @@ class AnchorWordListEntry:
             for syn in data.split(",")
         ]
 
-    def make_phrase(self, syn: str) -> list[re.Pattern]:
+    def make_phrase(self, syn: str) -> list[re.Pattern[str]]:
         """Generates a list of compiled regex patterns from a synonym phrase.
 
         Args:
@@ -61,7 +61,7 @@ class AnchorWordListEntry:
             if word.strip() != ""
         ]
 
-    def make_compiled_pattern(self, anchor_word: str) -> re.Pattern:
+    def make_compiled_pattern(self, anchor_word: str) -> re.Pattern[str]:
         """Make a proper regular expression from the anchor word"""
         pattern = "^" + anchor_word.replace("*", ".*") + "$"
         return re.compile(pattern, re.IGNORECASE | re.UNICODE)

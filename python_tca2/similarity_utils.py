@@ -101,7 +101,7 @@ def dice_match_word_with_phrase(word: str, phrase: tuple[str, str]) -> bool:
     )
 
 
-def is_word_anchor_match(compiled_anchor_pattern: re.Pattern, word: str) -> bool:
+def is_word_anchor_match(compiled_anchor_pattern: re.Pattern[str], word: str) -> bool:
     """Check if the word is an occurrence of the anchor word
 
     Args:
