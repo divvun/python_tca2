@@ -342,7 +342,14 @@ class AlignmentModel:
             new_position, best_path_scores=best_path_scores
         )
 
-        if best_path_score is not None and new_score <= best_path_score:
+        # HACK:
+        # The score is multiplied by 1000000000 to give the same result as the original
+        # Java code. The difference is probably due to differences in floating-point
+        # arithmetic between Python and Java.
+        if (
+            best_path_score is not None
+            and new_score * 1000000000 <= best_path_score * 1000000000
+        ):
             return None
 
         set_best_path_score(
