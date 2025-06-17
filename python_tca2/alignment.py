@@ -39,7 +39,7 @@ def main(  # noqa: PLR0913
         anchor_word_list=anchor_word_list,
     )
 
-    aligned, _ = aligner.suggest_without_gui()
+    aligned = aligner.suggest_without_gui()
 
     write_tmx_result(
         file1_path=Path(text_file1),
