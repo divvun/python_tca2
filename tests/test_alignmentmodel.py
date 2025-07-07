@@ -333,6 +333,184 @@ Gielda- ja guovlodepartemeantta neavva addojuvvon borgemánu 31. 2001 sámepolit
                 ),
             ],
         ),
+        (
+            "big_sentence_diff",
+            [
+                """Møte med Tana kommune
+Sametinget avholdt et digitalt møte med Tana kommune 5.november 2021.
+Møte var om at Tana kommune har behov for et mye større tospråklighetstilskudd enn det de bevilges av Sametinget.
+Sametingsrådene Mikkel Eskil Mikkelsen og Runar Myrnes Balto var med på møtet.
+Samisk språkuke
+Aldri noensinne har språkuka og samiske språk fått så mye oppmerksomhet i samfunnet.
+Sametinget så i fjor i forbindelse med pandemien at vi rekker ut til folk med filmer.
+Derfor bestilte Sametinget 11 filmer til språkuka.
+Sametinget har brukt mye ressurser på å synliggjøre språkuka via sosiale media.
+Vi ser at det er med en bredere synliggjøring av språkuka.
+Helhetlig ser Sametinget at det Norske samfunnet er klare til å gjøre mer i forbindelse med språkuka så lenge Sametinget har ressurser til å veilede og hjelpe.
+Sametinget har også muligheter til å samarbeide med større aktører, hvis de begynner å planlegge i god tid.
+""",
+                """Čoahkkin Deanu gielddain
+Sámediggi doalai digitála čoahkkima Deanu gielddain skábmamánu 5. beaivvi 2021.
+Čoahkkin lei Deanu gieldda guovttegielatvuođadoarjaga dárbbuid birra mat leat olu eambbo go doarjja maid Sámediggi juolluda.
+Sámediggeráđit Mikkel Eskil Mikkelsen ja Runar Myrnes Balto searvvaiga čoahkkimii.
+(  FUOM!
+ii dárbbaš jorgalit dan mii lea ruoksadin  , teaksta lei čállojuvvon guovtti gillii, bijan dušše dása vai ii láhppo  )
+Sámi báikenammanevvohat
+Báikenammanevvohat lea sádden álgorávvemiid Gáivuonas, Sáččás ja  Ulbbis  , ja loahpalaš rávvemiid Mátta-Várjjagis, Loabágis ja Rørosas.
+Sámediggi lea maid dán áigodagas sádden ođđa vástádusa Oslo suohkana jearaldahkii, mas bivde sámegiel nama Oslo gávpogii.
+Duogážin dán áššis lea ahte nammanevvohaga vuosttaš rávvema geažil šattai dát mediaáššin, ja nammanevvohat válljii guorahallat ášši ođđasit.
+Nammanevvohat lea dál čađahan ođđa nammafágalaš guorahallama, ja boađusin lea ahte nammanevvohat doalaha ovddit rávvema, namalassii ahte Oslo bisuhuvvo hámis Oslo.
+Nammanevvohat árvala reivvestis ahte Oslo suohkan váldá atnui sámegiel nama suohkanii čuovvovaččat:  dsg  .
+Oslo suohkan  /  gielda  ~ jsg.  Oslo suohkan  ~ lsg.
+Oslon  tjïelte  (  Oslon  geažus -n ea genetiivageažus)  .
+Sámi giellavahkku
+Ii goassege leat Giellavahkku ja sámegielat ná bures fuomášuvvon servodagas.
+Sámediggi oinnii diibmá pandemiija oktavuođas ahte olahit olbmuide filmmaiguin.
+Dan dihte diŋgui Sámediggi 11 filmma Giellavahkkui.
+Sámediggi lea atnán ollu resurssaid čalmmustahttit Giellavahku sosiála mediaid bokte.
+Mii oaidnit ahte dat lea mielde čalmmustahttime Giellavahku viidát.
+Ollislaččat oaidná Sámediggi ahte Norgga servodat lea gearggus dahkat eanet Giellavahku oktavuođas nu guhká go Sámedikkis leat resurssat sin láidestit ja veahkehit.
+Sámedikkis lea maid vejolašvuohta oažžut ovttasbarggu stuorit aktevrraiguin, jus buori áiggis oččodišgoahtit ovttasbarggu.
+""",
+            ],
+            [
+                ("Møte med Tana kommune", "Čoahkkin Deanu gielddain"),
+                (
+                    "Sametinget avholdt et digitalt møte med Tana kommune 5.november 2021.",
+                    "Sámediggi doalai digitála čoahkkima Deanu gielddain skábmamánu 5. beaivvi 2021.",
+                ),
+                (
+                    "Møte var om at Tana kommune har behov for et mye større tospråklighetstilskudd enn det de bevilges av Sametinget.",
+                    "Čoahkkin lei Deanu gieldda guovttegielatvuođadoarjaga dárbbuid birra mat leat olu eambbo go doarjja maid Sámediggi juolluda.",
+                ),
+                (
+                    "Sametingsrådene Mikkel Eskil Mikkelsen og Runar Myrnes Balto var med på møtet.",
+                    "Sámediggeráđit Mikkel Eskil Mikkelsen ja Runar Myrnes Balto searvvaiga čoahkkimii.",
+                ),
+                ("", "( FUOM!"),
+                (
+                    "",
+                    "ii dárbbaš jorgalit dan mii lea ruoksadin , teaksta lei čállojuvvon guovtti gillii, bijan dušše dása vai ii láhppo )",
+                ),
+                ("Samisk språkuke", "Sámi báikenammanevvohat"),
+                (
+                    "",
+                    "Báikenammanevvohat lea sádden álgorávvemiid Gáivuonas, Sáččás ja Ulbbis , ja loahpalaš rávvemiid Mátta-Várjjagis, Loabágis ja Rørosas.",
+                ),
+                (
+                    "",
+                    "Sámediggi lea maid dán áigodagas sádden ođđa vástádusa Oslo suohkana jearaldahkii, mas bivde sámegiel nama Oslo gávpogii.",
+                ),
+                (
+                    "",
+                    "Duogážin dán áššis lea ahte nammanevvohaga vuosttaš rávvema geažil šattai dát mediaáššin, ja nammanevvohat válljii guorahallat ášši ođđasit.",
+                ),
+                (
+                    "",
+                    "Nammanevvohat lea dál čađahan ođđa nammafágalaš guorahallama, ja boađusin lea ahte nammanevvohat doalaha ovddit rávvema, namalassii ahte Oslo bisuhuvvo hámis Oslo.",
+                ),
+                (
+                    "",
+                    "Nammanevvohat árvala reivvestis ahte Oslo suohkan váldá atnui sámegiel nama suohkanii čuovvovaččat: dsg .",
+                ),
+                ("", "Oslo suohkan / gielda ~ jsg. Oslo suohkan ~ lsg."),
+                ("", "Oslon tjïelte ( Oslon geažus -n ea genetiivageažus) ."),
+                (
+                    "Aldri noensinne har språkuka og samiske språk fått så mye oppmerksomhet i samfunnet.",
+                    "Sámi giellavahkku Ii goassege leat Giellavahkku ja sámegielat ná bures fuomášuvvon servodagas.",
+                ),
+                (
+                    "Sametinget så i fjor i forbindelse med pandemien at vi rekker ut til folk med filmer.",
+                    "Sámediggi oinnii diibmá pandemiija oktavuođas ahte olahit olbmuide filmmaiguin.",
+                ),
+                (
+                    "Derfor bestilte Sametinget 11 filmer til språkuka.",
+                    "Dan dihte diŋgui Sámediggi 11 filmma Giellavahkkui.",
+                ),
+                (
+                    "Sametinget har brukt mye ressurser på å synliggjøre språkuka via sosiale media.",
+                    "Sámediggi lea atnán ollu resurssaid čalmmustahttit Giellavahku sosiála mediaid bokte.",
+                ),
+                (
+                    "Vi ser at det er med en bredere synliggjøring av språkuka.",
+                    "Mii oaidnit ahte dat lea mielde čalmmustahttime Giellavahku viidát.",
+                ),
+                (
+                    "Helhetlig ser Sametinget at det Norske samfunnet er klare til å gjøre mer i forbindelse med språkuka så lenge Sametinget har ressurser til å veilede og hjelpe.",
+                    "Ollislaččat oaidná Sámediggi ahte Norgga servodat lea gearggus dahkat eanet Giellavahku oktavuođas nu guhká go Sámedikkis leat resurssat sin láidestit ja veahkehit.",
+                ),
+                (
+                    "Sametinget har også muligheter til å samarbeide med større aktører, hvis de begynner å planlegge i god tid.",
+                    "Sámedikkis lea maid vejolašvuohta oažžut ovttasbarggu stuorit aktevrraiguin, jus buori áiggis oččodišgoahtit ovttasbarggu.",
+                ),
+            ],
+        ),
+        (
+            "nob_concat",
+            [
+                """Fremmedspråk og norsk sidemål skriftlig – ikke obligatorisk
+Elever som har samisk som første- eller andrespråk, er fritatt i norsk sidemål skriftlig og i faget fremmedspråk.
+Elever med samisk som førstespråk eller andrespråk, er fritatt for opplæring og vurdering i norsk sidemål både på grunnskole og videregående opplæring, jf.Opplæringslova § 1-11.
+Fremmedspråk (eller språkfordypning eller arbeidslivsfag) er obligatorisk fag for alle unntatt for elever som har samisk som første- eller andrespråk på skolen.
+Disse har tre språkfag;
+samisk, norsk og engelsk, og de er fritatt fra dette både på grunnskolen og videregående opplæring, men de har likevel rett til å ha fremmedspråk dersom de ønsker det, jf. Forskrift til opplæringslova § 1-9 og 1-10.
+For å unngå mye ekstratimer for disse elevene, er det en bestemmelse for grunnskolen om at elever som velger fremmedspråk i tillegg til samisk, kan ha lavere minstetimetall i fremmedspråk på grunnskolen enn det som er det ordinære kravet for faget.
+Dersom en elev ønsker å ha fremmedspråk som fag på videregående, uten å ha hatt faget i grunnskolen, blir det godkjent at de fullfører nivå 1 på bare ett fremmedspråk på videregående opplæring.
+Elever uten samisk, skal fullføre nivå 1 og 2 i ett fremmedspråk, eller fullføre nivå 1 i to ulike fremmedspråk
+Mere opplysninger om organisering og timetall finner du på Utdanningsdirektoratets nettsider i Rundskriv om fag- og timefordeling.
+NB!
+Denne fornyes hvert år.
+""",
+                """Vierisgiella ja dárogiella siidogiella ii leat bákkolaš
+Oahppit geain lea sámegiella vuosttaš- dahje nubbingiellan, leat luvvejuvvon čálalaš dárogiella siidogielas ja vierisgiellafágas.
+Oahppit geain lea fága sámegiella vuosttašgiellan dahje sámegiella nubbingiellan, leat luvvejuvvon dárogiella siidogiella oahpahusas ja árvvoštallamis, gč. Oahpahusláhka § 1-11.
+Vierisgiella (dahje giellačiekŋudeapmi dahje bargoeallinfága) lea bákkolaš fága buohkaide earret ohppiide geain lea sámegiella vuosttaš- dahje nubbingiellan skuvllas.
+Sis leat golbma giellafága;
+sámegiella, dárogiella ja eŋgelasgiella, ja sii leat luvvejuvvon vierisgiellaoahpahusas sihke vuođđoskuvllas ja joatkkaoahpahusas, muhto sis lea vuoigatvuohta oažžut oahpu vierisgielas jus háliidit, gč. Oahpahuslága láhkaásahus §1-9 ja 1-10.
+Garvin dihte ahte dát oahppit šaddet váldit ollu liigediimmuid, de lea vuođđoskuvllas sierra njuolggadus ahte sáhttá leat unnit diibmolohku vierisgielas go dat dábálaš gáibádus fágas.
+Jus oahppit geain lea sámegiella vuosttaš- dahje nubbingiellan, háliidit vierisgiela fágan joatkkaoahpahusas, vaikko ii leat leamašan dát fága vuođđoskuvllas, de dohkkehuvvo ahte sii čađahit ovtta vierisgielas dási 1. Oahppit geain ii leat sámegiella, galget čađahit ovtta gielas dásiid 1 ja 2 dahje guovtti gielas dási 1.
+Eanet dieđuid organiserema ja diibmologuid birra gávnnat Utdanningsdirektoráhta neahttabáikkis čállosis: Rundskriv om fag- og timefordeling.
+Mearkkaš ahte dat ođastuvvo juohke jagi.
+""",
+            ],
+            [
+                (
+                    "Fremmedspråk og norsk sidemål skriftlig – ikke obligatorisk",
+                    "Vierisgiella ja dárogiella siidogiella ii leat bákkolaš",
+                ),
+                (
+                    "Elever som har samisk som første- eller andrespråk, er fritatt i norsk sidemål skriftlig og i faget fremmedspråk.",
+                    "Oahppit geain lea sámegiella vuosttaš- dahje nubbingiellan, leat luvvejuvvon čálalaš dárogiella siidogielas ja vierisgiellafágas.",
+                ),
+                (
+                    "Elever med samisk som førstespråk eller andrespråk, er fritatt for opplæring og vurdering i norsk sidemål både på grunnskole og videregående opplæring, jf.Opplæringslova § 1-11.",
+                    "Oahppit geain lea fága sámegiella vuosttašgiellan dahje sámegiella nubbingiellan, leat luvvejuvvon dárogiella siidogiella oahpahusas ja árvvoštallamis, gč. Oahpahusláhka § 1-11.",
+                ),
+                (
+                    "Fremmedspråk (eller språkfordypning eller arbeidslivsfag) er obligatorisk fag for alle unntatt for elever som har samisk som første- eller andrespråk på skolen.",
+                    "Vierisgiella (dahje giellačiekŋudeapmi dahje bargoeallinfága) lea bákkolaš fága buohkaide earret ohppiide geain lea sámegiella vuosttaš- dahje nubbingiellan skuvllas.",
+                ),
+                ("Disse har tre språkfag;", "Sis leat golbma giellafága;"),
+                (
+                    "samisk, norsk og engelsk, og de er fritatt fra dette både på grunnskolen og videregående opplæring, men de har likevel rett til å ha fremmedspråk dersom de ønsker det, jf. Forskrift til opplæringslova § 1-9 og 1-10.",
+                    "sámegiella, dárogiella ja eŋgelasgiella, ja sii leat luvvejuvvon vierisgiellaoahpahusas sihke vuođđoskuvllas ja joatkkaoahpahusas, muhto sis lea vuoigatvuohta oažžut oahpu vierisgielas jus háliidit, gč. Oahpahuslága láhkaásahus §1-9 ja 1-10.",
+                ),
+                (
+                    "For å unngå mye ekstratimer for disse elevene, er det en bestemmelse for grunnskolen om at elever som velger fremmedspråk i tillegg til samisk, kan ha lavere minstetimetall i fremmedspråk på grunnskolen enn det som er det ordinære kravet for faget.",
+                    "Garvin dihte ahte dát oahppit šaddet váldit ollu liigediimmuid, de lea vuođđoskuvllas sierra njuolggadus ahte sáhttá leat unnit diibmolohku vierisgielas go dat dábálaš gáibádus fágas.",
+                ),
+                (
+                    "Dersom en elev ønsker å ha fremmedspråk som fag på videregående, uten å ha hatt faget i grunnskolen, blir det godkjent at de fullfører nivå 1 på bare ett fremmedspråk på videregående opplæring. Elever uten samisk, skal fullføre nivå 1 og 2 i ett fremmedspråk, eller fullføre nivå 1 i to ulike fremmedspråk",
+                    "Jus oahppit geain lea sámegiella vuosttaš- dahje nubbingiellan, háliidit vierisgiela fágan joatkkaoahpahusas, vaikko ii leat leamašan dát fága vuođđoskuvllas, de dohkkehuvvo ahte sii čađahit ovtta vierisgielas dási 1. Oahppit geain ii leat sámegiella, galget čađahit ovtta gielas dásiid 1 ja 2 dahje guovtti gielas dási 1.",
+                ),
+                (
+                    "Mere opplysninger om organisering og timetall finner du på Utdanningsdirektoratets nettsider i Rundskriv om fag- og timefordeling.",
+                    "Eanet dieđuid organiserema ja diibmologuid birra gávnnat Utdanningsdirektoráhta neahttabáikkis čállosis: Rundskriv om fag- og timefordeling.",
+                ),
+                ("NB!", ""),
+                ("Denne fornyes hvert år.", "Mearkkaš ahte dat ođastuvvo juohke jagi."),
+            ],
+        ),
     ],
 )
 def test_suggest(
