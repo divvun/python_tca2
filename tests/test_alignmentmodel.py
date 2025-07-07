@@ -141,7 +141,7 @@ def test_find_dice_matches():
 
 def test_aelement_text():
     """Check that space is normalised in aelement.element"""
-    sentence = "9 Økonomiske, administrative og miljømessige konsekvenser"
+    sentence = "9 Økonomiske,  administrative og miljømessige konsekvenser"
 
     aelement = AlignmentElement(
         anchor_word_list=AnchorWordList(),

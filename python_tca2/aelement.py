@@ -69,9 +69,9 @@ class AlignmentElement:
         element_number: int,
     ) -> None:
         self.text_number = text_number
-        self.text = text
+        self.text = " ".join(text.split())
         self.element_number = element_number
-        self.length = len(text)
+        self.length = len(self.text)
         self.words = [
             rword
             for rword in [remove_special_characters(word) for word in text.split()]
