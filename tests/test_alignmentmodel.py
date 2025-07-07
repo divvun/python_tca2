@@ -1,4 +1,5 @@
 from dataclasses import asdict
+from pathlib import Path
 
 import pytest
 
@@ -206,11 +207,7 @@ def test_aligned_to_text_file():
 
 
 def load_anchor_words():
-    anchor_words = """1* / 1*, okta, ovtta
-mill, million* / milj, miljovdna*, miljovnna*
-Sametinget* / Sámedigg*, Sámedikk*
-om / birra
-"""
+    anchor_words = Path("tests", "anchor-nob-sme.txt").read_text(encoding="utf-8")
     anchor_word_list = alignmentmodel.AnchorWordList()
     anchor_word_list.entries = [
         AnchorWordListEntry(line.strip()) for line in anchor_words.splitlines()
