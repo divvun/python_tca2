@@ -21,6 +21,17 @@ class Aligned:
         if aligned_sentence_elements is not None:
             self.alignments.append(aligned_sentence_elements)
 
+    def complete_pairs(self) -> list[tuple[str, str]]:
+        """Create translation pairs.
+
+        Returns:
+            A list of tuples containing pairs of strings.
+        """
+        return [
+            to_string_tuple(aligned_sentence_elements)
+            for aligned_sentence_elements in self.alignments
+        ]
+
     def non_empty_pairs(self) -> list[tuple[str, str]]:
         """Create translation pairs containing non-empty strings.
 
