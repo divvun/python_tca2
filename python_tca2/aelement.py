@@ -1,5 +1,6 @@
 import json
 from dataclasses import asdict
+from typing import Any
 
 from python_tca2 import constants
 from python_tca2.anchorwordhits import AnchorWordHits
@@ -85,7 +86,7 @@ class AlignmentElement:
     def __str__(self):
         return json.dumps(self.to_json(), indent=0, ensure_ascii=False)
 
-    def to_json(self):
+    def to_json(self) -> dict[str, Any]:
         return {
             "text_number": self.text_number,
             "text": self.text,
