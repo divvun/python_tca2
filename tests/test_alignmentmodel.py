@@ -298,6 +298,41 @@ Boazodoallolága birra
                 ),
             ],
         ),
+        (
+            "government_document_without_first_sentence",
+            [
+                """Tilråding - regjeringen.no
+St.meld. nr. 55 (2000-2001)
+Om samepolitikken
+Tilråding
+Kommunal- og regionaldepartementet
+tilrår:
+Tilråding fra Kommunal- og regionaldepartementet av 31. august 2001 om samepolitikken blir sendt Stortinget.
+""",
+                """St.dieđ. nr. 55 (2000-2001)
+Sámepolitihka birra
+Ráva
+Gielda- ja guovlodepartemeanta
+ráđđe:
+Gielda- ja guovlodepartemeantta neavva addojuvvon borgemánu 31. 2001 sámepolitihka birra sáddejuvvo Stuorradiggái.
+""",
+            ],
+            [
+                ("Tilråding - regjeringen.no", ""),
+                ("St.meld. nr. 55 (2000-2001)", "St.dieđ. nr. 55 (2000-2001)"),
+                ("Om samepolitikken", "Sámepolitihka birra"),
+                ("Tilråding", "Ráva"),
+                (
+                    "Kommunal- og regionaldepartementet",
+                    "Gielda- ja guovlodepartemeanta",
+                ),
+                ("tilrår:", "ráđđe:"),
+                (
+                    "Tilråding fra Kommunal- og regionaldepartementet av 31. august 2001 om samepolitikken blir sendt Stortinget.",
+                    "Gielda- ja guovlodepartemeantta neavva addojuvvon borgemánu 31. 2001 sámepolitihka birra sáddejuvvo Stuorradiggái.",
+                ),
+            ],
+        ),
     ],
 )
 def test_suggest(
