@@ -550,8 +550,20 @@ def test_anchorword_hits():
     ]
     assert found_hits == [
         [
-            {"index": 0, "element_number": 0, "pos": 0, "word": "1"},
-            {"index": 1, "element_number": 0, "pos": 1, "word": "million"},
+            {"index": 3, "element_number": 0, "pos": 0, "word": "1"},
+            {"index": 312, "element_number": 0, "pos": 4, "word": "landbruket"},
+            {"index": 581, "element_number": 0, "pos": 2, "word": "kroner"},
+            {"index": 646, "element_number": 0, "pos": 1, "word": "million"},
+            {"index": 1038, "element_number": 0, "pos": 3, "word": "til"},
+            {"index": 1351, "element_number": 0, "pos": 6, "word": "arktisk"},
         ],
-        [{"index": 0, "element_number": 0, "pos": 0, "word": "1"}],
+        [
+            {"index": 3, "element_number": 0, "pos": 0, "word": "1"},
+            {"index": 312, "element_number": 0, "pos": 4, "word": "eanadollui"},
+            {"index": 370, "element_number": 0, "pos": 4, "word": "eanadollui"},
+            {"index": 586, "element_number": 0, "pos": 4, "word": "eanadollui"},
+            {"index": 1130, "element_number": 0, "pos": 2, "word": "ruvnno"},
+            {"index": 1197, "element_number": 0, "pos": 1, "word": "miljon"},
+            {"index": 1276, "element_number": 0, "pos": 4, "word": "eanadollui"},
+        ],
     ]
