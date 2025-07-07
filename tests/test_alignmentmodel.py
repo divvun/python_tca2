@@ -1,5 +1,7 @@
 from dataclasses import asdict
 
+import pytest
+
 from python_tca2 import alignmentmodel
 from python_tca2.aelement import AlignmentElement
 from python_tca2.aligned import Aligned
@@ -203,73 +205,6 @@ def test_aligned_to_text_file():
     ]
 
 
-# A simple test of the alignment model
-def test_suggest1():
-    strings = [
-        """Kanskje en innkjøpsordning for kvenskspråklig litteratur.
-Utvikling av undervisnings- og lærematerialer.
-""",
-        """Kvääninkielinen litteratuuri osto-oorninkhiin piian.
-Opetus- ja oppimateriaaliitten kehittäminen.
-""",
-    ]
-
-    model = alignmentmodel.AlignmentModel(
-        sentences_tuple=(strings[0].splitlines(), strings[1].splitlines()),
-        anchor_word_list=load_anchor_words(),
-    )
-    aligned = model.suggest_without_gui()
-
-    assert aligned.non_empty_pairs() == [
-        (
-            "Kanskje en innkjøpsordning for kvenskspråklig litteratur.",
-            "Kvääninkielinen litteratuuri osto-oorninkhiin piian.",
-        ),
-        (
-            "Utvikling av undervisnings- og lærematerialer.",
-            "Opetus- ja oppimateriaaliitten kehittäminen.",
-        ),
-    ]
-
-
-# A test of the alignment model, with different number of sentences
-def test_suggest2():
-    strings = [
-        """Når folk har gått på nybegynnerkursene hos enten instituttet eller universitetet, kan man tilby dem muligheten å få en mentor som de kan snakke kvensk med og gjøre aktiviteter med på kvensk.
-Motivere folk til å lære kvensk og vise dem at man får jobb med det, og at det er nok arbeid til alle.
-Forsøke selv å være gode forbilder.
-""",  # noqa: E501
-        """Ko ihmiset oon käynheet institutin tahi universiteetin alkukurssin, niin heile tarjothaan maholisuuen saaja menttorin, jonka kans puhhuut ja tehhä assiita kvääniksi Motiveerata ihmissii siihen ette oppiit kväänin kieltä ja näyttäät heile ette sillä saapi työn ja ette työtä oon nokko kaikile.
-Freistata itte olla hyvät esikuvat.
-""",  # noqa: E501
-    ]
-
-    model = alignmentmodel.AlignmentModel(
-        sentences_tuple=(strings[0].splitlines(), strings[1].splitlines()),
-        anchor_word_list=load_anchor_words(),
-    )
-    aligned = model.suggest_without_gui()
-
-    assert aligned.non_empty_pairs() == [
-        (
-            "Når folk har gått på nybegynnerkursene hos enten instituttet eller "
-            "universitetet, kan man tilby dem muligheten å få en mentor som de kan "
-            "snakke kvensk med og gjøre aktiviteter med på kvensk. Motivere folk "
-            "til å lære kvensk og vise dem at man får jobb med det, og at det er "
-            "nok arbeid til alle.",
-            "Ko ihmiset oon käynheet institutin tahi universiteetin alkukurssin, "
-            "niin heile tarjothaan maholisuuen saaja menttorin, jonka kans puhhuut "
-            "ja tehhä assiita kvääniksi Motiveerata ihmissii siihen ette oppiit "
-            "kväänin kieltä ja näyttäät heile ette sillä saapi työn ja ette työtä "
-            "oon nokko kaikile.",
-        ),
-        (
-            "Forsøke selv å være gode forbilder.",
-            "Freistata itte olla hyvät esikuvat.",
-        ),
-    ]
-
-
 def load_anchor_words():
     anchor_words = """1* / 1*, okta, ovtta
 mill, million* / milj, miljovdna*, miljovnna*
@@ -284,33 +219,101 @@ om / birra
     return anchor_word_list
 
 
-def test_suggest3():
-    strings = [
-        """- regjeringen.no
+@pytest.mark.parametrize(
+    ("test_name", "input_strings", "expected_pairs"),
+    [
+        (
+            "simple_alignment",
+            [
+                """Kanskje en innkjøpsordning for kvenskspråklig litteratur.
+Utvikling av undervisnings- og lærematerialer.
+""",
+                """Kvääninkielinen litteratuuri osto-oorninkhiin piian.
+Opetus- ja oppimateriaaliitten kehittäminen.
+""",
+            ],
+            [
+                (
+                    "Kanskje en innkjøpsordning for kvenskspråklig litteratur.",
+                    "Kvääninkielinen litteratuuri osto-oorninkhiin piian.",
+                ),
+                (
+                    "Utvikling av undervisnings- og lærematerialer.",
+                    "Opetus- ja oppimateriaaliitten kehittäminen.",
+                ),
+            ],
+        ),
+        (
+            "different_sentence_count",
+            [
+                """Når folk har gått på nybegynnerkursene hos enten instituttet eller universitetet, kan man tilby dem muligheten å få en mentor som de kan snakke kvensk med og gjøre aktiviteter med på kvensk.
+Motivere folk til å lære kvensk og vise dem at man får jobb med det, og at det er nok arbeid til alle.
+Forsøke selv å være gode forbilder.
+""",  # noqa: E501
+                """Ko ihmiset oon käynheet institutin tahi universiteetin alkukurssin, niin heile tarjothaan maholisuuen saaja menttorin, jonka kans puhhuut ja tehhä assiita kvääniksi Motiveerata ihmissii siihen ette oppiit kväänin kieltä ja näyttäät heile ette sillä saapi työn ja ette työtä oon nokko kaikile.
+Freistata itte olla hyvät esikuvat.
+""",  # noqa: E501
+            ],
+            [
+                (
+                    "Når folk har gått på nybegynnerkursene hos enten "
+                    "instituttet eller universitetet, kan man tilby dem "
+                    "muligheten å få en mentor som de kan snakke kvensk med "
+                    "og gjøre aktiviteter med på kvensk. Motivere folk til "
+                    "å lære kvensk og vise dem at man får jobb med det, og "
+                    "at det er nok arbeid til alle.",
+                    "Ko ihmiset oon käynheet institutin tahi universiteetin "
+                    "alkukurssin, niin heile tarjothaan maholisuuen saaja "
+                    "menttorin, jonka kans puhhuut ja tehhä assiita kvääniksi "
+                    "Motiveerata ihmissii siihen ette oppiit kväänin kieltä "
+                    "ja näyttäät heile ette sillä saapi työn ja ette työtä "
+                    "oon nokko kaikile.",
+                ),
+                (
+                    "Forsøke selv å være gode forbilder.",
+                    "Freistata itte olla hyvät esikuvat.",
+                ),
+            ],
+        ),
+        (
+            "government_document",
+            [
+                """- regjeringen.no
 Ot.prp. nr. 25 (2006-2007)
 Om lov om reindrift (reindriftsloven)
 """,
-        """- regjeringen.no
+                """- regjeringen.no
 Boazodoallolága birra
 """,
-    ]
-
+            ],
+            [
+                (
+                    "- regjeringen.no",
+                    "- regjeringen.no",
+                ),
+                (
+                    "Ot.prp. nr. 25 (2006-2007)",
+                    "",
+                ),
+                (
+                    "Om lov om reindrift (reindriftsloven)",
+                    "Boazodoallolága birra",
+                ),
+            ],
+        ),
+    ],
+)
+def test_suggest(
+    test_name: str, input_strings: list[str], expected_pairs: list[tuple[str, str]]
+):
+    """Test the alignment model with various input configurations."""
     model = alignmentmodel.AlignmentModel(
-        sentences_tuple=(strings[0].splitlines(), strings[1].splitlines()),
+        sentences_tuple=(input_strings[0].splitlines(), input_strings[1].splitlines()),
         anchor_word_list=load_anchor_words(),
     )
     aligned = model.suggest_without_gui()
 
-    assert aligned.non_empty_pairs() == [
-        (
-            "- regjeringen.no",
-            "- regjeringen.no",
-        ),
-        (
-            "Om lov om reindrift (reindriftsloven)",
-            "Boazodoallolága birra",
-        ),
-    ]
+    assert aligned.complete_pairs() == expected_pairs, f"Test '{test_name}' failed"
 
 
 def test_anchorword_hits():
