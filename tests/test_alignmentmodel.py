@@ -206,8 +206,8 @@ def test_aligned_to_text_file():
     ]
 
 
-def load_anchor_words():
-    anchor_words = Path("tests", "anchor-nob-sme.txt").read_text(encoding="utf-8")
+def load_anchor_words(lang_pair: str) -> AnchorWordList:
+    anchor_words = Path("tests", f"anchor-{lang_pair}.txt").read_text(encoding="utf-8")
     anchor_word_list = alignmentmodel.AnchorWordList()
     anchor_word_list.entries = [
         AnchorWordListEntry(line.strip()) for line in anchor_words.splitlines()
@@ -217,10 +217,11 @@ def load_anchor_words():
 
 
 @pytest.mark.parametrize(
-    ("test_name", "input_strings", "expected_pairs"),
+    ("test_name", "lang_pair", "input_strings", "expected_pairs"),
     [
         (
             "simple_alignment",
+            "nob-sme",
             [
                 """Kanskje en innkjøpsordning for kvenskspråklig litteratur.
 Utvikling av undervisnings- og lærematerialer.
@@ -242,6 +243,7 @@ Opetus- ja oppimateriaaliitten kehittäminen.
         ),
         (
             "different_sentence_count",
+            "nob-sme",
             [
                 """Når folk har gått på nybegynnerkursene hos enten instituttet eller universitetet, kan man tilby dem muligheten å få en mentor som de kan snakke kvensk med og gjøre aktiviteter med på kvensk.
 Motivere folk til å lære kvensk og vise dem at man får jobb med det, og at det er nok arbeid til alle.
@@ -274,6 +276,7 @@ Freistata itte olla hyvät esikuvat.
         ),
         (
             "government_document",
+            "nob-sme",
             [
                 """- regjeringen.no
 Ot.prp. nr. 25 (2006-2007)
@@ -300,6 +303,7 @@ Boazodoallolága birra
         ),
         (
             "government_document_without_first_sentence",
+            "nob-sme",
             [
                 """Tilråding - regjeringen.no
 St.meld. nr. 55 (2000-2001)
@@ -335,6 +339,7 @@ Gielda- ja guovlodepartemeantta neavva addojuvvon borgemánu 31. 2001 sámepolit
         ),
         (
             "big_sentence_diff",
+            "nob-sme",
             [
                 """Møte med Tana kommune
 Sametinget avholdt et digitalt møte med Tana kommune 5.november 2021.
@@ -447,6 +452,7 @@ Sámedikkis lea maid vejolašvuohta oažžut ovttasbarggu stuorit aktevrraiguin,
         ),
         (
             "nob_concat",
+            "nob-sme",
             [
                 """Fremmedspråk og norsk sidemål skriftlig – ikke obligatorisk
 Elever som har samisk som første- eller andrespråk, er fritatt i norsk sidemål skriftlig og i faget fremmedspråk.
@@ -514,12 +520,15 @@ Mearkkaš ahte dat ođastuvvo juohke jagi.
     ],
 )
 def test_suggest(
-    test_name: str, input_strings: list[str], expected_pairs: list[tuple[str, str]]
+    test_name: str,
+    lang_pair: str,
+    input_strings: list[str],
+    expected_pairs: list[tuple[str, str]],
 ):
     """Test the alignment model with various input configurations."""
     model = alignmentmodel.AlignmentModel(
         sentences_tuple=(input_strings[0].splitlines(), input_strings[1].splitlines()),
-        anchor_word_list=load_anchor_words(),
+        anchor_word_list=load_anchor_words(lang_pair),
     )
     aligned = model.suggest_without_gui()
 
@@ -534,7 +543,7 @@ def test_anchorword_hits():
 
     model = alignmentmodel.AlignmentModel(
         sentences_tuple=(strings[0].splitlines(), strings[1].splitlines()),
-        anchor_word_list=load_anchor_words(),
+        anchor_word_list=load_anchor_words("nob-sme"),
     )
     interesting = ElementInfoToBeCompared(
         aligned_sentence_elements=model.get_aligned_sentence_elements(
