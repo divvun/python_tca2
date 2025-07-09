@@ -517,6 +517,27 @@ Mearkkaš ahte dat ođastuvvo juohke jagi.
                 ("Denne fornyes hvert år.", "Mearkkaš ahte dat ođastuvvo juohke jagi."),
             ],
         ),
+        (
+            "second_sentence_moves_compared_to_java",
+            "sme-nob",
+            [
+                """Vel eanet borramuš!
+Juovllat lea borramuš áigi, muhto giđđat maid šaddá sáhka borramuša birra.""",
+                """Enda mer mat... 
+til våren
+Julen er tid for mat, men også til våren blir det mye mat.""",
+            ],
+            [
+                (
+                    "Vel eanet borramuš!",
+                    "Enda mer mat... til våren",
+                ),
+                (
+                    "Juovllat lea borramuš áigi, muhto giđđat maid šaddá sáhka borramuša birra.",
+                    "Julen er tid for mat, men også til våren blir det mye mat.",
+                ),
+            ],
+        ),
     ],
 )
 def test_suggest(
