@@ -43,7 +43,7 @@ class PathCandidate:
         """
         current = list(self.position)
 
-        if current == pos:
+        if tuple(current) == pos:
             return True
 
         for step in reversed(self.alignment_suggestions):
@@ -51,7 +51,7 @@ class PathCandidate:
             # treffer den noe som helst med det?
             current[0] -= step[0]
             current[1] -= step[1]
-            if current == pos:
+            if tuple(current) == pos:
                 return True
 
         return False
