@@ -51,6 +51,10 @@ class PathCandidate:
             # treffer den noe som helst med det?
             current[0] -= step[0]
             current[1] -= step[1]
+
+            if current[0] < pos[0] or current[1] < pos[1]:
+                return False
+
             if tuple(current) == pos:
                 return True
 
