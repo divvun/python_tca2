@@ -389,7 +389,7 @@ def get_best_path_score(
     Returns:
         The score as a float for the given position, None if not found.
     """
-    if any(pos < 0 for pos in position):
+    if any(pos == 0 for pos in position):
         return constants.BEST_PATH_SCORE_BAD
 
     best_path_score_key = ",".join(str(pos) for pos in position)
