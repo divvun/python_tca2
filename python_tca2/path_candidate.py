@@ -22,6 +22,7 @@ class PathCandidate:
     score: float = 0.0
     alignment_suggestions: list[AlignmentSuggestion] = field(default_factory=list)
     end: bool = False
+    removed: bool = False
 
     @property
     def normalized_score(self) -> float:
