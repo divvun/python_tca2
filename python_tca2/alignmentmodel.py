@@ -206,6 +206,7 @@ class AlignmentModel:
             path_candidates.entries = [
                 npc for npc in next_path_candidates.entries if not npc.removed
             ]
+            print(f"\tnext length: {len(path_candidates.entries)}")
 
         return path_candidates
 
@@ -350,14 +351,7 @@ class AlignmentModel:
             new_position, best_path_scores=best_path_scores
         )
 
-        # HACK:
-        # The score is multiplied by 1000000000 to give the same result as the original
-        # Java code. The difference is probably due to differences in floating-point
-        # arithmetic between Python and Java.
-        if (
-            best_path_score is not None
-            and new_score * 1000000000 <= best_path_score * 1000000000
-        ):
+        if best_path_score is not None and new_score <= best_path_score:
             return None
 
         set_best_path_score(
