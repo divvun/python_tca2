@@ -1,7 +1,7 @@
 import json
 from collections import Counter
 from itertools import product
-from typing import Iterator
+from typing import Any, Iterator
 
 from python_tca2 import (
     constants,
@@ -23,7 +23,7 @@ class ElementInfoToBeCompared:
         self.aligned_sentence_elements = aligned_sentence_elements
         self.score: float | None = None
 
-    def to_json(self):
+    def to_json(self) -> dict[str, Any]:
         return {
             "score": self.get_score(),
             "info": [

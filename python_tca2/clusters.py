@@ -1,5 +1,6 @@
 import json
 from copy import deepcopy
+from typing import Any
 
 from python_tca2.cluster import Cluster
 from python_tca2.ref import Ref
@@ -12,7 +13,7 @@ class Clusters:
     def __str__(self) -> str:
         return json.dumps(self.to_json(), indent=0, ensure_ascii=False)
 
-    def to_json(self) -> dict:
+    def to_json(self) -> dict[str, list[dict[str, Any]]]:
         return {"clusters": [cluster.to_json() for cluster in self.clusters]}
 
     def create_and_add_cluster(
@@ -44,7 +45,7 @@ class Clusters:
         Args:
             ref: The reference to be added to a cluster.
         """
-        overlaps = []
+        overlaps: list[Cluster] = []
         for cluster in self.clusters:
             if cluster.matches(ref):
                 overlaps.append(cluster)

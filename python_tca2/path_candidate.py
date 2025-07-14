@@ -20,7 +20,9 @@ class PathCandidate:
 
     position: tuple[int, int]
     score: float = 0.0
-    alignment_suggestions: list[AlignmentSuggestion] = field(default_factory=list)
+    alignment_suggestions: list[AlignmentSuggestion] = field(
+        default_factory=list[AlignmentSuggestion]
+    )
     end: bool = False
     removed: bool = False
 

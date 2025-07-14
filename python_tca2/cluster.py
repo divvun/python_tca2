@@ -1,5 +1,6 @@
 import json
 from dataclasses import asdict
+from typing import Any
 
 from python_tca2 import constants
 from python_tca2.ref import Ref
@@ -9,7 +10,7 @@ class Cluster:
     def __init__(self) -> None:
         self.refs: list[Ref] = []
 
-    def to_json(self) -> dict:
+    def to_json(self) -> dict[str, list[dict[str, Any]]]:
         return {"refs": [asdict(ref) for ref in self.refs]}
 
     def __str__(self) -> str:
