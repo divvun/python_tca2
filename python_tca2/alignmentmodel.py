@@ -179,18 +179,17 @@ class AlignmentModel:
                     path_candidate,
                     best_path_scores=best_path_scores,
                 ):
-                    if new_path_candidate is not None:
-                        if not new_path_candidate.end:
-                            pos = new_path_candidate.position
-                            for p in path_candidates:
-                                if p.has_hit(pos):
-                                    p.removed = True
-                            for npc in next_path_candidates:
-                                if npc.has_hit(pos):
-                                    npc.removed = True
-                            next_path_candidates.append(new_path_candidate)
-                        elif new_path_candidate not in next_path_candidates:
-                            next_path_candidates.append(new_path_candidate)
+                    if not new_path_candidate.end:
+                        pos = new_path_candidate.position
+                        for p in path_candidates:
+                            if p.has_hit(pos):
+                                p.removed = True
+                        for npc in next_path_candidates:
+                            if npc.has_hit(pos):
+                                npc.removed = True
+                        next_path_candidates.append(new_path_candidate)
+                    elif new_path_candidate not in next_path_candidates:
+                        next_path_candidates.append(new_path_candidate)
 
             if not next_path_candidates:
                 return path_candidates
@@ -203,7 +202,7 @@ class AlignmentModel:
         self,
         path_candidate: PathCandidate,
         best_path_scores: dict[str, float],
-    ) -> Iterator[PathCandidate | None]:
+    ) -> Iterator[PathCandidate]:
         """Extends the current path in the alignment process.
 
         This method iterates through a list of steps to attempt extending the
@@ -222,12 +221,14 @@ class AlignmentModel:
         for step in alignment_suggestion.generate_alignment_suggestions(
             len(self.parallel_documents)
         ):
-            yield self.extend_path_with_step(
+            candidate = self.extend_path_with_step(
                 old_position=path_candidate.position,
                 old_score=path_candidate.score,
                 alignment_suggestions=path_candidate.alignment_suggestions + [step],
                 best_path_scores=best_path_scores,
             )
+            if candidate is not None:
+                yield candidate
 
     @cache
     def get_step_score(
