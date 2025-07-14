@@ -174,30 +174,38 @@ class AlignmentModel:
         for _ in range(self.max_path_length):
             next_path_candidates = PathCandidates([])
             for path_candidate in path_candidates.entries:
-                if not path_candidate.end:
-                    for new_path_candidate in self.extend_current_path(
-                        path_candidate,
-                        best_path_scores=best_path_scores,
-                    ):
-                        if new_path_candidate is not None:
-                            pos = new_path_candidate.position
-                            path_candidates.entries = [
-                                path_candidate
-                                for path_candidate in path_candidates.entries
-                                if not path_candidate.has_hit(pos)
-                            ]
-                            next_path_candidates.entries = [
-                                path_candidate
-                                for path_candidate in next_path_candidates.entries
-                                if not path_candidate.has_hit(pos)
-                            ]
-                            if new_path_candidate not in next_path_candidates.entries:
-                                next_path_candidates.entries.append(new_path_candidate)
+                if not path_candidate.removed:
+                    if not path_candidate.end:
+                        for new_path_candidate in self.extend_current_path(
+                            path_candidate,
+                            best_path_scores=best_path_scores,
+                        ):
+                            if new_path_candidate is not None:
+                                if not new_path_candidate.end:
+                                    pos = new_path_candidate.position
+                                    for p in path_candidates.entries:
+                                        if p.has_hit(pos):
+                                            p.removed = True
+                                    for npc in next_path_candidates.entries:
+                                        if npc.has_hit(pos):
+                                            npc.removed = True
+                                    next_path_candidates.entries.append(
+                                        new_path_candidate
+                                    )
+                                elif (
+                                    new_path_candidate
+                                    not in next_path_candidates.entries
+                                ):
+                                    next_path_candidates.entries.append(
+                                        new_path_candidate
+                                    )
 
             if not next_path_candidates.entries:
                 return path_candidates
 
-            path_candidates = next_path_candidates
+            path_candidates.entries = [
+                npc for npc in next_path_candidates.entries if not npc.removed
+            ]
 
         return path_candidates
 
