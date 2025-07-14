@@ -9,7 +9,6 @@ from python_tca2.alignment_suggestion import AlignmentSuggestion
 from python_tca2.anchorwordlist import AnchorWordList
 from python_tca2.elementinfotobecompared import ElementInfoToBeCompared
 from python_tca2.path_candidate import PathCandidate
-from python_tca2.path_candidates import PathCandidates
 
 
 class AlignmentModel:
@@ -114,8 +113,8 @@ class AlignmentModel:
         path_candidates = self.extend_alignment_paths(start_position=start_position)
 
         if (
-            len(path_candidates.entries) < constants.NUM_FILES
-            and not path_candidates.entries[0].alignment_suggestions
+            len(path_candidates) < constants.NUM_FILES
+            and not path_candidates[0].alignment_suggestions
         ):
             # When the length of the queue list is less than the number of files
             # and the first path in the queue list has no steps, then aligment
@@ -125,7 +124,7 @@ class AlignmentModel:
         return self.select_best_alignment_suggestion(path_candidates)
 
     def select_best_alignment_suggestion(
-        self, path_candidates: PathCandidates
+        self, path_candidates: list[PathCandidate]
     ) -> AlignmentSuggestion | None:
         """Selects the best alignment suggestion based on normalized scores.
 
@@ -149,7 +148,7 @@ class AlignmentModel:
                 candidate_entry.normalized_score,
                 candidate_entry.alignment_suggestions[0],
             )
-            for candidate_entry in path_candidates.entries
+            for candidate_entry in path_candidates
         ]
 
         return max(score_step_list, key=lambda x: x[0])[1] if score_step_list else None
@@ -157,7 +156,7 @@ class AlignmentModel:
     def extend_alignment_paths(
         self,
         start_position: tuple[int, int],
-    ) -> PathCandidates:
+    ) -> list[PathCandidate]:
         """Lengthens paths in a text pair alignment process.
 
         This method iteratively extends paths in the alignment model until no
@@ -170,10 +169,10 @@ class AlignmentModel:
             A QueueList containing the final set of extended paths.
         """
         best_path_scores: dict[str, float] = {}
-        path_candidates = PathCandidates([PathCandidate(position=start_position)])
+        path_candidates = [PathCandidate(position=start_position)]
         for _ in range(self.max_path_length):
-            next_path_candidates = PathCandidates([])
-            for path_candidate in path_candidates.entries:
+            next_path_candidates: list[PathCandidate] = []
+            for path_candidate in path_candidates:
                 if not path_candidate.removed:
                     if not path_candidate.end:
                         for new_path_candidate in self.extend_current_path(
@@ -183,30 +182,20 @@ class AlignmentModel:
                             if new_path_candidate is not None:
                                 if not new_path_candidate.end:
                                     pos = new_path_candidate.position
-                                    for p in path_candidates.entries:
+                                    for p in path_candidates:
                                         if p.has_hit(pos):
                                             p.removed = True
-                                    for npc in next_path_candidates.entries:
+                                    for npc in next_path_candidates:
                                         if npc.has_hit(pos):
                                             npc.removed = True
-                                    next_path_candidates.entries.append(
-                                        new_path_candidate
-                                    )
-                                elif (
-                                    new_path_candidate
-                                    not in next_path_candidates.entries
-                                ):
-                                    next_path_candidates.entries.append(
-                                        new_path_candidate
-                                    )
+                                    next_path_candidates.append(new_path_candidate)
+                                elif new_path_candidate not in next_path_candidates:
+                                    next_path_candidates.append(new_path_candidate)
 
-            if not next_path_candidates.entries:
+            if not next_path_candidates:
                 return path_candidates
 
-            path_candidates.entries = [
-                npc for npc in next_path_candidates.entries if not npc.removed
-            ]
-            print(f"\tnext length: {len(path_candidates.entries)}")
+            path_candidates = [npc for npc in next_path_candidates if not npc.removed]
 
         return path_candidates
 
