@@ -186,24 +186,23 @@ class AlignmentModel:
         self, best_path_scores: dict[str, float], path_candidates: list[PathCandidate]
     ) -> list[PathCandidate]:
         next_path_candidates: list[PathCandidate] = []
-        for path_candidate in [
-            pc for pc in path_candidates if not (pc.removed or pc.end)
-        ]:
-            for new_path_candidate in self.extend_current_path(
-                path_candidate,
-                best_path_scores=best_path_scores,
-            ):
-                if not new_path_candidate.end:
-                    pos = new_path_candidate.position
-                    for p in path_candidates:
-                        if p.has_hit(pos):
-                            p.removed = True
-                    for npc in next_path_candidates:
-                        if npc.has_hit(pos):
-                            npc.removed = True
-                    next_path_candidates.append(new_path_candidate)
-                elif new_path_candidate not in next_path_candidates:
-                    next_path_candidates.append(new_path_candidate)
+        for path_candidate in path_candidates:
+            if not path_candidate.removed and not path_candidate.end:
+                for new_path_candidate in self.extend_current_path(
+                    path_candidate,
+                    best_path_scores=best_path_scores,
+                ):
+                    if not new_path_candidate.end:
+                        pos = new_path_candidate.position
+                        for p in path_candidates:
+                            if p.has_hit(pos):
+                                p.removed = True
+                        for npc in next_path_candidates:
+                            if npc.has_hit(pos):
+                                npc.removed = True
+                        next_path_candidates.append(new_path_candidate)
+                    elif new_path_candidate not in next_path_candidates:
+                        next_path_candidates.append(new_path_candidate)
 
         return [npc for npc in next_path_candidates if not npc.removed]
 
