@@ -200,16 +200,24 @@ class AlignmentModel:
             best_path_scores=best_path_scores,
         ):
             if not new_path_candidate.end:
-                pos = new_path_candidate.position
-                for p in path_candidates:
-                    if p.has_hit(pos):
-                        p.removed = True
-                for npc in next_path_candidates:
-                    if npc.has_hit(pos):
-                        npc.removed = True
+                self.mark_candidates_as_removed(
+                    new_path_candidate.position,
+                    [path_candidates, next_path_candidates],
+                )
                 next_path_candidates.append(new_path_candidate)
             elif new_path_candidate not in next_path_candidates:
                 next_path_candidates.append(new_path_candidate)
+
+    def mark_candidates_as_removed(
+        self,
+        position: tuple[int, int],
+        candidate_lists: list[list[PathCandidate]],
+    ) -> None:
+        """Mark candidates as removed if they hit the specified position."""
+        for candidate_list in candidate_lists:
+            for candidate in candidate_list:
+                if candidate.has_hit(position):
+                    candidate.removed = True
 
     def extend_current_path(
         self,
