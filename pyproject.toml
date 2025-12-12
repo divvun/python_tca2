@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "python-tca2"
-version = "1.0.0"
+version = "1.0.1"
 description = "Align plain text files using the TCA2 algorithm"
 authors = ["Børre Gaup <albbas@gmail.com>"]
 readme = "README.md"
@@ -23,7 +23,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.ruff]
 line-length = 88
-target-version = "py311"
+target-version = "py310"
 
 [tool.ruff.lint]
 select = [
