@@ -1,31 +1,35 @@
 from pathlib import Path
+from typing import Literal
 
-import click
+import typer
 
 from python_tca2 import alignmentmodel
 from python_tca2.anchorwordlist import AnchorWordList
 from python_tca2.tmx import write_tmx_result
 
+app = typer.Typer()
 
-@click.command()
-@click.option("--anchor_file", default=None, help="Anchor word list file")
-@click.option(
-    "--output_format",
-    default="html",
-    type=click.Choice(["tmx", "html"]),
-    help="Output format",
-)
-@click.argument("text_file1")
-@click.argument("text_file2")
-@click.argument("text_file1_lang")
-@click.argument("text_file2_lang")
-def main(  # noqa: PLR0913
-    anchor_file: str | None,
-    output_format: str,
-    text_file1: str,
-    text_file2: str,
-    text_file1_lang: str,
-    text_file2_lang: str,
+
+@app.command()
+def main(
+    text_file1: str = typer.Option(
+        ..., "--text-file1", help="First text file"
+    ),
+    text_file2: str = typer.Option(
+        ..., "--text-file2", help="Second text file"
+    ),
+    text_file1_lang: str = typer.Option(
+        ..., "--text-file1-lang", help="Language code for first text file"
+    ),
+    text_file2_lang: str = typer.Option(
+        ..., "--text-file2-lang", help="Language code for second text file"
+    ),
+    anchor_file: str | None = typer.Option(
+        None, "--anchor-file", help="Anchor word list file"
+    ),
+    output_format: Literal["tmx", "html"] = typer.Option(
+        "html", "--output-format", help="Output format"
+    ),
 ) -> None:
     anchor_word_list = AnchorWordList()
     if anchor_file is not None:
@@ -47,3 +51,7 @@ def main(  # noqa: PLR0913
         non_empty_sentence_pairs=aligned.non_empty_pairs(),
         output_format=output_format,
     )
+
+
+if __name__ == "__main__":
+    app()

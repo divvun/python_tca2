@@ -7,8 +7,8 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.10"
-click = "^8.1.7"
 lxml = "^6.0.2"
+typer = "^0.20.0"
 
 [tool.poetry.group.dev.dependencies]
 ruff = "^0.14.9"
@@ -16,7 +16,7 @@ pytest = "^9.0.2"
 types-lxml = "^2025.11.25"
 
 [tool.poetry.scripts]
-tca2 = "python_tca2.alignment:main"
+tca2 = "python_tca2.alignment:app"
 
 [build-system]
 requires = ["poetry-core"]
