@@ -13,6 +13,7 @@ lxml = "^6.0.2"
 [tool.poetry.group.dev.dependencies]
 ruff = "^0.14.9"
 pytest = "^9.0.2"
+types-lxml = "^2025.11.25"
 
 [tool.poetry.scripts]
 tca2 = "python_tca2.alignment:main"
