@@ -5,18 +5,7 @@ from python_tca2.alignment_suggestion import AlignmentSuggestion
 
 @dataclass
 class PathCandidate:
-    """Represents an entry in a processing queue.
-
-    Attributes:
-        path: The path associated with the queue entry.
-        score: The score or priority of the queue entry.
-        removed: Indicates if the entry has been removed.
-        end: Indicates if the entry marks the end of the queue.
-
-    Properties:
-        normalized_score (float): The normalized score of the queue entry, calculated as
-            the score divided by the length of the path in sentences.
-    """
+    """A candidate alignment path being extended during beam search."""
 
     position: tuple[int, int]
     score: float = 0.0
@@ -28,30 +17,17 @@ class PathCandidate:
 
     @property
     def normalized_score(self) -> float:
-        """Calculates the normalized score of the queue entry.
-
-        Returns:
-            float: The normalized score.
-        """
+        """Score divided by the path length in sentences, for comparing paths."""
         return self.score / self.get_length_in_sentences()
 
     def has_hit(self, pos: tuple[int, ...]) -> bool:
-        """Determines if a given position is a hit in the queue.
-
-        Args:
-            pos: The position to check.
-
-        Returns:
-            bool: True if the position is a hit, False otherwise.
-        """
+        """Check whether this path passed through pos at any point along its history."""
         current = list(self.position)
 
         if tuple(current) == pos:
             return True
 
         for step in reversed(self.alignment_suggestions):
-            # hvorfor trekkes step.increment fra current?
-            # treffer den noe som helst med det?
             current[0] -= step[0]
             current[1] -= step[1]
 
@@ -64,14 +40,7 @@ class PathCandidate:
         return False
 
     def get_length_in_sentences(self):
-        """Calculate the total number of sentences across all alignment suggestions.
-
-        Iterates through the alignment suggestions and sums up the sentence increments
-        for each text to compute the total count.
-
-        Returns:
-            The total count of sentences.
-        """
+        """Total sentence increments across all alignment suggestions on this path."""
         return sum(
             increment_number
             for alignment_suggestion in self.alignment_suggestions
