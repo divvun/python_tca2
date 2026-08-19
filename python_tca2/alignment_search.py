@@ -1,3 +1,17 @@
+"""Beam search over candidate sentence alignments.
+
+Beam search explores several plausible alignment paths in parallel instead of
+committing greedily to the first locally-best step, while pruning down to the
+surviving best candidates at each step instead of exploring every possibility.
+
+A PathCandidate is one such path: a sequence of AlignmentSuggestion steps
+advancing through both texts, with an accumulated score. Each round, every
+live candidate is extended by one step in every possible shape (1-1, 1-2,
+2-1, ...); candidates that reach a position already reached by an
+equal-or-better path are pruned (see get_best_path_score/set_best_path_score
+and _BeamRound). The step with the best normalized score is then committed.
+"""
+
 from typing import Iterator
 
 from python_tca2 import alignment_suggestion, constants
@@ -152,12 +166,12 @@ class AlignmentSearch:
     ) -> float:
         """Calculate (and cache) the score for the elements at the given slices."""
         if slices not in self._step_scores:
-            eitbc = CandidateAlignment(
+            candidate_alignment = CandidateAlignment(
                 aligned_sentence_elements=self.get_aligned_sentence_elements(
                     slices=slices,
                 )
             )
-            self._step_scores[slices] = eitbc.get_score()
+            self._step_scores[slices] = candidate_alignment.get_score()
 
         return self._step_scores[slices]
 
