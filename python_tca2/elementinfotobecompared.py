@@ -16,6 +16,24 @@ from python_tca2.clusters import Clusters
 from python_tca2.ref import Ref
 
 
+def _enumerate_words(alignment_element: AlignmentElement) -> Iterable[tuple[int, str]]:
+    return enumerate(alignment_element.words)
+
+
+def _enumerate_scoring_characters(
+    alignment_element: AlignmentElement,
+) -> Iterable[tuple[int, str]]:
+    return ((0, char) for char in alignment_element.scoring_characters)
+
+
+def _is_matching_proper_name(word1: str, word2: str) -> bool:
+    return bool(word2) and word1[0].isupper() and word2[0].isupper() and word1 == word2
+
+
+def _words_equal(word1: str, word2: str) -> bool:
+    return word1 == word2
+
+
 class ElementInfoToBeCompared:
     def __init__(
         self,
@@ -140,71 +158,82 @@ class ElementInfoToBeCompared:
                     info2.words[y],
                     constants.DEFAULT_DICE_MIN_COUNTING_SCORE,
                 ):
-                    yield Ref(
-                        match_type=match.DICE,
-                        weight=constants.DEFAULT_DICEPHRASE_MATCH_WEIGHT,
-                        text_number=info1.text_number,
-                        element_number=info1.element_number,
-                        pos=x,
-                        length=1,
-                        word=info1.words[x],
-                    ), Ref(
-                        match_type=match.DICE,
-                        weight=constants.DEFAULT_DICEPHRASE_MATCH_WEIGHT,
-                        text_number=info2.text_number,
-                        element_number=info2.element_number,
-                        pos=y,
-                        length=1,
-                        word=info2.words[y],
+                    yield (
+                        Ref(
+                            match_type=match.DICE,
+                            weight=constants.DEFAULT_DICEPHRASE_MATCH_WEIGHT,
+                            text_number=info1.text_number,
+                            element_number=info1.element_number,
+                            pos=x,
+                            length=1,
+                            word=info1.words[x],
+                        ),
+                        Ref(
+                            match_type=match.DICE,
+                            weight=constants.DEFAULT_DICEPHRASE_MATCH_WEIGHT,
+                            text_number=info2.text_number,
+                            element_number=info2.element_number,
+                            pos=y,
+                            length=1,
+                            word=info2.words[y],
+                        ),
                     )
                 next_word1 = info1.words[x + 1] if x < len(info1.words) - 1 else ""
-                if len(
-                    next_word1
-                ) >= constants.DEFAULT_DICE_MIN_WORD_LENGTH and similarity_utils.dice_match_word_with_phrase(
-                    phrase=(info1.words[x], next_word1),
-                    word=info2.words[y],
-                ):
-                    yield Ref(
-                        match_type=match.DICE,
-                        weight=constants.DEFAULT_DICEPHRASE_MATCH_WEIGHT,
-                        text_number=info1.text_number,
-                        element_number=info1.element_number,
-                        pos=x,
-                        length=2,
-                        word=" ".join(info1.words[x : x + 2]),
-                    ), Ref(
-                        match_type=match.DICE,
-                        weight=constants.DEFAULT_DICEPHRASE_MATCH_WEIGHT,
-                        text_number=info2.text_number,
-                        element_number=info2.element_number,
-                        pos=y,
-                        length=1,
+                if (
+                    len(next_word1) >= constants.DEFAULT_DICE_MIN_WORD_LENGTH
+                    and similarity_utils.dice_match_word_with_phrase(
+                        phrase=(info1.words[x], next_word1),
                         word=info2.words[y],
+                    )
+                ):
+                    yield (
+                        Ref(
+                            match_type=match.DICE,
+                            weight=constants.DEFAULT_DICEPHRASE_MATCH_WEIGHT,
+                            text_number=info1.text_number,
+                            element_number=info1.element_number,
+                            pos=x,
+                            length=2,
+                            word=" ".join(info1.words[x : x + 2]),
+                        ),
+                        Ref(
+                            match_type=match.DICE,
+                            weight=constants.DEFAULT_DICEPHRASE_MATCH_WEIGHT,
+                            text_number=info2.text_number,
+                            element_number=info2.element_number,
+                            pos=y,
+                            length=1,
+                            word=info2.words[y],
+                        ),
                     )
 
                 next_word2 = info2.words[y + 1] if y < len(info2.words) - 1 else ""
-                if len(
-                    next_word2
-                ) >= constants.DEFAULT_DICE_MIN_WORD_LENGTH and similarity_utils.dice_match_word_with_phrase(
-                    word=info1.words[x],
-                    phrase=(info2.words[y], next_word2),
-                ):
-                    yield Ref(
-                        match_type=match.DICE,
-                        weight=constants.DEFAULT_DICEPHRASE_MATCH_WEIGHT,
-                        text_number=info1.text_number,
-                        element_number=info1.element_number,
-                        pos=x,
-                        length=1,
+                if (
+                    len(next_word2) >= constants.DEFAULT_DICE_MIN_WORD_LENGTH
+                    and similarity_utils.dice_match_word_with_phrase(
                         word=info1.words[x],
-                    ), Ref(
-                        match_type=match.DICE,
-                        weight=constants.DEFAULT_DICEPHRASE_MATCH_WEIGHT,
-                        text_number=info2.text_number,
-                        element_number=info2.element_number,
-                        pos=y,
-                        length=2,
-                        word=" ".join(info2.words[y : y + 2]),
+                        phrase=(info2.words[y], next_word2),
+                    )
+                ):
+                    yield (
+                        Ref(
+                            match_type=match.DICE,
+                            weight=constants.DEFAULT_DICEPHRASE_MATCH_WEIGHT,
+                            text_number=info1.text_number,
+                            element_number=info1.element_number,
+                            pos=x,
+                            length=1,
+                            word=info1.words[x],
+                        ),
+                        Ref(
+                            match_type=match.DICE,
+                            weight=constants.DEFAULT_DICEPHRASE_MATCH_WEIGHT,
+                            text_number=info2.text_number,
+                            element_number=info2.element_number,
+                            pos=y,
+                            length=2,
+                            word=" ".join(info2.words[y : y + 2]),
+                        ),
                     )
 
     def get_these_hits(
@@ -319,11 +348,8 @@ class ElementInfoToBeCompared:
         return self._find_word_pair_matches(
             match_type=match.PROPER,
             weight=constants.DEFAULT_PROPERNAME_MATCH_WEIGHT,
-            extractor=lambda alignment_element: enumerate(alignment_element.words),
-            predicate=lambda word1, word2: bool(word2)
-            and word1[0].isupper()
-            and word2[0].isupper()
-            and word1 == word2,
+            extractor=_enumerate_words,
+            predicate=_is_matching_proper_name,
         )
 
     def are_words_numbers_and_equal(self, word1: str, word2: str) -> bool:
@@ -337,7 +363,7 @@ class ElementInfoToBeCompared:
         return self._find_word_pair_matches(
             match_type=match.NUMBER,
             weight=constants.DEFAULT_NUMBER_MATCH_WEIGHT,
-            extractor=lambda alignment_element: enumerate(alignment_element.words),
+            extractor=_enumerate_words,
             predicate=self.are_words_numbers_and_equal,
         )
 
@@ -345,10 +371,8 @@ class ElementInfoToBeCompared:
         return self._find_word_pair_matches(
             match_type=match.SCORING_CHARACTERS,
             weight=constants.DEFAULT_SCORING_CHARACTER_MATCH_WEIGHT,
-            extractor=lambda alignment_element: (
-                (0, char) for char in alignment_element.scoring_characters
-            ),
-            predicate=lambda word1, word2: word1 == word2,
+            extractor=_enumerate_scoring_characters,
+            predicate=_words_equal,
         )
 
     def find_hits(self) -> list[list[AnchorWordHit]]:
