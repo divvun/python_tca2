@@ -2,6 +2,7 @@ from dataclasses import asdict
 from pathlib import Path
 
 import pytest
+from lxml import etree
 
 from python_tca2 import alignmentmodel
 from python_tca2.aelement import AlignmentElement
@@ -13,6 +14,7 @@ from python_tca2.aligned_sentence_elements import (
 from python_tca2.anchorwordlist import AnchorWordList
 from python_tca2.anchorwordlistentry import AnchorWordListEntry
 from python_tca2.elementinfotobecompared import ElementInfoToBeCompared
+from python_tca2.tmx import write_streaming_result
 
 
 def test_get_score():
@@ -204,6 +206,70 @@ def test_aligned_to_text_file():
             "Sámi giellavahkku Ii goassege leat Giellavahkku ja sámegielat ná bures fuomášuvvon servodagas.",  # noqa: E501
         ),
     ]
+
+
+def test_streaming_alignment_uses_bounded_input_window():
+    line_count = 100
+    sentences = tuple(
+        "\n".join(f"Sentence {index}" for index in range(line_count))
+        for _ in range(2)
+    )
+    model = alignmentmodel.AlignmentModel(
+        sentences_tuple=tuple(
+            iter(sentence.splitlines()) for sentence in sentences
+        ),
+        anchor_word_list=AnchorWordList(),
+    )
+
+    aligned_pairs = [to_string_tuple(alignment) for alignment in model.iter_alignment_elements()]
+
+    assert aligned_pairs == [
+        (f"Sentence {index}", f"Sentence {index}") for index in range(line_count)
+    ]
+    assert model.max_buffer_size <= (
+        2 * alignmentmodel.constants.MAX_PATH_LENGTH * 2
+    )
+
+
+def test_write_streaming_result_writes_tmx_and_html(tmp_path):
+    alignment = AlignedSentenceElements(
+        (
+            [
+                AlignmentElement(
+                    anchor_word_list=AnchorWordList(),
+                    text="First & sentence",
+                    text_number=0,
+                    element_number=0,
+                )
+            ],
+            [
+                AlignmentElement(
+                    anchor_word_list=AnchorWordList(),
+                    text="Second sentence",
+                    text_number=1,
+                    element_number=0,
+                )
+            ],
+        )
+    )
+    file_path = tmp_path / "first.txt"
+
+    write_streaming_result(
+        file1_path=file_path,
+        language_pair=("nob", "sme"),
+        alignments=iter([alignment]),
+        output_format="tmx",
+    )
+    write_streaming_result(
+        file1_path=file_path,
+        language_pair=("nob", "sme"),
+        alignments=iter([alignment]),
+        output_format="html",
+    )
+
+    tmx = etree.parse(tmp_path / "first.tmx")
+    assert tmx.xpath("//seg/text()") == ["First & sentence", "Second sentence"]
+    assert "&amp;" in (tmp_path / "first.html").read_text(encoding="utf-8")
 
 
 def load_anchor_words(lang_pair: str) -> AnchorWordList:
@@ -530,9 +596,11 @@ def test_suggest(
         sentences_tuple=(input_strings[0].splitlines(), input_strings[1].splitlines()),
         anchor_word_list=load_anchor_words(lang_pair),
     )
-    aligned = model.suggest_without_gui()
+    aligned_pairs = [
+        to_string_tuple(alignment) for alignment in model.iter_alignment_elements()
+    ]
 
-    assert aligned.complete_pairs() == expected_pairs, f"Test '{test_name}' failed"
+    assert aligned_pairs == expected_pairs, f"Test '{test_name}' failed"
 
 
 @pytest.mark.skip(reason="Must find a more stable way to compute scores")
@@ -581,9 +649,11 @@ Julen er tid for mat, men også til våren blir det mye mat.""",
         sentences_tuple=(input_strings[0].splitlines(), input_strings[1].splitlines()),
         anchor_word_list=load_anchor_words(lang_pair),
     )
-    aligned = model.suggest_without_gui()
+    aligned_pairs = [
+        to_string_tuple(alignment) for alignment in model.iter_alignment_elements()
+    ]
 
-    assert aligned.complete_pairs() == expected_pairs, f"Test '{test_name}' failed"
+    assert aligned_pairs == expected_pairs, f"Test '{test_name}' failed"
 
 
 def test_anchorword_hits():

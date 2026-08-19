@@ -1,9 +1,16 @@
+from html import escape
 from pathlib import Path
+from typing import Iterable
 
 from lxml import etree
 
+from python_tca2.aligned_sentence_elements import (
+    AlignedSentenceElements,
+    to_string_tuple,
+)
 
-def add_filename_id(filename):
+
+def add_filename_id(filename: str) -> etree.Element:
     """Add the tmx filename as an prop element in the header."""
     prop = etree.Element("prop")
     prop.attrib["type"] = "x-filename"
@@ -12,7 +19,7 @@ def add_filename_id(filename):
     return prop
 
 
-def make_tuv(line: str, lang: str) -> etree._Element:
+def make_tuv(line: str, lang: str) -> etree.Element:
     """Make a tuv element given an input line and a lang variable."""
     tuv = etree.Element("tuv")
     tuv.attrib["{http://www.w3.org/XML/1998/namespace}lang"] = lang
@@ -23,7 +30,7 @@ def make_tuv(line: str, lang: str) -> etree._Element:
     return tuv
 
 
-def make_tmx_header(filename: str, lang: str) -> etree._Element:
+def make_tmx_header(filename: str, lang: str) -> etree.Element:
     """Make a tmx header based on the lang variable."""
     header = etree.Element("header")
 
@@ -39,7 +46,7 @@ def make_tmx_header(filename: str, lang: str) -> etree._Element:
     return header
 
 
-def make_tu(tuv_infos: tuple[tuple[str, str], ...]) -> etree._Element:
+def make_tu(tuv_infos: tuple[tuple[str, str], ...]) -> etree.Element:
     """Make a tmx tu element based on line and language tuples."""
     transl_unit = etree.Element("tu")
 
@@ -49,75 +56,54 @@ def make_tu(tuv_infos: tuple[tuple[str, str], ...]) -> etree._Element:
     return transl_unit
 
 
-def make_tmx(
-    file1_name: str,
-    language_pair: tuple[str, str],
-    aligned_text_pairs: list[tuple[str, str]],
-) -> etree._Element:
-    """Make tmx file based on the output of the aligner."""
-    tmx = etree.Element("tmx")
-    header = make_tmx_header(
-        file1_name,
-        language_pair[0],
-    )
-    tmx.append(header)
-
-    body = etree.SubElement(tmx, "body")
-    for sentence_pair in aligned_text_pairs:
-        transl_unit = make_tu(
-            tuple(
-                (sentence, language)
-                for (sentence, language) in zip(
-                    sentence_pair, language_pair, strict=True
-                )
-            )
-        )
-        body.append(transl_unit)
-
-    return tmx
-
-
-def make_html(
-    tmx: etree._Element,
-) -> etree._XSLTResultTree:
-    """Make tmx file based on the output of the aligner."""
-    html2tmx_transformer = etree.XSLT(
-        etree.parse(Path(__file__).parent / "xslt/tmx2html.xsl")
-    )
-    return html2tmx_transformer(tmx)
-
-
-def write_tmx_result(
+def write_streaming_result(
     file1_path: Path,
     language_pair: tuple[str, str],
-    non_empty_sentence_pairs: list[tuple[str, str]],
+    alignments: Iterable[AlignedSentenceElements],
     output_format: str = "tmx",
 ) -> None:
-    """Write the tmx file to disk."""
-
-    tmx_result = (
-        make_tmx(
-            file1_name=file1_path.stem,
-            language_pair=language_pair,
-            aligned_text_pairs=non_empty_sentence_pairs,
-        )
-        if output_format == "tmx"
-        else make_html(
-            make_tmx(
-                file1_name=file1_path.stem,
-                language_pair=language_pair,
-                aligned_text_pairs=non_empty_sentence_pairs,
-            )
-        )
-    )
-
+    """Write aligned sentence pairs incrementally without retaining the corpus."""
     output_path = file1_path.with_suffix(f".{output_format}")
-    output_path.write_bytes(
-        etree.tostring(
-            tmx_result,
-            pretty_print=True,
-            encoding="utf-8",
-            xml_declaration=True,
-        )
-    )
+
+    if output_format == "tmx":
+        with etree.xmlfile(output_path, encoding="utf-8") as output:
+            output.write_declaration()
+            with output.element("tmx"):
+                output.write(make_tmx_header(file1_path.stem, language_pair[0]))
+                with output.element("body"):
+                    for alignment in alignments:
+                        if all(alignment):
+                            output.write(
+                                make_tu(
+                                    tuple(
+                                        (sentence, language)
+                                        for sentence, language in zip(
+                                            to_string_tuple(alignment),
+                                            language_pair,
+                                            strict=True,
+                                        )
+                                    )
+                                )
+                            )
+    elif output_format == "html":
+        with output_path.open("w", encoding="utf-8") as output:
+            output.write(
+                '<?xml version="1.0" encoding="UTF-8"?>\n'
+                "<html><head><meta charset=\"UTF-8\"/></head>"
+                "<body><table border=\"2\">\n"
+            )
+            for alignment in alignments:
+                if all(alignment):
+                    first, second = to_string_tuple(alignment)
+                    output.write(
+                        "<tr><td>"
+                        f"{escape(first)}"
+                        "</td><td>"
+                        f"{escape(second)}"
+                        "</td></tr>\n"
+                    )
+            output.write("</table></body></html>\n")
+    else:
+        raise ValueError(f"Unsupported output format: {output_format}")
+
     print(f"Wrote {output_path}")

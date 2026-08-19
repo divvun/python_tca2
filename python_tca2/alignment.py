@@ -5,7 +5,7 @@ import typer
 
 from python_tca2 import alignmentmodel
 from python_tca2.anchorwordlist import AnchorWordList
-from python_tca2.tmx import write_tmx_result
+from python_tca2.tmx import write_streaming_result
 
 app = typer.Typer()
 
@@ -35,22 +35,19 @@ def main(
     if anchor_file is not None:
         anchor_word_list.load_from_file(anchor_file)
 
-    aligner = alignmentmodel.AlignmentModel(
-        sentences_tuple=(
-            Path(text_file1).read_text().splitlines(),
-            Path(text_file2).read_text().splitlines(),
-        ),
-        anchor_word_list=anchor_word_list,
-    )
-
-    aligned = aligner.suggest_without_gui()
-
-    write_tmx_result(
-        file1_path=Path(text_file1),
-        language_pair=(text_file1_lang, text_file2_lang),
-        non_empty_sentence_pairs=aligned.non_empty_pairs(),
-        output_format=output_format,
-    )
+    with Path(text_file1).open(encoding="utf-8") as first_file, Path(
+        text_file2
+    ).open(encoding="utf-8") as second_file:
+        aligner = alignmentmodel.AlignmentModel(
+            sentences_tuple=(first_file, second_file),
+            anchor_word_list=anchor_word_list,
+        )
+        write_streaming_result(
+            file1_path=Path(text_file1),
+            language_pair=(text_file1_lang, text_file2_lang),
+            alignments=aligner.iter_alignment_elements(),
+            output_format=output_format,
+        )
 
 
 if __name__ == "__main__":
