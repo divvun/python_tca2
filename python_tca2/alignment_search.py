@@ -8,6 +8,27 @@ from python_tca2.path_candidate import PathCandidate
 from python_tca2.rolling_document import RollingDocument
 
 
+class _BeamRound:
+    """Collects the candidates produced while extending one beam-search step."""
+
+    def __init__(self, current: list[PathCandidate]) -> None:
+        self._current = current
+        self.next: list[PathCandidate] = []
+
+    def add(self, candidate: PathCandidate) -> None:
+        if not candidate.end:
+            self._mark_hits_as_removed(candidate.position)
+            self.next.append(candidate)
+        elif candidate not in self.next:
+            self.next.append(candidate)
+
+    def _mark_hits_as_removed(self, position: tuple[int, int]) -> None:
+        for candidate_list in (self._current, self.next):
+            for candidate in candidate_list:
+                if candidate.has_hit(position):
+                    candidate.removed = True
+
+
 class AlignmentSearch:
     """Search alignments over a bounded pair of rolling documents."""
 
@@ -88,61 +109,29 @@ class AlignmentSearch:
         start_position: tuple[int, int],
     ) -> list[PathCandidate]:
         """Extend paths until no further extensions are possible or the max length is reached."""
-        best_path_scores: dict[str, float] = {}
+        best_path_scores: dict[tuple[int, ...], float] = {}
         path_candidates = [PathCandidate(position=start_position)]
         for _ in range(self._max_path_length):
-            next_path_candidates: list[PathCandidate] = []
+            beam_round = _BeamRound(path_candidates)
             for path_candidate in path_candidates:
                 if not path_candidate.removed and not path_candidate.end:
-                    self.make_new_path_candidates(
-                        best_path_scores,
+                    for new_candidate in self.extend_current_path(
                         path_candidate,
-                        path_candidates,
-                        next_path_candidates,
-                    )
+                        best_path_scores=best_path_scores,
+                    ):
+                        beam_round.add(new_candidate)
 
-            if not next_path_candidates:
+            if not beam_round.next:
                 return path_candidates
 
-            path_candidates = [npc for npc in next_path_candidates if not npc.removed]
+            path_candidates = [c for c in beam_round.next if not c.removed]
 
         return path_candidates
-
-    def make_new_path_candidates(
-        self,
-        best_path_scores: dict[str, float],
-        path_candidate: PathCandidate,
-        path_candidates: list[PathCandidate],
-        next_path_candidates: list[PathCandidate],
-    ) -> None:
-        for new_path_candidate in self.extend_current_path(
-            path_candidate,
-            best_path_scores=best_path_scores,
-        ):
-            if not new_path_candidate.end:
-                self.mark_candidates_as_removed(
-                    new_path_candidate.position,
-                    [path_candidates, next_path_candidates],
-                )
-                next_path_candidates.append(new_path_candidate)
-            elif new_path_candidate not in next_path_candidates:
-                next_path_candidates.append(new_path_candidate)
-
-    def mark_candidates_as_removed(
-        self,
-        position: tuple[int, int],
-        candidate_lists: list[list[PathCandidate]],
-    ) -> None:
-        """Mark candidates as removed if they hit the specified position."""
-        for candidate_list in candidate_lists:
-            for candidate in candidate_list:
-                if candidate.has_hit(position):
-                    candidate.removed = True
 
     def extend_current_path(
         self,
         path_candidate: PathCandidate,
-        best_path_scores: dict[str, float],
+        best_path_scores: dict[tuple[int, ...], float],
     ) -> Iterator[PathCandidate]:
         """Yield each way the current path can be extended by one alignment step."""
         for step in alignment_suggestion.generate_alignment_suggestions(
@@ -177,7 +166,7 @@ class AlignmentSearch:
         old_position: tuple[int, int],
         old_score: float,
         alignment_suggestions: list[AlignmentSuggestion],
-        best_path_scores: dict[str, float],
+        best_path_scores: dict[tuple[int, ...], float],
     ) -> PathCandidate | None:
         """Extend a path with a new step, returning the extended candidate if it improves on the best known score for its position."""
         current_alignment_step = alignment_suggestions[-1]
@@ -232,13 +221,13 @@ class AlignmentSearch:
         """Yield committed alignments while retaining only the search horizon."""
         start_position = (0, 0)
         while (
-            alignment_suggestion := self.retrieve_alignment_suggestion(
+            suggestion := self.retrieve_alignment_suggestion(
                 start_position=start_position
             )
         ) is not None:
             next_position = (
-                start_position[0] + alignment_suggestion[0],
-                start_position[1] + alignment_suggestion[1],
+                start_position[0] + suggestion[0],
+                start_position[1] + suggestion[1],
             )
             yield self.get_aligned_sentence_elements(
                 slices=(
@@ -255,19 +244,19 @@ class AlignmentSearch:
 
 
 def set_best_path_score(
-    position: tuple[int, ...], score: float, best_path_scores: dict[str, float]
+    position: tuple[int, ...],
+    score: float,
+    best_path_scores: dict[tuple[int, ...], float],
 ) -> None:
     """Record the score for a path reaching the given position."""
-    best_path_score_key = ",".join(str(pos) for pos in position)
-    best_path_scores[best_path_score_key] = score
+    best_path_scores[position] = score
 
 
 def get_best_path_score(
-    position: tuple[int, ...], best_path_scores: dict[str, float]
+    position: tuple[int, ...], best_path_scores: dict[tuple[int, ...], float]
 ) -> float | None:
     """Return the best known score for the given position, or None if unseen."""
     if any(pos == 0 for pos in position):
         return constants.BEST_PATH_SCORE_BAD
 
-    best_path_score_key = ",".join(str(pos) for pos in position)
-    return best_path_scores.get(best_path_score_key)
+    return best_path_scores.get(position)
