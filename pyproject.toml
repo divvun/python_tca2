@@ -7,13 +7,13 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.10"
-lxml = "^6.0.2"
-typer = "^0.20.0"
+lxml = "^6.1.2"
+typer = "^0.27.1"
 
 [tool.poetry.group.dev.dependencies]
-ruff = "^0.14.9"
-pytest = "^9.0.2"
-types-lxml = "^2025.11.25"
+ruff = "^0.16.3"
+pytest = "^9.1.1"
+types-lxml = "^2026.2.16"
 
 [tool.poetry.scripts]
 tca2 = "python_tca2.alignment:app"
