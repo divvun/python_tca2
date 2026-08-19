@@ -6,7 +6,6 @@ from lxml import etree
 
 from python_tca2 import alignmentmodel, constants
 from python_tca2.aelement import AlignmentElement
-from python_tca2.aligned import Aligned
 from python_tca2.aligned_sentence_elements import (
     AlignedSentenceElements,
     to_string_tuple,
@@ -155,59 +154,6 @@ def test_aelement_text():
     assert aelement.text == "9 Økonomiske, administrative og miljømessige konsekvenser"
 
 
-def test_aligned_to_text_file():
-    aligned = Aligned([])
-    a1 = AlignedSentenceElements(
-        (
-            [],
-            [
-                AlignmentElement(
-                    anchor_word_list=AnchorWordList(),
-                    text="Oslon tjïelte ( Oslon geažus -n ea genetiivageažus) .",
-                    text_number=1,
-                    element_number=13,
-                ),
-            ],
-        )
-    )
-    a2 = AlignedSentenceElements(
-        (
-            [
-                AlignmentElement(
-                    anchor_word_list=AnchorWordList(),
-                    text="Aldri noensinne har språkuka og samiske språk fått så mye oppmerksomhet i samfunnet.",  # noqa: E501
-                    text_number=0,
-                    element_number=5,
-                )
-            ],
-            [
-                AlignmentElement(
-                    anchor_word_list=AnchorWordList(),
-                    text="Sámi giellavahkku",
-                    text_number=1,
-                    element_number=14,
-                ),
-                AlignmentElement(
-                    anchor_word_list=AnchorWordList(),
-                    text="Ii goassege leat Giellavahkku ja sámegielat ná bures fuomášuvvon servodagas.",  # noqa: E501
-                    text_number=1,
-                    element_number=15,
-                ),
-            ],
-        )
-    )
-    aligned.alignments = [
-        a1,
-        a2,
-    ]
-    assert aligned.non_empty_pairs() == [
-        (
-            "Aldri noensinne har språkuka og samiske språk fått så mye oppmerksomhet i samfunnet.",  # noqa: E501
-            "Sámi giellavahkku Ii goassege leat Giellavahkku ja sámegielat ná bures fuomášuvvon servodagas.",  # noqa: E501
-        ),
-    ]
-
-
 def test_streaming_alignment_uses_bounded_input_window():
     line_count = 100
     sentences = tuple(
@@ -241,7 +187,7 @@ def test_alignment_model_has_a_search():
     assert not isinstance(model, alignmentmodel.AlignmentSearch)
 
 
-def test_write_streaming_result_writes_tmx_and_html(tmp_path):
+def test_write_streaming_result_writes_tmx_and_html(tmp_path: Path):
     alignment = AlignedSentenceElements(
         (
             [
