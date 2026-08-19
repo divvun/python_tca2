@@ -10,9 +10,48 @@ from python_tca2.elementinfotobecompared import ElementInfoToBeCompared
 from python_tca2.path_candidate import PathCandidate
 
 
-class _AlignmentSearch:
-    scoring_characters = constants.DEFAULT_SCORING_CHARACTERS
-    max_path_length = constants.MAX_PATH_LENGTH
+class AlignmentSearch:
+    """Search alignments over a bounded pair of rolling documents."""
+
+    def __init__(
+        self,
+        documents: tuple["RollingDocument", "RollingDocument"],
+    ) -> None:
+        self._documents = documents
+        self._step_scores: dict[tuple[slice, slice], float] = {}
+        self._max_path_length = constants.MAX_PATH_LENGTH
+
+    @property
+    def max_buffer_size(self) -> int:
+        return sum(document.max_buffer_size for document in self._documents)
+
+    def get_aligned_sentence_elements(
+        self, slices: tuple[slice, slice]
+    ) -> AlignedSentenceElements:
+        return (
+            self._documents[0].get_slice(slices[0]),
+            self._documents[1].get_slice(slices[1]),
+        )
+
+    def will_reach_both_ends(self, position: tuple[int, int]) -> bool:
+        return all(
+            document.is_past_end(current_position)
+            for current_position, document in zip(
+                position,
+                self._documents,
+                strict=True,
+            )
+        )
+
+    def will_reach_one_end(self, position: tuple[int, int]) -> bool:
+        return any(
+            document.is_past_end(current_position)
+            for current_position, document in zip(
+                position,
+                self._documents,
+                strict=True,
+            )
+        )
 
     def retrieve_alignment_suggestion(
         self,
@@ -79,7 +118,7 @@ class _AlignmentSearch:
         """
         best_path_scores: dict[str, float] = {}
         path_candidates = [PathCandidate(position=start_position)]
-        for _ in range(self.max_path_length):
+        for _ in range(self._max_path_length):
             next_path_candidates: list[PathCandidate] = []
             for path_candidate in path_candidates:
                 if not path_candidate.removed and not path_candidate.end:
@@ -149,7 +188,7 @@ class _AlignmentSearch:
                 the path cannot be extended further.
         """
         for step in alignment_suggestion.generate_alignment_suggestions(
-            len(self.parallel_documents)
+            len(self._documents)
         ):
             candidate = self.extend_path_with_step(
                 old_position=path_candidate.position,
@@ -182,45 +221,6 @@ class _AlignmentSearch:
             self._step_scores[slices] = eitbc.get_score()
 
         return self._step_scores[slices]
-
-    def will_reach_both_ends(self, position: tuple[int, ...]) -> bool:
-        """Check if the current position will reach the end of the texts.
-
-        Args:
-            position: The current position in the alignment.
-
-        Returns:
-            True if the end of the texts are reached, False otherwise.
-        """
-        return all(
-            current_position > len(n)
-            for current_position, n in zip(
-                position,
-                self.parallel_documents,
-                strict=True,
-            )
-        )
-
-    def will_reach_one_end(
-        self,
-        position: tuple[int, ...],
-    ) -> bool:
-        """Check if the current position will reach the end of a text.
-
-        Args:
-            position: The current position in the alignment.
-
-        Returns:
-            True if at least the end of one of the texts is reached, False otherwise.
-        """
-        return any(
-            current_position > len(n)
-            for current_position, n in zip(
-                position,
-                self.parallel_documents,
-                strict=True,
-            )
-        )
 
     def extend_path_with_step(
         self,
@@ -286,6 +286,31 @@ class _AlignmentSearch:
             score=new_score,
             alignment_suggestions=alignment_suggestions,
         )
+
+    def iter_alignment_elements(self) -> Iterator[AlignedSentenceElements]:
+        """Yield committed alignments while retaining only the search horizon."""
+        start_position = (0, 0)
+        while (
+            alignment_suggestion := self.retrieve_alignment_suggestion(
+                start_position=start_position
+            )
+        ) is not None:
+            next_position = (
+                start_position[0] + alignment_suggestion[0],
+                start_position[1] + alignment_suggestion[1],
+            )
+            yield self.get_aligned_sentence_elements(
+                slices=(
+                    slice(start_position[0], next_position[0]),
+                    slice(start_position[1], next_position[1]),
+                )
+            )
+            for document, position in zip(
+                self._documents, next_position, strict=True
+            ):
+                document.discard_before(position)
+            self._step_scores.clear()
+            start_position = next_position
 
 
 class RollingDocument:
@@ -358,7 +383,7 @@ class RollingDocument:
             self._buffer_start += 1
 
 
-class AlignmentModel(_AlignmentSearch):
+class AlignmentModel:
     """An alignment model backed by bounded rolling input windows."""
 
     def __init__(
@@ -366,73 +391,32 @@ class AlignmentModel(_AlignmentSearch):
         sentences_tuple: tuple[Iterable[str], Iterable[str]],
         anchor_word_list: AnchorWordList,
     ) -> None:
-        self.anchor_word_list = anchor_word_list
-        self._step_scores: dict[tuple[slice, slice], float] = {}
-        self.parallel_documents = tuple(
+        documents: tuple[RollingDocument, RollingDocument] = (
             RollingDocument(
-                sentences=sentences,
+                sentences=sentences_tuple[0],
                 anchor_word_list=anchor_word_list,
-                text_number=text_number,
-            )
-            for text_number, sentences in enumerate(sentences_tuple)
+                text_number=0,
+            ),
+            RollingDocument(
+                sentences=sentences_tuple[1],
+                anchor_word_list=anchor_word_list,
+                text_number=1,
+            ),
         )
+        self.search = AlignmentSearch(documents)
 
     @property
     def max_buffer_size(self) -> int:
-        return sum(document.max_buffer_size for document in self.parallel_documents)
+        return self.search.max_buffer_size
 
     def get_aligned_sentence_elements(
         self, slices: tuple[slice, slice]
     ) -> AlignedSentenceElements:
-        return (
-            self.parallel_documents[0].get_slice(slices[0]),
-            self.parallel_documents[1].get_slice(slices[1]),
-        )
-
-    def will_reach_both_ends(self, position: tuple[int, ...]) -> bool:
-        return all(
-            document.is_past_end(current_position)
-            for current_position, document in zip(
-                position,
-                self.parallel_documents,
-                strict=True,
-            )
-        )
-
-    def will_reach_one_end(self, position: tuple[int, ...]) -> bool:
-        return any(
-            document.is_past_end(current_position)
-            for current_position, document in zip(
-                position,
-                self.parallel_documents,
-                strict=True,
-            )
-        )
+        """Return elements in the current search window for the supplied slices."""
+        return self.search.get_aligned_sentence_elements(slices)
 
     def iter_alignment_elements(self) -> Iterator[AlignedSentenceElements]:
-        """Yield committed alignments while retaining only the search horizon."""
-        start_position = (0, 0)
-        while (
-            alignment_suggestion := self.retrieve_alignment_suggestion(
-                start_position=start_position
-            )
-        ) is not None:
-            next_position = (
-                start_position[0] + alignment_suggestion[0],
-                start_position[1] + alignment_suggestion[1],
-            )
-            yield self.get_aligned_sentence_elements(
-                slices=(
-                    slice(start_position[0], next_position[0]),
-                    slice(start_position[1], next_position[1]),
-                )
-            )
-            for document, position in zip(
-                self.parallel_documents, next_position, strict=True
-            ):
-                document.discard_before(position)
-            self._step_scores.clear()
-            start_position = next_position
+        return self.search.iter_alignment_elements()
 
 
 def set_best_path_score(

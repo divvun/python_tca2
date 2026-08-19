@@ -221,7 +221,9 @@ def test_streaming_alignment_uses_bounded_input_window():
         anchor_word_list=AnchorWordList(),
     )
 
-    aligned_pairs = [to_string_tuple(alignment) for alignment in model.iter_alignment_elements()]
+    aligned_pairs = [
+        to_string_tuple(alignment) for alignment in model.iter_alignment_elements()
+    ]
 
     assert aligned_pairs == [
         (f"Sentence {index}", f"Sentence {index}") for index in range(line_count)
@@ -229,6 +231,16 @@ def test_streaming_alignment_uses_bounded_input_window():
     assert model.max_buffer_size <= (
         2 * alignmentmodel.constants.MAX_PATH_LENGTH * 2
     )
+
+
+def test_alignment_model_has_a_search():
+    model = alignmentmodel.AlignmentModel(
+        sentences_tuple=(iter(["First"]), iter(["Second"])),
+        anchor_word_list=AnchorWordList(),
+    )
+
+    assert isinstance(model.search, alignmentmodel.AlignmentSearch)
+    assert not isinstance(model, alignmentmodel.AlignmentSearch)
 
 
 def test_write_streaming_result_writes_tmx_and_html(tmp_path):
