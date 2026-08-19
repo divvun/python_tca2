@@ -1,13 +1,14 @@
 import json
 from collections import Counter
 from itertools import product
-from typing import Any, Iterator
+from typing import Any, Callable, Iterable, Iterator
 
 from python_tca2 import (
     constants,
     match,
     similarity_utils,
 )
+from python_tca2.aelement import AlignmentElement
 from python_tca2.aligned_sentence_elements import AlignedSentenceElements
 from python_tca2.alignment_utils import count_words
 from python_tca2.anchorwordhit import AnchorWordHit
@@ -285,12 +286,19 @@ class ElementInfoToBeCompared:
 
                     current[text_number] += 1  # increment the count
 
-    def find_propername_matches(self) -> Iterator[tuple[Ref, Ref]]:
+    def _find_word_pair_matches(
+        self,
+        match_type: int,
+        weight: float,
+        extractor: Callable[[AlignmentElement], Iterable[tuple[int, str]]],
+        predicate: Callable[[str, str], bool],
+    ) -> Iterator[tuple[Ref, Ref]]:
+        """Yield ref pairs whose extractor output on both sides satisfies predicate."""
         pairs = [
             [
                 Ref(
-                    match_type=match.PROPER,
-                    weight=constants.DEFAULT_PROPERNAME_MATCH_WEIGHT,
+                    match_type=match_type,
+                    weight=weight,
                     text_number=alignment_element.text_number,
                     element_number=alignment_element.element_number,
                     pos=position,
@@ -298,19 +306,25 @@ class ElementInfoToBeCompared:
                     word=word,
                 )
                 for alignment_element in alignment_elements
-                for position, word in enumerate(alignment_element.words)
+                for position, word in extractor(alignment_element)
             ]
             for alignment_elements in self.aligned_sentence_elements
         ]
 
         for ref1, ref2 in product(*pairs):
-            if (
-                ref2.word
-                and ref1.word[0].isupper()
-                and ref2.word[0].isupper()
-                and ref1.word == ref2.word
-            ):
+            if predicate(ref1.word, ref2.word):
                 yield ref1, ref2
+
+    def find_propername_matches(self) -> Iterator[tuple[Ref, Ref]]:
+        return self._find_word_pair_matches(
+            match_type=match.PROPER,
+            weight=constants.DEFAULT_PROPERNAME_MATCH_WEIGHT,
+            extractor=lambda alignment_element: enumerate(alignment_element.words),
+            predicate=lambda word1, word2: bool(word2)
+            and word1[0].isupper()
+            and word2[0].isupper()
+            and word1 == word2,
+        )
 
     def are_words_numbers_and_equal(self, word1: str, word2: str) -> bool:
         """Check if both words are numbers."""
@@ -320,48 +334,22 @@ class ElementInfoToBeCompared:
             return False
 
     def find_number_matches(self) -> Iterator[tuple[Ref, Ref]]:
-        pairs = [
-            [
-                Ref(
-                    match_type=match.NUMBER,
-                    weight=constants.DEFAULT_NUMBER_MATCH_WEIGHT,
-                    text_number=alignment_element.text_number,
-                    element_number=alignment_element.element_number,
-                    pos=position,
-                    length=1,
-                    word=word,
-                )
-                for alignment_element in alignment_elements
-                for position, word in enumerate(alignment_element.words)
-            ]
-            for alignment_elements in self.aligned_sentence_elements
-        ]
-
-        for ref1, ref2 in product(*pairs):
-            if self.are_words_numbers_and_equal(ref1.word, ref2.word):
-                yield ref1, ref2
+        return self._find_word_pair_matches(
+            match_type=match.NUMBER,
+            weight=constants.DEFAULT_NUMBER_MATCH_WEIGHT,
+            extractor=lambda alignment_element: enumerate(alignment_element.words),
+            predicate=self.are_words_numbers_and_equal,
+        )
 
     def find_special_character_matches(self) -> Iterator[tuple[Ref, Ref]]:
-        pairs = [
-            [
-                Ref(
-                    match_type=match.SCORING_CHARACTERS,
-                    weight=constants.DEFAULT_SCORING_CHARACTER_MATCH_WEIGHT,
-                    text_number=alignment_element.text_number,
-                    element_number=alignment_element.element_number,
-                    pos=0,
-                    length=1,
-                    word=char,
-                )
-                for alignment_element in alignment_elements
-                for char in alignment_element.scoring_characters
-            ]
-            for alignment_elements in self.aligned_sentence_elements
-        ]
-
-        for ref1, ref2 in product(*pairs):
-            if ref1.word == ref2.word:
-                yield ref1, ref2
+        return self._find_word_pair_matches(
+            match_type=match.SCORING_CHARACTERS,
+            weight=constants.DEFAULT_SCORING_CHARACTER_MATCH_WEIGHT,
+            extractor=lambda alignment_element: (
+                (0, char) for char in alignment_element.scoring_characters
+            ),
+            predicate=lambda word1, word2: word1 == word2,
+        )
 
     def find_hits(self) -> list[list[AnchorWordHit]]:
         return [
