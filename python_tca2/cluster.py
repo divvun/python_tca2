@@ -3,12 +3,12 @@ from dataclasses import asdict
 from typing import Any
 
 from python_tca2 import constants
-from python_tca2.ref import Ref
+from python_tca2.word_match import WordMatch
 
 
 class Cluster:
     def __init__(self) -> None:
-        self.refs: list[Ref] = []
+        self.refs: list[WordMatch] = []
 
     def to_json(self) -> dict[str, list[dict[str, Any]]]:
         return {"refs": [asdict(ref) for ref in self.refs]}
@@ -16,7 +16,7 @@ class Cluster:
     def __str__(self) -> str:
         return json.dumps(self.to_json(), indent=0, ensure_ascii=False)
 
-    def add_ref(self, other_ref: Ref) -> None:
+    def add_ref(self, other_ref: WordMatch) -> None:
         """Adds a reference to the cluster if it is not already present.
 
         Args:
@@ -25,7 +25,7 @@ class Cluster:
         if other_ref not in self.refs:
             self.refs.append(other_ref)
 
-    def matches(self, other_ref: Ref) -> bool:
+    def matches(self, other_ref: WordMatch) -> bool:
         """Check if the given reference matches any reference in the collection.
 
         Args:
@@ -34,7 +34,7 @@ class Cluster:
         Returns:
             True if a match is found, otherwise False.
         """
-        return any(ref.matches(other_ref) for ref in self.refs)
+        return any(ref.overlaps(other_ref) for ref in self.refs)
 
     def add_cluster(self, other_cluster: "Cluster") -> None:
         """Merges another cluster into the current cluster.

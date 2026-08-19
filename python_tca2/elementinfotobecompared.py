@@ -12,7 +12,7 @@ from python_tca2.aelement import AlignmentElement
 from python_tca2.aligned_sentence_elements import AlignedSentenceElements
 from python_tca2.anchorwordhit import AnchorWordHit
 from python_tca2.clusters import Clusters
-from python_tca2.ref import Ref
+from python_tca2.word_match import WordMatch
 
 
 def _count_words(string: str) -> int:
@@ -148,7 +148,7 @@ class ElementInfoToBeCompared:
 
         return score if self.is11() else score - 0.001
 
-    def find_dice_matches(self) -> Iterator[tuple[Ref, Ref]]:
+    def find_dice_matches(self) -> Iterator[tuple[WordMatch, WordMatch]]:
         half_refs = [
             [
                 (alignment_element, position)
@@ -169,7 +169,7 @@ class ElementInfoToBeCompared:
                     constants.DEFAULT_DICE_MIN_COUNTING_SCORE,
                 ):
                     yield (
-                        Ref(
+                        WordMatch(
                             match_type=match.DICE,
                             weight=constants.DEFAULT_DICEPHRASE_MATCH_WEIGHT,
                             text_number=info1.text_number,
@@ -178,7 +178,7 @@ class ElementInfoToBeCompared:
                             length=1,
                             word=info1.words[x],
                         ),
-                        Ref(
+                        WordMatch(
                             match_type=match.DICE,
                             weight=constants.DEFAULT_DICEPHRASE_MATCH_WEIGHT,
                             text_number=info2.text_number,
@@ -197,7 +197,7 @@ class ElementInfoToBeCompared:
                     )
                 ):
                     yield (
-                        Ref(
+                        WordMatch(
                             match_type=match.DICE,
                             weight=constants.DEFAULT_DICEPHRASE_MATCH_WEIGHT,
                             text_number=info1.text_number,
@@ -206,7 +206,7 @@ class ElementInfoToBeCompared:
                             length=2,
                             word=" ".join(info1.words[x : x + 2]),
                         ),
-                        Ref(
+                        WordMatch(
                             match_type=match.DICE,
                             weight=constants.DEFAULT_DICEPHRASE_MATCH_WEIGHT,
                             text_number=info2.text_number,
@@ -226,7 +226,7 @@ class ElementInfoToBeCompared:
                     )
                 ):
                     yield (
-                        Ref(
+                        WordMatch(
                             match_type=match.DICE,
                             weight=constants.DEFAULT_DICEPHRASE_MATCH_WEIGHT,
                             text_number=info1.text_number,
@@ -235,7 +235,7 @@ class ElementInfoToBeCompared:
                             length=1,
                             word=info1.words[x],
                         ),
-                        Ref(
+                        WordMatch(
                             match_type=match.DICE,
                             weight=constants.DEFAULT_DICEPHRASE_MATCH_WEIGHT,
                             text_number=info2.text_number,
@@ -298,7 +298,7 @@ class ElementInfoToBeCompared:
         current: list[int],
         smallest: int,
         present_in_all_texts: bool,
-    ) -> Iterator[Ref]:
+    ) -> Iterator[WordMatch]:
         for text_number in range(constants.NUM_FILES):
             if current[text_number] < len(hits[text_number]):
                 while (
@@ -309,7 +309,7 @@ class ElementInfoToBeCompared:
                     if (
                         present_in_all_texts
                     ):  # if the smallest index is present in all texts
-                        yield Ref(
+                        yield WordMatch(
                             match_type=hit.index,
                             weight=(
                                 constants.DEFAULT_ANCHORPHRASE_MATCH_WEIGHT
@@ -331,11 +331,11 @@ class ElementInfoToBeCompared:
         weight: float,
         extractor: Callable[[AlignmentElement], Iterable[tuple[int, str]]],
         predicate: Callable[[str, str], bool],
-    ) -> Iterator[tuple[Ref, Ref]]:
+    ) -> Iterator[tuple[WordMatch, WordMatch]]:
         """Yield ref pairs whose extractor output on both sides satisfies predicate."""
         pairs = [
             [
-                Ref(
+                WordMatch(
                     match_type=match_type,
                     weight=weight,
                     text_number=alignment_element.text_number,
@@ -354,7 +354,7 @@ class ElementInfoToBeCompared:
             if predicate(ref1.word, ref2.word):
                 yield ref1, ref2
 
-    def find_propername_matches(self) -> Iterator[tuple[Ref, Ref]]:
+    def find_propername_matches(self) -> Iterator[tuple[WordMatch, WordMatch]]:
         return self._find_word_pair_matches(
             match_type=match.PROPER,
             weight=constants.DEFAULT_PROPERNAME_MATCH_WEIGHT,
@@ -369,7 +369,7 @@ class ElementInfoToBeCompared:
         except ValueError:
             return False
 
-    def find_number_matches(self) -> Iterator[tuple[Ref, Ref]]:
+    def find_number_matches(self) -> Iterator[tuple[WordMatch, WordMatch]]:
         return self._find_word_pair_matches(
             match_type=match.NUMBER,
             weight=constants.DEFAULT_NUMBER_MATCH_WEIGHT,
@@ -377,7 +377,7 @@ class ElementInfoToBeCompared:
             predicate=self.are_words_numbers_and_equal,
         )
 
-    def find_special_character_matches(self) -> Iterator[tuple[Ref, Ref]]:
+    def find_special_character_matches(self) -> Iterator[tuple[WordMatch, WordMatch]]:
         return self._find_word_pair_matches(
             match_type=match.SCORING_CHARACTERS,
             weight=constants.DEFAULT_SCORING_CHARACTER_MATCH_WEIGHT,

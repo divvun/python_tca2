@@ -3,7 +3,7 @@ from copy import deepcopy
 from typing import Any
 
 from python_tca2.cluster import Cluster
-from python_tca2.ref import Ref
+from python_tca2.word_match import WordMatch
 
 
 class Clusters:
@@ -18,8 +18,8 @@ class Clusters:
 
     def create_and_add_cluster(
         self,
-        ref1: Ref,
-        ref2: Ref,
+        ref1: WordMatch,
+        ref2: WordMatch,
     ) -> None:
         """Adds two references to a new cluster and stores the cluster.
 
@@ -35,7 +35,7 @@ class Clusters:
         new_cluster.add_ref(ref2)
         self.add_cluster(new_cluster)
 
-    def add_ref(self, ref: Ref) -> None:
+    def add_ref(self, ref: WordMatch) -> None:
         """Adds a reference to the appropriate cluster or creates a new one.
 
         This method checks for clusters that match the given reference and merges
