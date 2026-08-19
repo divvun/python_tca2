@@ -44,7 +44,13 @@ def _words_equal(word1: str, word2: str) -> bool:
     return word1 == word2
 
 
-class ElementInfoToBeCompared:
+class CandidateAlignment:
+    """A candidate sentence-pair alignment, scored by how well its sides match.
+
+    Exists so the beam search in AlignmentSearch can compare candidate slices
+    of two texts and pick the alignment with the highest similarity score.
+    """
+
     def __init__(
         self,
         aligned_sentence_elements: AlignedSentenceElements,

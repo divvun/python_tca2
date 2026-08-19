@@ -3,7 +3,7 @@ from typing import Iterator
 from python_tca2 import alignment_suggestion, constants
 from python_tca2.aligned_sentence_elements import AlignedSentenceElements
 from python_tca2.alignment_suggestion import AlignmentSuggestion
-from python_tca2.elementinfotobecompared import ElementInfoToBeCompared
+from python_tca2.candidate_alignment import CandidateAlignment
 from python_tca2.path_candidate import PathCandidate
 from python_tca2.rolling_document import RollingDocument
 
@@ -152,7 +152,7 @@ class AlignmentSearch:
     ) -> float:
         """Calculate (and cache) the score for the elements at the given slices."""
         if slices not in self._step_scores:
-            eitbc = ElementInfoToBeCompared(
+            eitbc = CandidateAlignment(
                 aligned_sentence_elements=self.get_aligned_sentence_elements(
                     slices=slices,
                 )

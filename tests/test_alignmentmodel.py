@@ -12,14 +12,14 @@ from python_tca2.aligned_sentence_elements import (
 )
 from python_tca2.anchorwordlist import AnchorWordList
 from python_tca2.anchorwordlistentry import AnchorWordListEntry
-from python_tca2.elementinfotobecompared import ElementInfoToBeCompared
+from python_tca2.candidate_alignment import CandidateAlignment
 from python_tca2.tmx import write_streaming_result
 
 
 def test_get_score():
     """Test that the first if in find_dice_matches works as expected"""
     expected_score = 4.0
-    eitbc = ElementInfoToBeCompared(
+    eitbc = CandidateAlignment(
         (
             [
                 AlignmentElement(
@@ -90,7 +90,7 @@ def test_alignment_etcs():
 
 def test_find_dice_matches():
     """Test that the first if in find_dice_matches works as expected"""
-    eitbc = ElementInfoToBeCompared(
+    eitbc = CandidateAlignment(
         (
             [
                 AlignmentElement(
@@ -622,7 +622,7 @@ def test_anchorword_hits():
         sentences_tuple=(strings[0].splitlines(), strings[1].splitlines()),
         anchor_word_list=load_anchor_words("nob-sme"),
     )
-    interesting = ElementInfoToBeCompared(
+    interesting = CandidateAlignment(
         aligned_sentence_elements=model.get_aligned_sentence_elements(
             slices=(
                 slice(0, 1),
