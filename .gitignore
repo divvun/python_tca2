@@ -1,3 +1,10 @@
 .DS_Store
 __pycache__
 .vscode
+
+graphify-out/*
+!graphify-out/GRAPH_REPORT.md
+!graphify-out/cost.json
+!graphify-out/graph.html
+!graphify-out/graph.json
+!graphify-out/manifest.json
