@@ -10,11 +10,21 @@ from python_tca2 import (
 )
 from python_tca2.aelement import AlignmentElement
 from python_tca2.aligned_sentence_elements import AlignedSentenceElements
-from python_tca2.alignment_utils import count_words
 from python_tca2.anchorwordhit import AnchorWordHit
 from python_tca2.clusters import Clusters
 from python_tca2.ref import Ref
 
+
+def _count_words(string: str) -> int:
+    """Counts the number of words in a given string.
+
+    Parameters:
+        string: The input string to count words from.
+
+    Returns:
+        The number of words in the input string.
+    """
+    return len(string.split())
 
 def _enumerate_words(alignment_element: AlignmentElement) -> Iterable[tuple[int, str]]:
     return enumerate(alignment_element.words)
@@ -303,13 +313,13 @@ class ElementInfoToBeCompared:
                             match_type=hit.index,
                             weight=(
                                 constants.DEFAULT_ANCHORPHRASE_MATCH_WEIGHT
-                                if count_words(hit.word) > 1
+                                if _count_words(hit.word) > 1
                                 else constants.DEFAULT_ANCHOR_WORD_MATCH_WEIGHT
                             ),
                             text_number=text_number,
                             element_number=hit.element_number,
                             pos=hit.pos,
-                            length=count_words(hit.word),
+                            length=_count_words(hit.word),
                             word=hit.word,
                         )
 
