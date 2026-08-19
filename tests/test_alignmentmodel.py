@@ -4,7 +4,7 @@ from pathlib import Path
 import pytest
 from lxml import etree
 
-from python_tca2 import alignmentmodel
+from python_tca2 import alignmentmodel, constants
 from python_tca2.aelement import AlignmentElement
 from python_tca2.aligned import Aligned
 from python_tca2.aligned_sentence_elements import (
@@ -228,9 +228,7 @@ def test_streaming_alignment_uses_bounded_input_window():
     assert aligned_pairs == [
         (f"Sentence {index}", f"Sentence {index}") for index in range(line_count)
     ]
-    assert model.max_buffer_size <= (
-        2 * alignmentmodel.constants.MAX_PATH_LENGTH * 2
-    )
+    assert model.max_buffer_size <= (2 * constants.MAX_PATH_LENGTH * 2)
 
 
 def test_alignment_model_has_a_search():
