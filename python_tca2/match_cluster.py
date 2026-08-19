@@ -6,7 +6,14 @@ from python_tca2 import constants
 from python_tca2.word_match import WordMatch
 
 
-class Cluster:
+class MatchCluster:
+    """A group of overlapping WordMatch occurrences, scored as a single unit.
+
+    Exists so overlapping matches (e.g. a word matched by both a dice match and
+    an anchor word) count once toward the sentence-pair score instead of each
+    contributing its own weight.
+    """
+
     def __init__(self) -> None:
         self.refs: list[WordMatch] = []
 
@@ -36,7 +43,7 @@ class Cluster:
         """
         return any(ref.overlaps(other_ref) for ref in self.refs)
 
-    def add_cluster(self, other_cluster: "Cluster") -> None:
+    def add_cluster(self, other_cluster: "MatchCluster") -> None:
         """Merges another cluster into the current cluster.
 
         Args:

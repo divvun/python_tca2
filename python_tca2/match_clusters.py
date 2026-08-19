@@ -2,13 +2,20 @@ import json
 from copy import deepcopy
 from typing import Any
 
-from python_tca2.cluster import Cluster
+from python_tca2.match_cluster import MatchCluster
 from python_tca2.word_match import WordMatch
 
 
-class Clusters:
+class MatchClusters:
+    """The full set of match clusters found for a sentence pair, scored together.
+
+    Exists so new WordMatch/MatchCluster results can be merged into existing
+    clusters when they overlap, keeping every match grouped exactly once
+    before the total similarity score is computed.
+    """
+
     def __init__(self) -> None:
-        self.clusters: list[Cluster] = []  # list of Cluster
+        self.clusters: list[MatchCluster] = []  # list of Cluster
 
     def __str__(self) -> str:
         return json.dumps(self.to_json(), indent=0, ensure_ascii=False)
@@ -30,7 +37,7 @@ class Clusters:
             ref1 (Ref): The first reference to add to the cluster.
             ref2 (Ref): The second reference to add to the cluster.
         """
-        new_cluster = Cluster()
+        new_cluster = MatchCluster()
         new_cluster.add_ref(ref1)
         new_cluster.add_ref(ref2)
         self.add_cluster(new_cluster)
@@ -45,12 +52,12 @@ class Clusters:
         Args:
             ref: The reference to be added to a cluster.
         """
-        overlaps: list[Cluster] = []
+        overlaps: list[MatchCluster] = []
         for cluster in self.clusters:
             if cluster.matches(ref):
                 overlaps.append(cluster)
 
-        merged_cluster = Cluster()
+        merged_cluster = MatchCluster()
         merged_cluster.add_ref(ref)
 
         for cluster in overlaps:
@@ -60,7 +67,7 @@ class Clusters:
 
         self.clusters.append(merged_cluster)
 
-    def add_clusters(self, other_clusters: "Clusters") -> None:
+    def add_clusters(self, other_clusters: "MatchClusters") -> None:
         """Add clusters from another Clusters object to the current instance.
 
         Args:
@@ -71,7 +78,7 @@ class Clusters:
             self.add_cluster(other_cluster)
 
     @staticmethod
-    def have_same_ref(cluster: Cluster, other_cluster: Cluster):
+    def have_same_ref(cluster: MatchCluster, other_cluster: MatchCluster):
         """Check if two clusters share a common reference.
 
         Args:
@@ -83,7 +90,7 @@ class Clusters:
         """
         return any(cluster.matches(ref) for ref in other_cluster.refs)
 
-    def add_cluster(self, other_cluster: Cluster) -> None:
+    def add_cluster(self, other_cluster: MatchCluster) -> None:
         """Add a cluster to the current collection of clusters.
 
         This method identifies overlapping clusters based on reference similarity,
@@ -93,7 +100,7 @@ class Clusters:
         Args:
             other_cluster: The cluster to be added and potentially merged.
         """
-        overlaps: list[Cluster] = [
+        overlaps: list[MatchCluster] = [
             cluster
             for cluster in self.clusters
             if self.have_same_ref(cluster, other_cluster)

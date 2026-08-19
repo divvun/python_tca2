@@ -11,7 +11,7 @@ from python_tca2 import (
 from python_tca2.aelement import AlignmentElement
 from python_tca2.aligned_sentence_elements import AlignedSentenceElements
 from python_tca2.anchorwordhit import AnchorWordHit
-from python_tca2.clusters import Clusters
+from python_tca2.match_clusters import MatchClusters
 from python_tca2.word_match import WordMatch
 
 
@@ -97,7 +97,7 @@ class ElementInfoToBeCompared:
         )
 
     def calculate_clusters_score(self) -> float:
-        common_clusters = Clusters()
+        common_clusters = MatchClusters()
         for anchor_word_clusters in self.make_anchor_word_clusters():
             common_clusters.add_clusters(anchor_word_clusters)
 
@@ -255,7 +255,7 @@ class ElementInfoToBeCompared:
             if current[text_number] < len(hits[text_number])
         ]
 
-    def make_anchor_word_clusters(self) -> Iterator[Clusters]:
+    def make_anchor_word_clusters(self) -> Iterator[MatchClusters]:
         hits = [
             sorted(lang_hits, key=lambda hit: (hit.index, hit.word))
             for lang_hits in self.find_hits()
@@ -265,7 +265,7 @@ class ElementInfoToBeCompared:
             hit_counter = Counter(hit.index for hit in these_hits)
             smallest_hit_index = min(hit_counter.keys())
 
-            anchor_word_clusters = Clusters()
+            anchor_word_clusters = MatchClusters()
             for ref in self.make_anchor_word_refs(
                 hits,
                 current=current,
