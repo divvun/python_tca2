@@ -20,6 +20,9 @@ from python_tca2.alignment_suggestion import AlignmentSuggestion
 from python_tca2.candidate_alignment import CandidateAlignment
 from python_tca2.path_candidate import PathCandidate
 from python_tca2.rolling_document import RollingDocument
+from python_tca2.score import Score, as_score
+
+PathRank = tuple[Score, int]
 
 
 class _BeamRound:
@@ -51,7 +54,7 @@ class AlignmentSearch:
         documents: tuple[RollingDocument, RollingDocument],
     ) -> None:
         self._documents = documents
-        self._step_scores: dict[tuple[slice, slice], float] = {}
+        self._step_scores: dict[tuple[slice, slice], Score] = {}
         self._max_path_length = constants.MAX_PATH_LENGTH
 
     @property
@@ -123,7 +126,7 @@ class AlignmentSearch:
         start_position: tuple[int, int],
     ) -> list[PathCandidate]:
         """Extend paths until no further extensions are possible or the max length is reached."""
-        best_path_scores: dict[tuple[int, ...], float] = {}
+        best_path_scores: dict[tuple[int, ...], PathRank] = {}
         path_candidates = [PathCandidate(position=start_position)]
         for _ in range(self._max_path_length):
             beam_round = _BeamRound(path_candidates)
@@ -145,7 +148,7 @@ class AlignmentSearch:
     def extend_current_path(
         self,
         path_candidate: PathCandidate,
-        best_path_scores: dict[tuple[int, ...], float],
+        best_path_scores: dict[tuple[int, ...], PathRank],
     ) -> Iterator[PathCandidate]:
         """Yield each way the current path can be extended by one alignment step."""
         for step in alignment_suggestion.generate_alignment_suggestions(
@@ -163,7 +166,7 @@ class AlignmentSearch:
     def get_step_score(
         self,
         slices: tuple[slice, slice],
-    ) -> float:
+    ) -> Score:
         """Calculate (and cache) the score for the elements at the given slices."""
         if slices not in self._step_scores:
             candidate_alignment = CandidateAlignment(
@@ -178,9 +181,9 @@ class AlignmentSearch:
     def extend_path_with_step(
         self,
         old_position: tuple[int, int],
-        old_score: float,
+        old_score: Score,
         alignment_suggestions: list[AlignmentSuggestion],
-        best_path_scores: dict[tuple[int, ...], float],
+        best_path_scores: dict[tuple[int, ...], PathRank],
     ) -> PathCandidate | None:
         """Extend a path with a new step, returning the extended candidate if it improves on the best known score for its position."""
         current_alignment_step = alignment_suggestions[-1]
@@ -207,7 +210,7 @@ class AlignmentSearch:
             )
         )
 
-        if position_step_score == constants.ELEMENTINFO_SCORE_HOPELESS:
+        if position_step_score == as_score(constants.ELEMENTINFO_SCORE_HOPELESS):
             return None
 
         new_score = old_score + position_step_score
@@ -216,12 +219,13 @@ class AlignmentSearch:
             new_position, best_path_scores=best_path_scores
         )
 
-        if best_path_score is not None and new_score <= best_path_score:
+        new_path_rank = (new_score, -len(alignment_suggestions))
+        if best_path_score is not None and new_path_rank <= best_path_score:
             return None
 
         set_best_path_score(
             new_position,
-            new_score,
+            new_path_rank,
             best_path_scores=best_path_scores,
         )
 
@@ -259,18 +263,18 @@ class AlignmentSearch:
 
 def set_best_path_score(
     position: tuple[int, ...],
-    score: float,
-    best_path_scores: dict[tuple[int, ...], float],
+    path_rank: PathRank,
+    best_path_scores: dict[tuple[int, ...], PathRank],
 ) -> None:
-    """Record the score for a path reaching the given position."""
-    best_path_scores[position] = score
+    """Record the score and tie-break rank for a path reaching a position."""
+    best_path_scores[position] = path_rank
 
 
 def get_best_path_score(
-    position: tuple[int, ...], best_path_scores: dict[tuple[int, ...], float]
-) -> float | None:
-    """Return the best known score for the given position, or None if unseen."""
+    position: tuple[int, ...], best_path_scores: dict[tuple[int, ...], PathRank]
+) -> PathRank | None:
+    """Return the best known path rank for a position, or None if unseen."""
     if any(pos == 0 for pos in position):
-        return constants.BEST_PATH_SCORE_BAD
+        return (as_score(constants.BEST_PATH_SCORE_BAD), 0)
 
     return best_path_scores.get(position)

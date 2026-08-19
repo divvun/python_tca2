@@ -1,6 +1,7 @@
 from dataclasses import dataclass, field
 
 from python_tca2.alignment_suggestion import AlignmentSuggestion
+from python_tca2.score import Score
 
 
 @dataclass
@@ -8,7 +9,7 @@ class PathCandidate:
     """A candidate alignment path being extended during beam search."""
 
     position: tuple[int, int]
-    score: float = 0.0
+    score: Score = field(default_factory=Score)
     alignment_suggestions: list[AlignmentSuggestion] = field(
         default_factory=list[AlignmentSuggestion]
     )
@@ -16,7 +17,7 @@ class PathCandidate:
     removed: bool = False
 
     @property
-    def normalized_score(self) -> float:
+    def normalized_score(self) -> Score:
         """Score divided by the path length in sentences, for comparing paths."""
         return self.score / self.get_length_in_sentences()
 

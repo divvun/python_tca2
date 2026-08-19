@@ -3,6 +3,7 @@ from dataclasses import asdict
 from typing import Any
 
 from python_tca2 import constants
+from python_tca2.score import Score, as_score
 from python_tca2.word_match import WordMatch
 
 
@@ -52,7 +53,7 @@ class MatchCluster:
         for other_ref in other_cluster.refs:
             self.add_ref(other_ref)
 
-    def get_score(self) -> float:
+    def get_score(self) -> Score:
         """Calculate the score for the cluster based on its characteristics.
 
         This method computes a score for the cluster by analyzing the number
@@ -72,11 +73,13 @@ class MatchCluster:
             ]
         )
 
-        return max_cluster_weight * (
-            1 + ((low - 1) * constants.DEFAULT_LARGE_CLUSTER_SCORE_PERCENTAGE / 100.0)
+        return as_score(max_cluster_weight) * (
+            1
+            + as_score((low - 1) * constants.DEFAULT_LARGE_CLUSTER_SCORE_PERCENTAGE)
+            / 100
         )
 
-    def get_max_cluster_weight(self) -> float:
+    def get_max_cluster_weight(self) -> Score:
         """Get the maximum weight of references in the cluster.
 
         Returns:
@@ -89,4 +92,4 @@ class MatchCluster:
             if ref.is_in_text(text_number)
         ]
 
-        return max(weights) if weights else 0.0
+        return as_score(max(weights)) if weights else Score()

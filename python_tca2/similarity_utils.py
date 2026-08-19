@@ -1,6 +1,7 @@
 import re
 
 from python_tca2 import constants
+from python_tca2.score import Score, as_score
 
 
 def string_to_bigram(word: str) -> list[str]:
@@ -114,7 +115,7 @@ def is_word_anchor_match(compiled_anchor_pattern: re.Pattern[str], word: str) ->
     return bool(compiled_anchor_pattern.match(word))
 
 
-def bad_length_correlation(lengths: list[int], ratio: float) -> bool:
+def bad_length_correlation(lengths: list[int], ratio: Score) -> bool:
     """Determine if the length correlation between two sequences is unacceptable.
 
     This function calculates a correlation value based on the lengths of two
@@ -129,14 +130,14 @@ def bad_length_correlation(lengths: list[int], ratio: float) -> bool:
         True if the correlation is above the kill limit and the element counts
         differ; otherwise, False.
     """
-    kill_limit = 0.5
+    kill_limit = as_score("0.5")
     # less tolerant limit for 1-2 and 2-1,
     # above which such alignments score lethally low
     length_correlation_factor = calculate_length_correlation_factor(lengths, ratio)
     return length_correlation_factor > kill_limit
 
 
-def calculate_length_correlation_factor(lengths: list[int], ratio: float) -> float:
+def calculate_length_correlation_factor(lengths: list[int], ratio: Score) -> Score:
     """Calculate the length correlation factor between two lengths using a given ratio.
 
     Args:
@@ -149,17 +150,17 @@ def calculate_length_correlation_factor(lengths: list[int], ratio: float) -> flo
     """
     return (
         2
-        * abs(0.0 + ratio * lengths[0] - lengths[1])
+        * abs(ratio * lengths[0] - lengths[1])
         / (ratio * lengths[0] + lengths[1])
     )
 
 
 def adjust_for_length_correlation(
-    score: float,
+    score: Score,
     lengths: list[int],
     element_counts: list[int],
-    ratio: float,
-) -> float:
+    ratio: Score,
+) -> Score:
     """
     Adjusts a similarity score based on length and element count correlation.
 
@@ -177,8 +178,8 @@ def adjust_for_length_correlation(
     Returns:
         The adjusted similarity score based on the correlation analysis.
     """
-    lower_limit = 0.4
-    upper_limit = 1.0
+    lower_limit = as_score("0.4")
+    upper_limit = Score(1)
     length_correlation_factor = calculate_length_correlation_factor(lengths, ratio)
 
     if length_correlation_factor < lower_limit / 2:

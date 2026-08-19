@@ -3,6 +3,7 @@ from copy import deepcopy
 from typing import Any
 
 from python_tca2.match_cluster import MatchCluster
+from python_tca2.score import Score
 from python_tca2.word_match import WordMatch
 
 
@@ -115,10 +116,10 @@ class MatchClusters:
 
         self.clusters.append(merged_cluster)
 
-    def get_score(self) -> float:
+    def get_score(self) -> Score:
         """Calculate the total score for all clusters.
 
         Returns:
             The total score as a float.
         """
-        return sum(cluster.get_score() for cluster in self.clusters)
+        return sum((cluster.get_score() for cluster in self.clusters), start=Score())

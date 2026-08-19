@@ -12,6 +12,7 @@ from python_tca2.aelement import AlignmentElement
 from python_tca2.aligned_sentence_elements import AlignedSentenceElements
 from python_tca2.anchorwordhit import AnchorWordHit
 from python_tca2.match_clusters import MatchClusters
+from python_tca2.score import Score, as_score
 from python_tca2.word_match import WordMatch
 
 
@@ -56,11 +57,11 @@ class CandidateAlignment:
         aligned_sentence_elements: AlignedSentenceElements,
     ) -> None:
         self.aligned_sentence_elements = aligned_sentence_elements
-        self.score: float | None = None
+        self.score: Score | None = None
 
     def to_json(self) -> dict[str, Any]:
         return {
-            "score": self.get_score(),
+            "score": float(self.get_score()),
             "info": [
                 alignment_element.to_json()
                 for alignment_elements in self.aligned_sentence_elements
@@ -75,13 +76,13 @@ class CandidateAlignment:
         """Both branches of self.info must have elements to be non-empty."""
         return not all(self.aligned_sentence_elements)
 
-    def get_score(self) -> float:
+    def get_score(self) -> Score:
         if self.score is None:
             self.score = self.calculate_score()
 
         return self.score
 
-    def has_bad_similarity_score(self) -> float:
+    def has_bad_similarity_score(self) -> bool:
         element_counts = [
             len(alignment_elements)
             for alignment_elements in self.aligned_sentence_elements
@@ -99,10 +100,10 @@ class CandidateAlignment:
 
         return similarity_utils.bad_length_correlation(
             lengths,
-            constants.DEFAULT_LENGTH_RATIO,
+            as_score(constants.DEFAULT_LENGTH_RATIO),
         )
 
-    def calculate_clusters_score(self) -> float:
+    def calculate_clusters_score(self) -> Score:
         common_clusters = MatchClusters()
         for anchor_word_clusters in self.make_anchor_word_clusters():
             common_clusters.add_clusters(anchor_word_clusters)
@@ -118,7 +119,7 @@ class CandidateAlignment:
 
         return common_clusters.get_score()
 
-    def adjust_for_length_correlation(self, score: float) -> float:
+    def adjust_for_length_correlation(self, score: Score) -> Score:
         lengths = [
             sum(alignment_element.length for alignment_element in alignment_elements)
             for alignment_elements in self.aligned_sentence_elements
@@ -132,7 +133,7 @@ class CandidateAlignment:
             score,
             lengths,
             element_counts,
-            ratio=constants.DEFAULT_LENGTH_RATIO,
+            ratio=as_score(constants.DEFAULT_LENGTH_RATIO),
         )
 
     def is11(self) -> bool:
@@ -142,17 +143,17 @@ class CandidateAlignment:
             for alignment_elements in self.aligned_sentence_elements
         )
 
-    def calculate_score(self) -> float:
+    def calculate_score(self) -> Score:
         if self.empty():
-            return 0.0
+            return Score()
 
         if self.has_bad_similarity_score():
-            return constants.ELEMENTINFO_SCORE_HOPELESS
+            return as_score(constants.ELEMENTINFO_SCORE_HOPELESS)
 
         cluster_score = self.calculate_clusters_score()
         score = self.adjust_for_length_correlation(score=cluster_score)
 
-        return score if self.is11() else score - 0.001
+        return score if self.is11() else score - as_score("0.001")
 
     def find_dice_matches(self) -> Iterator[tuple[WordMatch, WordMatch]]:
         half_refs = [
