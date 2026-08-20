@@ -38,12 +38,9 @@ def get_scoring_characters(text: str) -> str:
     Returns:
         A string containing only the scoring characters found in the input text.
     """
-    scoring_characters = constants.DEFAULT_SCORING_CHARACTERS
-    ret = ""
-    for i in range(len(text)):
-        if text[i] in scoring_characters:
-            ret += text[i]
-    return ret
+    return "".join(
+        char for char in text if char in constants.DEFAULT_SCORING_CHARACTERS
+    )
 
 
 class AlignmentElement:
