@@ -10,6 +10,7 @@ from python_tca2.aligned_sentence_elements import (
     AlignedSentenceElements,
     to_string_tuple,
 )
+from python_tca2.anchorwordhits import AnchorWordHits
 from python_tca2.anchorwordlist import AnchorWordList
 from python_tca2.anchorwordlistentry import AnchorWordListEntry
 from python_tca2.candidate_alignment import CandidateAlignment
@@ -23,18 +24,18 @@ def test_get_score():
         (
             [
                 AlignmentElement(
-                    anchor_word_list=AnchorWordList(),
-                    text="Mobil",
+                    sentence="Mobil",
                     text_number=0,
                     element_number=0,
+                    anchor_word_hits=AnchorWordHits([]),
                 )
             ],
             [
                 AlignmentElement(
-                    anchor_word_list=AnchorWordList(),
-                    text="Mobiila",
+                    sentence="Mobiila",
                     text_number=1,
                     element_number=0,
+                    anchor_word_hits=AnchorWordHits([]),
                 )
             ],
         )
@@ -48,36 +49,36 @@ def test_alignment_etcs():
         (
             [
                 AlignmentElement(
-                    anchor_word_list=AnchorWordList(),
-                    text="element0",
+                    sentence="element0",
                     text_number=0,
                     element_number=0,
+                    anchor_word_hits=AnchorWordHits([]),
                 ),
                 AlignmentElement(
-                    anchor_word_list=AnchorWordList(),
-                    text="element1",
+                    sentence="element1",
                     text_number=0,
                     element_number=1,
+                    anchor_word_hits=AnchorWordHits([]),
                 ),
             ],
             [
                 AlignmentElement(
-                    anchor_word_list=AnchorWordList(),
-                    text="element2",
+                    sentence="element2",
                     text_number=1,
                     element_number=0,
+                    anchor_word_hits=AnchorWordHits([]),
                 ),
                 AlignmentElement(
-                    anchor_word_list=AnchorWordList(),
-                    text="element3",
+                    sentence="element3",
                     text_number=1,
                     element_number=1,
+                    anchor_word_hits=AnchorWordHits([]),
                 ),
                 AlignmentElement(
-                    anchor_word_list=AnchorWordList(),
-                    text="element4",
+                    sentence="element4",
                     text_number=1,
                     element_number=2,
+                    anchor_word_hits=AnchorWordHits([]),
                 ),
             ],
         )
@@ -94,18 +95,18 @@ def test_find_dice_matches():
         (
             [
                 AlignmentElement(
-                    anchor_word_list=AnchorWordList(),
-                    text="Mobil",
+                    sentence="Mobil",
                     text_number=0,
                     element_number=0,
+                    anchor_word_hits=AnchorWordHits([]),
                 )
             ],
             [
                 AlignmentElement(
-                    anchor_word_list=AnchorWordList(),
-                    text="Mobiila",
+                    sentence="Mobiila",
                     text_number=1,
                     element_number=0,
+                    anchor_word_hits=AnchorWordHits([]),
                 )
             ],
         )
@@ -117,24 +118,20 @@ def test_find_dice_matches():
         "score": 4.0,
         "info": [
             {
-                "element_number": 0,
-                "length": 5,
-                "num_words": 1,
                 "text_number": 0,
-                "text": "Mobil",
-                "words": ["Mobil"],
-                "anchor_word_hits": {"hits": []},
-                "scoring_characters": "",
+                "sentence": "Mobil",
+                "element_number": 0,
+                "anchor_word_hits": {
+                    "hits": [],
+                },
             },
             {
-                "element_number": 0,
-                "length": 7,
-                "num_words": 1,
-                "text": "Mobiila",
                 "text_number": 1,
-                "words": ["Mobiila"],
-                "anchor_word_hits": {"hits": []},
-                "scoring_characters": "",
+                "sentence": "Mobiila",
+                "element_number": 0,
+                "anchor_word_hits": {
+                    "hits": [],
+                },
             },
         ],
     }
@@ -145,10 +142,10 @@ def test_aelement_text():
     sentence = "9 Økonomiske,  administrative og miljømessige konsekvenser"
 
     aelement = AlignmentElement(
-        anchor_word_list=AnchorWordList(),
-        text=sentence,
+        sentence=sentence,
         text_number=0,
         element_number=0,
+        anchor_word_hits=AnchorWordHits([]),
     )
 
     assert aelement.text == "9 Økonomiske, administrative og miljømessige konsekvenser"
@@ -157,13 +154,10 @@ def test_aelement_text():
 def test_streaming_alignment_uses_bounded_input_window():
     line_count = 100
     sentences = tuple(
-        "\n".join(f"Sentence {index}" for index in range(line_count))
-        for _ in range(2)
+        "\n".join(f"Sentence {index}" for index in range(line_count)) for _ in range(2)
     )
     model = alignmentmodel.AlignmentModel(
-        sentences_tuple=tuple(
-            iter(sentence.splitlines()) for sentence in sentences
-        ),
+        sentences_tuple=tuple(iter(sentence.splitlines()) for sentence in sentences),
         anchor_word_list=AnchorWordList(),
     )
 
@@ -192,18 +186,18 @@ def test_write_streaming_result_writes_tmx_and_html(tmp_path: Path):
         (
             [
                 AlignmentElement(
-                    anchor_word_list=AnchorWordList(),
-                    text="First & sentence",
+                    sentence="First & sentence",
                     text_number=0,
                     element_number=0,
+                    anchor_word_hits=AnchorWordHits([]),
                 )
             ],
             [
                 AlignmentElement(
-                    anchor_word_list=AnchorWordList(),
-                    text="Second sentence",
+                    sentence="Second sentence",
                     text_number=1,
                     element_number=0,
+                    anchor_word_hits=AnchorWordHits([]),
                 )
             ],
         )

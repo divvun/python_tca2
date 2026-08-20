@@ -36,10 +36,12 @@ class RollingDocument:
 
             self._elements.append(
                 AlignmentElement(
-                    anchor_word_list=self._anchor_word_list,
-                    text=sentence,
+                    sentence=sentence,
                     text_number=self._text_number,
                     element_number=self._next_element_number,
+                    anchor_word_hits=self._anchor_word_list.get_anchor_word_hits(
+                        sentence.split(), self._text_number, self._next_element_number
+                    ),
                 )
             )
             self._next_element_number += 1

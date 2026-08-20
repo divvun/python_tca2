@@ -1,5 +1,6 @@
 import json
 from collections import Counter
+from dataclasses import asdict
 from itertools import product
 from typing import Any, Callable, Iterable, Iterator
 
@@ -26,6 +27,7 @@ def _count_words(string: str) -> int:
         The number of words in the input string.
     """
     return len(string.split())
+
 
 def _enumerate_words(alignment_element: AlignmentElement) -> Iterable[tuple[int, str]]:
     return enumerate(alignment_element.words)
@@ -63,7 +65,7 @@ class CandidateAlignment:
         return {
             "score": float(self.get_score()),
             "info": [
-                alignment_element.to_json()
+                asdict(alignment_element)
                 for alignment_elements in self.aligned_sentence_elements
                 for alignment_element in alignment_elements
             ],
