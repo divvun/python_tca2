@@ -1,4 +1,4 @@
-from python_tca2.aelement import AlignmentElement
+from python_tca2.alignment_element import AlignmentElement
 
 AlignedSentenceElements = tuple[list[AlignmentElement], list[AlignmentElement]]
 """A representation of aligned sentences.

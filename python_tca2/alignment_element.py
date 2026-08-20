@@ -26,6 +26,7 @@ def remove_special_characters(word: str) -> str:
     return word.strip()
 
 
+
 @dataclass
 class AlignmentElement:
     text_number: int

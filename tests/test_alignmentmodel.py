@@ -5,7 +5,7 @@ import pytest
 from lxml import etree
 
 from python_tca2 import alignmentmodel, constants
-from python_tca2.aelement import AlignmentElement
+from python_tca2.alignment_element import AlignmentElement
 from python_tca2.aligned_sentence_elements import (
     AlignedSentenceElements,
     to_string_tuple,

@@ -9,7 +9,7 @@ from python_tca2 import (
     match,
     similarity_utils,
 )
-from python_tca2.aelement import AlignmentElement
+from python_tca2.alignment_element import AlignmentElement
 from python_tca2.aligned_sentence_elements import AlignedSentenceElements
 from python_tca2.anchorwordhit import AnchorWordHit
 from python_tca2.match_clusters import MatchClusters

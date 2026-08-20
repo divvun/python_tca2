@@ -1,7 +1,7 @@
 from collections import deque
 from typing import Iterable
 
-from python_tca2.aelement import AlignmentElement
+from python_tca2.alignment_element import AlignmentElement
 from python_tca2.anchorwordlist import AnchorWordList
 
 
