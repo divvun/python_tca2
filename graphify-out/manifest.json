@@ -1,7 +1,8 @@
 {
   "compare.json": {
     "mtime": 1747993557.214586,
-    "ast_hash": "",
+    "seen": 1787261428.610883,
+    "ast_hash": "de8d2327a301e14d7c72adf1abf6f288",
     "semantic_hash": ""
   },
   "py-tca2.sh": {
@@ -11,9 +12,9 @@
     "semantic_hash": "ee492d0181540438c59bdd40e0b6fd94"
   },
   "pyproject.toml": {
-    "mtime": 1787154757.6563919,
-    "seen": 1787163611.5769758,
-    "ast_hash": "32f6e8e89ff5fa4edda31b0986652975",
+    "mtime": 1787261239.2913282,
+    "seen": 1787261428.610892,
+    "ast_hash": "02ee0bab10b7098765ac64f73670b322",
     "semantic_hash": ""
   },
   "python_tca2/__init__.py": {
@@ -22,21 +23,15 @@
     "ast_hash": "d41d8cd98f00b204e9800998ecf8427e",
     "semantic_hash": "d41d8cd98f00b204e9800998ecf8427e"
   },
-  "python_tca2/aelement.py": {
-    "mtime": 1752606167.3238866,
-    "seen": 1787163611.576978,
-    "ast_hash": "edb892fcec2b8bc8531858999c6f9dd5",
-    "semantic_hash": "edb892fcec2b8bc8531858999c6f9dd5"
-  },
   "python_tca2/aligned_sentence_elements.py": {
-    "mtime": 1746833204.2128625,
-    "seen": 1787163611.576979,
-    "ast_hash": "37071fa1bf5e409e825dd2b01cdf3108",
-    "semantic_hash": "37071fa1bf5e409e825dd2b01cdf3108"
+    "mtime": 1787260431.5479317,
+    "seen": 1787261428.610894,
+    "ast_hash": "bfdebc9b88beafc255a35e1d1bf13cff",
+    "semantic_hash": ""
   },
   "python_tca2/alignment.py": {
-    "mtime": 1787147174.8776557,
-    "seen": 1787163611.576979,
+    "mtime": 1787252922.8605149,
+    "seen": 1787261428.6108952,
     "ast_hash": "e9f7898d78cd64d5448513531373557a",
     "semantic_hash": ""
   },
@@ -47,8 +42,8 @@
     "semantic_hash": "66930aa799739cf6514ed189588f32d0"
   },
   "python_tca2/alignmentmodel.py": {
-    "mtime": 1787148215.985163,
-    "seen": 1787163611.576981,
+    "mtime": 1787252922.8680403,
+    "seen": 1787261428.610899,
     "ast_hash": "d8335fd220bedad8aeb28a501f60da41",
     "semantic_hash": ""
   },
@@ -89,20 +84,20 @@
     "semantic_hash": "37b3f6b30dee595e2e57a10f44152e34"
   },
   "python_tca2/path_candidate.py": {
-    "mtime": 1787154937.3076172,
-    "seen": 1787163611.5769868,
+    "mtime": 1787256569.6639314,
+    "seen": 1787261428.6109052,
     "ast_hash": "c8f71857bebbbce8850a0f2be8134a04",
     "semantic_hash": ""
   },
   "python_tca2/similarity_utils.py": {
-    "mtime": 1787154937.3089185,
-    "seen": 1787163611.576989,
+    "mtime": 1787256569.6750627,
+    "seen": 1787261428.6109068,
     "ast_hash": "535cd39cc0ada9ad9c096f85901f110a",
     "semantic_hash": ""
   },
   "python_tca2/tmx.py": {
-    "mtime": 1787147174.9126887,
-    "seen": 1787163611.57699,
+    "mtime": 1787252922.8880205,
+    "seen": 1787261428.6109078,
     "ast_hash": "8413097425a012a75acf962e24c0b7cd",
     "semantic_hash": ""
   },
@@ -119,9 +114,9 @@
     "semantic_hash": "0add3f927c8e54fa5ac4d90c41b3b39c"
   },
   "tests/test_alignmentmodel.py": {
-    "mtime": 1787154937.3125343,
-    "seen": 1787163611.576992,
-    "ast_hash": "9195431c1f33d7b8603d9bd856fe6afb",
+    "mtime": 1787260431.5479128,
+    "seen": 1787261428.610911,
+    "ast_hash": "0048a5cb0e046d9b92c0451d730e1f90",
     "semantic_hash": ""
   },
   "tests/test_path_candidate.py": {
@@ -233,38 +228,38 @@
     "semantic_hash": "0e7f685cc6957084cfaf3d0cdd81b0f3"
   },
   "python_tca2/alignment_search.py": {
-    "mtime": 1787154937.30302,
-    "seen": 1787163611.5769799,
+    "mtime": 1787256569.6448827,
+    "seen": 1787261428.6108968,
     "ast_hash": "de2727845486c9a79a43ad2493573512",
     "semantic_hash": ""
   },
   "python_tca2/candidate_alignment.py": {
-    "mtime": 1787154937.3045015,
-    "seen": 1787163611.5769842,
-    "ast_hash": "e660797a69108da88282c85607aeb297",
+    "mtime": 1787260431.5479443,
+    "seen": 1787261428.610903,
+    "ast_hash": "5d6aadb9a49ac488d7efc43b45db1753",
     "semantic_hash": ""
   },
   "python_tca2/match_cluster.py": {
-    "mtime": 1787154937.3054662,
-    "seen": 1787163611.576986,
+    "mtime": 1787256569.6520867,
+    "seen": 1787261428.610904,
     "ast_hash": "9cfb8a27d846a5c995e01d8aa4be5672",
     "semantic_hash": ""
   },
   "python_tca2/match_clusters.py": {
-    "mtime": 1787154937.3066225,
-    "seen": 1787163611.5769868,
+    "mtime": 1787256569.656349,
+    "seen": 1787261428.6109052,
     "ast_hash": "c589d0ece2b2cf6f772b7dcb2ec801c7",
     "semantic_hash": ""
   },
   "python_tca2/rolling_document.py": {
-    "mtime": 1787148215.9853039,
-    "seen": 1787163611.576988,
-    "ast_hash": "8d3021f36305bbfa86cf031b0b776194",
+    "mtime": 1787260431.5598092,
+    "seen": 1787261428.6109061,
+    "ast_hash": "6abd0ef751c04e132a8ce60de1d7437e",
     "semantic_hash": ""
   },
   "python_tca2/word_match.py": {
-    "mtime": 1787149475.9937208,
-    "seen": 1787163611.57699,
+    "mtime": 1787252922.8921747,
+    "seen": 1787261428.610909,
     "ast_hash": "7d879eff26b094ce91ad5a3ec5ed676f",
     "semantic_hash": ""
   },
@@ -275,8 +270,8 @@
     "semantic_hash": ""
   },
   "python_tca2/score.py": {
-    "mtime": 1787153801.1371589,
-    "seen": 1787163611.576988,
+    "mtime": 1787256569.6690152,
+    "seen": 1787261428.6109068,
     "ast_hash": "dec949591de0110c23504ff2563605b0",
     "semantic_hash": ""
   },
@@ -284,6 +279,12 @@
     "mtime": 1787152838.9720564,
     "seen": 1787163611.576999,
     "ast_hash": "d252375e24ab4c664d9ef8676c575df9",
+    "semantic_hash": ""
+  },
+  "python_tca2/alignment_element.py": {
+    "mtime": 1787260814.2143404,
+    "seen": 1787261428.6108959,
+    "ast_hash": "e05ccc0517056298c3d51dde881d13c6",
     "semantic_hash": ""
   }
 }
