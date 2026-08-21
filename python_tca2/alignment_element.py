@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from functools import cached_property
 
 from python_tca2 import constants
 from python_tca2.anchorwordhits import AnchorWordHits
@@ -34,15 +35,15 @@ class AlignmentElement:
     element_number: int
     anchor_word_hits: AnchorWordHits
 
-    @property
+    @cached_property
     def text(self) -> str:
         return " ".join(self.sentence.split())
 
-    @property
+    @cached_property
     def length(self) -> int:
         return len(self.text)
 
-    @property
+    @cached_property
     def words(self) -> list[str]:
         return [
             rword
@@ -50,11 +51,11 @@ class AlignmentElement:
             if rword.strip()
         ]
 
-    @property
+    @cached_property
     def num_words(self) -> int:
         return len(self.words)
 
-    @property
+    @cached_property
     def scoring_characters(self) -> str:
         return "".join(
             char for char in self.text if char in constants.DEFAULT_SCORING_CHARACTERS
