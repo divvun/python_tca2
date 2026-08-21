@@ -56,6 +56,12 @@ def make_tu(tuv_infos: tuple[tuple[str, str], ...]) -> etree.Element:
     return transl_unit
 
 
+def render_indented(element: etree.Element, indent: str) -> str:
+    """Pretty-print an element and indent it as it would appear under its parent."""
+    xml = etree.tostring(element, pretty_print=True, encoding="unicode")
+    return "".join(f"{indent}{line}\n" for line in xml.splitlines())
+
+
 def write_streaming_result(
     file1_path: Path,
     language_pair: tuple[str, str],
@@ -66,25 +72,32 @@ def write_streaming_result(
     output_path = file1_path.with_suffix(f".{output_format}")
 
     if output_format == "tmx":
-        with etree.xmlfile(output_path, encoding="utf-8") as output:
-            output.write_declaration()
-            with output.element("tmx"):
-                output.write(make_tmx_header(file1_path.stem, language_pair[0]))
-                with output.element("body"):
-                    for alignment in alignments:
-                        if all(alignment):
-                            output.write(
-                                make_tu(
-                                    tuple(
-                                        (sentence, language)
-                                        for sentence, language in zip(
-                                            to_string_tuple(alignment),
-                                            language_pair,
-                                            strict=True,
-                                        )
-                                    )
-                                )
+        # Elements are pretty-printed and indented one at a time so the whole
+        # document is never held in memory at once.
+        with output_path.open("w", encoding="utf-8") as output:
+            output.write('<?xml version="1.0" encoding="UTF-8"?>\n')
+            output.write("<tmx>\n")
+            output.write(
+                render_indented(
+                    make_tmx_header(file1_path.stem, language_pair[0]), "  "
+                )
+            )
+            output.write("  <body>\n")
+            for alignment in alignments:
+                if all(alignment):
+                    tu = make_tu(
+                        tuple(
+                            (sentence, language)
+                            for sentence, language in zip(
+                                to_string_tuple(alignment),
+                                language_pair,
+                                strict=True,
                             )
+                        )
+                    )
+                    output.write(render_indented(tu, "    "))
+            output.write("  </body>\n")
+            output.write("</tmx>\n")
     elif output_format == "html":
         with output_path.open("w", encoding="utf-8") as output:
             output.write(
