@@ -1,16 +1,16 @@
-# Graph Report - python_tca2  (2026-08-20)
+# Graph Report - python_tca2  (2026-08-21)
 
 ## Corpus Check
-- 36 files · ~596,849 words
+- 36 files · ~596,901 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 311 nodes · 546 edges · 25 communities (20 shown, 5 thin omitted)
-- Extraction: 94% EXTRACTED · 6% INFERRED · 0% AMBIGUOUS · INFERRED: 35 edges (avg confidence: 0.92)
+- 317 nodes · 538 edges · 28 communities (19 shown, 9 thin omitted)
+- Extraction: 94% EXTRACTED · 6% INFERRED · 0% AMBIGUOUS · INFERRED: 31 edges (avg confidence: 0.92)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `7311766b`
+- Built from commit: `d1b54d49`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -18,7 +18,7 @@
 - candidate_alignment.py
 - AnchorWordList
 - Any
-- generate_alignment_suggestions
+- alignment_suggestion.py
 - CandidateAlignment
 - similarity_utils.py
 - AlignmentSearch
@@ -27,7 +27,7 @@
 - best_path_score
 - tca2
 - Kven Commission Corpus
-- RollingDocument
+- .get_aligned_sentence_elements
 - Program 6. februar
 - Norwegian–Northern Sámi Anchor Lexicon Test Fixture
 - Sentence Alignment Input A
@@ -36,20 +36,23 @@
 - python-tca2
 - Q: Why does ElementInfoToBeCompared connect Element Scoring to Utility Clustering, Alignment Elements, Alignment Model?
 - Q: What would be a more stable of computing scores? This is quite essential …
-- write_streaming_result
-- AlignmentElement
+- AlignedSentenceElements
+- AnchorWordHit
+- AlignmentSuggestion
+- Score
+- slice
 
 ## God Nodes (most connected - your core abstractions)
-1. `CandidateAlignment` - 33 edges
+1. `CandidateAlignment` - 31 edges
 2. `AnchorWordList` - 27 edges
 3. `WordMatch` - 20 edges
-4. `AlignmentSearch` - 20 edges
-5. `MatchCluster` - 17 edges
-6. `MatchClusters` - 17 edges
-7. `PathCandidate` - 16 edges
-8. `as_score()` - 16 edges
-9. `AlignmentModel` - 15 edges
-10. `RollingDocument` - 14 edges
+4. `MatchCluster` - 17 edges
+5. `MatchClusters` - 17 edges
+6. `AlignmentSearch` - 17 edges
+7. `AlignmentModel` - 15 edges
+8. `as_score()` - 15 edges
+9. `AnchorWordHit` - 12 edges
+10. `RollingDocument` - 11 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `load_anchor_words()` --uses--> `AnchorWordList`  [INFERRED]
@@ -71,7 +74,7 @@
 - **Kven–Norwegian Parallel Corpus** — data_kommisjonen_21_08_2020_fkv_txt_fkv_new_kven_commission_corpus, data_kommisjonen_21_08_2020_nob_txt_nob_new_norwegian_commission_corpus, suggest1_9_id_446575_html_nob_kven_norwegian_translation_examples [INFERRED 0.95]
 - **Norwegian–Northern Sámi Anchor Resources** — suggest1_anchor_nob_sme_norwegian_northern_sami_anchor_lexicon, tests_anchor_nob_sme_norwegian_northern_sami_anchor_lexicon, tests_anchor_sme_nob_northern_sami_norwegian_anchor_lexicon [INFERRED 0.95]
 
-## Communities (25 total, 5 thin omitted)
+## Communities (28 total, 9 thin omitted)
 
 ### Community 0 - "candidate_alignment.py"
 Cohesion: 0.06
@@ -79,11 +82,11 @@ Nodes (31): _enumerate_scoring_characters(), _enumerate_words(), _is_matching_pr
 
 ### Community 1 - "AnchorWordList"
 Cohesion: 0.07
-Nodes (36): command, parametrize, AlignedSentenceElements, Convert an AlignedSentenceElements into a tuple of strings. Args:…, to_string_tuple(), main(), AlignmentModel, AlignedSentenceElements (+28 more)
+Nodes (44): command, Element, parametrize, AlignedSentenceElements, Convert an AlignedSentenceElements into a tuple of strings. Args:…, to_string_tuple(), main(), AlignmentModel (+36 more)
 
-### Community 3 - "generate_alignment_suggestions"
-Cohesion: 0.33
-Nodes (6): generate_alignment_suggestions(), is_valid_suggestion(), AlignmentSuggestion, Check if the increment combination is valid based on the constraints. Args:…, Create a list of AlignmentSuggestions based on the given number of files. Args:…, test_generate_alignment_suggestions()
+### Community 3 - "alignment_suggestion.py"
+Cohesion: 0.13
+Nodes (14): generate_alignment_suggestions(), is_valid_suggestion(), AlignmentSuggestion, This module provides functionality for generating alignment suggestions., Check if the increment combination is valid based on the constraints. Args:…, Create a list of AlignmentSuggestions based on the given number of files. Args:…, PathCandidate, Score (+6 more)
 
 ### Community 4 - "CandidateAlignment"
 Cohesion: 0.12
@@ -94,11 +97,11 @@ Cohesion: 0.14
 Nodes (23): adjust_for_length_correlation(), bad_length_correlation(), calculate_length_correlation_factor(), dice_match_word_pair(), dice_match_word_with_phrase(), is_word_anchor_match(), Pattern, Score (+15 more)
 
 ### Community 6 - "AlignmentSearch"
-Cohesion: 0.07
-Nodes (28): PathRank, AlignmentSearch, _BeamRound, get_best_path_score(), AlignedSentenceElements, AlignmentSuggestion, Score, slice (+20 more)
+Cohesion: 0.09
+Nodes (22): AlignedSentenceElements, AlignmentSuggestion, PathCandidate, PathRank, AlignmentSearch, _BeamRound, get_best_path_score(), Beam search over candidate sentence alignments. Beam search explores several… (+14 more)
 
 ### Community 7 - "AnchorWordListEntry"
-Cohesion: 0.24
+Cohesion: 0.27
 Nodes (6): Loads anchor word list entries from a specified file. Reads the file line by…, AnchorWordListEntry, Pattern, Generate a list of phrase patterns from input pairs. Args: pairs: A list of…, Generates a list of compiled regex patterns from a synonym phrase. Args: syn: A…, Make a proper regular expression from the anchor word
 
 ### Community 8 - "extend_alignment_paths Debug Trace"
@@ -117,9 +120,9 @@ Nodes (4): Knut Hofland, Sentence Alignment Program, tca2, Øystein Reigem
 Cohesion: 1.00
 Nodes (3): Kven Commission Corpus, Norwegian Commission Corpus, Kven–Norwegian Translation Examples
 
-### Community 12 - "RollingDocument"
-Cohesion: 0.24
-Nodes (4): slice, Return whether an input position is beyond the document end., Lazily materialize alignment elements and discard committed input., RollingDocument
+### Community 12 - ".get_aligned_sentence_elements"
+Cohesion: 0.40
+Nodes (3): AlignedSentenceElements, slice, Return elements in the current search window for the supplied slices.
 
 ### Community 13 - "Program 6. februar"
 Cohesion: 0.67
@@ -137,33 +140,29 @@ Nodes (4): Answer, Outcome, Q: Why does ElementInfoToBeCompared connect Element 
 Cohesion: 0.40
 Nodes (4): Answer, Outcome, Q: What would be a more stable of computing scores? This is quite essential …, Source Nodes
 
-### Community 23 - "write_streaming_result"
-Cohesion: 0.22
-Nodes (13): Element, add_filename_id(), make_tmx_header(), make_tu(), make_tuv(), AlignedSentenceElements, Path, Add the tmx filename as an prop element in the header. (+5 more)
-
-### Community 24 - "AlignmentElement"
-Cohesion: 0.25
-Nodes (3): AlignmentElement, Removes special characters from the start and end of a word. Iterates through a…, remove_special_characters()
+### Community 24 - "AnchorWordHit"
+Cohesion: 0.12
+Nodes (9): AlignmentElement, Removes special characters from the start and end of a word. Iterates through a…, remove_special_characters(), AnchorWordHit, AnchorWordHits, Pattern, Retrieve synonyms for a given text number from the entries. Args: text_number:…, Retrieves anchor word hits based on provided words and indices. Args: words: A… (+1 more)
 
 ## Knowledge Gaps
-- **24 isolated node(s):** `py-tca2.sh script`, `python-tca2`, `Answer`, `Outcome`, `Source Nodes` (+19 more)
+- **24 isolated node(s):** `python-tca2`, `py-tca2.sh script`, `Answer`, `Outcome`, `Source Nodes` (+19 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **5 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **9 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `CandidateAlignment` connect `CandidateAlignment` to `candidate_alignment.py`, `AnchorWordList`, `AlignmentSearch`?**
-  _High betweenness centrality (0.209) - this node is a cross-community bridge._
-- **Why does `AlignmentSearch` connect `AlignmentSearch` to `AnchorWordList`, `RollingDocument`, `CandidateAlignment`?**
-  _High betweenness centrality (0.111) - this node is a cross-community bridge._
-- **Why does `MatchClusters` connect `candidate_alignment.py` to `CandidateAlignment`?**
-  _High betweenness centrality (0.090) - this node is a cross-community bridge._
-- **Are the 4 inferred relationships involving `CandidateAlignment` (e.g. with `AlignmentSearch` and `AnchorWordHit`) actually correct?**
-  _`CandidateAlignment` has 4 INFERRED edges - model-reasoned connections that need verification._
+- **Why does `CandidateAlignment` connect `CandidateAlignment` to `candidate_alignment.py`, `AnchorWordHit`, `AlignmentSearch`, `AnchorWordList`?**
+  _High betweenness centrality (0.164) - this node is a cross-community bridge._
+- **Why does `AnchorWordList` connect `AnchorWordList` to `AnchorWordHit`, `AnchorWordListEntry`?**
+  _High betweenness centrality (0.095) - this node is a cross-community bridge._
+- **Why does `AlignmentSearch` connect `AlignmentSearch` to `AnchorWordList`?**
+  _High betweenness centrality (0.087) - this node is a cross-community bridge._
+- **Are the 3 inferred relationships involving `CandidateAlignment` (e.g. with `AnchorWordHit` and `MatchClusters`) actually correct?**
+  _`CandidateAlignment` has 3 INFERRED edges - model-reasoned connections that need verification._
 - **Are the 7 inferred relationships involving `AnchorWordList` (e.g. with `main()` and `AlignmentModel`) actually correct?**
   _`AnchorWordList` has 7 INFERRED edges - model-reasoned connections that need verification._
 - **Are the 3 inferred relationships involving `WordMatch` (e.g. with `CandidateAlignment` and `MatchCluster`) actually correct?**
   _`WordMatch` has 3 INFERRED edges - model-reasoned connections that need verification._
-- **Are the 4 inferred relationships involving `AlignmentSearch` (e.g. with `CandidateAlignment` and `PathCandidate`) actually correct?**
-  _`AlignmentSearch` has 4 INFERRED edges - model-reasoned connections that need verification._
+- **Are the 2 inferred relationships involving `MatchCluster` (e.g. with `WordMatch` and `MatchClusters`) actually correct?**
+  _`MatchCluster` has 2 INFERRED edges - model-reasoned connections that need verification._
