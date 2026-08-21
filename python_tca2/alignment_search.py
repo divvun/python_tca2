@@ -257,7 +257,15 @@ class AlignmentSearch:
                 self._documents, next_position, strict=True
             ):
                 document.discard_before(position)
-            self._step_scores.clear()
+            # Beam search re-explores a window that mostly overlaps the
+            # previous one, so drop only scores that start before the new
+            # position instead of recomputing everything from scratch.
+            self._step_scores = {
+                slices: score
+                for slices, score in self._step_scores.items()
+                if slices[0].start >= next_position[0]
+                and slices[1].start >= next_position[1]
+            }
             start_position = next_position
 
 
