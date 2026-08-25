@@ -53,7 +53,7 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 0,
-      "community_name": "MatchCluster",
+      "community_name": "candidate_alignment.py",
       "file_type": "code",
       "norm_label": "matchcluster",
       "source_file": "python_tca2/match_cluster.py",
@@ -66,11 +66,24 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 0,
-      "community_name": "MatchCluster",
+      "community_name": "candidate_alignment.py",
       "file_type": "code",
       "norm_label": "matchclusters",
       "source_file": "python_tca2/match_clusters.py",
       "source_location": "L10"
+    },
+    {
+      "id": "python_tca2_word_match_wordmatch",
+      "label": "WordMatch",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "candidate_alignment.py",
+      "file_type": "code",
+      "norm_label": "wordmatch",
+      "source_file": "python_tca2/word_match.py",
+      "source_location": "L5"
     },
     {
       "id": "python_tca2_alignment_element_alignmentelement",
@@ -125,19 +138,6 @@
       "source_location": "L11"
     },
     {
-      "id": "python_tca2_anchorwordlistentry_anchorwordlistentry",
-      "label": "AnchorWordListEntry",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "test_alignmentmodel.py",
-      "file_type": "code",
-      "norm_label": "anchorwordlistentry",
-      "source_file": "python_tca2/anchorwordlistentry.py",
-      "source_location": "L7"
-    },
-    {
       "id": "python_tca2_rolling_document_rollingdocument",
       "label": "RollingDocument",
       "_callable": true,
@@ -151,17 +151,17 @@
       "source_location": "L8"
     },
     {
-      "id": "python_tca2_word_match_wordmatch",
-      "label": "WordMatch",
+      "id": "python_tca2_path_candidate_pathcandidate",
+      "label": "PathCandidate",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
-      "community": 15,
-      "community_name": "candidate_alignment.py",
+      "community": 3,
+      "community_name": "alignment_suggestion.py",
       "file_type": "code",
-      "norm_label": "wordmatch",
-      "source_file": "python_tca2/word_match.py",
-      "source_location": "L5"
+      "norm_label": "pathcandidate",
+      "source_file": "python_tca2/path_candidate.py",
+      "source_location": "L8"
     },
     {
       "id": "python_tca2_anchorwordhit_anchorwordhit",
@@ -216,17 +216,113 @@
       "source_location": "L26"
     },
     {
-      "id": "python_tca2_path_candidate_pathcandidate",
-      "label": "PathCandidate",
+      "id": "python_tca2_anchorwordlistentry_anchorwordlistentry",
+      "label": "AnchorWordListEntry",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
-      "community": 6,
-      "community_name": "AlignmentSearch",
+      "community": 7,
+      "community_name": "AnchorWordListEntry",
       "file_type": "code",
-      "norm_label": "pathcandidate",
-      "source_file": "python_tca2/path_candidate.py",
-      "source_location": "L8"
+      "norm_label": "anchorwordlistentry",
+      "source_file": "python_tca2/anchorwordlistentry.py",
+      "source_location": "L7"
+    },
+    {
+      "id": "python_tca2_candidate_alignment_candidatealignment_find_number_matches",
+      "label": ".find_number_matches()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "candidate_alignment.py",
+      "file_type": "code",
+      "norm_label": ".find_number_matches()",
+      "source_file": "python_tca2/candidate_alignment.py",
+      "source_location": "L381"
+    },
+    {
+      "id": "python_tca2_candidate_alignment_candidatealignment_find_propername_matches",
+      "label": ".find_propername_matches()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "candidate_alignment.py",
+      "file_type": "code",
+      "norm_label": ".find_propername_matches()",
+      "source_file": "python_tca2/candidate_alignment.py",
+      "source_location": "L366"
+    },
+    {
+      "id": "python_tca2_candidate_alignment_candidatealignment_find_special_character_matches",
+      "label": ".find_special_character_matches()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "candidate_alignment.py",
+      "file_type": "code",
+      "norm_label": ".find_special_character_matches()",
+      "source_file": "python_tca2/candidate_alignment.py",
+      "source_location": "L389"
+    },
+    {
+      "id": "python_tca2_candidate_alignment_candidatealignment_find_word_pair_matches",
+      "label": "._find_word_pair_matches()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "candidate_alignment.py",
+      "file_type": "code",
+      "norm_label": "._find_word_pair_matches()",
+      "source_file": "python_tca2/candidate_alignment.py",
+      "source_location": "L337"
+    },
+    {
+      "id": "python_tca2_candidate_alignment_enumerate_scoring_characters",
+      "label": "_enumerate_scoring_characters()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "candidate_alignment.py",
+      "file_type": "code",
+      "norm_label": "_enumerate_scoring_characters()",
+      "source_file": "python_tca2/candidate_alignment.py",
+      "source_location": "L36"
+    },
+    {
+      "id": "python_tca2_candidate_alignment_enumerate_words",
+      "label": "_enumerate_words()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "candidate_alignment.py",
+      "file_type": "code",
+      "norm_label": "_enumerate_words()",
+      "source_file": "python_tca2/candidate_alignment.py",
+      "source_location": "L32"
+    },
+    {
+      "id": "python_tca2_candidate_alignment_is_matching_proper_name",
+      "label": "_is_matching_proper_name()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "candidate_alignment.py",
+      "file_type": "code",
+      "norm_label": "_is_matching_proper_name()",
+      "source_file": "python_tca2/candidate_alignment.py",
+      "source_location": "L42"
+    },
+    {
+      "id": "python_tca2_candidate_alignment_words_equal",
+      "label": "_words_equal()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "candidate_alignment.py",
+      "file_type": "code",
+      "norm_label": "_words_equal()",
+      "source_file": "python_tca2/candidate_alignment.py",
+      "source_location": "L46"
     },
     {
       "id": "python_tca2_match_cluster_matchcluster_add_cluster",
@@ -234,7 +330,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 0,
-      "community_name": "MatchCluster",
+      "community_name": "candidate_alignment.py",
       "file_type": "code",
       "norm_label": ".add_cluster()",
       "source_file": "python_tca2/match_cluster.py",
@@ -246,35 +342,11 @@
       "_callable": true,
       "_origin": "ast",
       "community": 0,
-      "community_name": "MatchCluster",
+      "community_name": "candidate_alignment.py",
       "file_type": "code",
       "norm_label": ".add_ref()",
       "source_file": "python_tca2/match_cluster.py",
       "source_location": "L27"
-    },
-    {
-      "id": "python_tca2_match_cluster_matchcluster_get_max_cluster_weight",
-      "label": ".get_max_cluster_weight()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "MatchCluster",
-      "file_type": "code",
-      "norm_label": ".get_max_cluster_weight()",
-      "source_file": "python_tca2/match_cluster.py",
-      "source_location": "L82"
-    },
-    {
-      "id": "python_tca2_match_cluster_matchcluster_get_score",
-      "label": ".get_score()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "MatchCluster",
-      "file_type": "code",
-      "norm_label": ".get_score()",
-      "source_file": "python_tca2/match_cluster.py",
-      "source_location": "L56"
     },
     {
       "id": "python_tca2_match_cluster_matchcluster_init",
@@ -282,7 +354,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 0,
-      "community_name": "MatchCluster",
+      "community_name": "candidate_alignment.py",
       "file_type": "code",
       "norm_label": ".__init__()",
       "source_file": "python_tca2/match_cluster.py",
@@ -294,7 +366,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 0,
-      "community_name": "MatchCluster",
+      "community_name": "candidate_alignment.py",
       "file_type": "code",
       "norm_label": ".matches()",
       "source_file": "python_tca2/match_cluster.py",
@@ -306,7 +378,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 0,
-      "community_name": "MatchCluster",
+      "community_name": "candidate_alignment.py",
       "file_type": "code",
       "norm_label": ".__str__()",
       "source_file": "python_tca2/match_cluster.py",
@@ -318,7 +390,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 0,
-      "community_name": "MatchCluster",
+      "community_name": "candidate_alignment.py",
       "file_type": "code",
       "norm_label": ".to_json()",
       "source_file": "python_tca2/match_cluster.py",
@@ -330,7 +402,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 0,
-      "community_name": "MatchCluster",
+      "community_name": "candidate_alignment.py",
       "file_type": "code",
       "norm_label": ".add_cluster()",
       "source_file": "python_tca2/match_clusters.py",
@@ -342,7 +414,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 0,
-      "community_name": "MatchCluster",
+      "community_name": "candidate_alignment.py",
       "file_type": "code",
       "norm_label": ".add_clusters()",
       "source_file": "python_tca2/match_clusters.py",
@@ -354,7 +426,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 0,
-      "community_name": "MatchCluster",
+      "community_name": "candidate_alignment.py",
       "file_type": "code",
       "norm_label": ".add_ref()",
       "source_file": "python_tca2/match_clusters.py",
@@ -366,7 +438,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 0,
-      "community_name": "MatchCluster",
+      "community_name": "candidate_alignment.py",
       "file_type": "code",
       "norm_label": ".create_and_add_cluster()",
       "source_file": "python_tca2/match_clusters.py",
@@ -378,7 +450,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 0,
-      "community_name": "MatchCluster",
+      "community_name": "candidate_alignment.py",
       "file_type": "code",
       "norm_label": ".get_score()",
       "source_file": "python_tca2/match_clusters.py",
@@ -390,7 +462,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 0,
-      "community_name": "MatchCluster",
+      "community_name": "candidate_alignment.py",
       "file_type": "code",
       "norm_label": ".have_same_ref()",
       "source_file": "python_tca2/match_clusters.py",
@@ -402,7 +474,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 0,
-      "community_name": "MatchCluster",
+      "community_name": "candidate_alignment.py",
       "file_type": "code",
       "norm_label": ".__init__()",
       "source_file": "python_tca2/match_clusters.py",
@@ -414,7 +486,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 0,
-      "community_name": "MatchCluster",
+      "community_name": "candidate_alignment.py",
       "file_type": "code",
       "norm_label": ".__str__()",
       "source_file": "python_tca2/match_clusters.py",
@@ -426,11 +498,35 @@
       "_callable": true,
       "_origin": "ast",
       "community": 0,
-      "community_name": "MatchCluster",
+      "community_name": "candidate_alignment.py",
       "file_type": "code",
       "norm_label": ".to_json()",
       "source_file": "python_tca2/match_clusters.py",
       "source_location": "L24"
+    },
+    {
+      "id": "python_tca2_word_match_wordmatch_is_in_text",
+      "label": ".is_in_text()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "candidate_alignment.py",
+      "file_type": "code",
+      "norm_label": ".is_in_text()",
+      "source_file": "python_tca2/word_match.py",
+      "source_location": "L30"
+    },
+    {
+      "id": "python_tca2_word_match_wordmatch_overlaps",
+      "label": ".overlaps()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "candidate_alignment.py",
+      "file_type": "code",
+      "norm_label": ".overlaps()",
+      "source_file": "python_tca2/word_match.py",
+      "source_location": "L16"
     },
     {
       "id": "python_tca2_aligned_sentence_elements_to_string_tuple",
@@ -517,16 +613,16 @@
       "source_location": "L8"
     },
     {
-      "id": "python_tca2_alignment_search_alignmentsearch_init",
-      "label": ".__init__()",
+      "id": "python_tca2_alignment_main",
+      "label": "main()",
       "_callable": true,
       "_origin": "ast",
       "community": 1,
       "community_name": "test_alignmentmodel.py",
       "file_type": "code",
-      "norm_label": ".__init__()",
-      "source_file": "python_tca2/alignment_search.py",
-      "source_location": "L50"
+      "norm_label": "main()",
+      "source_file": "python_tca2/alignment.py",
+      "source_location": "L14"
     },
     {
       "id": "python_tca2_alignmentmodel_alignmentmodel_init",
@@ -563,18 +659,6 @@
       "norm_label": ".__init__()",
       "source_file": "python_tca2/anchorwordlist.py",
       "source_location": "L14"
-    },
-    {
-      "id": "python_tca2_anchorwordlist_anchorwordlist_load_from_file",
-      "label": ".load_from_file()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "test_alignmentmodel.py",
-      "file_type": "code",
-      "norm_label": ".load_from_file()",
-      "source_file": "python_tca2/anchorwordlist.py",
-      "source_location": "L17"
     },
     {
       "id": "python_tca2_rolling_document_rollingdocument_discard_before",
@@ -793,162 +877,6 @@
       "source_location": "L41"
     },
     {
-      "id": "python_tca2_candidate_alignment_candidatealignment_find_dice_matches",
-      "label": ".find_dice_matches()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 15,
-      "community_name": "candidate_alignment.py",
-      "file_type": "code",
-      "norm_label": ".find_dice_matches()",
-      "source_file": "python_tca2/candidate_alignment.py",
-      "source_location": "L160"
-    },
-    {
-      "id": "python_tca2_candidate_alignment_candidatealignment_find_number_matches",
-      "label": ".find_number_matches()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 15,
-      "community_name": "candidate_alignment.py",
-      "file_type": "code",
-      "norm_label": ".find_number_matches()",
-      "source_file": "python_tca2/candidate_alignment.py",
-      "source_location": "L381"
-    },
-    {
-      "id": "python_tca2_candidate_alignment_candidatealignment_find_propername_matches",
-      "label": ".find_propername_matches()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 15,
-      "community_name": "candidate_alignment.py",
-      "file_type": "code",
-      "norm_label": ".find_propername_matches()",
-      "source_file": "python_tca2/candidate_alignment.py",
-      "source_location": "L366"
-    },
-    {
-      "id": "python_tca2_candidate_alignment_candidatealignment_find_special_character_matches",
-      "label": ".find_special_character_matches()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 15,
-      "community_name": "candidate_alignment.py",
-      "file_type": "code",
-      "norm_label": ".find_special_character_matches()",
-      "source_file": "python_tca2/candidate_alignment.py",
-      "source_location": "L389"
-    },
-    {
-      "id": "python_tca2_candidate_alignment_candidatealignment_find_word_pair_matches",
-      "label": "._find_word_pair_matches()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 15,
-      "community_name": "candidate_alignment.py",
-      "file_type": "code",
-      "norm_label": "._find_word_pair_matches()",
-      "source_file": "python_tca2/candidate_alignment.py",
-      "source_location": "L337"
-    },
-    {
-      "id": "python_tca2_candidate_alignment_count_words",
-      "label": "_count_words()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 15,
-      "community_name": "candidate_alignment.py",
-      "file_type": "code",
-      "norm_label": "_count_words()",
-      "source_file": "python_tca2/candidate_alignment.py",
-      "source_location": "L20"
-    },
-    {
-      "id": "python_tca2_candidate_alignment_enumerate_scoring_characters",
-      "label": "_enumerate_scoring_characters()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 15,
-      "community_name": "candidate_alignment.py",
-      "file_type": "code",
-      "norm_label": "_enumerate_scoring_characters()",
-      "source_file": "python_tca2/candidate_alignment.py",
-      "source_location": "L36"
-    },
-    {
-      "id": "python_tca2_candidate_alignment_enumerate_words",
-      "label": "_enumerate_words()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 15,
-      "community_name": "candidate_alignment.py",
-      "file_type": "code",
-      "norm_label": "_enumerate_words()",
-      "source_file": "python_tca2/candidate_alignment.py",
-      "source_location": "L32"
-    },
-    {
-      "id": "python_tca2_candidate_alignment_is_matching_proper_name",
-      "label": "_is_matching_proper_name()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 15,
-      "community_name": "candidate_alignment.py",
-      "file_type": "code",
-      "norm_label": "_is_matching_proper_name()",
-      "source_file": "python_tca2/candidate_alignment.py",
-      "source_location": "L42"
-    },
-    {
-      "id": "python_tca2_candidate_alignment_words_equal",
-      "label": "_words_equal()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 15,
-      "community_name": "candidate_alignment.py",
-      "file_type": "code",
-      "norm_label": "_words_equal()",
-      "source_file": "python_tca2/candidate_alignment.py",
-      "source_location": "L46"
-    },
-    {
-      "id": "python_tca2_word_match_wordmatch_is_in_text",
-      "label": ".is_in_text()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 15,
-      "community_name": "candidate_alignment.py",
-      "file_type": "code",
-      "norm_label": ".is_in_text()",
-      "source_file": "python_tca2/word_match.py",
-      "source_location": "L30"
-    },
-    {
-      "id": "python_tca2_word_match_wordmatch_overlaps",
-      "label": ".overlaps()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 15,
-      "community_name": "candidate_alignment.py",
-      "file_type": "code",
-      "norm_label": ".overlaps()",
-      "source_file": "python_tca2/word_match.py",
-      "source_location": "L16"
-    },
-    {
-      "id": "python_tca2_alignment_main",
-      "label": "main()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "write_streaming_result",
-      "file_type": "code",
-      "norm_label": "main()",
-      "source_file": "python_tca2/alignment.py",
-      "source_location": "L14"
-    },
-    {
       "id": "python_tca2_tmx_add_filename_id",
       "label": "add_filename_id()",
       "_callable": true,
@@ -1081,6 +1009,42 @@
       "source_location": "L23"
     },
     {
+      "id": "python_tca2_path_candidate_pathcandidate_get_length_in_sentences",
+      "label": ".get_length_in_sentences()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "alignment_suggestion.py",
+      "file_type": "code",
+      "norm_label": ".get_length_in_sentences()",
+      "source_file": "python_tca2/path_candidate.py",
+      "source_location": "L43"
+    },
+    {
+      "id": "python_tca2_path_candidate_pathcandidate_has_hit",
+      "label": ".has_hit()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "alignment_suggestion.py",
+      "file_type": "code",
+      "norm_label": ".has_hit()",
+      "source_file": "python_tca2/path_candidate.py",
+      "source_location": "L24"
+    },
+    {
+      "id": "python_tca2_path_candidate_pathcandidate_normalized_score",
+      "label": ".normalized_score()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "alignment_suggestion.py",
+      "file_type": "code",
+      "norm_label": ".normalized_score()",
+      "source_file": "python_tca2/path_candidate.py",
+      "source_location": "L20"
+    },
+    {
       "id": "tests_test_alignment_suggestion_test_generate_alignment_suggestions",
       "label": "test_generate_alignment_suggestions()",
       "_callable": true,
@@ -1091,6 +1055,18 @@
       "norm_label": "test_generate_alignment_suggestions()",
       "source_file": "tests/test_alignment_suggestion.py",
       "source_location": "L7"
+    },
+    {
+      "id": "tests_test_path_candidate_test_is_hit",
+      "label": "test_is_hit()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "alignment_suggestion.py",
+      "file_type": "code",
+      "norm_label": "test_is_hit()",
+      "source_file": "tests/test_path_candidate.py",
+      "source_location": "L5"
     },
     {
       "id": "python_tca2_candidate_alignment_candidatealignment_adjust_for_length_correlation",
@@ -1151,6 +1127,18 @@
       "norm_label": ".empty()",
       "source_file": "python_tca2/candidate_alignment.py",
       "source_location": "L77"
+    },
+    {
+      "id": "python_tca2_candidate_alignment_candidatealignment_find_dice_matches",
+      "label": ".find_dice_matches()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "CandidateAlignment",
+      "file_type": "code",
+      "norm_label": ".find_dice_matches()",
+      "source_file": "python_tca2/candidate_alignment.py",
+      "source_location": "L160"
     },
     {
       "id": "python_tca2_candidate_alignment_candidatealignment_find_hits",
@@ -1283,6 +1271,42 @@
       "norm_label": ".to_json()",
       "source_file": "python_tca2/candidate_alignment.py",
       "source_location": "L64"
+    },
+    {
+      "id": "python_tca2_candidate_alignment_count_words",
+      "label": "_count_words()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "CandidateAlignment",
+      "file_type": "code",
+      "norm_label": "_count_words()",
+      "source_file": "python_tca2/candidate_alignment.py",
+      "source_location": "L20"
+    },
+    {
+      "id": "python_tca2_match_cluster_matchcluster_get_max_cluster_weight",
+      "label": ".get_max_cluster_weight()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "CandidateAlignment",
+      "file_type": "code",
+      "norm_label": ".get_max_cluster_weight()",
+      "source_file": "python_tca2/match_cluster.py",
+      "source_location": "L82"
+    },
+    {
+      "id": "python_tca2_match_cluster_matchcluster_get_score",
+      "label": ".get_score()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "CandidateAlignment",
+      "file_type": "code",
+      "norm_label": ".get_score()",
+      "source_file": "python_tca2/match_cluster.py",
+      "source_location": "L56"
     },
     {
       "id": "python_tca2_score_as_score",
@@ -1513,6 +1537,18 @@
       "source_location": "L164"
     },
     {
+      "id": "python_tca2_alignment_search_alignmentsearch_init",
+      "label": ".__init__()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 6,
+      "community_name": "AlignmentSearch",
+      "file_type": "code",
+      "norm_label": ".__init__()",
+      "source_file": "python_tca2/alignment_search.py",
+      "source_location": "L50"
+    },
+    {
       "id": "python_tca2_alignment_search_alignmentsearch_iter_alignment_elements",
       "label": ".iter_alignment_elements()",
       "_callable": true,
@@ -1645,52 +1681,16 @@
       "source_location": "L269"
     },
     {
-      "id": "python_tca2_path_candidate_pathcandidate_get_length_in_sentences",
-      "label": ".get_length_in_sentences()",
+      "id": "python_tca2_anchorwordlist_anchorwordlist_load_from_file",
+      "label": ".load_from_file()",
       "_callable": true,
       "_origin": "ast",
-      "community": 6,
-      "community_name": "AlignmentSearch",
+      "community": 7,
+      "community_name": "AnchorWordListEntry",
       "file_type": "code",
-      "norm_label": ".get_length_in_sentences()",
-      "source_file": "python_tca2/path_candidate.py",
-      "source_location": "L43"
-    },
-    {
-      "id": "python_tca2_path_candidate_pathcandidate_has_hit",
-      "label": ".has_hit()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 6,
-      "community_name": "AlignmentSearch",
-      "file_type": "code",
-      "norm_label": ".has_hit()",
-      "source_file": "python_tca2/path_candidate.py",
-      "source_location": "L24"
-    },
-    {
-      "id": "python_tca2_path_candidate_pathcandidate_normalized_score",
-      "label": ".normalized_score()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 6,
-      "community_name": "AlignmentSearch",
-      "file_type": "code",
-      "norm_label": ".normalized_score()",
-      "source_file": "python_tca2/path_candidate.py",
-      "source_location": "L20"
-    },
-    {
-      "id": "tests_test_path_candidate_test_is_hit",
-      "label": "test_is_hit()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 6,
-      "community_name": "AlignmentSearch",
-      "file_type": "code",
-      "norm_label": "test_is_hit()",
-      "source_file": "tests/test_path_candidate.py",
-      "source_location": "L5"
+      "norm_label": ".load_from_file()",
+      "source_file": "python_tca2/anchorwordlist.py",
+      "source_location": "L17"
     },
     {
       "id": "python_tca2_anchorwordlistentry_anchorwordlistentry_init",
@@ -1698,7 +1698,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 7,
-      "community_name": ".make_phrase",
+      "community_name": "AnchorWordListEntry",
       "file_type": "code",
       "norm_label": ".__init__()",
       "source_file": "python_tca2/anchorwordlistentry.py",
@@ -1710,7 +1710,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 7,
-      "community_name": ".make_phrase",
+      "community_name": "AnchorWordListEntry",
       "file_type": "code",
       "norm_label": ".make_compiled_pattern()",
       "source_file": "python_tca2/anchorwordlistentry.py",
@@ -1722,7 +1722,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 7,
-      "community_name": ".make_phrase",
+      "community_name": "AnchorWordListEntry",
       "file_type": "code",
       "norm_label": ".make_phrase()",
       "source_file": "python_tca2/anchorwordlistentry.py",
@@ -1734,40 +1734,84 @@
       "_callable": true,
       "_origin": "ast",
       "community": 7,
-      "community_name": ".make_phrase",
+      "community_name": "AnchorWordListEntry",
       "file_type": "code",
       "norm_label": ".make_phrases()",
       "source_file": "python_tca2/anchorwordlistentry.py",
       "source_location": "L32"
     },
     {
+      "id": "python_tca2_candidate_alignment",
+      "label": "candidate_alignment.py",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "candidate_alignment.py",
+      "file_type": "code",
+      "norm_label": "candidate_alignment.py",
+      "source_file": "python_tca2/candidate_alignment.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "python_tca2_constants",
+      "label": "constants.py",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "candidate_alignment.py",
+      "file_type": "code",
+      "norm_label": "constants.py",
+      "source_file": "python_tca2/constants.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "python_tca2_match",
+      "label": "match.py",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "candidate_alignment.py",
+      "file_type": "code",
+      "norm_label": "match.py",
+      "source_file": "python_tca2/match.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "python_tca2_match_cluster",
+      "label": "match_cluster.py",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "candidate_alignment.py",
+      "file_type": "code",
+      "norm_label": "match_cluster.py",
+      "source_file": "python_tca2/match_cluster.py",
+      "source_location": "L1"
+    },
+    {
       "id": "python_tca2_match_cluster_py_any",
       "label": "Any",
       "_origin": "ast",
       "community": 0,
-      "community_name": "MatchCluster",
+      "community_name": "candidate_alignment.py",
       "file_type": "code",
       "norm_label": "any",
       "source_file": "",
       "source_location": ""
     },
     {
-      "id": "python_tca2_match_cluster_py_score",
-      "label": "Score",
+      "id": "python_tca2_match_clusters",
+      "label": "match_clusters.py",
       "_origin": "ast",
       "community": 0,
-      "community_name": "MatchCluster",
+      "community_name": "candidate_alignment.py",
       "file_type": "code",
-      "norm_label": "score",
-      "source_file": "",
-      "source_location": ""
+      "norm_label": "match_clusters.py",
+      "source_file": "python_tca2/match_clusters.py",
+      "source_location": "L1"
     },
     {
       "id": "python_tca2_match_clusters_py_any",
       "label": "Any",
       "_origin": "ast",
       "community": 0,
-      "community_name": "MatchCluster",
+      "community_name": "candidate_alignment.py",
       "file_type": "code",
       "norm_label": "any",
       "source_file": "",
@@ -1778,18 +1822,51 @@
       "label": "Score",
       "_origin": "ast",
       "community": 0,
-      "community_name": "MatchCluster",
+      "community_name": "candidate_alignment.py",
       "file_type": "code",
       "norm_label": "score",
       "source_file": "",
       "source_location": ""
     },
     {
+      "id": "python_tca2_score",
+      "label": "score.py",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "candidate_alignment.py",
+      "file_type": "code",
+      "norm_label": "score.py",
+      "source_file": "python_tca2/score.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "python_tca2_word_match",
+      "label": "word_match.py",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "candidate_alignment.py",
+      "file_type": "code",
+      "norm_label": "word_match.py",
+      "source_file": "python_tca2/word_match.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "python_tca2_candidate_alignment_rationale_344",
+      "label": "Yield ref pairs whose extractor output on both sides satisfies predicate.",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "candidate_alignment.py",
+      "file_type": "rationale",
+      "norm_label": "yield ref pairs whose extractor output on both sides satisfies predicate.",
+      "source_file": "python_tca2/candidate_alignment.py",
+      "source_location": "L344"
+    },
+    {
       "id": "python_tca2_match_cluster_rationale_11",
       "label": "A group of overlapping WordMatch occurrences, scored as a single unit. Exists\u2026",
       "_origin": "ast",
       "community": 0,
-      "community_name": "MatchCluster",
+      "community_name": "candidate_alignment.py",
       "file_type": "rationale",
       "norm_label": "a group of overlapping wordmatch occurrences, scored as a single unit. exists...",
       "source_file": "python_tca2/match_cluster.py",
@@ -1800,7 +1877,7 @@
       "label": "Adds a reference to the cluster if it is not already present. Args: other_ref:\u2026",
       "_origin": "ast",
       "community": 0,
-      "community_name": "MatchCluster",
+      "community_name": "candidate_alignment.py",
       "file_type": "rationale",
       "norm_label": "adds a reference to the cluster if it is not already present. args: other_ref:...",
       "source_file": "python_tca2/match_cluster.py",
@@ -1811,7 +1888,7 @@
       "label": "Check if the given reference matches any reference in the collection. Args:\u2026",
       "_origin": "ast",
       "community": 0,
-      "community_name": "MatchCluster",
+      "community_name": "candidate_alignment.py",
       "file_type": "rationale",
       "norm_label": "check if the given reference matches any reference in the collection. args:...",
       "source_file": "python_tca2/match_cluster.py",
@@ -1822,40 +1899,18 @@
       "label": "Merges another cluster into the current cluster. Args: other_cluster: The\u2026",
       "_origin": "ast",
       "community": 0,
-      "community_name": "MatchCluster",
+      "community_name": "candidate_alignment.py",
       "file_type": "rationale",
       "norm_label": "merges another cluster into the current cluster. args: other_cluster: the...",
       "source_file": "python_tca2/match_cluster.py",
       "source_location": "L48"
     },
     {
-      "id": "python_tca2_match_cluster_rationale_57",
-      "label": "Calculate the score for the cluster based on its characteristics. This method\u2026",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "MatchCluster",
-      "file_type": "rationale",
-      "norm_label": "calculate the score for the cluster based on its characteristics. this method...",
-      "source_file": "python_tca2/match_cluster.py",
-      "source_location": "L57"
-    },
-    {
-      "id": "python_tca2_match_cluster_rationale_83",
-      "label": "Get the maximum weight of references in the cluster. Returns: The biggest\u2026",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "MatchCluster",
-      "file_type": "rationale",
-      "norm_label": "get the maximum weight of references in the cluster. returns: the biggest...",
-      "source_file": "python_tca2/match_cluster.py",
-      "source_location": "L83"
-    },
-    {
       "id": "python_tca2_match_clusters_rationale_11",
       "label": "The full set of match clusters found for a sentence pair, scored together.\u2026",
       "_origin": "ast",
       "community": 0,
-      "community_name": "MatchCluster",
+      "community_name": "candidate_alignment.py",
       "file_type": "rationale",
       "norm_label": "the full set of match clusters found for a sentence pair, scored together....",
       "source_file": "python_tca2/match_clusters.py",
@@ -1866,7 +1921,7 @@
       "label": "Calculate the total score for all clusters. Returns: The total score as a float.",
       "_origin": "ast",
       "community": 0,
-      "community_name": "MatchCluster",
+      "community_name": "candidate_alignment.py",
       "file_type": "rationale",
       "norm_label": "calculate the total score for all clusters. returns: the total score as a float.",
       "source_file": "python_tca2/match_clusters.py",
@@ -1877,7 +1932,7 @@
       "label": "Adds two references to a new cluster and stores the cluster. This method\u2026",
       "_origin": "ast",
       "community": 0,
-      "community_name": "MatchCluster",
+      "community_name": "candidate_alignment.py",
       "file_type": "rationale",
       "norm_label": "adds two references to a new cluster and stores the cluster. this method...",
       "source_file": "python_tca2/match_clusters.py",
@@ -1888,7 +1943,7 @@
       "label": "Adds a reference to the appropriate cluster or creates a new one. This method\u2026",
       "_origin": "ast",
       "community": 0,
-      "community_name": "MatchCluster",
+      "community_name": "candidate_alignment.py",
       "file_type": "rationale",
       "norm_label": "adds a reference to the appropriate cluster or creates a new one. this method...",
       "source_file": "python_tca2/match_clusters.py",
@@ -1899,7 +1954,7 @@
       "label": "Add clusters from another Clusters object to the current instance. Args:\u2026",
       "_origin": "ast",
       "community": 0,
-      "community_name": "MatchCluster",
+      "community_name": "candidate_alignment.py",
       "file_type": "rationale",
       "norm_label": "add clusters from another clusters object to the current instance. args:...",
       "source_file": "python_tca2/match_clusters.py",
@@ -1910,7 +1965,7 @@
       "label": "Check if two clusters share a common reference. Args: cluster: The first\u2026",
       "_origin": "ast",
       "community": 0,
-      "community_name": "MatchCluster",
+      "community_name": "candidate_alignment.py",
       "file_type": "rationale",
       "norm_label": "check if two clusters share a common reference. args: cluster: the first...",
       "source_file": "python_tca2/match_clusters.py",
@@ -1921,11 +1976,55 @@
       "label": "Add a cluster to the current collection of clusters. This method identifies\u2026",
       "_origin": "ast",
       "community": 0,
-      "community_name": "MatchCluster",
+      "community_name": "candidate_alignment.py",
       "file_type": "rationale",
       "norm_label": "add a cluster to the current collection of clusters. this method identifies...",
       "source_file": "python_tca2/match_clusters.py",
       "source_location": "L95"
+    },
+    {
+      "id": "python_tca2_word_match_rationale_17",
+      "label": "Check whether this match overlaps another in position or match type.",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "candidate_alignment.py",
+      "file_type": "rationale",
+      "norm_label": "check whether this match overlaps another in position or match type.",
+      "source_file": "python_tca2/word_match.py",
+      "source_location": "L17"
+    },
+    {
+      "id": "python_tca2_word_match_rationale_31",
+      "label": "Check if this match belongs to the given text.",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "candidate_alignment.py",
+      "file_type": "rationale",
+      "norm_label": "check if this match belongs to the given text.",
+      "source_file": "python_tca2/word_match.py",
+      "source_location": "L31"
+    },
+    {
+      "id": "python_tca2_word_match_rationale_6",
+      "label": "A single matched word occurrence, used to build scoring clusters.",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "candidate_alignment.py",
+      "file_type": "rationale",
+      "norm_label": "a single matched word occurrence, used to build scoring clusters.",
+      "source_file": "python_tca2/word_match.py",
+      "source_location": "L6"
+    },
+    {
+      "id": "command",
+      "label": "command",
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "test_alignmentmodel.py",
+      "file_type": "code",
+      "norm_label": "command",
+      "source_file": "",
+      "source_location": ""
     },
     {
       "id": "parametrize",
@@ -1959,6 +2058,17 @@
       "norm_label": "alignedsentenceelements",
       "source_file": "",
       "source_location": ""
+    },
+    {
+      "id": "python_tca2_alignment",
+      "label": "alignment.py",
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "test_alignmentmodel.py",
+      "file_type": "code",
+      "norm_label": "alignment.py",
+      "source_file": "python_tca2/alignment.py",
+      "source_location": "L1"
     },
     {
       "id": "python_tca2_alignment_element",
@@ -2013,28 +2123,6 @@
       "file_type": "code",
       "norm_label": "anchorwordlist.py",
       "source_file": "python_tca2/anchorwordlist.py",
-      "source_location": "L1"
-    },
-    {
-      "id": "python_tca2_anchorwordlistentry",
-      "label": "anchorwordlistentry.py",
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "test_alignmentmodel.py",
-      "file_type": "code",
-      "norm_label": "anchorwordlistentry.py",
-      "source_file": "python_tca2/anchorwordlistentry.py",
-      "source_location": "L1"
-    },
-    {
-      "id": "python_tca2_constants",
-      "label": "constants.py",
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "test_alignmentmodel.py",
-      "file_type": "code",
-      "norm_label": "constants.py",
-      "source_file": "python_tca2/constants.py",
       "source_location": "L1"
     },
     {
@@ -2124,17 +2212,6 @@
       "norm_label": "represents a list of anchor words and provides methods to process them.",
       "source_file": "python_tca2/anchorwordlist.py",
       "source_location": "L12"
-    },
-    {
-      "id": "python_tca2_anchorwordlist_rationale_18",
-      "label": "Loads anchor word list entries from a specified file. Reads the file line by\u2026",
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "test_alignmentmodel.py",
-      "file_type": "rationale",
-      "norm_label": "loads anchor word list entries from a specified file. reads the file line by...",
-      "source_file": "python_tca2/anchorwordlist.py",
-      "source_location": "L18"
     },
     {
       "id": "python_tca2_rolling_document_rationale_69",
@@ -2247,125 +2324,15 @@
       "source_location": "L38"
     },
     {
-      "id": "python_tca2_candidate_alignment",
-      "label": "candidate_alignment.py",
+      "id": "python_tca2_alignment_search_py_alignedsentenceelements",
+      "label": "AlignedSentenceElements",
       "_origin": "ast",
       "community": 15,
-      "community_name": "candidate_alignment.py",
+      "community_name": "AlignedSentenceElements",
       "file_type": "code",
-      "norm_label": "candidate_alignment.py",
-      "source_file": "python_tca2/candidate_alignment.py",
-      "source_location": "L1"
-    },
-    {
-      "id": "python_tca2_match",
-      "label": "match.py",
-      "_origin": "ast",
-      "community": 15,
-      "community_name": "candidate_alignment.py",
-      "file_type": "code",
-      "norm_label": "match.py",
-      "source_file": "python_tca2/match.py",
-      "source_location": "L1"
-    },
-    {
-      "id": "python_tca2_match_cluster",
-      "label": "match_cluster.py",
-      "_origin": "ast",
-      "community": 15,
-      "community_name": "candidate_alignment.py",
-      "file_type": "code",
-      "norm_label": "match_cluster.py",
-      "source_file": "python_tca2/match_cluster.py",
-      "source_location": "L1"
-    },
-    {
-      "id": "python_tca2_match_clusters",
-      "label": "match_clusters.py",
-      "_origin": "ast",
-      "community": 15,
-      "community_name": "candidate_alignment.py",
-      "file_type": "code",
-      "norm_label": "match_clusters.py",
-      "source_file": "python_tca2/match_clusters.py",
-      "source_location": "L1"
-    },
-    {
-      "id": "python_tca2_score",
-      "label": "score.py",
-      "_origin": "ast",
-      "community": 15,
-      "community_name": "candidate_alignment.py",
-      "file_type": "code",
-      "norm_label": "score.py",
-      "source_file": "python_tca2/score.py",
-      "source_location": "L1"
-    },
-    {
-      "id": "python_tca2_word_match",
-      "label": "word_match.py",
-      "_origin": "ast",
-      "community": 15,
-      "community_name": "candidate_alignment.py",
-      "file_type": "code",
-      "norm_label": "word_match.py",
-      "source_file": "python_tca2/word_match.py",
-      "source_location": "L1"
-    },
-    {
-      "id": "python_tca2_candidate_alignment_rationale_21",
-      "label": "Counts the number of words in a given string. Parameters: string: The input\u2026",
-      "_origin": "ast",
-      "community": 15,
-      "community_name": "candidate_alignment.py",
-      "file_type": "rationale",
-      "norm_label": "counts the number of words in a given string. parameters: string: the input...",
-      "source_file": "python_tca2/candidate_alignment.py",
-      "source_location": "L21"
-    },
-    {
-      "id": "python_tca2_candidate_alignment_rationale_344",
-      "label": "Yield ref pairs whose extractor output on both sides satisfies predicate.",
-      "_origin": "ast",
-      "community": 15,
-      "community_name": "candidate_alignment.py",
-      "file_type": "rationale",
-      "norm_label": "yield ref pairs whose extractor output on both sides satisfies predicate.",
-      "source_file": "python_tca2/candidate_alignment.py",
-      "source_location": "L344"
-    },
-    {
-      "id": "python_tca2_word_match_rationale_17",
-      "label": "Check whether this match overlaps another in position or match type.",
-      "_origin": "ast",
-      "community": 15,
-      "community_name": "candidate_alignment.py",
-      "file_type": "rationale",
-      "norm_label": "check whether this match overlaps another in position or match type.",
-      "source_file": "python_tca2/word_match.py",
-      "source_location": "L17"
-    },
-    {
-      "id": "python_tca2_word_match_rationale_31",
-      "label": "Check if this match belongs to the given text.",
-      "_origin": "ast",
-      "community": 15,
-      "community_name": "candidate_alignment.py",
-      "file_type": "rationale",
-      "norm_label": "check if this match belongs to the given text.",
-      "source_file": "python_tca2/word_match.py",
-      "source_location": "L31"
-    },
-    {
-      "id": "python_tca2_word_match_rationale_6",
-      "label": "A single matched word occurrence, used to build scoring clusters.",
-      "_origin": "ast",
-      "community": 15,
-      "community_name": "candidate_alignment.py",
-      "file_type": "rationale",
-      "norm_label": "a single matched word occurrence, used to build scoring clusters.",
-      "source_file": "python_tca2/word_match.py",
-      "source_location": "L6"
+      "norm_label": "alignedsentenceelements",
+      "source_file": "",
+      "source_location": ""
     },
     {
       "id": "py_tca2",
@@ -2409,7 +2376,7 @@
       "source_file": "pyproject.toml",
       "source_location": "L1",
       "type": "package",
-      "version": "2.0.2"
+      "version": "2.0.3"
     },
     {
       "id": "python_tca2_init",
@@ -2423,17 +2390,6 @@
       "source_location": "L1"
     },
     {
-      "id": "command",
-      "label": "command",
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "write_streaming_result",
-      "file_type": "code",
-      "norm_label": "command",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
       "id": "element",
       "label": "Element",
       "_origin": "ast",
@@ -2443,17 +2399,6 @@
       "norm_label": "element",
       "source_file": "",
       "source_location": ""
-    },
-    {
-      "id": "python_tca2_alignment",
-      "label": "alignment.py",
-      "_origin": "ast",
-      "community": 2,
-      "community_name": "write_streaming_result",
-      "file_type": "code",
-      "norm_label": "alignment.py",
-      "source_file": "python_tca2/alignment.py",
-      "source_location": "L1"
     },
     {
       "id": "python_tca2_tmx",
@@ -2566,6 +2511,39 @@
       "source_location": "L1"
     },
     {
+      "id": "python_tca2_alignment_search_py_alignmentsuggestion",
+      "label": "AlignmentSuggestion",
+      "_origin": "ast",
+      "community": 21,
+      "community_name": "AlignmentSuggestion",
+      "file_type": "code",
+      "norm_label": "alignmentsuggestion",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "python_tca2_alignment_search_py_score",
+      "label": "Score",
+      "_origin": "ast",
+      "community": 22,
+      "community_name": "Score",
+      "file_type": "code",
+      "norm_label": "score",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "python_tca2_alignment_search_py_slice",
+      "label": "slice",
+      "_origin": "ast",
+      "community": 23,
+      "community_name": "slice",
+      "file_type": "code",
+      "norm_label": "slice",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
       "id": "python_tca2_anchorwordlist_py_pattern",
       "label": "Pattern",
       "_origin": "ast",
@@ -2632,6 +2610,28 @@
       "source_location": ""
     },
     {
+      "id": "python_tca2_path_candidate",
+      "label": "path_candidate.py",
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "alignment_suggestion.py",
+      "file_type": "code",
+      "norm_label": "path_candidate.py",
+      "source_file": "python_tca2/path_candidate.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "python_tca2_path_candidate_py_score",
+      "label": "Score",
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "alignment_suggestion.py",
+      "file_type": "code",
+      "norm_label": "score",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
       "id": "tests_test_alignment_suggestion",
       "label": "test_alignment_suggestion.py",
       "_origin": "ast",
@@ -2640,6 +2640,17 @@
       "file_type": "code",
       "norm_label": "test_alignment_suggestion.py",
       "source_file": "tests/test_alignment_suggestion.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "tests_test_path_candidate",
+      "label": "test_path_candidate.py",
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "alignment_suggestion.py",
+      "file_type": "code",
+      "norm_label": "test_path_candidate.py",
+      "source_file": "tests/test_path_candidate.py",
       "source_location": "L1"
     },
     {
@@ -2676,6 +2687,50 @@
       "source_location": "L43"
     },
     {
+      "id": "python_tca2_path_candidate_rationale_21",
+      "label": "Score divided by the path length in sentences, for comparing paths.",
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "alignment_suggestion.py",
+      "file_type": "rationale",
+      "norm_label": "score divided by the path length in sentences, for comparing paths.",
+      "source_file": "python_tca2/path_candidate.py",
+      "source_location": "L21"
+    },
+    {
+      "id": "python_tca2_path_candidate_rationale_25",
+      "label": "Check whether this path passed through pos at any point along its history.",
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "alignment_suggestion.py",
+      "file_type": "rationale",
+      "norm_label": "check whether this path passed through pos at any point along its history.",
+      "source_file": "python_tca2/path_candidate.py",
+      "source_location": "L25"
+    },
+    {
+      "id": "python_tca2_path_candidate_rationale_44",
+      "label": "Total sentence increments across all alignment suggestions on this path.",
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "alignment_suggestion.py",
+      "file_type": "rationale",
+      "norm_label": "total sentence increments across all alignment suggestions on this path.",
+      "source_file": "python_tca2/path_candidate.py",
+      "source_location": "L44"
+    },
+    {
+      "id": "python_tca2_path_candidate_rationale_9",
+      "label": "A candidate alignment path being extended during beam search.",
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "alignment_suggestion.py",
+      "file_type": "rationale",
+      "norm_label": "a candidate alignment path being extended during beam search.",
+      "source_file": "python_tca2/path_candidate.py",
+      "source_location": "L9"
+    },
+    {
       "id": "python_tca2_candidate_alignment_py_alignedsentenceelements",
       "label": "AlignedSentenceElements",
       "_origin": "ast",
@@ -2709,6 +2764,17 @@
       "source_location": ""
     },
     {
+      "id": "python_tca2_match_cluster_py_score",
+      "label": "Score",
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "CandidateAlignment",
+      "file_type": "code",
+      "norm_label": "score",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
       "id": "python_tca2_score_py_score",
       "label": "Score",
       "_origin": "ast",
@@ -2729,6 +2795,17 @@
       "norm_label": "check if all elements in self.info have a length of 1.",
       "source_file": "python_tca2/candidate_alignment.py",
       "source_location": "L142"
+    },
+    {
+      "id": "python_tca2_candidate_alignment_rationale_21",
+      "label": "Counts the number of words in a given string. Parameters: string: The input\u2026",
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "CandidateAlignment",
+      "file_type": "rationale",
+      "norm_label": "counts the number of words in a given string. parameters: string: the input...",
+      "source_file": "python_tca2/candidate_alignment.py",
+      "source_location": "L21"
     },
     {
       "id": "python_tca2_candidate_alignment_rationale_375",
@@ -2762,6 +2839,28 @@
       "norm_label": "both branches of self.info must have elements to be non-empty.",
       "source_file": "python_tca2/candidate_alignment.py",
       "source_location": "L78"
+    },
+    {
+      "id": "python_tca2_match_cluster_rationale_57",
+      "label": "Calculate the score for the cluster based on its characteristics. This method\u2026",
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "CandidateAlignment",
+      "file_type": "rationale",
+      "norm_label": "calculate the score for the cluster based on its characteristics. this method...",
+      "source_file": "python_tca2/match_cluster.py",
+      "source_location": "L57"
+    },
+    {
+      "id": "python_tca2_match_cluster_rationale_83",
+      "label": "Get the maximum weight of references in the cluster. Returns: The biggest\u2026",
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "CandidateAlignment",
+      "file_type": "rationale",
+      "norm_label": "get the maximum weight of references in the cluster. returns: the biggest...",
+      "source_file": "python_tca2/match_cluster.py",
+      "source_location": "L83"
     },
     {
       "id": "python_tca2_score_rationale_7",
@@ -2907,6 +3006,39 @@
       "source_location": "L8"
     },
     {
+      "id": "alignedsentenceelements",
+      "label": "AlignedSentenceElements",
+      "_origin": "ast",
+      "community": 6,
+      "community_name": "AlignmentSearch",
+      "file_type": "code",
+      "norm_label": "alignedsentenceelements",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "alignmentsuggestion",
+      "label": "AlignmentSuggestion",
+      "_origin": "ast",
+      "community": 6,
+      "community_name": "AlignmentSearch",
+      "file_type": "code",
+      "norm_label": "alignmentsuggestion",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "pathcandidate",
+      "label": "PathCandidate",
+      "_origin": "ast",
+      "community": 6,
+      "community_name": "AlignmentSearch",
+      "file_type": "code",
+      "norm_label": "pathcandidate",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
       "id": "python_tca2_alignment_search",
       "label": "alignment_search.py",
       "_origin": "ast",
@@ -2918,29 +3050,18 @@
       "source_location": "L1"
     },
     {
-      "id": "python_tca2_alignment_search_py_alignedsentenceelements",
-      "label": "AlignedSentenceElements",
+      "id": "rollingdocument",
+      "label": "RollingDocument",
       "_origin": "ast",
       "community": 6,
       "community_name": "AlignmentSearch",
       "file_type": "code",
-      "norm_label": "alignedsentenceelements",
+      "norm_label": "rollingdocument",
       "source_file": "",
       "source_location": ""
     },
     {
-      "id": "python_tca2_alignment_search_py_alignmentsuggestion",
-      "label": "AlignmentSuggestion",
-      "_origin": "ast",
-      "community": 6,
-      "community_name": "AlignmentSearch",
-      "file_type": "code",
-      "norm_label": "alignmentsuggestion",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
-      "id": "python_tca2_alignment_search_py_score",
+      "id": "score",
       "label": "Score",
       "_origin": "ast",
       "community": 6,
@@ -2951,7 +3072,7 @@
       "source_location": ""
     },
     {
-      "id": "python_tca2_alignment_search_py_slice",
+      "id": "slice",
       "label": "slice",
       "_origin": "ast",
       "community": 6,
@@ -2960,39 +3081,6 @@
       "norm_label": "slice",
       "source_file": "",
       "source_location": ""
-    },
-    {
-      "id": "python_tca2_path_candidate",
-      "label": "path_candidate.py",
-      "_origin": "ast",
-      "community": 6,
-      "community_name": "AlignmentSearch",
-      "file_type": "code",
-      "norm_label": "path_candidate.py",
-      "source_file": "python_tca2/path_candidate.py",
-      "source_location": "L1"
-    },
-    {
-      "id": "python_tca2_path_candidate_py_score",
-      "label": "Score",
-      "_origin": "ast",
-      "community": 6,
-      "community_name": "AlignmentSearch",
-      "file_type": "code",
-      "norm_label": "score",
-      "source_file": "",
-      "source_location": ""
-    },
-    {
-      "id": "tests_test_path_candidate",
-      "label": "test_path_candidate.py",
-      "_origin": "ast",
-      "community": 6,
-      "community_name": "AlignmentSearch",
-      "file_type": "code",
-      "norm_label": "test_path_candidate.py",
-      "source_file": "tests/test_path_candidate.py",
-      "source_location": "L1"
     },
     {
       "id": "python_tca2_alignment_search_rationale_1",
@@ -3116,66 +3204,44 @@
       "source_location": "L48"
     },
     {
-      "id": "python_tca2_path_candidate_rationale_21",
-      "label": "Score divided by the path length in sentences, for comparing paths.",
+      "id": "python_tca2_anchorwordlistentry",
+      "label": "anchorwordlistentry.py",
       "_origin": "ast",
-      "community": 6,
-      "community_name": "AlignmentSearch",
-      "file_type": "rationale",
-      "norm_label": "score divided by the path length in sentences, for comparing paths.",
-      "source_file": "python_tca2/path_candidate.py",
-      "source_location": "L21"
-    },
-    {
-      "id": "python_tca2_path_candidate_rationale_25",
-      "label": "Check whether this path passed through pos at any point along its history.",
-      "_origin": "ast",
-      "community": 6,
-      "community_name": "AlignmentSearch",
-      "file_type": "rationale",
-      "norm_label": "check whether this path passed through pos at any point along its history.",
-      "source_file": "python_tca2/path_candidate.py",
-      "source_location": "L25"
-    },
-    {
-      "id": "python_tca2_path_candidate_rationale_44",
-      "label": "Total sentence increments across all alignment suggestions on this path.",
-      "_origin": "ast",
-      "community": 6,
-      "community_name": "AlignmentSearch",
-      "file_type": "rationale",
-      "norm_label": "total sentence increments across all alignment suggestions on this path.",
-      "source_file": "python_tca2/path_candidate.py",
-      "source_location": "L44"
-    },
-    {
-      "id": "python_tca2_path_candidate_rationale_9",
-      "label": "A candidate alignment path being extended during beam search.",
-      "_origin": "ast",
-      "community": 6,
-      "community_name": "AlignmentSearch",
-      "file_type": "rationale",
-      "norm_label": "a candidate alignment path being extended during beam search.",
-      "source_file": "python_tca2/path_candidate.py",
-      "source_location": "L9"
+      "community": 7,
+      "community_name": "AnchorWordListEntry",
+      "file_type": "code",
+      "norm_label": "anchorwordlistentry.py",
+      "source_file": "python_tca2/anchorwordlistentry.py",
+      "source_location": "L1"
     },
     {
       "id": "python_tca2_anchorwordlistentry_py_pattern",
       "label": "Pattern",
       "_origin": "ast",
       "community": 7,
-      "community_name": ".make_phrase",
+      "community_name": "AnchorWordListEntry",
       "file_type": "code",
       "norm_label": "pattern",
       "source_file": "",
       "source_location": ""
     },
     {
+      "id": "python_tca2_anchorwordlist_rationale_18",
+      "label": "Loads anchor word list entries from a specified file. Reads the file line by\u2026",
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "AnchorWordListEntry",
+      "file_type": "rationale",
+      "norm_label": "loads anchor word list entries from a specified file. reads the file line by...",
+      "source_file": "python_tca2/anchorwordlist.py",
+      "source_location": "L18"
+    },
+    {
       "id": "python_tca2_anchorwordlistentry_rationale_33",
       "label": "Generate a list of phrase patterns from input pairs. Args: pairs: A list of\u2026",
       "_origin": "ast",
       "community": 7,
-      "community_name": ".make_phrase",
+      "community_name": "AnchorWordListEntry",
       "file_type": "rationale",
       "norm_label": "generate a list of phrase patterns from input pairs. args: pairs: a list of...",
       "source_file": "python_tca2/anchorwordlistentry.py",
@@ -3186,7 +3252,7 @@
       "label": "Generates a list of compiled regex patterns from a synonym phrase. Args: syn: A\u2026",
       "_origin": "ast",
       "community": 7,
-      "community_name": ".make_phrase",
+      "community_name": "AnchorWordListEntry",
       "file_type": "rationale",
       "norm_label": "generates a list of compiled regex patterns from a synonym phrase. args: syn: a...",
       "source_file": "python_tca2/anchorwordlistentry.py",
@@ -3197,7 +3263,7 @@
       "label": "Make a proper regular expression from the anchor word",
       "_origin": "ast",
       "community": 7,
-      "community_name": ".make_phrase",
+      "community_name": "AnchorWordListEntry",
       "file_type": "rationale",
       "norm_label": "make a proper regular expression from the anchor word",
       "source_file": "python_tca2/anchorwordlistentry.py",
@@ -3618,7 +3684,7 @@
     },
     {
       "source": "python_tca2_alignment_search_alignmentsearch_extend_alignment_paths",
-      "target": "python_tca2_path_candidate_pathcandidate",
+      "target": "pathcandidate",
       "relation": "calls",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -3678,7 +3744,7 @@
     },
     {
       "source": "python_tca2_alignment_search_alignmentsearch_extend_path_with_step",
-      "target": "python_tca2_path_candidate_pathcandidate",
+      "target": "pathcandidate",
       "relation": "calls",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -3714,7 +3780,7 @@
     },
     {
       "source": "python_tca2_alignment_search_alignmentsearch_extend_path_with_step",
-      "target": "python_tca2_alignment_search_py_slice",
+      "target": "slice",
       "relation": "calls",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -3810,7 +3876,7 @@
     },
     {
       "source": "python_tca2_alignment_search_alignmentsearch_iter_alignment_elements",
-      "target": "python_tca2_alignment_search_py_slice",
+      "target": "slice",
       "relation": "calls",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -5202,7 +5268,7 @@
     },
     {
       "source": "python_tca2_alignment_search_alignmentsearch_extend_current_path",
-      "target": "python_tca2_alignment_search_py_score",
+      "target": "pathcandidate",
       "relation": "references",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -5214,7 +5280,7 @@
     },
     {
       "source": "python_tca2_alignment_search_alignmentsearch_extend_current_path",
-      "target": "python_tca2_path_candidate_pathcandidate",
+      "target": "score",
       "relation": "references",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -5226,7 +5292,7 @@
     },
     {
       "source": "python_tca2_alignment_search_alignmentsearch_extend_path_with_step",
-      "target": "python_tca2_alignment_search_py_alignmentsuggestion",
+      "target": "alignmentsuggestion",
       "relation": "references",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -5238,7 +5304,7 @@
     },
     {
       "source": "python_tca2_alignment_search_alignmentsearch_extend_path_with_step",
-      "target": "python_tca2_alignment_search_py_score",
+      "target": "score",
       "relation": "references",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -5250,7 +5316,7 @@
     },
     {
       "source": "python_tca2_alignment_search_alignmentsearch_get_aligned_sentence_elements",
-      "target": "python_tca2_alignment_search_py_slice",
+      "target": "slice",
       "relation": "references",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -5262,7 +5328,7 @@
     },
     {
       "source": "python_tca2_alignment_search_alignmentsearch_get_step_score",
-      "target": "python_tca2_alignment_search_py_slice",
+      "target": "slice",
       "relation": "references",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -5274,7 +5340,7 @@
     },
     {
       "source": "python_tca2_alignment_search_alignmentsearch_init",
-      "target": "python_tca2_rolling_document_rollingdocument",
+      "target": "rollingdocument",
       "relation": "references",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -5286,7 +5352,7 @@
     },
     {
       "source": "python_tca2_alignment_search_alignmentsearch_iter_alignment_elements",
-      "target": "python_tca2_alignment_search_py_alignedsentenceelements",
+      "target": "alignedsentenceelements",
       "relation": "references",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -5298,7 +5364,7 @@
     },
     {
       "source": "python_tca2_alignment_search_alignmentsearch_select_best_alignment_suggestion",
-      "target": "python_tca2_path_candidate_pathcandidate",
+      "target": "pathcandidate",
       "relation": "references",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -5310,7 +5376,7 @@
     },
     {
       "source": "python_tca2_alignment_search_beamround_init",
-      "target": "python_tca2_path_candidate_pathcandidate",
+      "target": "pathcandidate",
       "relation": "references",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -5322,7 +5388,7 @@
     },
     {
       "source": "python_tca2_alignment_search_set_best_path_score",
-      "target": "python_tca2_alignment_search_py_score",
+      "target": "score",
       "relation": "references",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -5618,54 +5684,6 @@
       "context": "import",
       "source_file": "python_tca2/alignment_element.py",
       "source_location": "L5",
-      "weight": 1.0
-    },
-    {
-      "source": "python_tca2_alignment_search",
-      "target": "python_tca2_candidate_alignment_candidatealignment",
-      "relation": "imports",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "import",
-      "source_file": "python_tca2/alignment_search.py",
-      "source_location": "L20",
-      "weight": 1.0
-    },
-    {
-      "source": "python_tca2_alignment_search",
-      "target": "python_tca2_path_candidate_pathcandidate",
-      "relation": "imports",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "import",
-      "source_file": "python_tca2/alignment_search.py",
-      "source_location": "L21",
-      "weight": 1.0
-    },
-    {
-      "source": "python_tca2_alignment_search",
-      "target": "python_tca2_rolling_document_rollingdocument",
-      "relation": "imports",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "import",
-      "source_file": "python_tca2/alignment_search.py",
-      "source_location": "L22",
-      "weight": 1.0
-    },
-    {
-      "source": "python_tca2_alignment_search",
-      "target": "python_tca2_score_as_score",
-      "relation": "imports",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "import",
-      "source_file": "python_tca2/alignment_search.py",
-      "source_location": "L23",
       "weight": 1.0
     },
     {
@@ -6618,7 +6636,7 @@
     },
     {
       "source": "python_tca2_alignment_search_beamround_add",
-      "target": "python_tca2_path_candidate_pathcandidate",
+      "target": "pathcandidate",
       "relation": "references",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -6798,7 +6816,7 @@
     },
     {
       "source": "python_tca2_alignment_search_alignmentsearch_get_aligned_sentence_elements",
-      "target": "python_tca2_alignment_search_py_alignedsentenceelements",
+      "target": "alignedsentenceelements",
       "relation": "references",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -6810,7 +6828,7 @@
     },
     {
       "source": "python_tca2_alignment_search_alignmentsearch_get_step_score",
-      "target": "python_tca2_alignment_search_py_score",
+      "target": "score",
       "relation": "references",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -6822,7 +6840,7 @@
     },
     {
       "source": "python_tca2_alignment_search_alignmentsearch_retrieve_alignment_suggestion",
-      "target": "python_tca2_alignment_search_py_alignmentsuggestion",
+      "target": "alignmentsuggestion",
       "relation": "references",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -6834,7 +6852,7 @@
     },
     {
       "source": "python_tca2_alignment_search_alignmentsearch_select_best_alignment_suggestion",
-      "target": "python_tca2_alignment_search_py_alignmentsuggestion",
+      "target": "alignmentsuggestion",
       "relation": "references",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -6846,7 +6864,7 @@
     },
     {
       "source": "python_tca2_alignment_search_get_best_path_score",
-      "target": "python_tca2_alignment_search_py_score",
+      "target": "score",
       "relation": "references",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -9640,50 +9658,6 @@
       "weight": 0.8
     },
     {
-      "source": "python_tca2_alignment_search_alignmentsearch",
-      "target": "python_tca2_path_candidate_pathcandidate",
-      "relation": "uses",
-      "_origin": "ast",
-      "confidence": "INFERRED",
-      "confidence_score": 0.95,
-      "source_file": "python_tca2/alignment_search.py",
-      "source_location": "L109",
-      "weight": 0.8
-    },
-    {
-      "source": "python_tca2_alignment_search_alignmentsearch",
-      "target": "python_tca2_candidate_alignment_candidatealignment",
-      "relation": "uses",
-      "_origin": "ast",
-      "confidence": "INFERRED",
-      "confidence_score": 0.95,
-      "source_file": "python_tca2/alignment_search.py",
-      "source_location": "L170",
-      "weight": 0.8
-    },
-    {
-      "source": "python_tca2_alignment_search_alignmentsearch",
-      "target": "python_tca2_rolling_document_rollingdocument",
-      "relation": "uses",
-      "_origin": "ast",
-      "confidence": "INFERRED",
-      "confidence_score": 0.95,
-      "source_file": "python_tca2/alignment_search.py",
-      "source_location": "L52",
-      "weight": 0.8
-    },
-    {
-      "source": "python_tca2_alignment_search_beamround",
-      "target": "python_tca2_path_candidate_pathcandidate",
-      "relation": "uses",
-      "_origin": "ast",
-      "confidence": "INFERRED",
-      "confidence_score": 0.95,
-      "source_file": "python_tca2/alignment_search.py",
-      "source_location": "L29",
-      "weight": 0.8
-    },
-    {
       "source": "python_tca2_alignmentmodel_alignmentmodel",
       "target": "python_tca2_anchorwordlist_anchorwordlist",
       "relation": "uses",
@@ -10111,5 +10085,5 @@
       "source_file": "tests/anchor-nob-sme.txt"
     }
   ],
-  "built_at_commit": "299a038bd4553b49ed10d91df3a7cd4a48bc0992"
+  "built_at_commit": "66966bd135b38534ad82ebf0bc0857a4cc391092"
 }
